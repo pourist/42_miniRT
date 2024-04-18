@@ -84,6 +84,12 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 
 all: $(NAME)
 
+atest: $(NAME)
+	@make -C tests -s
+
+test: $(NAME)
+	@make $(T) -C tests -s
+
 $(NAME): $(OBJECTS) | $(LIBFT) $(MLX)
 	@printf "\n$(MAGENTA)[$(NAME)] $(DEFAULT)Linking "
 	@printf "($(BLUE)$(NAME)$(DEFAULT))..."
@@ -141,5 +147,6 @@ fclean: clean
 	@printf "🧹🧹$(DEFAULT)\n"
 
 re: fclean all
+	@git submodule update --remote -q
 
 .PHONY: all clean fclean re
