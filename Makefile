@@ -37,7 +37,7 @@ vpath %.h $(INC_DIRS)
 vpath %.o $(OBJ_DIR)
 
 LIBFT							:= $(LIBFT_DIR)/libft.a
-MLX								:= $(MLX_DIR)/libmlx42.a
+MLX								:= $(MLX_DIR)/build/libmlx42.a
 HEADERS						:=
 SOURCE						:= main.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
@@ -48,8 +48,8 @@ OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 CFLAGS						:= -Wall -Wextra -Werror
 INCLUDE						:= $(addprefix -I, $(INC_DIRS))
-LDFLAGS						:= -L$(LIBFT_DIR) -L$(MLX_DIR)
-LDLIBS						:= -lft -lmlx -lglfw
+LDFLAGS						:= -L$(LIBFT_DIR) -L$(MLX_DIR)/build
+LDLIBS						:= -lft -lmlx42 -lglfw
 
 ifeq ($(shell uname), Darwin)
 	LDLIBS				+= -framework Cocoa -framework OpenGL -framework IOKit
@@ -87,7 +87,7 @@ all: $(NAME)
 $(NAME): $(OBJECTS) | $(LIBFT) $(MLX)
 	@printf "\n$(MAGENTA)[$(NAME)] $(DEFAULT)Linking "
 	@printf "($(BLUE)$(NAME)$(DEFAULT))..."
-	@
+	@$(CC) $(CFLAGS) $^ $(LDFLAGS) $(LDLIBS) -o $@
 	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(GREEN)Compilation success "
 	@printf "🎉!$(DEFAULT)\n"
 
@@ -106,7 +106,19 @@ $(OBJ_DIR):
 	@printf "Created successfully!\n"
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR)
+	@if [ ! -d $(LIBFT_DIR) ]; then \
+			mkdir -p $(LIB_DIR); \
+			git submodule update --init -q; \
+		fi
+	@make -C $(LIBFT_DIR) -s
+
+$(MLX):
+	@if [ ! -d $(MLX_DIR) ]; then \
+		mkdir -p $(LIB_DIR); \
+		git submodule update --init -q; \
+	 fi
+	@cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
+	@cmake --build $(MLX_DIR)/build -j4
 
 clean:
 	@printf "$(MAGENTA)[$(NAME)] $(DEFAULT)Cleaning up objects files in "
@@ -120,6 +132,12 @@ fclean: clean
 	@printf "($(RED)$(NAME)$(DEFAULT))..."
 	@$(RM) $(NAME)
 	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(YELLOW)Full clean success "
+	@printf "🧹🧹$(DEFAULT)\n"
+	@make fclean -C $(LIBFT_DIR) -s
+	@printf "$(MAGENTA)[$(NAME)] $(DEFAULT)Cleaning up "
+	@printf "($(RED)$(MLX_DIR)/build $(DEFAULT))..."
+	@$(RM) $(MLX_DIR)/build
+	@printf "\r%100s\r$(MAGENTA)[$(MLX_DIR)] $(YELLOW)Full clean success "
 	@printf "🧹🧹$(DEFAULT)\n"
 
 re: fclean all
