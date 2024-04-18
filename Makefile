@@ -90,6 +90,9 @@ atest: $(NAME)
 test: $(NAME)
 	@make $(T) -C tests -s
 
+ex: $(NAME)
+	@make $(EX) -C exs -s
+
 $(NAME): $(OBJECTS) | $(LIBFT) $(MLX)
 	@printf "\n$(MAGENTA)[$(NAME)] $(DEFAULT)Linking "
 	@printf "($(BLUE)$(NAME)$(DEFAULT))..."
@@ -149,4 +152,4 @@ fclean: clean
 re: fclean all
 	@git submodule update --remote -q
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test atest

@@ -16,7 +16,9 @@ WHITE       := \033[0;97m
 ##                                   MINIRT                                   ##
 ################################################################################
 
-TESTS							:= tuples
+ifndef EX
+	EX								:= ch01
+endif
 RM								:= rm -rf
 	
 ################################################################################
@@ -42,10 +44,10 @@ OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 ##                                   FLAGS                                    ##
 ################################################################################
 
-CFLAGS						:= -Wall -Wextra -Werror -O3
+CFLAGS						:= -Wall -Wextra -Werror -O3 -g3
 INCLUDE						:= $(addprefix -I, $(INC_DIRS))
 LDFLAGS						:= -L$(LIBFT_DIR) -L$(MLX_DIR)/build
-LDLIBS						:= -lft -lmlx42 -lglfw -lcriterion
+LDLIBS						:= -lft -lmlx42 -lglfw
 
 ifeq ($(shell uname), Darwin)
 	LDLIBS				+= -framework Cocoa -framework OpenGL -framework IOKit
@@ -53,27 +55,22 @@ else
 	LDLIBS				+= -ldl -pthread -lm
 endif
 
-define run
-	$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) $(LDLIBS) -o $@ && ./$@ --verbose
-endef
-
 ################################################################################
 ##                                COMPILATION                                 ##
 ################################################################################
 
-all: $(TESTS) clean
+all: $(EX)
 
-.PHONY: tuples
-tuples: $(OBJECTS) test_tuples.c
-	@$(call run, "$^")
+$(EX): $(OBJECTS) $(EX).c
+	@$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) $(LDLIBS) -o $@ && ./$@
 
 $(OBJECTS):
 	@make -C .. -s
 
 clean:
-	@printf "$(MAGENTA)[tests] $(DEFAULT)Cleaning up tests..."
-	@$(RM) $(TESTS)
-	@printf "\r%100s\r$(MAGENTA)[tests] $(YELLOW)Full clean success "
+	@printf "$(MAGENTA)[$(EX)] $(DEFAULT)Cleaning up tests..."
+	@$(RM) $(EX)
+	@printf "\r%100s\r$(MAGENTA)[$(EX)] $(YELLOW)Full clean success "
 	@printf "🧹🧹$(DEFAULT)\n"
 
 fclean: clean
