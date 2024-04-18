@@ -1,0 +1,127 @@
+################################################################################
+##                                   COLORS                                   ##
+################################################################################
+
+DEFAULT     := \033[0;39m
+GRAY        := \033[0;90m
+RED         := \033[0;91m
+GREEN       := \033[0;92m
+YELLOW      := \033[0;93m
+BLUE        := \033[0;94m
+MAGENTA     := \033[0;95m
+CYAN        := \033[0;96m
+WHITE       := \033[0;97m
+	
+################################################################################
+##                                   MINIRT                                   ##
+################################################################################
+
+NAME							:= miniRT
+RM								:= rm -rf
+	
+################################################################################
+##                                DIRECTORIES                                 ##
+################################################################################
+
+OBJ_DIR						:= obj
+SRC_DIRS					:=
+SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
+SRC_DIRS					+= src
+LIB_DIR						:= lib
+LIBFT_DIR					:= $(LIB_DIR)/libft
+MLX_DIR						:= $(LIB_DIR)/MLX42
+INC_DIRS						:= include $(LIBFT_DIR)/include $(MLX_DIR)/include
+
+vpath %.c $(SRC_DIRS)
+vpath %.h $(INC_DIRS)
+vpath %.o $(OBJ_DIR)
+
+LIBFT							:= $(LIBFT_DIR)/libft.a
+MLX								:= $(MLX_DIR)/libmlx42.a
+HEADERS						:=
+SOURCE						:= main.c
+OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
+	
+################################################################################
+##                                   FLAGS                                    ##
+################################################################################
+
+CFLAGS						:= -Wall -Wextra -Werror
+INCLUDE						:= $(addprefix -I, $(INC_DIRS))
+LDFLAGS						:= -L$(LIBFT_DIR) -L$(MLX_DIR)
+LDLIBS						:= -lft -lmlx -lglfw
+
+ifeq ($(shell uname), Darwin)
+	LDLIBS				+= -framework Cocoa -framework OpenGL -framework IOKit
+else
+	LDLIBS				+= -ldl -pthread -lm
+endif
+
+ifdef DEBUG
+	CFLAGS					 += -g3
+else
+	CFLAGS 					 += -O3
+endif
+
+################################################################################
+##                                PROGRESS_BAR                                ##
+################################################################################
+
+NUM_SRC_FILES			:= $(words $(SOURCE))
+NUM_OBJ_FILES			:= $(words $(OBJECTS))
+NUM_TO_COMPILE		= $(shell expr $(NUM_SRC_FILES) - $(NUM_OBJ_FILES))
+
+ifeq ($(shell test $(NUM_TO_COMPILE) -le 0; echo $$?), 0)
+	NUM_TO_COMPILE	= $(NUM_SRC_FILES)
+endif
+
+COMPILED_FILES		= 0
+COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
+	
+################################################################################
+##                                COMPILATION                                 ##
+################################################################################
+
+all: $(NAME)
+
+$(NAME): $(OBJECTS) | $(LIBFT) $(MLX)
+	@printf "\n$(MAGENTA)[$(NAME)] $(DEFAULT)Linking "
+	@printf "($(BLUE)$(NAME)$(DEFAULT))..."
+	@
+	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(GREEN)Compilation success "
+	@printf "🎉!$(DEFAULT)\n"
+
+$(OBJ_DIR)/%.o: %.c $(HEADERS) | $(OBJ_DIR)
+	@$(eval COMPILED_FILES = $(shell expr $(COMPILED_FILES) + 1))
+	@printf "$(MAGENTA)\r%100s\r[$(NAME)] $(GREEN)[ %d/%d (%d%%) ]" \
+			"" $(COMPILED_FILES) $(NUM_TO_COMPILE) $(COMPILATION_PCT) 
+	@printf " $(DEFAULT)Compiling ($(BLUE)$<$(DEFAULT))..."
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+$(OBJ_DIR):
+	@printf "$(MAGENTA)[$(NAME)] $(DEFAULT)Creating objects directory "
+	@printf "($(BLUE)$(OBJ_DIR)$(DEFAULT))..."
+	@mkdir -p $@
+	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(DEFAULT)($(BLUE)$(OBJ_DIR)/$(DEFAULT)) "
+	@printf "Created successfully!\n"
+
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
+
+clean:
+	@printf "$(MAGENTA)[$(NAME)] $(DEFAULT)Cleaning up objects files in "
+	@printf "($(RED)$(OBJ_DIR)$(DEFAULT))..."
+	@$(RM) $(OBJ_DIR)
+	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(YELLOW)Objects clean success "
+	@printf "🧹🧹$(DEFAULT)\n"
+
+fclean: clean
+	@printf "$(MAGENTA)[$(NAME)] $(DEFAULT)Cleaning up "
+	@printf "($(RED)$(NAME)$(DEFAULT))..."
+	@$(RM) $(NAME)
+	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(YELLOW)Full clean success "
+	@printf "🧹🧹$(DEFAULT)\n"
+
+re: fclean all
+
+.PHONY: all clean fclean re
