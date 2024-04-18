@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 21:45:39 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/18 21:45:43 by sebasnadu        ###   ########.fr        #
+#    Updated: 2024/04/18 23:53:53 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ RM								:= rm -rf
 ################################################################################
 
 OBJ_DIR						:= obj
-SRC_DIRS					:=
+SRC_DIRS					:= tuples
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
@@ -50,8 +50,8 @@ vpath %.o $(OBJ_DIR)
 
 LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
-HEADERS						:=
-SOURCE						:= main.c
+HEADERS						:= tuples.h
+SOURCE						:= main.c tuples.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 	
 ################################################################################

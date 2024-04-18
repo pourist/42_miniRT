@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 21:46:03 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/18 21:46:06 by sebasnadu        ###   ########.fr        #
+#    Updated: 2024/04/19 00:36:52 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,15 +40,17 @@ SRC_DIR						:= ../src
 LIB_DIR						:= ../lib
 LIBFT_DIR					:= $(LIB_DIR)/libft
 MLX_DIR						:= $(LIB_DIR)/MLX42
-INC_DIRS						:= include $(LIBFT_DIR)/include $(MLX_DIR)/include
+INC_DIRS						:= ./ ../include $(LIBFT_DIR)/include $(MLX_DIR)/include
 
 vpath %.c $(SRC_DIR) ./
-vpath %.h $(INC_DIRS)
+vpath %.h $(INC_DIRS) ./
 vpath %.o $(OBJ_DIR)
 
 SOURCE						:= $(shell find $(SRC_DIR) -name '*.c' -exec basename {} \;)
 SOURCE						:= $(filter-out main.c, $(SOURCE))
+TEST							:= test.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
+# OBJECTS						+= $(TEST:.c=.o)
 	
 ################################################################################
 ##                                   FLAGS                                    ##

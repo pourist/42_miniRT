@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tuples.c                                      :+:      :+:    :+:   */
+/*   tuples.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 23:07:56 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 00:15:42 by sebasnadu        ###   ########.fr       */
+/*   Created: 2024/04/18 23:01:28 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/04/18 23:54:38 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
 #include "tuples.h"
 
-Test(tuples, create_a_tuple)
+t_tuple	tuple(double x, double y, double z, double w)
 {
-	t_tuple a;
+	return ((t_tuple){x, y, z, w});
+}
 
-	a = tuple(4.2, -4.2, 3.2, 1.0);
-	cr_assert(eq(flt, a.x, 4.2));
-	cr_assert(eq(flt, a.y, -4.2));
-	cr_assert(eq(flt, a.z, 3.2));
-	cr_assert(eq(flt, a.w, 1.0));
+t_tuple	point(double x, double y, double z)
+{
+	return (tuple(x, y, z, 1.0));
+}
+
+t_tuple vector(double x, double y, double z)
+{
+	return (tuple(x, y, z, 0.0));
 }
