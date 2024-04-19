@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 21:46:03 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/19 00:36:52 by sebasnadu        ###   ########.fr        #
+#    Updated: 2024/04/19 14:07:57 by johnavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,9 +62,10 @@ LDFLAGS						:= -L$(LIBFT_DIR) -L$(MLX_DIR)/build
 LDLIBS						:= -lft -lmlx42 -lglfw -lcriterion
 
 ifeq ($(shell uname), Darwin)
-	LDLIBS				+= -framework Cocoa -framework OpenGL -framework IOKit
+	LDLIBS					+= -framework Cocoa -framework OpenGL -framework IOKit
 else
-	LDLIBS				+= -ldl -pthread -lm
+	LDFLAGS					+= -L$(HOME)/libs/Criterion/builddir/src
+	LDLIBS					+= -ldl -pthread -lm
 endif
 
 define run
