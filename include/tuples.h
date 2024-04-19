@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:47:17 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 15:30:38 by johnavar         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:36:13 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TUPLES_H
 
 # include <stdlib.h>
+# include <math.h>
 
 /*  
 * @breif t_tuple is a struct that represents a point or a vector in 3D space
@@ -53,5 +54,6 @@ t_tuple	subtract(t_tuple t1, t_tuple t2);
 t_tuple	negate(t_tuple t);
 t_tuple	multiply(t_tuple t, double scalar);
 t_tuple	division(t_tuple t, double scalar);
+double	magnitude(t_vector v);
 
 #endif
