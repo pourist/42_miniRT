@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_tuples.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*   By: aguede <aguede@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:07:56 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 15:59:29 by johnavar         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:09:03 by aguede           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,21 @@ Test(tuples, adding_a_tuples)
 	cr_assert(eq(flt, result.x, 1));
 	cr_assert(eq(flt, result.y, 1));
 	cr_assert(eq(flt, result.z, 6));
+	cr_assert(eq(flt, result.w, 1));
+}
+
+Test(tuples, adding_a_tuples_2)
+{
+	t_tuple	a;
+	t_tuple	b;
+	t_tuple result;
+
+	a = tuple(6, 5, 4, 1.0);
+	b = tuple(-2, 6, 4, 0.0);
+	result = add(a, b);
+	cr_assert(eq(flt, result.x, 4));
+	cr_assert(eq(flt, result.y, 11));
+	cr_assert(eq(flt, result.z, 8));
 	cr_assert(eq(flt, result.w, 1));
 }
 
