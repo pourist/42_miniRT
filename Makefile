@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 21:45:39 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/18 23:53:53 by sebasnadu        ###   ########.fr        #
+#    Updated: 2024/04/19 09:45:46 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,9 +51,9 @@ vpath %.o $(OBJ_DIR)
 LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
 HEADERS						:= tuples.h
-SOURCE						:= main.c tuples.c
+SOURCE						:= main.c tuples.c basic_math.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
-	
+
 ################################################################################
 ##                                   FLAGS                                    ##
 ################################################################################

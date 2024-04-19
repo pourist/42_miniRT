@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   basic_math.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 00:39:46 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 00:40:17 by sebasnadu        ###   ########.fr       */
+/*   Created: 2024/04/19 09:47:19 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/04/19 09:49:32 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+#include "tuples.h"
 
-# include <criterion/criterion.h>
-# include <criterion/new/assert.h>
-
-# include "tuples.h"
-
-# define EPSILON 0.00001
-
-#endif
+t_tuple add(t_tuple a, t_tuple b)
+{
+	return ((t_tuple){
+		a.x + b.x,
+		a.y + b.y,
+		a.z + b.z,
+		a.w + b.w,
+	});
+}

@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:47:17 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 00:10:05 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/04/19 09:56:06 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,24 @@ typedef struct s_tuple {
 }	t_tuple;
 
 /*  
-*	@brief the type t_point is an alias for t_tuple who has w = 1
+@brief the type t_point is an alias for t_tuple who has w = 1
 */
 typedef t_tuple	t_point;
 /*  
-* @brief the type t_vector is an alias for t_tuple who has w = 0
+@brief the type t_vector is an alias for t_tuple who has w = 0
 */
 typedef t_tuple	t_vector;
 
-
+/*
+Tuples creation functions
+*/
 t_tuple	tuple(double x, double y, double z, double w);
-
 t_tuple	point(double x, double y, double z);
+t_tuple	vector(double x, double y, double z);
 
-t_tuple vector(double x, double y, double z);
+/*
+Tuples basic math operations
+*/
+t_tuple	add(t_tuple t1, t_tuple t2);
 
 #endif
