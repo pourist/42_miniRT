@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 21:47:17 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 09:56:06 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/04/19 15:30:38 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,9 @@ t_tuple	vector(double x, double y, double z);
 Tuples basic math operations
 */
 t_tuple	add(t_tuple t1, t_tuple t2);
+t_tuple	subtract(t_tuple t1, t_tuple t2);
+t_tuple	negate(t_tuple t);
+t_tuple	multiply(t_tuple t, double scalar);
+t_tuple	division(t_tuple t, double scalar);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:07:56 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 09:57:01 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/04/19 15:59:29 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ Test(tuples, create_a_vector)
 	cr_assert(eq(flt, a.w, 0.0));
 }
 
-Test(tuples, adding_tuples)
+Test(tuples, adding_a_tuples)
 {
 	t_tuple	a;
 	t_tuple	b;
@@ -69,4 +69,69 @@ Test(tuples, adding_tuples)
 	cr_assert(eq(flt, result.y, 1));
 	cr_assert(eq(flt, result.z, 6));
 	cr_assert(eq(flt, result.w, 1));
+}
+
+Test(tuples, subtracting_a_tuples)
+{
+	t_tuple	a;
+	t_tuple	b;
+	t_tuple result;
+
+	a = point(3, 2, 1);
+	b = point(5, 6, 7);
+	result = subtract(a, b);
+	cr_assert(eq(flt, result.x, -2));
+	cr_assert(eq(flt, result.y, -4));
+	cr_assert(eq(flt, result.z, -6));
+	cr_assert(eq(flt, result.w, 0));
+	a = point(3, 2, 1);
+	b = vector(5, 6, 7);
+	cr_assert(eq(flt, result.x, -2));
+	cr_assert(eq(flt, result.y, -4));
+	cr_assert(eq(flt, result.z, -6));
+	cr_assert(eq(flt, result.w, -0));
+	a = vector(3, 2, 1);
+	b = vector(5, 6, 7);
+	cr_assert(eq(flt, result.x, -2));
+	cr_assert(eq(flt, result.y, -4));
+	cr_assert(eq(flt, result.z, -6));
+	cr_assert(eq(flt, result.w, 0));
+}
+
+Test(tuples, negating_a_tuple)
+{
+	t_vector result;
+
+	result = negate(tuple(1, -2, 3, -4));
+	cr_assert(eq(flt, result.x, -1));
+	cr_assert(eq(flt, result.y, 2));
+	cr_assert(eq(flt, result.z, -3));
+	cr_assert(eq(flt, result.w, 4));
+}
+
+Test(tuples, multiplying_a_tuple_by_a_scalar)
+{
+	t_tuple	result;
+
+	result = multiply(tuple(1, -2, 3, -4), 3.5);
+	cr_assert(eq(flt, result.x, 3.5));
+	cr_assert(eq(flt, result.y, -7));
+	cr_assert(eq(flt, result.z, 10.5));
+	cr_assert(eq(flt, result.w, -14));
+	result = multiply(tuple(1, -2, 3, -4), 0.5);
+	cr_assert(eq(flt, result.x, 0.5));
+	cr_assert(eq(flt, result.y, -1));
+	cr_assert(eq(flt, result.z, 1.5));
+	cr_assert(eq(flt, result.w, -2));
+}
+
+Test(tuples, dividing_a_tuple_by_a_scalar)
+{
+	t_tuple	result;
+
+	result = division(tuple(1, -2, 3, -4), 2);
+	cr_assert(eq(flt, result.x, 0.5));
+	cr_assert(eq(flt, result.y, -1));
+	cr_assert(eq(flt, result.z, 1.5));
+	cr_assert(eq(flt, result.w, -2));
 }
