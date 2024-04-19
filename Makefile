@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 21:45:39 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/19 09:45:46 by sebasnadu        ###   ########.fr        #
+#    Updated: 2024/04/19 12:58:33 by johnavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,17 +127,11 @@ $(OBJ_DIR):
 	@printf "Created successfully!\n"
 
 $(LIBFT):
-	@if [ ! -d $(LIBFT_DIR) ]; then \
-			mkdir -p $(LIB_DIR); \
-			git submodule update --init -q; \
-		fi
+	@git submodule update --init -q;
 	@make -C $(LIBFT_DIR) -s
 
 $(MLX):
-	@if [ ! -d $(MLX_DIR) ]; then \
-		mkdir -p $(LIB_DIR); \
-		git submodule update --init -q; \
-	 fi
+	@git submodule update --init -q
 	@cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
 	@cmake --build $(MLX_DIR)/build -j4
 
