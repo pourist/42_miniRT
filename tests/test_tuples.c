@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:07:56 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 15:59:29 by johnavar         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:38:59 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,4 +134,20 @@ Test(tuples, dividing_a_tuple_by_a_scalar)
 	cr_assert(eq(flt, result.y, -1));
 	cr_assert(eq(flt, result.z, 1.5));
 	cr_assert(eq(flt, result.w, -2));
+}
+
+Test(tuples, computing_the_magnitude_of_a_vector)
+{
+	double result;
+
+	result = magnitude(vector(1, 0, 0));
+	cr_assert(eq(flt, result, 1));
+	result = magnitude(vector(0, 1, 0));
+	cr_assert(eq(flt, result, 1));
+	result = magnitude(vector(0, 0, 1));
+	cr_assert(eq(flt, result, 1));
+	result = magnitude(vector(1, 2, 3));
+	cr_assert(eq(flt, result, 3.7416573868));
+	result = magnitude(vector(-1, -2, -3));
+	cr_assert(eq(flt, result, 3.7416573868));
 }
