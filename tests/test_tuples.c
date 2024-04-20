@@ -6,7 +6,7 @@
 /*   By: aguede <aguede@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:07:56 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 16:38:59 by johnavar         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:25:01 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ Test(tuples, create_a_vector)
 	cr_assert(eq(flt, a.w, 0.0));
 }
 
+/* Test if the function "add", adds two tuples correctly. */
 Test(tuples, adding_a_tuples)
 {
 	t_tuple	a;
@@ -86,6 +87,7 @@ Test(tuples, adding_a_tuples_2)
 	cr_assert(eq(flt, result.w, 1));
 }
 
+/* test if the function "subtract", subtracts two tuples correctly. */
 Test(tuples, subtracting_a_tuples)
 {
 	t_tuple	a;
@@ -113,6 +115,7 @@ Test(tuples, subtracting_a_tuples)
 	cr_assert(eq(flt, result.w, 0));
 }
 
+/* Test if the function "negate", negates a tuple correctly. */
 Test(tuples, negating_a_tuple)
 {
 	t_vector result;
@@ -124,6 +127,7 @@ Test(tuples, negating_a_tuple)
 	cr_assert(eq(flt, result.w, 4));
 }
 
+/* Test if the function "multiply", multiplies a tuple by a scalar correctly. */
 Test(tuples, multiplying_a_tuple_by_a_scalar)
 {
 	t_tuple	result;
@@ -140,6 +144,7 @@ Test(tuples, multiplying_a_tuple_by_a_scalar)
 	cr_assert(eq(flt, result.w, -2));
 }
 
+/* test if the function "divide", divides a tuple by a scalar correctly. */
 Test(tuples, dividing_a_tuple_by_a_scalar)
 {
 	t_tuple	result;
@@ -151,18 +156,64 @@ Test(tuples, dividing_a_tuple_by_a_scalar)
 	cr_assert(eq(flt, result.w, -2));
 }
 
+/* Test if the function "magnitude", computes the magnitude of a vector correctly. */
 Test(tuples, computing_the_magnitude_of_a_vector)
 {
-	double result;
+	double length;
 
-	result = magnitude(vector(1, 0, 0));
-	cr_assert(eq(flt, result, 1));
-	result = magnitude(vector(0, 1, 0));
-	cr_assert(eq(flt, result, 1));
-	result = magnitude(vector(0, 0, 1));
-	cr_assert(eq(flt, result, 1));
-	result = magnitude(vector(1, 2, 3));
-	cr_assert(eq(flt, result, 3.7416573868));
-	result = magnitude(vector(-1, -2, -3));
-	cr_assert(eq(flt, result, 3.7416573868));
+	length = magnitude(vector(1, 0, 0));
+	cr_assert(eq(flt, length, 1));
+	length = magnitude(vector(0, 1, 0));
+	cr_assert(eq(flt, length, 1));
+	length = magnitude(vector(0, 0, 1));
+	cr_assert(eq(flt, length, 1));
+	length = magnitude(vector(1, 2, 3));
+	cr_assert(eq(flt, length, 3.7416573868));
+	length = magnitude(vector(-1, -2, -3));
+	cr_assert(eq(flt, length, 3.7416573868));
+}
+
+/* Test if the function "normalize" correctly normalizes a vector. */
+Test(tuples, normalizing_vectors)
+{
+	t_tuple	v;
+	t_tuple	normal;
+
+	v = vector(4, 0, 0);
+	normal = normalize(v);
+	cr_assert(epsilon_eq(flt, magnitude(normal), 1, DBL_EPSILON));
+
+	v = vector(1, 2, 3);
+	normal = normalize(v);
+	cr_assert(epsilon_eq(flt, magnitude(normal), 1, DBL_EPSILON));
+}
+
+/* Test if the function "dot" computes the dot product of two vectors correctly. */
+Test(tuples, dot_product_of_two_vectors)
+{
+	t_vector	a;
+	t_vector	b;
+	double		result;
+
+	a = vector(1, 2, 3);
+	b = vector(2, 3, 4);
+	result = dot(a, b);
+	cr_assert(eq(flt, result, 20));
+}
+
+Test(tuples, cross_product_of_two_vectors)
+{
+	t_vector	a;
+	t_vector	b;
+	t_vector	result;
+	a = vector(1, 2, 3);
+	b = vector(2, 3, 4);
+	result = cross(a, b);
+	cr_assert(eq(flt, result.x, -1));
+	cr_assert(eq(flt, result.y, 2));
+	cr_assert(eq(flt, result.z, -1));
+	result = cross(b, a);
+	cr_assert(eq(flt, result.x, 1));
+	cr_assert(eq(flt, result.y, -2));
+	cr_assert(eq(flt, result.z, 1));
 }
