@@ -6,7 +6,7 @@
 #    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/18 21:45:49 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/18 21:45:50 by sebasnadu        ###   ########.fr        #
+#    Updated: 2024/04/20 23:19:05 by sebasnadu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SRC_DIR						:= ../src
 LIB_DIR						:= ../lib
 LIBFT_DIR					:= $(LIB_DIR)/libft
 MLX_DIR						:= $(LIB_DIR)/MLX42
-INC_DIRS						:= include $(LIBFT_DIR)/include $(MLX_DIR)/include
+INC_DIRS					:= ../include $(LIBFT_DIR)/include $(MLX_DIR)/include
 
 vpath %.c $(SRC_DIR) ./
 vpath %.h $(INC_DIRS)
@@ -71,7 +71,7 @@ endif
 ##                                COMPILATION                                 ##
 ################################################################################
 
-all: $(EX)
+all: $(EX) clean
 
 $(EX): $(OBJECTS) $(EX).c
 	@$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) $(LDLIBS) -o $@ && ./$@
