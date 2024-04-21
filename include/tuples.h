@@ -23,10 +23,13 @@ typedef t_tuple	t_point;
 /* @brief the type t_vector is an alias for t_tuple who has w = 0 */
 typedef t_tuple	t_vector;
 
+/* @brief t_color is a struct that represents a rgb color, 1.0 is
+ * the max value, 0.0 is the min value	*/
 typedef struct s_color {
 	double	r;
 	double	g;
 	double	b;
+	double	a;
 }	t_color;
 
 /* Tuples creation functions */
@@ -48,7 +51,7 @@ double		dot(t_vector a, t_vector b);
 t_vector	cross(t_vector a, t_vector b);
 
 /* Color creation  */
-t_color		color(double r, double g, double b);
+t_color		color(double r, double g, double b, double a);
 
 /*  Color operations */
 t_color		add_color(t_color c1, t_color c2);
