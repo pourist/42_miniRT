@@ -1,4 +1,5 @@
 #include "tuples.h"
+#include "utils.h"
 #include <stdio.h>
 
 typedef struct s_projectile {
@@ -31,11 +32,12 @@ int	main(void)
 	p.velocity = normalize(vector(1, 1, 0));
 	e.gravity = vector(0, -0.1, 0);
 	e.wind = vector(-0.01, 0, 0);
-	while (p.position.y > 0.0)
+	while (!eq_dbl(p.position.y, 0.0) && p.position.y > 0.0)
 	{
 		printf("(%f, %f, %f)\n", p.position.x, p.position.y, p.position.z);
 		p = tick(e, p);
 	}
-	printf("Final position >> (%f, %f, %f)\n", p.position.x, p.position.y, p.position.z);
+	printf("Final position >> (%f, %f, %f)\n", p.position.x, p.position.y,
+		p.position.z);
 	return (0);
 }

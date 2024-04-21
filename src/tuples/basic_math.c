@@ -40,7 +40,7 @@ t_tuple	multiply(t_tuple t, double scalar)
 	});
 }
 
-t_tuple	division(t_tuple t, double scalar)
+t_tuple	divide(t_tuple t, double scalar)
 {
 	return ((t_tuple){
 		t.x / scalar,
