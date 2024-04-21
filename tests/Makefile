@@ -16,7 +16,7 @@ WHITE       := \033[0;97m
 ##                                   MINIRT                                   ##
 ################################################################################
 
-TESTS							:= tuples colors
+TESTS							:= tuples colors canvas
 RM								:= rm -rf
 	
 ################################################################################
@@ -72,6 +72,10 @@ tuples: $(OBJECTS) test_tuples.c
 
 .PHONY: colors
 colors: $(OBJECTS) test_colors.c
+	@$(call run, "$^")
+
+.PHONY: convas
+canvas: $(OBJECTS) test_canvas.c
 	@$(call run, "$^")
 
 $(OBJECTS):

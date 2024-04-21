@@ -189,6 +189,8 @@ Test(tuples, dot_product_of_two_vectors)
 	cr_assert(eq(dbl, result, 20));
 }
 
+/* Test the function "cross" computes the cross product of two vectors
+ * correctly */
 Test(tuples, cross_product_of_two_vectors)
 {
 	t_vector	a;
