@@ -16,7 +16,7 @@ WHITE       := \033[0;97m
 ##                                   MINIRT                                   ##
 ################################################################################
 
-TESTS							:= tuples
+TESTS							:= tuples colors
 RM								:= rm -rf
 	
 ################################################################################
@@ -68,6 +68,10 @@ all: $(TESTS) clean
 
 .PHONY: tuples
 tuples: $(OBJECTS) test_tuples.c
+	@$(call run, "$^")
+
+.PHONY: colors
+colors: $(OBJECTS) test_colors.c
 	@$(call run, "$^")
 
 $(OBJECTS):

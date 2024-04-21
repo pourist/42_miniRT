@@ -24,7 +24,7 @@ RM								:= rm -rf
 ################################################################################
 
 OBJ_DIR						:= obj
-SRC_DIRS					:= tuples
+SRC_DIRS					:= tuples utils
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
@@ -38,8 +38,9 @@ vpath %.o $(OBJ_DIR)
 
 LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
-HEADERS						:= tuples.h
-SOURCE						:= main.c tuples.c basic_math.c vector_math.c
+HEADERS						:= tuples.h utils.h
+SOURCE						:= main.c tuples.c basic_math.c vector_math.c eq_dbl.c \
+										 colors.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
@@ -89,9 +90,11 @@ atest: $(NAME)
 
 test: $(NAME)
 	@make $(T) -C tests -s
+	@make fclean -C tests -s
 
 ex: $(NAME)
 	@make $(EX) -C exs -s
+	@make fclean -C exs -s
 
 $(NAME): $(OBJECTS) | $(LIBFT) $(MLX)
 	@printf "\n$(MAGENTA)[$(NAME)] $(DEFAULT)Linking "

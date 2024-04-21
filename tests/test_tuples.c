@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test_tuples.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aguede <aguede@student.42berlin.de>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 23:07:56 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/20 23:47:03 by sebasnadu        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "test.h"
 
 /*
@@ -149,7 +137,7 @@ Test(tuples, dividing_a_tuple_by_a_scalar)
 {
 	t_tuple	result;
 
-	result = division(tuple(1, -2, 3, -4), 2);
+	result = divide(tuple(1, -2, 3, -4), 2);
 	cr_assert(eq(dbl, result.x, 0.5));
 	cr_assert(eq(dbl, result.y, -1));
 	cr_assert(eq(dbl, result.z, 1.5));
