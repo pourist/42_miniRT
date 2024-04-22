@@ -12,14 +12,19 @@
 
 typedef struct s_canvas {
 	mlx_t				*mlx;
-	mlx_image_t	*img;
+	mlx_image_t			*img;
+	int					*width;
+	int					*height;
 }	t_canvas;
 
 bool		new_canvas(t_canvas *canvas, int width, int height, char *title);
 int			get_rgba(t_color color);
-void		write_pixel(mlx_image_t *img, uint32_t x, uint32_t y, t_color color);
-t_color	read_pixel(mlx_image_t *img, uint32_t x, uint32_t y);
+void		write_pixel(mlx_image_t *img, uint32_t x, uint32_t y,
+				t_color color);
+t_color		read_pixel(mlx_image_t *img, uint32_t x, uint32_t y);
 
-void	canvas_to_ppm(t_canvas *canvas, char *filename);
+void		canvas_to_ppm(t_canvas *canvas, char *filename);
 
+void		handle_keyhook(mlx_key_data_t keydata, void *param);
+void		quit(void *param);
 #endif

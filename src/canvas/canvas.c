@@ -23,6 +23,8 @@ bool	new_canvas(t_canvas *canvas, int width, int height, char *title)
 	canvas->mlx = mlx_init(width, height, title, true);
 	if (!canvas->mlx)
 		return (false);
+	canvas->width = &canvas->mlx->width;
+	canvas->height = &canvas->mlx->height;
 	canvas->img = mlx_new_image(canvas->mlx, width, height);
 	if (!canvas->img)
 		return (false);
