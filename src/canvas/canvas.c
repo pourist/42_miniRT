@@ -52,7 +52,7 @@ t_color	read_pixel(mlx_image_t *img, uint32_t x, uint32_t y)
 	if (x < 0 || x >= img->width || y < 0 || y >= img->height)
 		return ((t_color){0, 0, 0, 0});
 	pixel = &img->pixels[(y * img->width + x) * sizeof(int32_t)];
-  c = *(pixel++) << 24;
+	c = *(pixel++) << 24;
 	c |= *(pixel++) << 16;
 	c |= *(pixel++) << 8;
 	c |= *(pixel);
