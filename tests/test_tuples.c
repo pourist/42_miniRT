@@ -7,7 +7,7 @@ Test(tuples, create_a_tuple)
 {
 	t_tuple a;
 
-	a = tuple(4.2, -4.2, 3.2, 1.0);
+	a = new_tuple(4.2, -4.2, 3.2, 1.0);
 	cr_assert(eq(dbl, a.x, 4.2));
 	cr_assert(eq(dbl, a.y, -4.2));
 	cr_assert(eq(dbl, a.z, 3.2));
@@ -22,7 +22,7 @@ Test(tuples, create_a_point)
 {
 	t_tuple a;
 
-	a = point(4.2, -4.2, 3.2);
+	a = new_point(4.2, -4.2, 3.2);
 	cr_assert(eq(dbl, a.x, 4.2));
 	cr_assert(eq(dbl, a.y, -4.2));
 	cr_assert(eq(dbl, a.z, 3.2));
@@ -37,7 +37,7 @@ Test(tuples, create_a_vector)
 {
 	t_tuple a;
 
-	a = vector(4.2, -4.2, 3.2);
+	a = new_vector(4.2, -4.2, 3.2);
 	cr_assert(eq(dbl, a.x, 4.2));
 	cr_assert(eq(dbl, a.y, -4.2));
 	cr_assert(eq(dbl, a.z, 3.2));
@@ -51,8 +51,8 @@ Test(tuples, adding_a_tuples)
 	t_tuple	b;
 	t_tuple result;
 
-	a = tuple(3, -2, 5, 1.0);
-	b = tuple(-2, 3, 1, 0.0);
+	a = new_tuple(3, -2, 5, 1.0);
+	b = new_tuple(-2, 3, 1, 0.0);
 	result = add(a, b);
 	cr_assert(eq(dbl, result.x, 1));
 	cr_assert(eq(dbl, result.y, 1));
@@ -66,8 +66,8 @@ Test(tuples, adding_a_tuples_2)
 	t_tuple	b;
 	t_tuple result;
 
-	a = tuple(6, 5, 4, 1.0);
-	b = tuple(-2, 6, 4, 0.0);
+	a = new_tuple(6, 5, 4, 1.0);
+	b = new_tuple(-2, 6, 4, 0.0);
 	result = add(a, b);
 	cr_assert(eq(dbl, result.x, 4));
 	cr_assert(eq(dbl, result.y, 11));
@@ -82,21 +82,21 @@ Test(tuples, subtracting_a_tuples)
 	t_tuple	b;
 	t_tuple result;
 
-	a = point(3, 2, 1);
-	b = point(5, 6, 7);
+	a = new_point(3, 2, 1);
+	b = new_point(5, 6, 7);
 	result = subtract(a, b);
 	cr_assert(eq(dbl, result.x, -2));
 	cr_assert(eq(dbl, result.y, -4));
 	cr_assert(eq(dbl, result.z, -6));
 	cr_assert(eq(dbl, result.w, 0));
-	a = point(3, 2, 1);
-	b = vector(5, 6, 7);
+	a = new_point(3, 2, 1);
+	b = new_vector(5, 6, 7);
 	cr_assert(eq(dbl, result.x, -2));
 	cr_assert(eq(dbl, result.y, -4));
 	cr_assert(eq(dbl, result.z, -6));
 	cr_assert(eq(dbl, result.w, -0));
-	a = vector(3, 2, 1);
-	b = vector(5, 6, 7);
+	a = new_vector(3, 2, 1);
+	b = new_vector(5, 6, 7);
 	cr_assert(eq(dbl, result.x, -2));
 	cr_assert(eq(dbl, result.y, -4));
 	cr_assert(eq(dbl, result.z, -6));
@@ -108,7 +108,7 @@ Test(tuples, negating_a_tuple)
 {
 	t_vector result;
 
-	result = negate(tuple(1, -2, 3, -4));
+	result = negate(new_tuple(1, -2, 3, -4));
 	cr_assert(eq(dbl, result.x, -1));
 	cr_assert(eq(dbl, result.y, 2));
 	cr_assert(eq(dbl, result.z, -3));
@@ -120,12 +120,12 @@ Test(tuples, multiplying_a_tuple_by_a_scalar)
 {
 	t_tuple	result;
 
-	result = multiply(tuple(1, -2, 3, -4), 3.5);
+	result = multiply(new_tuple(1, -2, 3, -4), 3.5);
 	cr_assert(eq(dbl, result.x, 3.5));
 	cr_assert(eq(dbl, result.y, -7));
 	cr_assert(eq(dbl, result.z, 10.5));
 	cr_assert(eq(dbl, result.w, -14));
-	result = multiply(tuple(1, -2, 3, -4), 0.5);
+	result = multiply(new_tuple(1, -2, 3, -4), 0.5);
 	cr_assert(eq(dbl, result.x, 0.5));
 	cr_assert(eq(dbl, result.y, -1));
 	cr_assert(eq(dbl, result.z, 1.5));
@@ -137,7 +137,7 @@ Test(tuples, dividing_a_tuple_by_a_scalar)
 {
 	t_tuple	result;
 
-	result = divide(tuple(1, -2, 3, -4), 2);
+	result = divide(new_tuple(1, -2, 3, -4), 2);
 	cr_assert(eq(dbl, result.x, 0.5));
 	cr_assert(eq(dbl, result.y, -1));
 	cr_assert(eq(dbl, result.z, 1.5));
@@ -149,15 +149,15 @@ Test(tuples, computing_the_magnitude_of_a_vector)
 {
 	double length;
 
-	length = magnitude(vector(1, 0, 0));
+	length = magnitude(new_vector(1, 0, 0));
 	cr_assert(eq(dbl, length, 1));
-	length = magnitude(vector(0, 1, 0));
+	length = magnitude(new_vector(0, 1, 0));
 	cr_assert(eq(dbl, length, 1));
-	length = magnitude(vector(0, 0, 1));
+	length = magnitude(new_vector(0, 0, 1));
 	cr_assert(eq(dbl, length, 1));
-	length = magnitude(vector(1, 2, 3));
+	length = magnitude(new_vector(1, 2, 3));
 	cr_assert(eq(dbl, length, sqrt(14)));
-	length = magnitude(vector(-1, -2, -3));
+	length = magnitude(new_vector(-1, -2, -3));
 	cr_assert(eq(dbl, length, sqrt(14)));
 }
 
@@ -167,11 +167,11 @@ Test(tuples, normalizing_vectors)
 	t_tuple	v;
 	t_tuple	normal;
 
-	v = vector(4, 0, 0);
+	v = new_vector(4, 0, 0);
 	normal = normalize(v);
 	cr_assert(epsilon_eq(dbl, magnitude(normal), 1, DBL_EPSILON));
 
-	v = vector(1, 2, 3);
+	v = new_vector(1, 2, 3);
 	normal = normalize(v);
 	cr_assert(epsilon_eq(dbl, magnitude(normal), 1, DBL_EPSILON));
 }
@@ -183,8 +183,8 @@ Test(tuples, dot_product_of_two_vectors)
 	t_vector	b;
 	double		result;
 
-	a = vector(1, 2, 3);
-	b = vector(2, 3, 4);
+	a = new_vector(1, 2, 3);
+	b = new_vector(2, 3, 4);
 	result = dot(a, b);
 	cr_assert(eq(dbl, result, 20));
 }
@@ -196,8 +196,8 @@ Test(tuples, cross_product_of_two_vectors)
 	t_vector	a;
 	t_vector	b;
 	t_vector	result;
-	a = vector(1, 2, 3);
-	b = vector(2, 3, 4);
+	a = new_vector(1, 2, 3);
+	b = new_vector(2, 3, 4);
 	result = cross(a, b);
 	cr_assert(eq(dbl, result.x, -1));
 	cr_assert(eq(dbl, result.y, 2));

@@ -33,9 +33,9 @@ typedef struct s_color {
 }	t_color;
 
 /* Tuples creation functions */
-t_tuple		tuple(double x, double y, double z, double w);
-t_tuple		point(double x, double y, double z);
-t_tuple		vector(double x, double y, double z);
+t_tuple		new_tuple(double x, double y, double z, double w);
+t_tuple		new_point(double x, double y, double z);
+t_tuple		new_vector(double x, double y, double z);
 
 /* Tuples basic math operations */
 t_tuple		add(t_tuple t1, t_tuple t2);
@@ -51,7 +51,7 @@ double		dot(t_vector a, t_vector b);
 t_vector	cross(t_vector a, t_vector b);
 
 /* Color creation  */
-t_color		color(double r, double g, double b, double a);
+t_color		new_color(double r, double g, double b, double a);
 
 /*  Color operations */
 t_color		add_color(t_color c1, t_color c2);

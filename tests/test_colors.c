@@ -5,7 +5,7 @@ Test(colors, create_a_color)
 {
 	t_color	c;
 
-	c = color(-0.5, 0.4, 1.7, 1.0);
+	c = new_color(-0.5, 0.4, 1.7, 1.0);
 	cr_assert(eq(dbl, c.r, -0.5));
 	cr_assert(eq(dbl, c.g, 0.4));
 	cr_assert(eq(dbl, c.b, 1.7));
@@ -17,7 +17,7 @@ Test(colors, adding_colors)
 {
 	t_color	c;
 
-	c = add_color(color(0.9, 0.6, 0.75, 1.0), color(0.7, 0.1, 0.25, 0.0));
+	c = add_color(new_color(0.9, 0.6, 0.75, 1.0), new_color(0.7, 0.1, 0.25, 0.0));
 	cr_assert(epsilon_eq(dbl, c.r, 1.6, DBL_EPSILON));
 	cr_assert(epsilon_eq(dbl, c.g, 0.7, DBL_EPSILON));
 	cr_assert(epsilon_eq(dbl, c.b, 1.0, DBL_EPSILON));
@@ -29,7 +29,7 @@ Test(colors, subtracting_colors)
 {
 	t_color	c;
 
-	c = subtract_color(color(0.9, 0.6, 0.75, 1.0), color(0.7, 0.1, 0.25, 1.0));
+	c = subtract_color(new_color(0.9, 0.6, 0.75, 1.0), new_color(0.7, 0.1, 0.25, 1.0));
 	cr_assert(epsilon_eq(dbl, c.r, 0.2, DBL_EPSILON));
 	cr_assert(epsilon_eq(dbl, c.g, 0.5, DBL_EPSILON));
 	cr_assert(epsilon_eq(dbl, c.b, 0.5, DBL_EPSILON));
@@ -41,7 +41,7 @@ Test(colors, multiplying_a_color_by_a_scalar)
 {
 	t_color	c;
 
-	c = multiply_color(color(0.2, 0.3, 0.4, 1.0), 2);
+	c = multiply_color(new_color(0.2, 0.3, 0.4, 1.0), 2);
 	cr_assert(epsilon_eq(dbl, c.r, 0.4, DBL_EPSILON));
 	cr_assert(epsilon_eq(dbl, c.g, 0.6, DBL_EPSILON));
 	cr_assert(epsilon_eq(dbl, c.b, 0.8, DBL_EPSILON));
@@ -53,7 +53,7 @@ Test(colors, multiply_colors)
 {
 	t_color	c;
 
-	c = hadamard_product(color(1, 0.2, 0.4, 1.0), color(0.9, 1, 0.1, 1.0));
+	c = hadamard_product(new_color(1, 0.2, 0.4, 1.0), new_color(0.9, 1, 0.1, 1.0));
 	cr_assert(epsilon_eq(dbl, c.r, 0.9, DBL_EPSILON));
 	cr_assert(epsilon_eq(dbl, c.g, 0.2, DBL_EPSILON));
 	cr_assert(epsilon_eq(dbl, c.b, 0.04, DBL_EPSILON));

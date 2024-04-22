@@ -16,7 +16,7 @@ WHITE       := \033[0;97m
 ##                                   MINIRT                                   ##
 ################################################################################
 
-TESTS							:= tuples colors canvas
+TESTS							:= tuples colors canvas matrices
 RM								:= rm -rf
 	
 ################################################################################
@@ -36,9 +36,7 @@ vpath %.o $(OBJ_DIR)
 
 SOURCE						:= $(shell find $(SRC_DIR) -name '*.c' -exec basename {} \;)
 SOURCE						:= $(filter-out main.c, $(SOURCE))
-TEST							:= test.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
-# OBJECTS						+= $(TEST:.c=.o)
 	
 ################################################################################
 ##                                   FLAGS                                    ##
@@ -74,8 +72,12 @@ tuples: $(OBJECTS) test_tuples.c
 colors: $(OBJECTS) test_colors.c
 	@$(call run, "$^")
 
-.PHONY: convas
+.PHONY: canvas
 canvas: $(OBJECTS) test_canvas.c
+	@$(call run, "$^")
+
+.PHONY: matrices
+matrices: $(OBJECTS) test_matrices.c
 	@$(call run, "$^")
 
 $(OBJECTS):

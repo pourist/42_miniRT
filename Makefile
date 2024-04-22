@@ -24,7 +24,7 @@ RM								:= rm -rf
 ################################################################################
 
 OBJ_DIR						:= obj
-SRC_DIRS					:= tuples utils canvas
+SRC_DIRS					:= tuples utils canvas matrices
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
@@ -38,9 +38,9 @@ vpath %.o $(OBJ_DIR)
 
 LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
-HEADERS						:= tuples.h utils.h canvas.h
+HEADERS						:= tuples.h utils.h canvas.h matrices.h
 SOURCE						:= main.c tuples.c basic_math.c vector_math.c eq_dbl.c \
-										 colors.c canvas.c save.c hooks.c
+										 colors.c canvas.c save.c hooks.c matrices.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

@@ -28,7 +28,7 @@ bool	new_canvas(t_canvas *canvas, int width, int height, char *title)
 	canvas->img = mlx_new_image(canvas->mlx, width, height);
 	if (!canvas->img)
 		return (false);
-	ft_memset(canvas->img->pixels, get_rgba(color(0, 0, 0, 1)),
+	ft_memset(canvas->img->pixels, get_rgba(new_color(0, 0, 0, 1)),
 		canvas->img->width * canvas->img->height * sizeof(int32_t));
 	return (true);
 }
@@ -58,6 +58,6 @@ t_color	read_pixel(mlx_image_t *img, uint32_t x, uint32_t y)
 	c |= *(pixel++) << 16;
 	c |= *(pixel++) << 8;
 	c |= *(pixel);
-	return (color((c >> 24) / 255.0, (c >> 16 & 0xFF) / 255.0,
+	return (new_color((c >> 24) / 255.0, (c >> 16 & 0xFF) / 255.0,
 			(c >> 8 & 0xFF) / 255.0, (c & 0xFF) / 255.0));
 }

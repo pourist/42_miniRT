@@ -52,10 +52,10 @@ static void	render_projectile_motion(t_canvas *canvas)
 	t_projectile		p;
 	t_environment		e;
 
-	c = color(1, 0, 0, 1);
-	p = projectile(point(0, 0, 0),
-			multiply(normalize(vector(1, 1.8, 0)), 11.25));
-	e = environment(vector(0, -0.1, 0), vector(-0.01, 0, 0));
+	c = new_color(1, 0, 0, 1);
+	p = projectile(new_point(0, 0, 0),
+			multiply(normalize(new_vector(1, 1.8, 0)), 11.25));
+	e = environment(new_vector(0, -0.1, 0), new_vector(-0.01, 0, 0));
 	printf("x: %f, y: %f, z: %f\n", p.position.x, p.position.y, p.position.z);
 	while (p.position.y >= 0.0)
 	{
