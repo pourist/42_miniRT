@@ -1,6 +1,6 @@
 #include "tuples.h"
 
-t_color	color(double r, double g, double b, double a)
+t_color	new_color(double r, double g, double b, double a)
 {
 	return ((t_color){
 		r,

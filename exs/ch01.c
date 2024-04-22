@@ -28,10 +28,10 @@ int	main(void)
 	t_projectile	p;
 	t_environment	e;
 
-	p.position = point(0, 1, 0);
-	p.velocity = normalize(vector(1, 1, 0));
-	e.gravity = vector(0, -0.1, 0);
-	e.wind = vector(-0.01, 0, 0);
+	p.position = new_point(0, 1, 0);
+	p.velocity = new_normalize(vector(1, 1, 0));
+	e.gravity = new_vector(0, -0.1, 0);
+	e.wind = new_vector(-0.01, 0, 0);
 	while (!eq_dbl(p.position.y, 0.0) && p.position.y > 0.0)
 	{
 		printf("(%f, %f, %f)\n", p.position.x, p.position.y, p.position.z);
