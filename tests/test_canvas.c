@@ -25,3 +25,16 @@ Test(canvas, write_a_pixel)
 	mlx_delete_image(canvas.mlx, canvas.img);
 	mlx_terminate(canvas.mlx);
 }
+
+Test(canvas, save_canvas_to_ppm)
+{
+	t_canvas	canvas;
+
+	new_canvas(&canvas, 10, 20, "Test");
+	write_pixel(canvas.img, 2, 3, color(1, 0, 0, 1));
+	write_pixel(canvas.img, 4, 5, color(0, 1, 0, 1));
+	write_pixel(canvas.img, 6, 7, color(0, 0, 1, 1));
+	canvas_to_ppm(&canvas, "test_canvas");
+	mlx_delete_image(canvas.mlx, canvas.img);
+	mlx_terminate(canvas.mlx);
+}

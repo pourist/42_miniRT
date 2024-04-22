@@ -40,7 +40,7 @@ LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
 HEADERS						:= tuples.h utils.h canvas.h
 SOURCE						:= main.c tuples.c basic_math.c vector_math.c eq_dbl.c \
-										 colors.c canvas.c
+										 colors.c canvas.c save.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
