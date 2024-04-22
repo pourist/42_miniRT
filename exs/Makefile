@@ -17,7 +17,7 @@ WHITE       := \033[0;97m
 ################################################################################
 
 ifndef EX
-	EX								:= ch01
+	EX								:= ch01 ch02
 endif
 RM								:= rm -rf
 	
@@ -55,14 +55,23 @@ else
 	LDLIBS				+= -ldl -pthread -lm
 endif
 
+define run
+	$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) $(LDLIBS) -o $@ && ./$@ --verbose
+endef
+
 ################################################################################
 ##                                COMPILATION                                 ##
 ################################################################################
 
 all: $(EX) clean
 
-$(EX): $(OBJECTS) $(EX).c
-	@$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) $(LDLIBS) -o $@ && ./$@
+.PHONY: ch01
+ch01: $(OBJECTS) ch01.c
+	@$(call run, "$^")
+
+.PHONY: ch02
+ch02: $(OBJECTS) ch02.c
+	@$(call run, "$^")
 
 $(OBJECTS):
 	@make -C .. -s

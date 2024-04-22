@@ -40,7 +40,7 @@ LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
 HEADERS						:= tuples.h utils.h canvas.h
 SOURCE						:= main.c tuples.c basic_math.c vector_math.c eq_dbl.c \
-										 colors.c canvas.c save.c
+										 colors.c canvas.c save.c hooks.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
@@ -85,15 +85,12 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 
 all: $(NAME)
 
-atest: $(NAME)
-	@make -C tests -s
-
 test: $(NAME)
 	@make $(T) -C tests -s
 	@make fclean -C tests -s
 
 ex: $(NAME)
-	@make $(EX) -C exs -s
+	@make $(X) -C exs -s
 	@make fclean -C exs -s
 
 $(NAME): $(OBJECTS) | $(LIBFT) $(MLX)
