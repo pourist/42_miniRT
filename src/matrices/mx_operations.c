@@ -52,3 +52,23 @@ t_matrix	transpose_matrix(t_matrix m)
 	}
 	return (new_matrix(result, m.size));
 }
+
+t_matrix	inverse_matrix(t_matrix m)
+{
+	double	det;
+	double	result[MAX][MAX];
+	int		row;
+	int		col;
+
+	if (!is_invertible(m))
+		return (get_identity_matrix());
+	det = get_determinant(m);
+	row = -1;
+	while (++row < m.size)
+	{
+		col = -1;
+		while (++col < m.size)
+			result[col][row] = get_cofactor(m, row, col) / det;
+	}
+	return (new_matrix(result, m.size));
+}
