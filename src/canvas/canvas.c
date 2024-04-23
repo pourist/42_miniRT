@@ -2,9 +2,9 @@
 
 static uint32_t	convert_value(double value)
 {
-	if (value > 1)
-		value = 1;
-	value *= 255 + 0.5;
+	if (value > 1.0)
+		value = 1.0;
+	value = round(value * 255.0);
 	return (value);
 }
 
