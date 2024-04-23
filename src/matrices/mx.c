@@ -13,3 +13,8 @@ t_matrix	new_matrix(const double table[MAX][MAX], size_t size)
 	ft_memmove(m.mx, table, sizeof(double) * SIZE);
 	return (m);
 }
+
+bool	is_invertible(t_matrix m)
+{
+	return (get_determinant(m) != 0);
+}
