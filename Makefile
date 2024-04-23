@@ -30,7 +30,7 @@ SRC_DIRS					+= src
 LIB_DIR						:= lib
 LIBFT_DIR					:= $(LIB_DIR)/libft
 MLX_DIR						:= $(LIB_DIR)/MLX42
-INC_DIRS						:= include $(LIBFT_DIR)/include $(MLX_DIR)/include
+INC_DIRS					:= include $(LIBFT_DIR)/include $(MLX_DIR)/include
 
 vpath %.c $(SRC_DIRS)
 vpath %.h $(INC_DIRS)
@@ -40,7 +40,8 @@ LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
 HEADERS						:= tuples.h utils.h canvas.h matrices.h
 SOURCE						:= main.c tuples.c basic_math.c vector_math.c eq_dbl.c \
-										 colors.c canvas.c save.c hooks.c matrices.c
+										 colors.c canvas.c save.c hooks.c mx.c mx_operations.c \
+										 mx_attributes.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
