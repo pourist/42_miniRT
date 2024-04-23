@@ -464,25 +464,25 @@ cr_assert(eq(dbl, result, 532));
 	cr_assert(eq(dbl, result, 105));
 	cr_assert(eq(flt, b.mx[2][3], (double)105 / 532));
 
-	cr_assert(epsilon_eq(b.mx[0][0], 0.21805, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][1], 0.45113, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][2], 0.24060, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][3], -0.04511, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][0], 0.21805, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][1], 0.45113, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][2], 0.24060, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][3], -0.04511, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[1][0], -0.80827, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][1], -1.45677, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][2], -0.44361, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][3], 0.52068, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][0], -0.80827, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][1], -1.45677, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][2], -0.44361, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][3], 0.52068, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[2][0], -0.07895, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][1], -0.22368, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][2], -0.05263, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][3], 0.19737, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][0], -0.07895, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][1], -0.22368, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][2], -0.05263, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][3], 0.19737, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[3][0], -0.52256, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][1], -0.81391, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][2], -0.30075, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][3], 0.30639, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][0], -0.52256, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][1], -0.81391, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][2], -0.30075, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][3], 0.30639, EPSILON));
 }
 
 Test(matrices, inverse_4x4_matrix_2)
@@ -499,25 +499,25 @@ Test(matrices, inverse_4x4_matrix_2)
 	a = new_matrix(table_a, 4);
 	b = inverse_matrix(a);
 
-	cr_assert(epsilon_eq(b.mx[0][0], -0.15385, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][1], -0.15385, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][2], -0.28205, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][3], -0.53846, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][0], -0.15385, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][1], -0.15385, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][2], -0.28205, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][3], -0.53846, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[1][0], -0.07692, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][1], 0.12308, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][2], 0.02564, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][3], 0.03077, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][0], -0.07692, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][1], 0.12308, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][2], 0.02564, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][3], 0.03077, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[2][0], 0.35897, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][1], 0.35897, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][2], 0.43590, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][3], 0.92308, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][0], 0.35897, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][1], 0.35897, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][2], 0.43590, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][3], 0.92308, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[3][0], -0.69231, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][1], -0.69231, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][2], -0.76923, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][3], -1.92308, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][0], -0.69231, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][1], -0.69231, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][2], -0.76923, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][3], -1.92308, EPSILON));
 }
 
 Test(matrices, inverse_4x4_matrix_3)
@@ -534,25 +534,25 @@ Test(matrices, inverse_4x4_matrix_3)
 	a = new_matrix(table_a, 4);
 	b = inverse_matrix(a);
 
-	cr_assert(epsilon_eq(b.mx[0][0], -0.04074, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][1], -0.07778, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][2], 0.14444, EPSILON));
-	cr_assert(epsilon_eq(b.mx[0][3], -0.22222, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][0], -0.04074, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][1], -0.07778, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][2], 0.14444, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[0][3], -0.22222, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[1][0], -0.07778, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][1], 0.03333, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][2], 0.36667, EPSILON));
-	cr_assert(epsilon_eq(b.mx[1][3], -0.33333, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][0], -0.07778, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][1], 0.03333, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][2], 0.36667, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[1][3], -0.33333, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[2][0], -0.02901, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][1], -0.14630, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][2], -0.10926, EPSILON));
-	cr_assert(epsilon_eq(b.mx[2][3], 0.12963, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][0], -0.02901, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][1], -0.14630, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][2], -0.10926, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[2][3], 0.12963, EPSILON));
 
-	cr_assert(epsilon_eq(b.mx[3][0], 0.17778, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][1], 0.06667, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][2], -0.26667, EPSILON));
-	cr_assert(epsilon_eq(b.mx[3][3], 0.33333, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][0], 0.17778, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][1], 0.06667, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][2], -0.26667, EPSILON));
+	cr_assert(epsilon_eq(dbl, b.mx[3][3], 0.33333, EPSILON));
 }
 
 Test(matrices, multiplying_a_product_by_its_inverse)
@@ -579,23 +579,23 @@ Test(matrices, multiplying_a_product_by_its_inverse)
 	c = multiply_matrices(a, b);
 	result = multiply_matrices(c, inverse_matrix(b));
 
-	cr_assert(epsilon_eq(result.mx[0][0], 3, EPSILON));
-	cr_assert(epsilon_eq(result.mx[0][1], -9, EPSILON));
-	cr_assert(epsilon_eq(result.mx[0][2], 7, EPSILON));
-	cr_assert(epsilon_eq(result.mx[0][3], 3, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[0][0], 3, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[0][1], -9, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[0][2], 7, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[0][3], 3, EPSILON));
 
-	cr_assert(epsilon_eq(result.mx[1][0], 3, EPSILON));
-	cr_assert(epsilon_eq(result.mx[1][1], -8, EPSILON));
-	cr_assert(epsilon_eq(result.mx[1][2], 2, EPSILON));
-	cr_assert(epsilon_eq(result.mx[1][3], -9, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[1][0], 3, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[1][1], -8, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[1][2], 2, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[1][3], -9, EPSILON));
 
-	cr_assert(epsilon_eq(result.mx[2][0], -4, EPSILON));
-	cr_assert(epsilon_eq(result.mx[2][1], 4, EPSILON));
-	cr_assert(epsilon_eq(result.mx[2][2], 4, EPSILON));
-	cr_assert(epsilon_eq(result.mx[2][3], 1, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[2][0], -4, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[2][1], 4, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[2][2], 4, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[2][3], 1, EPSILON));
 
-	cr_assert(epsilon_eq(result.mx[3][0], -6, EPSILON));
-	cr_assert(epsilon_eq(result.mx[3][1], 5, EPSILON));
-	cr_assert(epsilon_eq(result.mx[3][2], -1, EPSILON));
-	cr_assert(epsilon_eq(result.mx[3][3], 1, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[3][0], -6, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[3][1], 5, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[3][2], -1, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.mx[3][3], 1, EPSILON));
 }

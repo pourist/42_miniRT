@@ -19,9 +19,9 @@ Test(canvas, write_a_pixel)
 	new_canvas(&canvas, 10, 20, "Test");
 	write_pixel(canvas.img, 2, 3, new_color(1, 0, 0, 1));
 	c = read_pixel(canvas.img, 2, 3);
-	cr_assert(epsilon_eq(dbl, c.r, 1, DBL_EPSILON));
-	cr_assert(epsilon_eq(dbl, c.g, 0, DBL_EPSILON));
-	cr_assert(epsilon_eq(dbl, c.b, 0, DBL_EPSILON));
+	cr_assert(epsilon_eq(flt, c.r, 1, EPSILON));
+	cr_assert(epsilon_eq(flt, c.g, 0, EPSILON));
+	cr_assert(epsilon_eq(flt, c.b, 0, EPSILON));
 	mlx_delete_image(canvas.mlx, canvas.img);
 	mlx_terminate(canvas.mlx);
 }
