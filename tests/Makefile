@@ -16,7 +16,7 @@ WHITE       := \033[0;97m
 ##                                   MINIRT                                   ##
 ################################################################################
 
-TESTS							:= tuples colors canvas matrices
+TESTS							:= tuples colors canvas matrices transformations
 RM								:= rm -rf
 	
 ################################################################################
@@ -78,6 +78,10 @@ canvas: $(OBJECTS) test_canvas.c
 
 .PHONY: matrices
 matrices: $(OBJECTS) test_matrices.c
+	@$(call run, "$^")
+
+.PHONY: transformations
+transformations: $(OBJECTS) test_transformations.c
 	@$(call run, "$^")
 
 $(OBJECTS):

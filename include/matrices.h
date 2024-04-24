@@ -27,5 +27,8 @@ t_matrix	get_submatrix(t_matrix m, size_t del_row, size_t del_col);
 double		get_minor(t_matrix m, size_t row, size_t col);
 double		get_cofactor(t_matrix m, size_t row, size_t col);
 t_matrix	get_identity_matrix(void);
+/* matrix transformations */
+t_matrix	translation(double x, double y, double z);
+t_matrix	scaling(double x, double y, double z);
 
 #endif
