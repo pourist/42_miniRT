@@ -21,3 +21,14 @@ t_matrix	scaling(double x, double y, double z)
 
 	return (new_matrix(table, MAX));
 }
+
+t_matrix	shearing(t_shearing x, t_shearing y, t_shearing z)
+{
+	double const	table[MAX][MAX] = {
+	{1, x.p1, x.p2, 0},
+	{y.p1, 1, y.p2, 0},
+	{z.p1, z.p2, 1, 0},
+	{0, 0, 0, 1}};
+
+	return (new_matrix(table, MAX));
+}

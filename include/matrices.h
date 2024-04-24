@@ -1,6 +1,8 @@
 #ifndef MATRICES_H
 # define MATRICES_H
 
+# include <math.h>
+
 # include "libft.h"
 # include "tuples.h"
 
@@ -11,6 +13,11 @@ typedef struct s_matrix {
 	double	mx[MAX][MAX];
 	int		size;
 }	t_matrix;
+
+typedef struct s_shearing {
+	double	p1;
+	double	p2;
+}	t_shearing;
 
 /* mx.c */
 t_matrix	new_matrix(const double table[MAX][MAX], size_t size);
@@ -30,5 +37,10 @@ t_matrix	get_identity_matrix(void);
 /* matrix transformations */
 t_matrix	translation(double x, double y, double z);
 t_matrix	scaling(double x, double y, double z);
+t_matrix	shearing(t_shearing x, t_shearing y, t_shearing z);
+/* matrix rotations  */
+t_matrix	rotation_x(double rad);
+t_matrix	rotation_y(double rad);
+t_matrix	rotation_z(double rad);
 
 #endif
