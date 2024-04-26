@@ -1,24 +1,61 @@
 #include "shapes.h"
 
-void	intersect(t_intersect *xs, t_shape *s, t_ray ray)
+void	intersect(t_hit **xs, t_shape *s, t_ray r)
 {
-	t_vector	sphere_to_ray;
-	double		a;
-	double		b;
-	double		c;
-	double		delta;
+	s->intersect_fn(xs, s, r);
+}
 
-	sphere_to_ray = subtract(ray.origin, s->sphere.origin);
-	a = dot(ray.direction, ray.direction);
-	b = 2 * dot(ray.direction, sphere_to_ray);
-	c = dot(sphere_to_ray, sphere_to_ray) - 1;
-	delta = b * b - 4 * a * c;
-	if (delta < 0)
-		xs->count = 0;
+t_hit	*intersection(double t, t_shape	*shape)
+{
+	static t_hit	pool[MAX_NODES];
+	static size_t	index = 0;
+	t_hit			*hit;
+
+	hit = &pool[index++ % MAX_NODES];
+	hit->t = t;
+	hit->obj = shape;
+	hit->next = NULL;
+	return (hit);
+}
+
+void	insert_intersection(t_hit **xs, t_hit *hit)
+{
+	t_hit	*current;
+	t_hit	*prev;
+
+	if (*xs == NULL)
+		*xs = hit;
 	else
 	{
-		xs->t[0] = (-b - sqrt(delta)) / (2 * a);
-		xs->t[1] = (-b + sqrt(delta)) / (2 * a);
-		xs->count = 2;
+		current = *xs;
+		prev = NULL;
+		while (current && current->t < hit->t)
+		{
+			prev = current;
+			current = current->next;
+		}
+		if (prev)
+		{
+			prev->next = hit;
+			hit->next = current;
+		}
+		else
+		{
+			hit->next = *xs;
+			*xs = hit;
+		}
 	}
+}
+
+int	intersect_count(t_hit	*xs)
+{
+	int	count;
+
+	count = 0;
+	while (xs)
+	{
+		count++;
+		xs = xs->next;
+	}
+	return (count);
 }
