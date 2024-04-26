@@ -7,27 +7,27 @@
 
 static void	write_circle(mlx_image_t *img, int xy[2], int radius, t_color color)
 {
-	int	x_beg_end[2];
-	int	y_beg_end[2];
+	int	x_start_end[2];
+	int	y_start_end[2];
 	int	square_r;
 	int	distance;
 
-	x_beg_end[0] = xy[0] - radius;
-	x_beg_end[1] = xy[0] + radius;
-	y_beg_end[1] = xy[1] + radius;
-	while (x_beg_end[0] < x_beg_end[1])
+	x_start_end[0] = xy[0] - radius;
+	x_start_end[1] = xy[0] + radius;
+	y_start_end[1] = xy[1] + radius;
+	while (x_start_end[0] < x_start_end[1])
 	{
-		y_beg_end[0] = xy[1] - radius;
-		while (y_beg_end[0] < y_beg_end[1])
+		y_start_end[0] = xy[1] - radius;
+		while (y_start_end[0] < y_start_end[1])
 		{
 			square_r = radius * radius;
-			distance = (x_beg_end[0] - xy[0]) * (x_beg_end[0] - xy[0])
-				+ (y_beg_end[0] - xy[1]) * (y_beg_end[0] - xy[1]);
+			distance = (x_start_end[0] - xy[0]) * (x_start_end[0] - xy[0])
+				+ (y_start_end[0] - xy[1]) * (y_start_end[0] - xy[1]);
 			if (distance <= square_r)
-				write_pixel(img, x_beg_end[0], y_beg_end[0], color);
-			y_beg_end[0]++;
+				write_pixel(img, x_start_end[0], y_start_end[0], color);
+			y_start_end[0]++;
 		}
-		x_beg_end[0]++;
+		x_start_end[0]++;
 	}
 }
 
@@ -59,12 +59,29 @@ static void	render_clock(t_canvas *canvas)
 	}
 }
 
+static void	render_background(t_canvas *canvas)
+{
+	int		y;
+	int		x;
+	t_color	color;
+
+	color = new_color(0, 0, 0, 1.0);
+	y = -1;
+	while (++y < *canvas->height)
+	{
+		x = -1;
+		while (++x < *canvas->width)
+			write_pixel(canvas->img, x, y, color);
+	}
+}
+
 int	main(void)
 {
 	t_canvas	rt;
 
 	if (!new_canvas(&rt, 900, 550, "Chapter 04"))
 		return (1);
+	render_background(&rt);
 	render_clock(&rt);
 	mlx_image_to_window(rt.mlx, rt.img, 0, 0);
 	mlx_close_hook(rt.mlx, &quit, &rt);

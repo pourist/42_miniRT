@@ -2,6 +2,7 @@
 # define MATRICES_H
 
 # include <math.h>
+# include <stdarg.h>
 
 # include "libft.h"
 # include "tuples.h"
@@ -35,6 +36,7 @@ double		get_minor(t_matrix m, size_t row, size_t col);
 double		get_cofactor(t_matrix m, size_t row, size_t col);
 t_matrix	get_identity_matrix(void);
 /* matrix transformations */
+t_matrix	transformations(int length, ...);
 t_matrix	translation(double x, double y, double z);
 t_matrix	scaling(double x, double y, double z);
 t_matrix	shearing(t_shearing x, t_shearing y, t_shearing z);

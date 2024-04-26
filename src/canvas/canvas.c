@@ -28,8 +28,8 @@ bool	new_canvas(t_canvas *canvas, int width, int height, char *title)
 	canvas->img = mlx_new_image(canvas->mlx, width, height);
 	if (!canvas->img)
 		return (false);
-	ft_memset(canvas->img->pixels, 255,
-		canvas->img->width * canvas->img->height * sizeof(int32_t));
+	ft_memset(canvas->img->pixels, 0,
+		*canvas->width * *canvas->height * sizeof(int32_t));
 	return (true);
 }
 
