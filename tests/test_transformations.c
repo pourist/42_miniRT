@@ -285,3 +285,22 @@ Test(transformations, chained_transformations_must_in_reverse_order)
 	cr_assert(epsilon_eq(dbl, p.y, 0, EPSILON));
 	cr_assert(epsilon_eq(dbl, p.z, 7, EPSILON));
 }
+
+Test(transformations, chained_transformations_with_transformations_func)
+{
+	t_matrix	a;
+	t_matrix	b;
+	t_matrix	c;
+	t_point		p;
+	t_matrix	m;
+
+	p = new_point(1, 0, 1);
+	a = rotation_x(M_PI_2);
+	b = scaling(5, 5, 5);
+	c = translation(10, 5, 7);
+	m = transformations(3, a, b, c);
+	p = multiply_matrix_by_tuple(m, p);
+	cr_assert(epsilon_eq(dbl, p.x, 15, EPSILON));
+	cr_assert(epsilon_eq(dbl, p.y, 0, EPSILON));
+	cr_assert(epsilon_eq(dbl, p.z, 7, EPSILON));
+}
