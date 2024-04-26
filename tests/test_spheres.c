@@ -116,3 +116,66 @@ Test(intersections, intersect_sets_object_on_intersection)
 	cr_assert(xs->obj == &s);
 	cr_assert(xs->next->obj == &s);
 }
+
+Test(intersections, hit_when_all_intersections_have_positive_t)
+{
+	t_shape	s;
+	t_hit		*xs;
+	t_hit		*i;
+	xs = NULL;
+	s = new_sphere();
+	insert_intersection(&xs, intersection(2, &s));
+	insert_intersection(&xs, intersection(1, &s));
+	i = hit(xs);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	cr_assert(eq(ptr, i, xs));
+	cr_assert(eq(dbl, i->t, 1));
+}
+
+Test(intersections, hit_when_some_intersections_have_negative_t)
+{
+	t_shape	s;
+	t_hit		*xs;
+	t_hit		*i;
+
+	xs = NULL;
+	s = new_sphere();
+	insert_intersection(&xs, intersection(1, &s));
+	insert_intersection(&xs, intersection(-1, &s));
+	i = hit(xs);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	cr_assert(eq(ptr, i, xs->next));
+	cr_assert(eq(dbl, i->t, 1));
+}
+
+Test(intersections, hit_when_all_intersections_have_negative_t)
+{
+	t_shape	s;
+	t_hit		*xs;
+	t_hit		*i;
+
+	xs = NULL;
+	s = new_sphere();
+	insert_intersection(&xs, intersection(-2, &s));
+	insert_intersection(&xs, intersection(-3, &s));
+	i = hit(xs);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	cr_assert(eq(ptr, i, NULL));
+}
+
+Test(intersections, hit_is_always_lowest_nonnegative_intersection)
+{
+	t_shape	s;
+	t_hit		*xs;
+	t_hit		*i;
+	xs = NULL;
+	s = new_sphere();
+	insert_intersection(&xs, intersection(5, &s));
+	insert_intersection(&xs, intersection(7, &s));
+	insert_intersection(&xs, intersection(-3, &s));
+	insert_intersection(&xs, intersection(2, &s));
+	i = hit(xs);
+	cr_assert(eq(int, intersect_count(xs), 4));
+	cr_assert(eq(ptr, i, xs->next));
+	cr_assert(eq(dbl, i->t, 2));
+}
