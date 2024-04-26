@@ -6,6 +6,7 @@
 # include "matrices.h"
 
 # define MAX_NODES	512
+# define EPSILON	1e-5
 
 typedef struct s_sphere {
 	t_point	origin;
@@ -47,6 +48,7 @@ void	intersect(t_hit **xs, t_shape *s, t_ray r);
 t_hit	*intersection(double t, t_shape	*shape);
 void	insert_intersection(t_hit **xs, t_hit *hit);
 int		intersect_count(t_hit	*xs);
+t_hit	*hit(t_hit *xs);
 
 bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray);
 

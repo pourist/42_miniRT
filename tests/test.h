@@ -12,6 +12,4 @@
 # include "rays.h"
 # include "shapes.h"
 
-# define EPSILON 0.00001
-
 #endif
