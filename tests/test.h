@@ -12,4 +12,6 @@
 # include "rays.h"
 # include "shapes.h"
 
+bool	matrix_eq(t_matrix a, t_matrix b);
+
 #endif

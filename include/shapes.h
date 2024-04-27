@@ -22,6 +22,7 @@ typedef struct s_shape {
 		t_sphere	sphere;
 	};
 	t_intersect_fn	intersect_fn;
+	t_matrix		transform;
 }	t_shape;
 
 typedef struct s_hit {
@@ -42,6 +43,7 @@ typedef struct s_discriminant
 
 // Sphere Shape
 t_shape	new_sphere(void);
+bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray);
 
 // Intersections general
 void	intersect(t_hit **xs, t_shape *s, t_ray r);
@@ -50,6 +52,8 @@ void	insert_intersection(t_hit **xs, t_hit *hit);
 int		intersect_count(t_hit	*xs);
 t_hit	*hit(t_hit *xs);
 
-bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray);
+// Shapes utils
+t_shape	new_shape(void);
+void	set_transform(t_shape *shape, t_matrix transform);
 
 #endif

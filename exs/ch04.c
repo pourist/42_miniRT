@@ -5,7 +5,8 @@
 #include "utils.h"
 #include <stdio.h>
 
-static void	write_circle(mlx_image_t *img, int xy[2], int radius, t_color color)
+static void	write_circle(mlx_image_t *img, int xy[2], int radius,
+												uint32_t color)
 {
 	int	x_start_end[2];
 	int	y_start_end[2];
@@ -33,13 +34,13 @@ static void	write_circle(mlx_image_t *img, int xy[2], int radius, t_color color)
 
 static void	render_clock(t_canvas *canvas)
 {
-	t_color		color;
+	uint32_t	color;
 	t_matrix	transformations[2];
 	int			i;
 	double		radius;
 	t_point		points[2];
 
-	color = new_color(0.5, 1, 0.5, 1);
+	color = get_rgba(new_color(0.5, 1, 0.5, 1));
 	transformations[0] = translation(
 			*canvas->width * 0.5, 0, *canvas->height * 0.5);
 	if (*canvas->width < *canvas->height)
@@ -61,11 +62,11 @@ static void	render_clock(t_canvas *canvas)
 
 static void	render_background(t_canvas *canvas)
 {
-	int		y;
-	int		x;
-	t_color	color;
+	int			y;
+	int			x;
+	uint32_t	color;
 
-	color = new_color(0, 0, 0, 1.0);
+	color = get_rgba(new_color(0.3, 0.3, 1, 1));
 	y = -1;
 	while (++y < *canvas->height)
 	{

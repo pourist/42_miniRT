@@ -179,3 +179,21 @@ Test(intersections, hit_is_always_lowest_nonnegative_intersection)
 	cr_assert(eq(ptr, i, xs->next));
 	cr_assert(eq(dbl, i->t, 2));
 }
+
+Test(transformations, a_sphere_default_transformations)
+{
+	t_shape	s;
+	s = new_sphere();
+	cr_assert(matrix_eq(s.transform, get_identity_matrix()));
+}
+
+Test(transformations, changing_a_sphere_transformation)
+{
+	t_shape	s;
+	t_matrix	t;
+
+	s = new_sphere();
+	t = translation(2, 3, 4);
+	set_transform(&s, t);
+	cr_assert(matrix_eq(s.transform, t));
+}
