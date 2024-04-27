@@ -62,7 +62,7 @@ int	intersect_count(t_hit	*xs)
 
 t_hit	*hit(t_hit *xs)
 {
-	while (xs != NULL && xs->t <= EPSILON)
+	while (xs != NULL && xs->t < EPSILON)
 		xs = xs->next;
 	return (xs);
 }

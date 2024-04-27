@@ -18,9 +18,8 @@ typedef struct s_canvas {
 }	t_canvas;
 
 bool		new_canvas(t_canvas *canvas, int width, int height, char *title);
-int			get_rgba(t_color color);
-void		write_pixel(mlx_image_t *img, uint32_t x, uint32_t y,
-				t_color color);
+uint32_t	get_rgba(t_color color);
+void		write_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
 t_color		read_pixel(mlx_image_t *img, uint32_t x, uint32_t y);
 
 void		canvas_to_ppm(t_canvas *canvas, char *filename);

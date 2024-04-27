@@ -42,7 +42,7 @@ HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h
 SOURCE						:= main.c tuples.c basic_math.c vector_math.c eq_dbl.c \
 										 colors.c canvas.c save.c hooks.c mx.c mx_operations.c \
 										 mx_attributes.c mx_transformations.c mx_rotations.c \
-										 rays.c sphere.c intersections.c
+										 rays.c sphere.c intersections.c shapes.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
