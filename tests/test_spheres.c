@@ -85,7 +85,7 @@ Test(spheres, an_intersection_encapsulates_t_and_object)
 	cr_assert(xs->obj == &s);
 }
 
-Test(intersections, aggregating_intersections)
+Test(spheres, aggregating_intersections)
 {
 	t_shape	s;
 	t_hit		*i1;
@@ -103,7 +103,7 @@ Test(intersections, aggregating_intersections)
 	cr_assert(eq(dbl, xs->next->t, 2));
 }
 
-Test(intersections, intersect_sets_object_on_intersection)
+Test(spheres, intersect_sets_object_on_intersection)
 {
 	t_shape	s;
 	t_ray		r;
@@ -117,7 +117,7 @@ Test(intersections, intersect_sets_object_on_intersection)
 	cr_assert(xs->next->obj == &s);
 }
 
-Test(intersections, hit_when_all_intersections_have_positive_t)
+Test(spheres, hit_when_all_intersections_have_positive_t)
 {
 	t_shape	s;
 	t_hit		*xs;
@@ -132,7 +132,7 @@ Test(intersections, hit_when_all_intersections_have_positive_t)
 	cr_assert(eq(dbl, i->t, 1));
 }
 
-Test(intersections, hit_when_some_intersections_have_negative_t)
+Test(spheres, hit_when_some_intersections_have_negative_t)
 {
 	t_shape	s;
 	t_hit		*xs;
@@ -148,7 +148,7 @@ Test(intersections, hit_when_some_intersections_have_negative_t)
 	cr_assert(eq(dbl, i->t, 1));
 }
 
-Test(intersections, hit_when_all_intersections_have_negative_t)
+Test(spheres, hit_when_all_intersections_have_negative_t)
 {
 	t_shape	s;
 	t_hit		*xs;
@@ -163,7 +163,7 @@ Test(intersections, hit_when_all_intersections_have_negative_t)
 	cr_assert(eq(ptr, i, NULL));
 }
 
-Test(intersections, hit_is_always_lowest_nonnegative_intersection)
+Test(spheres, hit_is_always_lowest_nonnegative_intersection)
 {
 	t_shape	s;
 	t_hit		*xs;
@@ -180,14 +180,14 @@ Test(intersections, hit_is_always_lowest_nonnegative_intersection)
 	cr_assert(eq(dbl, i->t, 2));
 }
 
-Test(transformations, a_sphere_default_transformations)
+Test(spheres, a_sphere_default_transformations)
 {
 	t_shape	s;
 	s = new_sphere();
 	cr_assert(matrix_eq(s.transform, get_identity_matrix()));
 }
 
-Test(transformations, changing_a_sphere_transformation)
+Test(spheres, changing_a_sphere_transformation)
 {
 	t_shape	s;
 	t_matrix	t;
@@ -196,4 +196,34 @@ Test(transformations, changing_a_sphere_transformation)
 	t = translation(2, 3, 4);
 	set_transform(&s, t);
 	cr_assert(matrix_eq(s.transform, t));
+}
+
+Test(spheres, intersecting_a_scaled_sphere_with_a_ray)
+{
+	t_ray		r;
+	t_shape	s;
+	t_hit		*xs;
+
+	xs = NULL;
+	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+	s = new_sphere();
+	set_transform(&s, scaling(2, 2, 2));
+	intersect(&xs, &s, r);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	cr_assert(eq(dbl, xs->t, 3));
+	cr_assert(eq(dbl, xs->next->t, 7));
+}
+
+Test(spheres, intersecting_a_translated_sphere_with_a_ray)
+{
+	t_ray		r;
+	t_shape	s;
+	t_hit		*xs;
+
+	xs = NULL;
+	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+	s = new_sphere();
+	set_transform(&s, translation(5, 0, 0));
+	intersect(&xs, &s, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
 }

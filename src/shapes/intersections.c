@@ -2,7 +2,10 @@
 
 void	intersect(t_hit **xs, t_shape *s, t_ray r)
 {
-	s->intersect_fn(xs, s, r);
+	t_ray	ray_transformed;
+
+	ray_transformed = transform(r, s->inverse);
+	s->intersect_fn(xs, s, ray_transformed);
 }
 
 t_hit	*intersection(double t, t_shape	*shape)
