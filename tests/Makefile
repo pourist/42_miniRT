@@ -16,7 +16,7 @@ WHITE       := \033[0;97m
 ##                                   MINIRT                                   ##
 ################################################################################
 
-TESTS							:= tuples colors canvas matrices transformations rays
+TESTS							:= tuples colors canvas matrices transformations rays spheres
 RM								:= rm -rf
 	
 ################################################################################
@@ -37,7 +37,7 @@ vpath %.o $(OBJ_DIR)
 
 SOURCE						:= $(shell find $(SRC_DIR) -name '*.c' -exec basename {} \;)
 SOURCE						:= $(filter-out main.c, $(SOURCE))
-OBJECTS						= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
+OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 	
 ################################################################################
 ##                                   FLAGS                                    ##

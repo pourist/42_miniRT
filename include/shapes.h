@@ -23,6 +23,7 @@ typedef struct s_shape {
 	};
 	t_intersect_fn	intersect_fn;
 	t_matrix		transform;
+	t_matrix		inverse;
 }	t_shape;
 
 typedef struct s_hit {
