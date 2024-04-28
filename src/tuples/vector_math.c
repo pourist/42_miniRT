@@ -1,15 +1,5 @@
 #include "tuples.h"
 
-double	magnitude(t_vector a)
-{
-	return (sqrt(
-			a.x * a.x
-			+ a.y * a.y
-			+ a.z * a.z
-			+ a.w * a.w
-		));
-}
-
 double	magnitude_squared(t_vector a)
 {
 	return (
@@ -54,4 +44,9 @@ t_vector	cross(t_vector a, t_vector b)
 			a.z * b.x - a.x * b.z,
 			a.x * b.y - a.y * b.x
 		));
+}
+
+t_tuple	reflect(t_vector in, t_vector normal)
+{
+	return (subtract(in, multiply(normal, 2 * dot(in, normal))));
 }

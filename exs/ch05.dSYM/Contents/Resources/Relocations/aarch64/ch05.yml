@@ -2,8 +2,8 @@
 triple:          'arm64-apple-darwin'
 binary-path:     ch05
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _render_sphere, symObjAddr: 0x0, symBinAddr: 0x10000417C, symSize: 0x134 }
-  - { offsetInCU: 0x3AF, offset: 0x3AF, size: 0x8, addend: 0x0, symName: _render_sphere, symObjAddr: 0x0, symBinAddr: 0x10000417C, symSize: 0x134 }
-  - { offsetInCU: 0x83C, offset: 0x83C, size: 0x8, addend: 0x0, symName: _set_params, symObjAddr: 0x134, symBinAddr: 0x1000042B0, symSize: 0x14C }
-  - { offsetInCU: 0x9EA, offset: 0x9EA, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x280, symBinAddr: 0x1000043FC, symSize: 0xB0 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _render_sphere, symObjAddr: 0x0, symBinAddr: 0x10000416C, symSize: 0x134 }
+  - { offsetInCU: 0x3AF, offset: 0x3AF, size: 0x8, addend: 0x0, symName: _render_sphere, symObjAddr: 0x0, symBinAddr: 0x10000416C, symSize: 0x134 }
+  - { offsetInCU: 0x875, offset: 0x875, size: 0x8, addend: 0x0, symName: _set_params, symObjAddr: 0x134, symBinAddr: 0x1000042A0, symSize: 0x14C }
+  - { offsetInCU: 0xA23, offset: 0xA23, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x280, symBinAddr: 0x1000043EC, symSize: 0xB0 }
 ...

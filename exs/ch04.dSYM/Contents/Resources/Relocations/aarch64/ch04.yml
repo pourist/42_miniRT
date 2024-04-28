@@ -2,6 +2,6 @@
 triple:          'arm64-apple-darwin'
 binary-path:     ch04
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100004010, symSize: 0x4C0 }
-  - { offsetInCU: 0x715, offset: 0x715, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100004010, symSize: 0x4C0 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003FF0, symSize: 0x4C0 }
+  - { offsetInCU: 0x715, offset: 0x715, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003FF0, symSize: 0x4C0 }
 ...
