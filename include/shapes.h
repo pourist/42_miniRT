@@ -16,14 +16,17 @@ typedef struct s_sphere {
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
 typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
+typedef t_tuple			(*t_normal_fn)(t_shape *, t_point);
 
 typedef struct s_shape {
 	union {
 		t_sphere	sphere;
 	};
 	t_intersect_fn	intersect_fn;
+	t_normal_fn		normal_at;
 	t_matrix		transform;
 	t_matrix		inverse;
+	t_matrix		transpose;
 }	t_shape;
 
 typedef struct s_hit {
@@ -43,18 +46,18 @@ typedef struct s_discriminant
 }	t_discriminant;
 
 // Sphere Shape
-t_shape	new_sphere(void);
-bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray);
+t_shape		new_sphere(void);
 
 // Intersections general
-void	intersect(t_hit **xs, t_shape *s, t_ray r);
-t_hit	*intersection(double t, t_shape	*shape);
-void	insert_intersection(t_hit **xs, t_hit *hit);
-int		intersect_count(t_hit	*xs);
-t_hit	*hit(t_hit *xs);
+void		intersect(t_hit **xs, t_shape *s, t_ray r);
+t_hit		*intersection(double t, t_shape	*shape);
+void		insert_intersection(t_hit **xs, t_hit *hit);
+int			intersect_count(t_hit	*xs);
+t_hit		*hit(t_hit *xs);
 
 // Shapes utils
-t_shape	new_shape(void);
-void	set_transform(t_shape *shape, t_matrix transform);
+t_shape		new_shape(void);
+void		set_transform(t_shape *shape, t_matrix transform);
+t_vector	normal_at(t_shape *shape, t_point point);
 
 #endif

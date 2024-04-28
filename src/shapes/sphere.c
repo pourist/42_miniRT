@@ -1,6 +1,7 @@
 #include "shapes.h"
 
-bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray);
+static bool		intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray);
+static t_vector	normal_at_sphere(t_shape *sphere, t_point object_point);
 
 t_shape	new_sphere(void)
 {
@@ -10,6 +11,7 @@ t_shape	new_sphere(void)
 	shape.sphere.origin = new_point(0, 0, 0);
 	shape.sphere.radius = 1.0;
 	shape.intersect_fn = intersect_sphere;
+	shape.normal_at = normal_at_sphere;
 	return (shape);
 }
 
@@ -38,7 +40,7 @@ static t_discriminant	sphere_discriminant(t_sphere *sphere, t_ray ray)
 
 // TODO: check in the future if we dont need the negative values of t1 and t2
 // avoid inserting them in the intersection list
-bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray)
+static bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray)
 {
 	t_discriminant	d;
 
@@ -48,4 +50,10 @@ bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray)
 	insert_intersection(xs, intersection(d.t1, shape));
 	insert_intersection(xs, intersection(d.t2, shape));
 	return (true);
+}
+
+static t_vector	normal_at_sphere(t_shape *sphere, t_point object_point)
+{
+	(void)sphere;
+	return (subtract(object_point, sphere->sphere.origin));
 }

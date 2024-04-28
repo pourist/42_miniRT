@@ -227,3 +227,77 @@ Test(spheres, intersecting_a_translated_sphere_with_a_ray)
 	intersect(&xs, &s, r);
 	cr_assert(eq(int, intersect_count(xs), 0));
 }
+
+Test(spheres, normal_on_a_sphere_at_a_point_on_x_axis)
+{
+	t_shape	s;
+	t_vector	n;
+
+	s = new_sphere();
+	n = normal_at(&s, new_point(1, 0, 0));
+	cr_assert(tuple_eq(n, new_vector(1, 0, 0)));
+}
+
+Test(spheres, normal_on_a_sphere_at_a_point_on_y_axis)
+{
+	t_shape	s;
+	t_vector	n;
+
+	s = new_sphere();
+	n = normal_at(&s, new_point(0, 1, 0));
+	cr_assert(tuple_eq(n, new_vector(0, 1, 0)));
+}
+
+Test(spheres, normal_on_a_sphere_at_a_point_on_z_axis)
+{
+	t_shape	s;
+	t_vector	n;
+
+	s = new_sphere();
+	n = normal_at(&s, new_point(0, 0, 1));
+	cr_assert(tuple_eq(n, new_vector(0, 0, 1)));
+}
+
+Test(spheres, normal_on_a_sphere_at_a_nonaxial_point)
+{
+	t_shape	s;
+	t_vector	n;
+
+	s = new_sphere();
+	n = normal_at(&s, new_point(sqrt(3)/3, sqrt(3)/3, sqrt(3)/3));
+	cr_assert(tuple_eq(n, new_vector(sqrt(3)/3, sqrt(3)/3, sqrt(3)/3)));
+}
+
+Test(spheres, normal_is_a_normalized_vector)
+{
+	t_shape	s;
+	t_vector	n;
+
+	s = new_sphere();
+	n = normal_at(&s, new_point(sqrt(3)/3, sqrt(3)/3, sqrt(3)/3));
+	cr_assert(tuple_eq(n, normalize(n)));
+}
+
+Test(spheres, normal_on_a_translated_sphere)
+{
+	t_shape	s;
+	t_vector	n;
+
+	s = new_sphere();
+	set_transform(&s, translation(0, 1, 0));
+	n = normal_at(&s, new_point(0, 1.70711, -0.70711));
+	cr_assert(tuple_eq(n, new_vector(0, 0.70711, -0.70711)));
+}
+
+Test(spheres, normal_on_a_transformed_sphere)
+{
+	t_shape	s;
+	t_vector	n;
+	t_matrix	m;
+
+	s = new_sphere();
+	m = multiply_matrices(scaling(1, 0.5, 1), rotation_z(cos(M_PI/5), sin(M_PI/5)));
+	set_transform(&s, m);
+	n = normal_at(&s, new_point(0, sqrt(2)/2, -sqrt(2)/2));
+	cr_assert(tuple_eq(n, new_vector(0, 0.97014, -0.24254)));
+}

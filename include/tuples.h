@@ -45,10 +45,11 @@ t_tuple		multiply(t_tuple t, double scalar);
 t_tuple		divide(t_tuple t, double scalar);
 
 /* Vector math operations */
-double		magnitude(t_vector v);
-t_vector	normalize(t_vector v);
+double		magnitude_squared(t_vector a);
+t_vector	normalize(t_vector a);
 double		dot(t_vector a, t_vector b);
 t_vector	cross(t_vector a, t_vector b);
+t_tuple		reflect(t_vector in, t_vector normal);
 
 /* Color creation  */
 t_color		new_color(double r, double g, double b, double a);

@@ -149,15 +149,15 @@ Test(tuples, computing_the_magnitude_of_a_vector)
 {
 	double length;
 
-	length = magnitude(new_vector(1, 0, 0));
+	length = sqrt(magnitude_squared(new_vector(1, 0, 0)));
 	cr_assert(eq(dbl, length, 1));
-	length = magnitude(new_vector(0, 1, 0));
+	length = sqrt(magnitude_squared(new_vector(0, 1, 0)));
 	cr_assert(eq(dbl, length, 1));
-	length = magnitude(new_vector(0, 0, 1));
+	length = sqrt(magnitude_squared(new_vector(0, 0, 1)));
 	cr_assert(eq(dbl, length, 1));
-	length = magnitude(new_vector(1, 2, 3));
+	length = sqrt(magnitude_squared(new_vector(1, 2, 3)));
 	cr_assert(eq(dbl, length, sqrt(14)));
-	length = magnitude(new_vector(-1, -2, -3));
+	length = sqrt(magnitude_squared(new_vector(-1, -2, -3)));
 	cr_assert(eq(dbl, length, sqrt(14)));
 }
 
@@ -169,11 +169,11 @@ Test(tuples, normalizing_vectors)
 
 	v = new_vector(4, 0, 0);
 	normal = normalize(v);
-	cr_assert(epsilon_eq(dbl, magnitude(normal), 1, DBL_EPSILON));
+	cr_assert(epsilon_eq(dbl, sqrt(magnitude_squared(normal)), 1, DBL_EPSILON));
 
 	v = new_vector(1, 2, 3);
 	normal = normalize(v);
-	cr_assert(epsilon_eq(dbl, magnitude(normal), 1, DBL_EPSILON));
+	cr_assert(epsilon_eq(dbl, sqrt(magnitude_squared(normal)), 1, DBL_EPSILON));
 }
 
 /* Test if the function "dot" computes the dot product of two vectors correctly. */
@@ -206,4 +206,32 @@ Test(tuples, cross_product_of_two_vectors)
 	cr_assert(eq(dbl, result.x, 1));
 	cr_assert(eq(dbl, result.y, -2));
 	cr_assert(eq(dbl, result.z, 1));
+}
+
+Test(tuples, reflecting_a_vector_approaching_at_45_degrees)
+{
+	t_vector	v;
+	t_vector	n;
+	t_vector	r;
+
+	v = new_vector(1, -1, 0);
+	n = new_vector(0, 1, 0);
+	r = reflect(v, n);
+	cr_assert(eq(dbl, r.x, 1));
+	cr_assert(eq(dbl, r.y, 1));
+	cr_assert(eq(dbl, r.z, 0));
+}
+
+Test(tuples, reflecting_a_vector_off_a_slanted_surface)
+{
+	t_vector	v;
+	t_vector	n;
+	t_vector	r;
+
+	v = new_vector(0, -1, 0);
+	n = new_vector(sqrt(2)/2, sqrt(2)/2, 0);
+	r = reflect(v, n);
+	cr_assert(epsilon_eq(dbl, r.x, 1, EPSILON));
+	cr_assert(epsilon_eq(dbl, r.y, 0, EPSILON));
+	cr_assert(epsilon_eq(dbl, r.z, 0, EPSILON));
 }
