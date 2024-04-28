@@ -5,7 +5,7 @@ static void	write_ppm(t_canvas *canvas, int fd)
 	size_t	i;
 	size_t	j;
 	uint8_t	*pixel;
-	int			rgb[3];
+	int		rgb[3];
 
 	pixel = canvas->img->pixels;
 	i = 0;

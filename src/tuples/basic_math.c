@@ -32,6 +32,10 @@ t_tuple	negate(t_tuple t)
 
 t_tuple	multiply(t_tuple t, double scalar)
 {
+	if (scalar == 0)
+		return ((t_tuple){0, 0, 0, 0});
+	else if (scalar == 1)
+		return (t);
 	return ((t_tuple){
 		t.x * scalar,
 		t.y * scalar,
@@ -42,10 +46,13 @@ t_tuple	multiply(t_tuple t, double scalar)
 
 t_tuple	divide(t_tuple t, double scalar)
 {
+	double	inverse_scalar;
+
+	inverse_scalar = 1.0 / scalar;
 	return ((t_tuple){
-		t.x / scalar,
-		t.y / scalar,
-		t.z / scalar,
-		t.w / scalar,
+		t.x * inverse_scalar,
+		t.y * inverse_scalar,
+		t.z * inverse_scalar,
+		t.w * inverse_scalar,
 	});
 }

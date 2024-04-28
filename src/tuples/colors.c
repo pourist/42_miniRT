@@ -32,6 +32,10 @@ t_color	subtract_color(t_color c1, t_color c2)
 
 t_color	multiply_color(t_color c, double scalar)
 {
+	if (scalar == 0.0)
+		return ((t_color){0.0, 0.0, 0.0, 0.0});
+	else if (scalar == 1.0)
+		return (c);
 	return ((t_color){
 		c.r * scalar,
 		c.g * scalar,

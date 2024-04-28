@@ -8,13 +8,17 @@ void	intersect(t_hit **xs, t_shape *s, t_ray r)
 	s->intersect_fn(xs, s, ray_transformed);
 }
 
+/*  To increase performance, we keep an array of MAX_NODES intersections
+ *  that we can use to build up the list. Also to avoid overflows use
+ *  modulo MAX_NODES, to improve the performance it use a bit mask instead
+ *  of modulo. MAX_NODES should be a power of 2. */
 t_hit	*intersection(double t, t_shape	*shape)
 {
-	static t_hit	pool[MAX_NODES];
+	static t_hit	pool[MAX_NODES + 1];
 	static size_t	index = 0;
 	t_hit			*hit;
 
-	hit = &pool[index++ % MAX_NODES];
+	hit = &pool[index++ & (MAX_NODES)];
 	hit->t = t;
 	hit->obj = shape;
 	hit->next = NULL;
@@ -23,30 +27,17 @@ t_hit	*intersection(double t, t_shape	*shape)
 
 void	insert_intersection(t_hit **xs, t_hit *hit)
 {
-	t_hit	*current;
-	t_hit	*prev;
+	t_hit	**current;
 
 	if (*xs == NULL)
 		*xs = hit;
 	else
 	{
-		current = *xs;
-		prev = NULL;
-		while (current && current->t < hit->t)
-		{
-			prev = current;
-			current = current->next;
-		}
-		if (prev)
-		{
-			prev->next = hit;
-			hit->next = current;
-		}
-		else
-		{
-			hit->next = *xs;
-			*xs = hit;
-		}
+		current = xs;
+		while (*current && (*current)->t < hit->t)
+			current = &((*current)->next);
+		hit->next = *current;
+		*current = hit;
 	}
 }
 
@@ -65,7 +56,7 @@ int	intersect_count(t_hit	*xs)
 
 t_hit	*hit(t_hit *xs)
 {
-	while (xs != NULL && xs->t < EPSILON)
+	while (xs && xs->t < EPSILON)
 		xs = xs->next;
 	return (xs);
 }

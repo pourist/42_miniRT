@@ -101,8 +101,8 @@ Test(transformations, rotating_point_around_x)
 	t_point		result;
 
 	p = new_point(0, 1, 0);
-	half_quarter = rotation_x(M_PI_4);
-	full_quarter = rotation_x(M_PI_2);
+	half_quarter = rotation_x(cos(M_PI_4), sin(M_PI_4));
+	full_quarter = rotation_x(cos(M_PI_2), sin(M_PI_2));
 	result = multiply_matrix_by_tuple(half_quarter, p);
 	cr_assert(epsilon_eq(dbl, result.x, 0, EPSILON));
 	cr_assert(epsilon_eq(dbl, result.y, sqrt(2)/2, EPSILON));
@@ -120,7 +120,7 @@ Test(transformations, inverse_of_x_rotation)
 	t_point		result;
 
 	p = new_point(0, 1, 0);
-	half_quarter_i = inverse_matrix(rotation_x(M_PI_4));
+	half_quarter_i = inverse_matrix(rotation_x(cos(M_PI_4), sin(M_PI_4)));
 	result = multiply_matrix_by_tuple(half_quarter_i, p);
 	cr_assert(epsilon_eq(dbl, result.x, 0, EPSILON));
 	cr_assert(epsilon_eq(dbl, result.y, sqrt(2)/2, EPSILON));
@@ -135,8 +135,8 @@ Test(transformations, rotating_poin_around_y)
 	t_point		result;
 
 	p = new_point(0, 0, 1);
-	half_quarter = rotation_y(M_PI_4);
-	full_quarter = rotation_y(M_PI_2);
+	half_quarter = rotation_y(cos(M_PI_4), sin(M_PI_4));
+	full_quarter = rotation_y(cos(M_PI_2), sin(M_PI_2));
 	result = multiply_matrix_by_tuple(half_quarter, p);
 	cr_assert(epsilon_eq(dbl, result.x, sqrt(2)/2, EPSILON));
 	cr_assert(epsilon_eq(dbl, result.y, 0, EPSILON));
@@ -155,8 +155,8 @@ Test(transformations, rotating_poin_around_z)
 	t_point		result;
 
 	p = new_point(0, 1, 0);
-	half_quarter = rotation_z(M_PI_4);
-	full_quarter = rotation_z(M_PI_2);
+	half_quarter = rotation_z(cos(M_PI_4), sin(M_PI_4));
+	full_quarter = rotation_z(cos(M_PI_2), sin(M_PI_2));
 	result = multiply_matrix_by_tuple(half_quarter, p);
 	cr_assert(epsilon_eq(dbl, result.x, -sqrt(2)/2, EPSILON));
 	cr_assert(epsilon_eq(dbl, result.y, sqrt(2)/2, EPSILON));
@@ -250,7 +250,7 @@ Test(transformations, individual_transformations_in_sequence)
 	t_point		p4;
 
 	p = new_point(1, 0, 1);
-	a = rotation_x(M_PI_2);
+	a = rotation_x(cos(M_PI_2), sin(M_PI_2));
 	b = scaling(5, 5, 5);
 	c = translation(10, 5, 7);
 	p2 = multiply_matrix_by_tuple(a, p);
@@ -276,7 +276,7 @@ Test(transformations, chained_transformations_must_in_reverse_order)
 	t_matrix	m;
 
 	p = new_point(1, 0, 1);
-	a = rotation_x(M_PI_2);
+	a = rotation_x(cos(M_PI_2), sin(M_PI_2));
 	b = scaling(5, 5, 5);
 	c = translation(10, 5, 7);
 	m = multiply_matrices(multiply_matrices(c, b), a);
@@ -295,7 +295,7 @@ Test(transformations, chained_transformations_with_transformations_func)
 	t_matrix	m;
 
 	p = new_point(1, 0, 1);
-	a = rotation_x(M_PI_2);
+	a = rotation_x(cos(M_PI_2), sin(M_PI_2));
 	b = scaling(5, 5, 5);
 	c = translation(10, 5, 7);
 	m = transformations(3, a, b, c);

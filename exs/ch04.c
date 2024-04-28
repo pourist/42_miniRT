@@ -51,7 +51,7 @@ static void	render_clock(t_canvas *canvas)
 	i = -1;
 	while (++i < 12)
 	{
-		transformations[1] = rotation_y(i * M_PI / 6);
+		transformations[1] = rotation_y(cos(i * M_PI / 6), sin(i * M_PI / 6));
 		points[1] = multiply_matrix_by_tuple(
 				multiply_matrices(transformations[0], transformations[1]),
 				points[0]);

@@ -5,7 +5,7 @@
 # include "rays.h"
 # include "matrices.h"
 
-# define MAX_NODES	512
+# define MAX_NODES	511
 # define EPSILON	1e-5
 
 typedef struct s_sphere {
