@@ -55,20 +55,20 @@ t_matrix	transpose_matrix(t_matrix m)
 
 t_matrix	inverse_matrix(t_matrix m)
 {
-	double	det;
+	double	inverse_det;
 	double	result[MAX][MAX];
 	int		row;
 	int		col;
 
-	if (!is_invertible(m))
+	inverse_det = 1.0 / get_determinant(m);
+	if (!is_invertible(m) || inverse_det == 0.0)
 		return (get_identity_matrix());
-	det = get_determinant(m);
 	row = -1;
 	while (++row < m.size)
 	{
 		col = -1;
 		while (++col < m.size)
-			result[col][row] = get_cofactor(m, row, col) / det;
+			result[col][row] = get_cofactor(m, row, col) * inverse_det;
 	}
 	return (new_matrix(result, m.size));
 }

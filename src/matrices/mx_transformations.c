@@ -37,12 +37,10 @@ t_matrix	transformations(int length, ...)
 {
 	va_list		args;
 	t_matrix	result;
-	int			len;
 
 	va_start(args, length);
-	len = length;
 	result = va_arg(args, t_matrix);
-	while (0 < --len)
+	while (0 < --length)
 		result = multiply_matrices(va_arg(args, t_matrix), result);
 	va_end(args);
 	return (result);

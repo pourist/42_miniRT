@@ -18,7 +18,7 @@ double	get_determinant(t_matrix m)
 	return (det);
 }
 
-t_matrix	get_submatrix(t_matrix m, size_t del_row, size_t del_col)
+t_matrix	get_submatrix(t_matrix m, int del_row, int del_col)
 {
 	double	sub_matrix[MAX][MAX];
 	int		row;
@@ -29,8 +29,8 @@ t_matrix	get_submatrix(t_matrix m, size_t del_row, size_t del_col)
 	{
 		col = -1;
 		while (++col < m.size - 1)
-			sub_matrix[row][col] = m.mx \
-				[row + (row >= (int)del_row)][col + (col >= (int)del_col)];
+			sub_matrix[row][col]
+				= m.mx[row + (row >= del_row)][col + (col >= del_col)];
 	}
 	return (new_matrix(sub_matrix, m.size - 1));
 }
@@ -61,7 +61,8 @@ t_matrix	get_identity_matrix(void)
 	{1, 0, 0, 0},
 	{0, 1, 0, 0},
 	{0, 0, 1, 0},
-	{0, 0, 0, 1},};
+	{0, 0, 0, 1},
+	};
 
 	return (new_matrix(table, 4));
 }
