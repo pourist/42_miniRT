@@ -59,6 +59,17 @@ void	set_params(t_params *params)
 	params->sphere_color = get_rgba(new_color(0.6, 0.1, 0.1, 1));
 	params->bg_color = get_rgba(new_color(0.1, 0.2, 0.3, 1));
 	params->sphere = new_sphere();
+	// set_transform(&params->sphere, scaling(1, 0.5, 1));
+	// set_transform(&params->sphere, scaling(0.5, 1, 1));
+	// set_transform(&params->sphere, multiply_matrices(
+	// 		rotation_z(M_PI / 4), scaling(0.5, 1, 1)));
+	set_transform(&params->sphere, transformations(2,
+			scaling(0.5, 1, 1), rotation_z(M_PI_4)));
+	// set_transform(&params->sphere, multiply_matrices(
+	// 		shearing((t_shearing){1, 0}, (t_shearing){0}, (t_shearing){0}),
+	// 		scaling(0.5, 1, 1)));
+	// set_transform(&params->sphere, transformations(2, scaling(0.5, 1, 1),
+	// 			shearing((t_shearing){1, 0}, (t_shearing){0, 0}, (t_shearing){0, 0})));
 }
 
 int	main(void)
