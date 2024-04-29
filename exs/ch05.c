@@ -14,8 +14,8 @@ typedef struct s_params {
 	double		half;
 	t_point		ray_origin;
 	t_shape		sphere;
-	uint32_t	sphere_color;
-	uint32_t	bg_color;
+	t_color		sphere_color;
+	t_color		bg_color;
 }	t_params;
 
 void	render_sphere(t_canvas *rt, t_params *params)
@@ -56,8 +56,8 @@ void	set_params(t_params *params)
 	params->pixel_size = params->wall_size / HEIGHT;
 	params->half = params->wall_size * 0.5;
 	params->ray_origin = new_point(0, 0, -5);
-	params->sphere_color = get_rgba(new_color(0.6, 0.1, 0.1, 1));
-	params->bg_color = get_rgba(new_color(0.1, 0.2, 0.3, 1));
+	params->sphere_color = new_color(0.6, 0.1, 0.1);
+	params->bg_color = new_color(0.1, 0.2, 0.3);
 	params->sphere = new_sphere();
 	// set_transform(&params->sphere, scaling(1, 0.5, 1));
 	// set_transform(&params->sphere, scaling(0.5, 1, 1));

@@ -328,5 +328,5 @@ Test(spheres, a_sphere_may_be_assigned_a_material)
 	cr_assert(eq(dbl, s.material.diffuse, 0.9));
 	cr_assert(eq(dbl, s.material.specular, 0.9));
 	cr_assert(eq(dbl, s.material.shininess, 200.0));
-	cr_assert(color_eq(s.material.color, new_color(1.0, 1.0, 1.0, 1.0)));
+	cr_assert(color_eq(s.material.color, new_color(1.0, 1.0, 1.0)));
 }
