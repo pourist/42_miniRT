@@ -1,9 +1,8 @@
 #ifndef SHAPES_H
 # define SHAPES_H
 
-# include "tuples.h"
 # include "rays.h"
-# include "matrices.h"
+# include "materials.h"
 
 # define MAX_NODES	511
 # define EPSILON	1e-5
@@ -27,6 +26,7 @@ typedef struct s_shape {
 	t_matrix		transform;
 	t_matrix		inverse;
 	t_matrix		transpose;
+	t_material		material;
 }	t_shape;
 
 typedef struct s_hit {
@@ -59,5 +59,9 @@ t_hit		*hit(t_hit *xs);
 t_shape		new_shape(void);
 void		set_transform(t_shape *shape, t_matrix transform);
 t_vector	normal_at(t_shape *shape, t_point point);
+
+// Material.c 
+t_color		lighting(t_material const *material, t_light const *light,
+				t_point const *point, t_eye_normal const *eyenorm);
 
 #endif

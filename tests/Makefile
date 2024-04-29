@@ -16,7 +16,8 @@ WHITE       := \033[0;97m
 ##                                   MINIRT                                   ##
 ################################################################################
 
-TESTS							:= tuples colors canvas matrices transformations rays spheres
+TESTS							:= tuples colors canvas matrices transformations rays spheres \
+										 lights materials
 RM								:= rm -rf
 	
 ################################################################################
@@ -91,6 +92,14 @@ rays: $(OBJECTS) test_rays.c
 
 .PHONY: spheres
 spheres: $(OBJECTS) test.c test_spheres.c
+	@$(call run, "$^")
+
+.PHONY: lights
+lights: $(OBJECTS) test.c test_lights.c
+	@$(call run, "$^")
+
+.PHONY: materials
+materials: $(OBJECTS) test.c test_materials.c
 	@$(call run, "$^")
 
 $(OBJECTS):

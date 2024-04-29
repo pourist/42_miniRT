@@ -1,7 +1,6 @@
 #ifndef RAYS_H
 # define RAYS_H
 
-# include "tuples.h"
 # include "matrices.h"
 
 typedef struct s_ray {

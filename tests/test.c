@@ -31,3 +31,16 @@ bool	tuple_eq(t_tuple a, t_tuple b)
 		return (false);
 	return (true);
 }
+
+bool	color_eq(t_color a, t_color b)
+{
+	if (a.r - b.r > EPSILON || a.r - b.r < -EPSILON)
+		return (false);
+	if (a.g - b.g > EPSILON || a.g - b.g < -EPSILON)
+		return (false);
+	if (a.b - b.b > EPSILON || a.b - b.b < -EPSILON)
+		return (false);
+	if (a.a - b.a > EPSILON || a.a - b.a < -EPSILON)
+		return (false);
+	return (true);
+}

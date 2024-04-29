@@ -301,3 +301,32 @@ Test(spheres, normal_on_a_transformed_sphere)
 	n = normal_at(&s, new_point(0, sqrt(2)/2, -sqrt(2)/2));
 	cr_assert(tuple_eq(n, new_vector(0, 0.97014, -0.24254)));
 }
+
+Test(spheres, a_sphere_has_a_default_material)
+{
+	t_shape	s;
+	t_material	m;
+
+	s = new_sphere();
+	m = new_material();
+	cr_assert(eq(dbl, m.ambient, s.material.ambient));
+	cr_assert(eq(dbl, m.diffuse, s.material.diffuse));
+	cr_assert(eq(dbl, m.specular, s.material.specular));
+	cr_assert(eq(dbl, m.shininess, s.material.shininess));
+	cr_assert(color_eq(m.color, s.material.color));
+}
+
+Test(spheres, a_sphere_may_be_assigned_a_material)
+{
+	t_shape	s;
+	t_material	*m;
+
+	s = new_sphere();
+	m = &s.material;
+	m->ambient = 1;
+	cr_assert(eq(dbl, s.material.ambient, 1));
+	cr_assert(eq(dbl, s.material.diffuse, 0.9));
+	cr_assert(eq(dbl, s.material.specular, 0.9));
+	cr_assert(eq(dbl, s.material.shininess, 200.0));
+	cr_assert(color_eq(s.material.color, new_color(1.0, 1.0, 1.0, 1.0)));
+}
