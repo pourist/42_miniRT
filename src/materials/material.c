@@ -5,7 +5,7 @@
 t_material	new_material(void)
 {
 	return ((t_material){
-		.color = new_color(1.0, 1.0, 1.0, 1.0),
+		.color = new_color(1.0, 1.0, 1.0),
 		.ambient = 0.1,
 		.diffuse = 0.9,
 		.specular = 0.9,
@@ -23,8 +23,8 @@ t_color	lighting(t_material const *material, t_light const *light,
 	lp.light_dot_normal = dot(lp.light_v, view->normal_v);
 	if (lp.light_dot_normal < 0)
 	{
-		lp.diffuse = new_color(0, 0, 0, 0);
-		lp.specular = new_color(0, 0, 0, 0);
+		lp.diffuse = new_color(0, 0, 0);
+		lp.specular = new_color(0, 0, 0);
 	}
 	else
 	{
@@ -33,7 +33,7 @@ t_color	lighting(t_material const *material, t_light const *light,
 		lp.reflect_v = reflect(negate(lp.light_v), view->normal_v);
 		lp.reflect_dot_eye = dot(lp.reflect_v, view->eye_v);
 		if (lp.reflect_dot_eye <= 0)
-			lp.specular = new_color(0, 0, 0, 0);
+			lp.specular = new_color(0, 0, 0);
 		else
 			lp.specular = multiply_color(light->intensity, material->specular
 					* pow(lp.reflect_dot_eye, material->shininess));

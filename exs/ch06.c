@@ -15,7 +15,7 @@ typedef struct s_params {
 	double		half;
 	t_point		ray_origin;
 	t_shape		sphere;
-	uint32_t	sphere_color;
+	t_color		sphere_color;
 	uint32_t	bg_color;
 }	t_params;
 
@@ -48,12 +48,12 @@ void	render_sphere(t_canvas *rt, t_params *params, t_light *light)
 				pos = position(ray, hits->t);
 				view.normal_v = normal_at(&params->sphere, pos);
 				view.eye_v = negate(ray.direction);
-				params->sphere_color = get_rgba(
-						lighting(&params->sphere.material, light, &pos, &view));
+				params->sphere_color = lighting(&params->sphere.material,
+						light, &pos, &view);
 				write_pixel(rt->img, xy[0], xy[1], params->sphere_color);
 			}
 			else
-				write_pixel(rt->img, xy[0], xy[1], params->bg_color);
+				write_pixel_32(rt->img, xy[0], xy[1], params->bg_color);
 		}
 	}
 }
@@ -67,8 +67,8 @@ void	set_params(t_params *params)
 	params->pixel_size = params->wall_size / HEIGHT;
 	params->half = params->wall_size * 0.5;
 	params->ray_origin = new_point(0, 0, -5);
-	params->sphere_color = get_rgba(new_color(0.6, 0.1, 0.1, 1));
-	params->bg_color = get_rgba(new_color(0.0, 0.0, 0.0, 1));
+	params->sphere_color = new_color(0.6, 0.1, 0.1);
+	params->bg_color = get_rgb(new_color(0.0, 0.0, 0.0));
 	params->sphere = new_sphere();
 	params->sphere.material.color.g = 0.2;
 	// set_transform(&params->sphere, scaling(1, 0.5, 1));
@@ -90,10 +90,10 @@ int	main(void)
 	t_params	params;
 	t_light		light;
 
-	if (!new_canvas(&rt, WIDTH, HEIGHT, "Chapter 05"))
+	if (!new_canvas(&rt, WIDTH, HEIGHT, "Chapter 06"))
 		return (1);
 	set_params(&params);
-	light = new_light(new_point(-10, 10, -10), new_color(1, 1, 1, 1));
+	light = new_light(new_point(-10, 10, -10), new_color(1, 1, 1));
 	render_sphere(&rt, &params, &light);
 	mlx_image_to_window(rt.mlx, rt.img, 0, 0);
 	mlx_close_hook(rt.mlx, &quit, &rt);

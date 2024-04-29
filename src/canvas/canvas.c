@@ -10,10 +10,10 @@ static uint8_t	convert_value(double value)
 		return (value * 255.0 + 0.5);
 }
 
-uint32_t	get_rgba(t_color color)
+uint32_t	get_rgb(t_color color)
 {
-	return (convert_value(color.r) << 24 | convert_value(color.g) << 16
-		| convert_value(color.b) << 8 | convert_value(color.a));
+	return (convert_value(color.b) << 16 | convert_value(color.g) << 8
+		| convert_value(color.r) | 0xFF000000);
 }
 
 bool	new_canvas(t_canvas *canvas, int width, int height, char *title)
@@ -26,33 +26,32 @@ bool	new_canvas(t_canvas *canvas, int width, int height, char *title)
 	canvas->img = mlx_new_image(canvas->mlx, width, height);
 	if (!canvas->img)
 		return (false);
-	ft_memset(canvas->img->pixels, 0, (*canvas->width * *canvas->height) << 2);
+	ft_memset(canvas->img->pixels, 255,
+		(*canvas->width * *canvas->height) << 2);
 	return (true);
 }
 
-void	write_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
+void	write_pixel(mlx_image_t *img, uint32_t x, uint32_t y, t_color color)
 {
 	uint8_t		*pixel;
 
 	if (x < 0 || x >= img->width || y < 0 || y >= img->height)
 		return ;
 	pixel = &img->pixels[((y * img->width) + x) << 2];
-	*(pixel) = color >> 24;
-	*(++pixel) = color >> 16 & 0xFF;
-	*(++pixel) = color >> 8 & 0xFF;
-	*(++pixel) = color & 0xFF;
+	*(pixel) = convert_value(color.r);
+	*(++pixel) = convert_value(color.g);
+	*(++pixel) = convert_value(color.b);
 }
 
-/* Second version of write_pixel, casting the pixels to uint32_t
-and assigning the color directly to it. To work the function get_rgba
-should be changed to return a uint32_t in abgr format to match the
-little-endian format of the pixels. */
-/* void	write_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
+void	write_pixel_32(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
 {
+	uint8_t		*pixel;
+
 	if (x < 0 || x >= img->width || y < 0 || y >= img->height)
 		return ;
-	((uint32_t *)img->pixels)[(y * img->width) + x] = color;
-} */
+	pixel = &img->pixels[((y * img->width) + x) << 2];
+	*(uint32_t *)pixel = color;
+}
 
 /* t_color	read_pixel(mlx_image_t *img, uint32_t x, uint32_t y)
 {
@@ -81,8 +80,8 @@ t_color	read_pixel(mlx_image_t *img, uint32_t x, uint32_t y)
 	double const	inv_255 = 0.00392157;
 
 	if (x < 0 || x >= img->width || y < 0 || y >= img->height)
-		return ((t_color){0, 0, 0, 0});
+		return ((t_color){0, 0, 0});
 	pixel = ((uint32_t *)img->pixels)[y * img->width + x];
 	return (new_color((pixel & 0xFF) * inv_255, (pixel >> 8 & 0xFF) * inv_255,
-			(pixel >> 16 & 0xFF) * inv_255, (pixel >> 24) * inv_255));
+			(pixel >> 16 & 0xFF) * inv_255));
 }

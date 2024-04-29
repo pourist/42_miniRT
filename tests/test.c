@@ -40,7 +40,5 @@ bool	color_eq(t_color a, t_color b)
 		return (false);
 	if (a.b - b.b > EPSILON || a.b - b.b < -EPSILON)
 		return (false);
-	if (a.a - b.a > EPSILON || a.a - b.a < -EPSILON)
-		return (false);
 	return (true);
 }

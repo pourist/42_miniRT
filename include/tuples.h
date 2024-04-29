@@ -29,7 +29,6 @@ typedef struct s_color {
 	double	r;
 	double	g;
 	double	b;
-	double	a;
 }	t_color;
 
 /* Tuples creation functions */
@@ -52,7 +51,7 @@ t_vector	cross(t_vector a, t_vector b);
 t_tuple		reflect(t_vector in, t_vector normal);
 
 /* Color creation  */
-t_color		new_color(double r, double g, double b, double a);
+t_color		new_color(double r, double g, double b);
 
 /*  Color operations */
 t_color		add_color(t_color c1, t_color c2);

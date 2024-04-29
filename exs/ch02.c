@@ -33,7 +33,7 @@ static t_projectile	tick(t_environment env, t_projectile proj)
 	return (projectile(pos, vel));
 }
 
-static void	write_dot(mlx_image_t *img, int x, int y, int color)
+static void	write_dot(mlx_image_t *img, int x, int y, t_color color)
 {
 	write_pixel(img, x, y, color);
 	write_pixel(img, x + 1, y, color);
@@ -48,11 +48,11 @@ static void	write_dot(mlx_image_t *img, int x, int y, int color)
 
 static void	render_projectile_motion(t_canvas *canvas)
 {
-	int				c;
+	t_color			c;
 	t_projectile	p;
 	t_environment	e;
 
-	c = get_rgba(new_color(1, 0, 0, 1));
+	c = new_color(1, 0, 0);
 	p = projectile(new_point(0, 0, 0),
 			multiply(normalize(new_vector(1, 1.8, 0)), 11.25));
 	e = environment(new_vector(0, -0.1, 0), new_vector(-0.01, 0, 0));
