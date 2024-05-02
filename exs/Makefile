@@ -17,7 +17,7 @@ WHITE       := \033[0;97m
 ################################################################################
 
 ifndef EX
-	EX								:= ch01 ch02 ch03 ch04 ch05 ch06
+	EX								:= ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08
 endif
 RM								:= rm -rf
 	
@@ -91,6 +91,10 @@ ch06: $(OBJECTS) ch06.c
 
 .PHONY: ch07
 ch07: $(OBJECTS) ch07.c
+	@$(call run, "$^")
+
+.PHONY: ch08
+ch08: $(OBJECTS) ch08.c
 	@$(call run, "$^")
 
 $(OBJECTS):
