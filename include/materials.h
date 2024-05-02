@@ -6,7 +6,7 @@
 typedef struct s_material
 {
 	t_color	color;
-	double	ambient;
+	t_color	ambient;
 	double	diffuse;
 	double	specular;
 	double	shininess;

@@ -80,7 +80,7 @@ void	set_params(t_params *params)
 	params->sphere = new_sphere();
 	params->sphere.material.color.g = 0.2;
 	params->light = new_light(new_point(-10, 10, -10), new_color(1, 1, 1));
-	params->sphere.material.ambient = 0.08;
+	params->sphere.material.ambient = new_color(0.1, 0.1, 0.1);
 	params->sphere.material.diffuse = 0.8;
 	params->sphere.material.specular = 0.8;
 }

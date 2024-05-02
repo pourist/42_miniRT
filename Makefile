@@ -24,7 +24,8 @@ RM								:= rm -rf
 ################################################################################
 
 OBJ_DIR						:= obj
-SRC_DIRS					:= tuples utils canvas matrices rays shapes lights materials
+SRC_DIRS					:= tuples utils canvas matrices rays shapes lights materials \
+										 world camera
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
@@ -39,11 +40,12 @@ vpath %.o $(OBJ_DIR)
 LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
 HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h \
-										 lights.h materials.h
+										 lights.h materials.h world.h camera.h
 SOURCE						:= main.c tuple.c basic_math.c vector_math.c eq_dbl.c \
 										 color.c canvas.c save.c hooks.c mx.c mx_operations.c \
 										 mx_attributes.c mx_transformations.c mx_rotations.c \
-										 ray.c sphere.c intersection.c shape.c light.c material.c
+										 ray.c sphere.c intersection.c shape.c light.c material.c \
+										 world.c view_transform.c camera.c render.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
