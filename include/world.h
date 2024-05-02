@@ -30,5 +30,7 @@ t_hit	*intersect_world(t_world *world, t_ray *ray);
 t_comps	prepare_computations(t_hit *intersect, t_ray *ray);
 t_color	shade_hit(t_world *world, t_comps *comps);
 t_color	color_at(t_world *world, t_ray *ray);
+// is_shadowed
+bool	is_shadowed(t_world *world, t_point *point, int index);
 
 #endif

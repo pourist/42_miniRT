@@ -21,7 +21,7 @@ t_color	lighting(t_material const *material, t_light const *light,
 	lp.light_v = normalize(subtract(light->position, *point));
 	lp.ambient = hadamard_product(lp.effective_color, material->ambient);
 	lp.light_dot_normal = dot(lp.light_v, view->normal_v);
-	if (lp.light_dot_normal < 0)
+	if (lp.light_dot_normal < 0 || light->in_shadow)
 	{
 		lp.diffuse = new_color(0, 0, 0);
 		lp.specular = new_color(0, 0, 0);

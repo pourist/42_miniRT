@@ -39,6 +39,7 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray)
 	}
 	else
 		comps.inside = false;
+	comps.over_point = add(comps.point, multiply(comps.view.normal_v, EPSILON));
 	return (comps);
 }
 
@@ -50,9 +51,11 @@ t_color	shade_hit(t_world *world, t_comps *comps)
 	i = -1;
 	color = new_color(0, 0, 0);
 	while (++i < world->lights_count)
-		color = add_color(color,
-				lighting(&comps->obj->material, &world->lights[i],
-					&comps->point, &comps->view));
+	{
+		world->lights[i].in_shadow = is_shadowed(world, &comps->over_point, i);
+		color = add_color(color, lighting(&comps->obj->material,
+					&world->lights[i], &comps->point, &comps->view));
+	}
 	return (color);
 }
 

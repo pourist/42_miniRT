@@ -309,7 +309,7 @@ Test(spheres, a_sphere_has_a_default_material)
 
 	s = new_sphere();
 	m = new_material();
-	cr_assert(eq(dbl, m.ambient, s.material.ambient));
+	cr_assert(color_eq(m.ambient, s.material.ambient));
 	cr_assert(eq(dbl, m.diffuse, s.material.diffuse));
 	cr_assert(eq(dbl, m.specular, s.material.specular));
 	cr_assert(eq(dbl, m.shininess, s.material.shininess));
@@ -323,10 +323,26 @@ Test(spheres, a_sphere_may_be_assigned_a_material)
 
 	s = new_sphere();
 	m = &s.material;
-	m->ambient = 1;
-	cr_assert(eq(dbl, s.material.ambient, 1));
+	m->ambient = new_color(1, 1, 1);
+	cr_assert(color_eq(s.material.ambient, m->ambient));
 	cr_assert(eq(dbl, s.material.diffuse, 0.9));
 	cr_assert(eq(dbl, s.material.specular, 0.9));
 	cr_assert(eq(dbl, s.material.shininess, 200.0));
 	cr_assert(color_eq(s.material.color, new_color(1.0, 1.0, 1.0)));
+}
+
+Test(intersections, hit_should_offset_the_intersection)
+{
+	t_ray		r;
+	t_shape		shape;
+	t_hit		*i;
+	t_comps		comps;
+
+	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+	shape = new_sphere();
+	set_transform(&shape, translation(0, 0, 1));
+	i = intersection(5, &shape);
+	comps = prepare_computations(i, &r);
+	cr_assert(lt(dbl, comps.over_point.z, -EPSILON/2));
+	cr_assert(gt(dbl, comps.point.z, comps.over_point.z));
 }
