@@ -70,6 +70,13 @@ void	create_spheres(t_world *world)
 	world->objs[5] = left;
 }
 
+void	create_ligts(t_world *world)
+{
+	world->lights = malloc(sizeof(t_light));
+	world->lights_count = 1;
+	world->lights[0] = new_light(new_point(-10, 10, -10), new_color(1, 1, 1));
+}
+
 void	create_camera(t_camera *camera)
 {
 	t_point		from;
@@ -87,22 +94,22 @@ int	main(void)
 {
 	t_world		world;
 	t_camera	camera;
-	t_canvas	rt;
+	t_canvas	canvas;
 
 	world = new_world();
 	world.objs = malloc(sizeof(t_shape) * 6);
 	world.objs_count = 6;
-	world.lights = malloc(sizeof(t_light));
-	world.lights_count = 1;
 	create_background(&world);
 	create_spheres(&world);
-	world.lights[0] = new_light(new_point(-10, 10, -10), new_color(1, 1, 1));
+	create_ligts(&world);
 	create_camera(&camera);
-	render(&rt, &world, &camera);
-	mlx_image_to_window(rt.mlx, rt.img, 0, 0);
-	mlx_close_hook(rt.mlx, &quit, &rt);
-	mlx_key_hook(rt.mlx, &handle_keyhook, &rt);
-	mlx_loop(rt.mlx);
-	mlx_terminate(rt.mlx);
+	render(&canvas, &world, &camera);
+	mlx_image_to_window(canvas.mlx, canvas.img, 0, 0);
+	mlx_close_hook(canvas.mlx, &quit, &canvas);
+	mlx_key_hook(canvas.mlx, &handle_keyhook, &canvas);
+	mlx_loop(canvas.mlx);
+	free(world.objs);
+	free(world.lights);
+	mlx_terminate(canvas.mlx);
 	return (0);
 }
