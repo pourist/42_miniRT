@@ -89,6 +89,10 @@ ch05: $(OBJECTS) ch05.c
 ch06: $(OBJECTS) ch06.c
 	@$(call run, "$^")
 
+.PHONY: ch07
+ch07: $(OBJECTS) ch07.c
+	@$(call run, "$^")
+
 $(OBJECTS):
 	@make -C .. -s
 
