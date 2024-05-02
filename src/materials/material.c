@@ -6,7 +6,7 @@ t_material	new_material(void)
 {
 	return ((t_material){
 		.color = new_color(1.0, 1.0, 1.0),
-		.ambient = 0.1,
+		.ambient = new_color(0.1, 0.1, 0.1),
 		.diffuse = 0.9,
 		.specular = 0.9,
 		.shininess = 200.0});
@@ -19,7 +19,7 @@ t_color	lighting(t_material const *material, t_light const *light,
 
 	lp.effective_color = hadamard_product(material->color, light->intensity);
 	lp.light_v = normalize(subtract(light->position, *point));
-	lp.ambient = multiply_color(lp.effective_color, material->ambient);
+	lp.ambient = hadamard_product(lp.effective_color, material->ambient);
 	lp.light_dot_normal = dot(lp.light_v, view->normal_v);
 	if (lp.light_dot_normal < 0)
 	{

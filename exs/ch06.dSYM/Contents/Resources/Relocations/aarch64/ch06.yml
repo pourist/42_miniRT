@@ -2,10 +2,10 @@
 triple:          'arm64-apple-darwin'
 binary-path:     ch06
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _light_and_shading, symObjAddr: 0x0, symBinAddr: 0x100003D84, symSize: 0xFC }
-  - { offsetInCU: 0x3AF, offset: 0x3AF, size: 0x8, addend: 0x0, symName: _light_and_shading, symObjAddr: 0x0, symBinAddr: 0x100003D84, symSize: 0xFC }
-  - { offsetInCU: 0xAE0, offset: 0xAE0, size: 0x8, addend: 0x0, symName: _render_sphere, symObjAddr: 0xFC, symBinAddr: 0x100003E80, symSize: 0x1F4 }
-  - { offsetInCU: 0xCE4, offset: 0xCE4, size: 0x8, addend: 0x0, symName: _set_params, symObjAddr: 0x2F0, symBinAddr: 0x100004074, symSize: 0x16C }
-  - { offsetInCU: 0xD99, offset: 0xD99, size: 0x8, addend: 0x0, symName: _set_transformations, symObjAddr: 0x45C, symBinAddr: 0x1000041E0, symSize: 0x50 }
-  - { offsetInCU: 0xE39, offset: 0xE39, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x4AC, symBinAddr: 0x100004230, symSize: 0x204 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _light_and_shading, symObjAddr: 0x0, symBinAddr: 0x100003D80, symSize: 0xFC }
+  - { offsetInCU: 0x3AF, offset: 0x3AF, size: 0x8, addend: 0x0, symName: _light_and_shading, symObjAddr: 0x0, symBinAddr: 0x100003D80, symSize: 0xFC }
+  - { offsetInCU: 0xAE0, offset: 0xAE0, size: 0x8, addend: 0x0, symName: _render_sphere, symObjAddr: 0xFC, symBinAddr: 0x100003E7C, symSize: 0x1F4 }
+  - { offsetInCU: 0xCE4, offset: 0xCE4, size: 0x8, addend: 0x0, symName: _set_params, symObjAddr: 0x2F0, symBinAddr: 0x100004070, symSize: 0x188 }
+  - { offsetInCU: 0xDA6, offset: 0xDA6, size: 0x8, addend: 0x0, symName: _set_transformations, symObjAddr: 0x478, symBinAddr: 0x1000041F8, symSize: 0x50 }
+  - { offsetInCU: 0xE46, offset: 0xE46, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x4C8, symBinAddr: 0x100004248, symSize: 0x218 }
 ...
