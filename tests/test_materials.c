@@ -5,7 +5,7 @@ Test(materials, create_a_material)
 	t_material	m;
 
 	m = new_material();
-	cr_assert(eq(dbl, m.ambient, 0.1));
+	cr_assert(color_eq(m.ambient, new_color(0.1, 0.1, 0.1)));
 	cr_assert(eq(dbl, m.diffuse, 0.9));
 	cr_assert(eq(dbl, m.specular, 0.9));
 	cr_assert(eq(dbl, m.shininess, 200.0));
@@ -105,4 +105,26 @@ Test(materials, lighting_with_the_light_behind_the_surface)
 	cr_assert(epsilon_eq(dbl, result.r, 0.1, EPSILON));
 	cr_assert(epsilon_eq(dbl, result.g, 0.1, EPSILON));
 	cr_assert(epsilon_eq(dbl, result.b, 0.1, EPSILON));
+}
+
+Test(materials, lighting_with_the_surface_in_shadow)
+{
+	t_eye_normal	eye;
+	t_light			light;
+	t_color			result;
+	t_color			expected;
+	t_material	m;
+	t_tuple			position;
+
+	m = new_material();
+	eye.eye_v = new_vector(0, 0, 1);
+	eye.normal_v = new_vector(0, 0, -1);
+	position = new_point(0, 0, 0);
+	light = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
+	light.in_shadow = true;
+	result = lighting(&m, &light, &position, &eye);
+	expected = new_color(0.1, 0.1, 0.1);
+	cr_assert(epsilon_eq(dbl, result.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.b, expected.b, EPSILON));
 }

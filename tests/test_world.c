@@ -190,3 +190,70 @@ Test(world, color_with_intersection_behind_ray)
 	cr_assert(epsilon_eq(dbl, c.g, expected.g, EPSILON));
 	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
 }
+
+Test(world, no_shadow_when_nothing_is_collinear_with_point_and_light)
+{
+	t_world	w;
+	t_point	p;
+
+	w = default_world();
+	p = new_point(0, 10, 0);
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+}
+
+Test(world, shadow_when_object_is_between_point_and_light)
+{
+	t_world	w;
+	t_point	p;
+
+	w = default_world();
+	p = new_point(10, -10, 10);
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), true));
+}
+
+Test(world, no_shadow_when_object_is_behind_light)
+{
+	t_world	w;
+	t_point	p;
+
+	w = default_world();
+	p = new_point(-20, 20, -20);
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+}
+
+Test(world, no_shadow_when_object_is_behind_point)
+{
+	t_world	w;
+	t_point	p;
+	w = default_world();
+	p = new_point(-2, 2, -2);
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+}
+
+Test(world, shade_hit_is_given_an_intersection_in_shadow)
+{
+	t_world		w;
+	t_ray			r;
+	t_hit			*i;
+	t_comps		comps;
+	t_color		c;
+	t_color		expected;
+
+	w = new_world();
+	w.lights = malloc(sizeof(t_light));
+	w.lights_count = 1;
+	w.lights[0] = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
+	w.objs = malloc(sizeof(t_shape) * 2);
+	w.objs_count = 2;
+	w.objs[0] = new_sphere();
+	w.objs[1] = new_sphere();
+	set_transform(&w.objs[1], translation(0, 0, 10));
+	r = new_ray(new_point(0, 0, 5), new_vector(0, 0, 1));
+	i = intersection(4, &w.objs[1]);
+	comps = prepare_computations(i, &r);
+	c = shade_hit(&w, &comps);
+	expected = new_color(0.1, 0.1, 0.1);
+	cr_assert(epsilon_eq(dbl, c.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, c.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
+}
