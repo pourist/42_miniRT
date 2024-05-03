@@ -45,7 +45,8 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c eq_dbl.c \
 										 color.c canvas.c save.c hooks.c mx.c mx_operations.c \
 										 mx_attributes.c mx_transformations.c mx_rotations.c \
 										 ray.c sphere.c intersection.c shape.c light.c material.c \
-										 world.c view_transform.c camera.c render.c is_shadowed.c
+										 world.c view_transform.c camera.c render.c is_shadowed.c \
+										 plane.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

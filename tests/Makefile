@@ -17,7 +17,7 @@ WHITE       := \033[0;97m
 ################################################################################
 
 TESTS							:= tuples colors canvas matrices transformations rays spheres \
-										 lights materials world view_transform camera
+										 lights materials world view_transform camera shapes planes
 RM								:= rm -rf
 	
 ################################################################################
@@ -112,6 +112,14 @@ view_transform: $(OBJECTS) test.c test_view_transform.c
 
 .PHONY: camera
 camera: $(OBJECTS) test.c test_camera.c
+	@$(call run, "$^")
+
+.PHONY: shapes
+shapes: $(OBJECTS) test.c test_shapes.c
+	@$(call run, "$^")
+
+.PHONY: planes
+planes: $(OBJECTS) test.c test_planes.c
 	@$(call run, "$^")
 
 $(OBJECTS):
