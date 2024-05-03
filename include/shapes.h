@@ -3,6 +3,7 @@
 
 # include "rays.h"
 # include "materials.h"
+# include "patterns.h"
 
 # define MAX_NODES	511
 # define EPSILON	1e-5
@@ -68,7 +69,11 @@ void		set_transform(t_shape *shape, t_matrix transform);
 t_vector	normal_at(t_shape *shape, t_point point);
 
 // Material.c 
-t_color		lighting(t_material const *material, t_light const *light,
-				t_point const *point, t_eye_normal const *eyenorm);
+t_color		lighting(t_shape *shape, t_light *light, t_point *point,
+				t_eye_normal *view);
+
+// pattern.c
+t_color		pattern_at_shape(t_pattern *pattern, t_shape *shape,
+				t_point *world_point);
 
 #endif

@@ -2,6 +2,7 @@
 # define WORLD_H
 
 # include "shapes.h"
+# include "lights.h"
 
 typedef struct s_world
 {
