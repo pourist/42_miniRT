@@ -1,6 +1,7 @@
 #ifndef CAMERA_H
 # define CAMERA_H
 
+# include "tuples.h"
 # include "matrices.h"
 # include "rays.h"
 

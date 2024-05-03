@@ -2,14 +2,16 @@
 # define MATERIALS_H
 
 # include "lights.h"
+# include "patterns.h"
 
 typedef struct s_material
 {
-	t_color	color;
-	t_color	ambient;
-	double	diffuse;
-	double	specular;
-	double	shininess;
+	t_color		color;
+	t_color		ambient;
+	double		diffuse;
+	double		specular;
+	double		shininess;
+	t_pattern	pattern;
 }	t_material;
 
 typedef struct s_lighting_params

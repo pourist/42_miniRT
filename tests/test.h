@@ -1,6 +1,9 @@
 #ifndef TEST_H
 # define TEST_H
 
+# define BLACK new_color(0, 0, 0)
+# define WHITE new_color(1, 1, 1)
+
 # include <criterion/criterion.h>
 # include <criterion/new/assert.h>
 
@@ -15,6 +18,7 @@
 # include "materials.h"
 # include "world.h"
 # include "camera.h"
+# include "patterns.h"
 
 bool	matrix_eq(t_matrix a, t_matrix b);
 bool	tuple_eq(t_tuple a, t_tuple b);

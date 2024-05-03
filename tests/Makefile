@@ -17,7 +17,8 @@ WHITE       := \033[0;97m
 ################################################################################
 
 TESTS							:= tuples colors canvas matrices transformations rays spheres \
-										 lights materials world view_transform camera shapes planes
+										 lights materials world view_transform camera shapes planes \
+										 patterns
 RM								:= rm -rf
 	
 ################################################################################
@@ -120,6 +121,10 @@ shapes: $(OBJECTS) test.c test_shapes.c
 
 .PHONY: planes
 planes: $(OBJECTS) test.c test_planes.c
+	@$(call run, "$^")
+
+.PHONY: patterns
+patterns: $(OBJECTS) test_patterns.c
 	@$(call run, "$^")
 
 $(OBJECTS):

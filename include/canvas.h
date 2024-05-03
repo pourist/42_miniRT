@@ -5,7 +5,6 @@
 # include <fcntl.h>
 # include "MLX42/MLX42.h"
 # include "libft.h"
-# include "tuples.h"
 # include "world.h"
 # include "camera.h"
 
