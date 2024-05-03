@@ -12,6 +12,10 @@ typedef struct s_sphere {
 	double	radius;
 }	t_sphere;
 
+typedef struct s_plane {
+	t_point	origin;
+}	t_plane;
+
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
 typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
@@ -20,6 +24,7 @@ typedef t_tuple			(*t_normal_fn)(t_shape *, t_point);
 typedef struct s_shape {
 	union {
 		t_sphere	sphere;
+		t_plane		plane;
 	};
 	t_intersect_fn	intersect_fn;
 	t_normal_fn		normal_at;
@@ -47,6 +52,8 @@ typedef struct s_discriminant
 
 // Sphere Shape
 t_shape		new_sphere(void);
+// Plane Shape
+t_shape		new_plane(void);
 
 // Intersections general
 void		intersect(t_hit **xs, t_shape *s, t_ray r);

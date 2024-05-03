@@ -12,8 +12,8 @@ t_shape	new_sphere(void)
 	shape.sphere.radius = 1.0;
 	shape.intersect_fn = intersect_sphere;
 	shape.normal_at = normal_at_sphere;
-	// shape.material.diffuse = 0.7;
-	// shape.material.specular = 0.3;
+	shape.material.diffuse = 0.7;
+	shape.material.specular = 0.3;
 	return (shape);
 }
 
@@ -50,7 +50,8 @@ static bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray)
 	if (d.discriminant < 0)
 		return (false);
 	insert_intersection(xs, intersection(d.t1, shape));
-	insert_intersection(xs, intersection(d.t2, shape));
+	if (d.discriminant != 0)
+		insert_intersection(xs, intersection(d.t2, shape));
 	return (true);
 }
 
