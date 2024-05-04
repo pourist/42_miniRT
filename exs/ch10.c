@@ -1,62 +1,49 @@
 #include "shapes.h"
 #include "canvas.h"
 #include "materials.h"
-#include <stdio.h>
+#include "patterns.h"
 
 #define WIDTH	1024
 #define HEIGHT	1024
+#define N_OBJS	7
 
 void	create_background(t_world *world)
 {
 	t_shape		floor;
-	t_shape		front; 
-	t_shape		r_top;
-	t_shape		l_top;
-	t_shape		r_bottom; 
-	t_shape		l_bottom;
-	t_shape		back;
+	t_shape		front_wall;
+	t_shape		left_wall;
+	t_shape		right_wall;
+	t_color		a;
+	t_color		b;
 	t_matrix	multi;
 
+	a = new_color(0.5, 0.5, 0.5);
+	b = new_color(0.7, 0.7, 0.7);
 	floor = new_plane();
-	floor.material.color = new_color(1, 0.9, 0.9);
 	floor.material.specular = 0;
-	front = new_plane();
-	front.material = floor.material;
-	multi = transformations(2, 
-			rotation_x(cos(M_PI / 2), sin(M_PI / 2)), translation(0, 0, 12));
-	set_transform(&front, multi);
-	l_top = new_plane();
-	l_top.material = floor.material;
+	floor.material.pattern = new_ring_pattern(a, b);
+	front_wall = new_plane();
+	front_wall.material = floor.material;
+	front_wall.material.pattern = new_checkers_pattern(a, b);
+	multi = transformations(2, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
+			translation(0, 0, 5));
+	set_transform(&front_wall, multi);
+	set_pattern_transform(&front_wall.material.pattern, multi);
+	right_wall = new_plane();
+	right_wall.material = floor.material;
+	right_wall.material.pattern = new_checkers_pattern(a, b);
 	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
-			rotation_y(cos(-M_PI / 4), sin(-M_PI / 4)), translation(-12, 0, 12));
-	set_transform(&l_top, multi);
-	r_top = new_plane();
+			rotation_y(cos(M_PI / 3), sin(M_PI / 3)), translation(5, 0, 5));
+	set_transform(&right_wall, multi);
+	left_wall = new_plane();
+	left_wall.material = right_wall.material;
 	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
-			rotation_y(cos(M_PI / 4), sin(M_PI / 4)), translation(12, 0, 12));
-	set_transform(&r_top, multi);
-	r_top.material = floor.material;
-	l_bottom = new_plane();
-	l_bottom.material = floor.material;
-	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
-			rotation_y(cos(-M_PI * 0.75), sin(-M_PI * 0.75)), translation(-12, 0, -12));
-	set_transform(&l_bottom, multi);
-	r_bottom = new_plane();
-	r_bottom.material = floor.material;
-	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
-			rotation_y(cos(M_PI * 0.75), sin(M_PI * 0.75)), translation(12, 0, -12));
-	set_transform(&r_bottom, multi);
-	back = new_plane();
-	back.material = floor.material;
-	multi = transformations(2, 
-			rotation_x(cos(M_PI / 2), sin(M_PI / 2)), translation(0, 0, -12));
-	set_transform(&back, multi);
+			rotation_y(cos(-M_PI / 3), sin(-M_PI / 3)), translation(-5, 0, 5));
+	set_transform(&left_wall, multi);
 	world->objs[0] = floor;
-	world->objs[1] = front; 
-	world->objs[2] = l_top;
-	world->objs[3] = r_top; 
-	world->objs[4] = l_bottom; 
-	world->objs[5] = r_bottom; 
-	world->objs[6] = back; 
+	world->objs[1] = front_wall;
+	world->objs[2] = right_wall;
+	world->objs[3] = left_wall;
 }
 
 void	create_spheres(t_world *world)
@@ -64,27 +51,32 @@ void	create_spheres(t_world *world)
 	t_shape		middle;
 	t_shape		right;
 	t_shape		left;
+	t_color		a;
+	t_matrix	m;
 
+	a = new_color(1, 1, 1);
 	middle = new_sphere();
 	middle.material.color = new_color(0.1, 1, 0.5);
-	middle.material.diffuse = 0.7;
-	middle.material.specular = 0.3;
-	set_transform(&middle, translation(-0.5, 1, 0.5));
+	middle.material.pattern = new_checkers_pattern(a, middle.material.color);
+	m = translation(-0.5, 1, 0.5);
+	set_transform(&middle, m);
+	m = scaling(0.4, 0.4, 0.4);
+	set_pattern_transform(&middle.material.pattern, m);
 	right = new_sphere();
-	set_transform(&right, transformations(2, scaling(0.5, 0.5, 0.5),
-			translation(1.5, 0.5, -0.5)));
 	right.material.color = new_color(0.5, 1, 0.1);
-	right.material.diffuse = 0.7;
-	right.material.specular = 0.3;
+	right.material.pattern = new_ring_pattern(a, right.material.color);
+	m = multiply_matrices(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5));
+	set_transform(&right, m);
+	set_pattern_transform(&right.material.pattern, m);
 	left = new_sphere();
-	set_transform(&left, transformations(2, scaling(0.33, 0.33, 0.33),
-			translation(-1.5, 0.33, -0.75)));
 	left.material.color = new_color(1, 0.8, 0.1);
-	left.material.diffuse = 0.7;
-	left.material.specular = 0.3;
-	world->objs[7] = middle;
-	world->objs[8] = right;
-	world->objs[9] = left;
+	left.material.pattern = new_gradient_pattern(a, left.material.color);
+	m = multiply_matrices(translation(-1.5, 0.33, -0.75), scaling(0.33, 0.33, 0.33));
+	set_transform(&left, m);
+	set_pattern_transform(&left.material.pattern, m);
+	world->objs[4] = middle;
+	world->objs[5] = right;
+	world->objs[6] = left;
 }
 
 void	create_ligts(t_world *world)
@@ -100,9 +92,9 @@ void	create_camera(t_camera *camera)
 	t_point		to;
 	t_vector	up;
 
-	*camera = new_camera(WIDTH, HEIGHT, M_PI / 3);
-	from = new_point(0, 12, -2);
-	to = new_point(0, -6, 0);
+	*camera = new_camera(WIDTH, HEIGHT, M_PI / 2);
+	from = new_point(0, 1, -5);
+	to = new_point(0, 1, 0);
 	up = new_vector(0, 1, 0);
 	set_transform_camera(camera, view_transform(&from, &to, &up));
 }
@@ -114,8 +106,8 @@ int	main(void)
 	t_canvas	canvas;
 
 	world = new_world();
-	world.objs = malloc(sizeof(t_shape) * 10);
-	world.objs_count = 10;
+	world.objs = malloc(sizeof(t_shape) * N_OBJS);
+	world.objs_count = N_OBJS;
 	create_background(&world);
 	create_spheres(&world);
 	create_ligts(&world);
