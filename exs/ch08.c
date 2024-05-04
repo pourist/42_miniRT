@@ -17,9 +17,6 @@ void	create_background(t_world *world)
 	set_transform(&floor, scaling(10, 0.01, 10));
 	floor.material.color = new_color(1, 0.9, 0.9);
 	floor.material.specular = 0;
-	floor.material.pattern = new_stripe_pattern(new_color(1, 0.9, 0.9),
-			new_color(0.9, 0.9, 1));
-	set_pattern_transform(&floor.material.pattern, scaling(10, 0.01, 10));
 	left_wall = new_sphere();
 	multi = multiply_matrices(
 			multiply_matrices(
@@ -55,10 +52,7 @@ void	create_spheres(t_world *world)
 	middle.material.color = new_color(0.1, 1, 0.5);
 	middle.material.diffuse = 0.7;
 	middle.material.specular = 0.3;
-	middle.material.pattern = new_stripe_pattern(new_color(0.1, 1, 0.5),
-			new_color(0.1, 0.5, 1));
 	set_transform(&middle, translation(-0.5, 1, 0.5));
-	set_pattern_transform(&middle.material.pattern, translation(-0.5, 1, 0.5));
 	right = new_sphere();
 	right.sphere.radius = 0.5;
 	set_transform(&right, translation(0, 2, 0.5));
