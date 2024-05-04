@@ -321,3 +321,154 @@ Test(patterns, stripes_with_object_and_pattern_transformation)
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
 }
+
+Test(patterns, gradient_linear_interpolation)
+{
+	t_pattern	pattern;
+	t_color		res;
+	t_color		expected;
+	t_point		p;
+
+	pattern = new_gradient_pattern(WHITE, BLACK);
+	p = new_point(0, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = WHITE;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0.25, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = new_color(0.75, 0.75, 0.75);
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0.5, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = new_color(0.5, 0.5, 0.5);
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0.75, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = new_color(0.25, 0.25, 0.25);
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+}
+
+Test(patterns, ring_pattern)
+{
+	t_pattern	pattern;
+	t_color		res;
+	t_color		expected;
+	t_point		p;
+	pattern = new_ring_pattern(WHITE, BLACK);
+	p = new_point(0, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = WHITE;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(1, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = BLACK;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0, 0, 1);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = BLACK;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0.708, 0, 0.708);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = BLACK;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+}
+
+Test(patterns, checkers_should_repeat_in_x)
+{
+	t_pattern	pattern;
+	t_color		res;
+	t_color		expected;
+	t_point		p;
+
+	pattern = new_checkers_pattern(WHITE, BLACK);
+	p = new_point(0, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = WHITE;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0.99, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = WHITE;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(1.01, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = BLACK;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+}
+
+Test(patterns, checkers_should_repeat_in_y)
+{
+	t_pattern	pattern;
+	t_color		res;
+	t_color		expected;
+	t_point		p;
+
+	pattern = new_checkers_pattern(WHITE, BLACK);
+	p = new_point(0, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = WHITE;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0, 0.99, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = WHITE;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0, 1.01, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = BLACK;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+}
+
+Test(patterns, checkers_should_repeat_in_z)
+{
+	t_pattern	pattern;
+	t_color		res;
+	t_color		expected;
+	t_point		p;
+
+	pattern = new_checkers_pattern(WHITE, BLACK);
+	p = new_point(0, 0, 0);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = WHITE;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0, 0, 0.99);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = WHITE;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+	p = new_point(0, 0, 1.01);
+	res = pattern.pattern_at(&pattern, &p);
+	expected = BLACK;
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+}
