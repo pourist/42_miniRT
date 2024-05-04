@@ -54,7 +54,7 @@ t_color	shade_hit(t_world *world, t_comps *comps)
 	{
 		world->lights[i].in_shadow = is_shadowed(world, &comps->over_point, i);
 		color = add_color(color, lighting(comps->obj,
-					&world->lights[i], &comps->point, &comps->view));
+					&world->lights[i], &comps->over_point, &comps->view));
 	}
 	return (color);
 }

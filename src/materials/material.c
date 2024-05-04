@@ -30,7 +30,7 @@ t_color	lighting(t_shape *shape, t_light *light, t_point *point,
 	lp.effective_color = hadamard_product(color, light->intensity);
 	lp.light_v = normalize(subtract(light->position, *point));
 	lp.light_dot_normal = dot(lp.light_v, view->normal_v);
-	if (lp.light_dot_normal < 0 || light->in_shadow)
+	if (lp.light_dot_normal < 0 || light->in_shadow == true)
 		return (darken(&shape->material, &lp));
 	return (lighten(&shape->material, &lp, light, view));
 }
