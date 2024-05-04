@@ -23,7 +23,7 @@ t_color	lighting(t_shape *shape, t_light *light, t_point *point,
 	t_lighting_params	lp;
 	t_color				color;
 
-	if (shape->material.pattern.has_pattern)
+	if (shape->material.pattern.has_pattern == true)
 		color = pattern_at_shape(&shape->material.pattern, shape, point);
 	else
 		color = shape->material.color;
