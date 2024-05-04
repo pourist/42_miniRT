@@ -20,3 +20,10 @@ t_color	pattern_at_shape(t_pattern *pattern, t_shape *shape,
 	pattern_point = multiply_matrix_by_tuple(pattern->inverse, object_point);
 	return (pattern->pattern_at(pattern, &pattern_point));
 }
+
+void	set_pattern_transform(t_pattern *pattern, t_matrix transform)
+{
+	pattern->transform = transform;
+	pattern->inverse = inverse_matrix(transform);
+	pattern->transpose = transpose_matrix(pattern->inverse);
+}

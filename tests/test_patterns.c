@@ -237,16 +237,16 @@ Test(patterns, lighting_with_stripe_pattern_applied)
 	t_point		p;
 
 	shape = new_sphere();
-	m = material();
+	m = new_material();
 	m.pattern = new_stripe_pattern(new_color(1, 1, 1), new_color(0, 0, 0));
 	m.ambient = new_color(1, 1, 1);
 	m.diffuse = 0;
 	m.specular = 0;
 	shape.material = m;
-	view.eyev = vector(0, 0, -1);
-	view.normalv = vector(0, 0, -1);
-	light = new_light(point(0, 0, -10), new_color(1, 1, 1));
-	light.in_shadow = FALSE;
+	view.eye_v = new_vector(0, 0, -1);
+	view.normal_v = new_vector(0, 0, -1);
+	light = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
+	light.in_shadow = false;
 	p = new_point(0.9, 0, 0);
 	c1 = lighting(&shape, &light, &p, &view);
 	p = new_point(1.1, 0, 0);
@@ -259,4 +259,65 @@ Test(patterns, lighting_with_stripe_pattern_applied)
 	cr_assert(eq(dbl, c2.r, 0));
 	cr_assert(eq(dbl, c2.g, 0));
 	cr_assert(eq(dbl, c2.b, 0));
+}
+
+Test(patterns, stripes_with_object_transformation)
+{
+	t_shape		object;
+	t_pattern	pattern;
+	t_color		res;
+	t_color		expected;
+	t_point		p;
+
+	object = new_sphere();
+	set_transform(&object, scaling(2, 2, 2));
+	pattern = new_stripe_pattern(WHITE, BLACK);
+	p = new_point(1.5, 0, 0);
+	res = pattern_at_shape(&pattern, &object, &p);
+	expected = WHITE;
+
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+}
+
+Test(patterns, stripes_with_pattern_transformation)
+{
+	t_shape		object;
+	t_pattern	pattern;
+	t_color		res;
+	t_color		expected;
+	t_point		p;
+
+	object = new_sphere();
+	pattern = new_stripe_pattern(WHITE, BLACK);
+	set_pattern_transform(&pattern, scaling(2, 2, 2));
+	p = new_point(1.5, 0, 0);
+	res = pattern_at_shape(&pattern, &object, &p);
+	expected = WHITE;
+
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
+}
+
+Test(patterns, stripes_with_object_and_pattern_transformation)
+{
+	t_shape		object;
+	t_pattern	pattern;
+	t_color		res;
+	t_color		expected;
+	t_point		p;
+
+	object = new_sphere();
+	set_transform(&object, scaling(2, 2, 2));
+	pattern = new_stripe_pattern(WHITE, BLACK);
+	set_pattern_transform(&pattern, translation(0.5, 0, 0));
+	p = new_point(2.5, 0, 0);
+	res = pattern_at_shape(&pattern, &object, &p);
+	expected = WHITE;
+
+	cr_assert(eq(dbl, res.r, expected.r));
+	cr_assert(eq(dbl, res.g, expected.g));
+	cr_assert(eq(dbl, res.b, expected.b));
 }
