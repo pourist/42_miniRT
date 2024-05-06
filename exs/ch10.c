@@ -32,12 +32,20 @@ void	create_background(t_world *world)
 	set_pattern_transform(floor.material.pattern.b, scaling(0.1, 0.1, 0.1));
 	front_wall = new_plane();
 	front_wall.material = floor.material;
-	front_wall.material.pattern = new_gradient_pattern(
+	front_wall.material.pattern = new_blended_pattern(
 			new_solid_pattern(a), new_solid_pattern(b));
+	*front_wall.material.pattern.a = new_stripe_pattern(
+			new_solid_pattern(new_color(0, 0.5, 0.1)),
+			new_solid_pattern(new_color(0.8, 0.8, 0.8)));
+	*front_wall.material.pattern.b = new_stripe_pattern(
+			new_solid_pattern(new_color(0, 0.5, 0.1)),
+			new_solid_pattern(new_color(0.8, 0.8, 0.8)));
 	multi = transformations(2, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
 			translation(0, 0, 5));
 	set_transform(&front_wall, multi);
 	set_pattern_transform(&front_wall.material.pattern, multi);
+	set_pattern_transform(front_wall.material.pattern.a, rotation_z(cos(M_PI / 4), sin(M_PI / 4)));
+	set_pattern_transform(front_wall.material.pattern.b, rotation_z(cos(-M_PI / 4), sin(-M_PI / 4)));
 	right_wall = new_plane();
 	right_wall.material = floor.material;
 	right_wall.material.pattern = new_checkers_pattern(new_solid_pattern(a),

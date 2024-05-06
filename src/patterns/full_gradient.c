@@ -12,7 +12,10 @@ t_pattern	new_full_gradient_pattern(t_pattern a, t_pattern b)
 		return (pattern);
 	pattern.b = malloc(sizeof(t_pattern));
 	if (!pattern.b)
+	{
+		free(pattern.a);
 		return (pattern);
+	}
 	*pattern.a = a;
 	*pattern.b = b;
 	pattern.pattern_at = full_gradient_at;

@@ -28,5 +28,6 @@ t_pattern	new_ring_pattern(t_pattern a, t_pattern b);
 t_pattern	new_checkers_pattern(t_pattern a, t_pattern b);
 t_pattern	new_full_gradient_pattern(t_pattern a, t_pattern b);
 t_pattern	new_radial_gradient_pattern(t_pattern a, t_pattern b);
+t_pattern	new_blended_pattern(t_pattern a, t_pattern b);
 
 #endif
