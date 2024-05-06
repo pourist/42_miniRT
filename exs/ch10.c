@@ -21,22 +21,33 @@ void	create_background(t_world *world)
 	b = new_color(0.7, 0.7, 0.7);
 	floor = new_plane();
 	floor.material.specular = 0;
-	floor.material.pattern = new_ring_pattern(a, b);
+	floor.material.pattern = new_checkers_pattern(new_solid_pattern(a),
+			new_solid_pattern(b));
+	*floor.material.pattern.a = new_stripe_pattern(
+			new_solid_pattern(new_color(0.9, 0.3, 0.3)),
+			new_solid_pattern(new_color(0.6, 0.3, 0.3)));
+	set_pattern_transform(floor.material.pattern.a, scaling(0.1, 0.1, 0.1));
+	*floor.material.pattern.b = new_stripe_pattern(
+			new_solid_pattern(a), new_solid_pattern(b));
+	set_pattern_transform(floor.material.pattern.b, scaling(0.1, 0.1, 0.1));
 	front_wall = new_plane();
 	front_wall.material = floor.material;
-	front_wall.material.pattern = new_checkers_pattern(a, b);
+	front_wall.material.pattern = new_gradient_pattern(
+			new_solid_pattern(a), new_solid_pattern(b));
 	multi = transformations(2, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
 			translation(0, 0, 5));
 	set_transform(&front_wall, multi);
 	set_pattern_transform(&front_wall.material.pattern, multi);
 	right_wall = new_plane();
 	right_wall.material = floor.material;
-	right_wall.material.pattern = new_checkers_pattern(a, b);
+	right_wall.material.pattern = new_checkers_pattern(new_solid_pattern(a),
+			new_solid_pattern(b));
 	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
 			rotation_y(cos(M_PI / 3), sin(M_PI / 3)), translation(5, 0, 5));
 	set_transform(&right_wall, multi);
 	left_wall = new_plane();
-	left_wall.material = right_wall.material;
+	left_wall.material.pattern = new_checkers_pattern(new_solid_pattern(a),
+			new_solid_pattern(b));
 	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
 			rotation_y(cos(-M_PI / 3), sin(-M_PI / 3)), translation(-5, 0, 5));
 	set_transform(&left_wall, multi);
@@ -57,20 +68,23 @@ void	create_spheres(t_world *world)
 	a = new_color(1, 1, 1);
 	middle = new_sphere();
 	middle.material.color = new_color(0.1, 1, 0.5);
-	middle.material.pattern = new_checkers_pattern(a, middle.material.color);
+	middle.material.pattern = new_checkers_pattern(new_solid_pattern(a),
+			new_solid_pattern(middle.material.color));
 	m = translation(-0.5, 1, 0.5);
 	set_transform(&middle, m);
 	m = scaling(0.4, 0.4, 0.4);
 	set_pattern_transform(&middle.material.pattern, m);
 	right = new_sphere();
 	right.material.color = new_color(0.5, 1, 0.1);
-	right.material.pattern = new_ring_pattern(a, right.material.color);
+	right.material.pattern = new_ring_pattern(new_solid_pattern(a),
+			new_solid_pattern(right.material.color));
 	m = multiply_matrices(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5));
 	set_transform(&right, m);
 	set_pattern_transform(&right.material.pattern, m);
 	left = new_sphere();
 	left.material.color = new_color(1, 0.8, 0.1);
-	left.material.pattern = new_gradient_pattern(a, left.material.color);
+	left.material.pattern = new_full_gradient_pattern(new_solid_pattern(a),
+			new_solid_pattern(left.material.color));
 	m = multiply_matrices(translation(-1.5, 0.33, -0.75), scaling(0.33, 0.33, 0.33));
 	set_transform(&left, m);
 	set_pattern_transform(&left.material.pattern, m);
@@ -117,6 +131,20 @@ int	main(void)
 	mlx_close_hook(canvas.mlx, &quit, &canvas);
 	mlx_key_hook(canvas.mlx, &handle_keyhook, &canvas);
 	mlx_loop(canvas.mlx);
+	free(world.objs[0].material.pattern.a);
+	free(world.objs[0].material.pattern.b);
+	free(world.objs[1].material.pattern.a);
+	free(world.objs[1].material.pattern.b);
+	free(world.objs[2].material.pattern.a);
+	free(world.objs[2].material.pattern.b);
+	free(world.objs[3].material.pattern.a);
+	free(world.objs[3].material.pattern.b);
+	free(world.objs[4].material.pattern.a);
+	free(world.objs[4].material.pattern.b);
+	free(world.objs[5].material.pattern.a);
+	free(world.objs[5].material.pattern.b);
+	free(world.objs[6].material.pattern.a);
+	free(world.objs[6].material.pattern.b);
 	free(world.objs);
 	free(world.lights);
 	mlx_terminate(canvas.mlx);

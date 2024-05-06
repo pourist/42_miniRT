@@ -5,19 +5,27 @@ Test(patterns, create_stripe_feature)
 	t_pattern	pattern;
 	t_color		white;
 	t_color		black;
+	t_color		res;
+	t_point		p;
 	
-	pattern.a = WHITE;
-	pattern.b = BLACK;
+	pattern.a = malloc(sizeof(t_pattern));
+	pattern.b = malloc(sizeof(t_pattern));
+	*pattern.a = new_solid_pattern(WHITE);
+	*pattern.b = new_solid_pattern(BLACK);
 	white = new_color(1, 1, 1);
 	black = new_color(0, 0, 0);
+	p = new_point(0, 0, 0);
 
-	cr_assert(eq(dbl, pattern.a.r, white.r));
-	cr_assert(eq(dbl, pattern.a.g, white.g));
-	cr_assert(eq(dbl, pattern.a.b, white.b));
-
-	cr_assert(eq(dbl, pattern.b.r, black.r));
-	cr_assert(eq(dbl, pattern.b.g, black.g));
-	cr_assert(eq(dbl, pattern.b.b, black.b));
+	res = pattern.a->pattern_at(pattern.a, &p);
+	cr_assert(eq(dbl, res.r, white.r));
+	cr_assert(eq(dbl, res.g, white.g));
+	cr_assert(eq(dbl, res.b, white.b));
+	res = pattern.b->pattern_at(pattern.b, &p);
+	cr_assert(eq(dbl, res.r, black.r));
+	cr_assert(eq(dbl, res.g, black.g));
+	cr_assert(eq(dbl, res.b, black.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_y_1)
@@ -28,13 +36,16 @@ Test(patterns, new_pattern_constant_in_y_1)
 	t_color		expected;
 
 	p = new_point(0, 0, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_y_2)
@@ -45,13 +56,16 @@ Test(patterns, new_pattern_constant_in_y_2)
 	t_color		expected;
 
 	p = new_point(0, 1, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_y_3)
@@ -62,13 +76,16 @@ Test(patterns, new_pattern_constant_in_y_3)
 	t_color		expected;
 
 	p = new_point(0, 2, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 /* A stripe pattern is constant in z */
@@ -80,13 +97,16 @@ Test(patterns, new_pattern_constant_in_z_1)
 	t_color		expected;
 
 	p = new_point(0, 0, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_z_2)
@@ -97,13 +117,16 @@ Test(patterns, new_pattern_constant_in_z_2)
 	t_color		expected;
 
 	p = new_point(0, 0, 1);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_z_3)
@@ -114,13 +137,16 @@ Test(patterns, new_pattern_constant_in_z_3)
 	t_color		expected;
 
 	p = new_point(0, 0, 2);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 /* A stripe pattern is constant in x */
@@ -132,13 +158,16 @@ Test(patterns, new_pattern_constant_in_x_1)
 	t_color		expected;
 
 	p = new_point(0, 0, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_x_2)
@@ -149,13 +178,16 @@ Test(patterns, new_pattern_constant_in_x_2)
 	t_color		expected;
 
 	p = new_point(0.9, 0, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_x_3)
@@ -166,13 +198,16 @@ Test(patterns, new_pattern_constant_in_x_3)
 	t_color		expected;
 
 	p = new_point(1, 0, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = BLACK;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_x_4)
@@ -183,13 +218,16 @@ Test(patterns, new_pattern_constant_in_x_4)
 	t_color		expected;
 
 	p = new_point(-0.1, 0, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = BLACK;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_x_5)
@@ -200,13 +238,16 @@ Test(patterns, new_pattern_constant_in_x_5)
 	t_color		expected;
 
 	p = new_point(-1, 0, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = BLACK;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, new_pattern_constant_in_x_6)
@@ -217,13 +258,16 @@ Test(patterns, new_pattern_constant_in_x_6)
 	t_color		expected;
 
 	p = new_point(-1.1, 0, 0);
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
 	
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, lighting_with_stripe_pattern_applied)
@@ -238,7 +282,8 @@ Test(patterns, lighting_with_stripe_pattern_applied)
 
 	shape = new_sphere();
 	m = new_material();
-	m.pattern = new_stripe_pattern(new_color(1, 1, 1), new_color(0, 0, 0));
+	m.pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	m.ambient = new_color(1, 1, 1);
 	m.diffuse = 0;
 	m.specular = 0;
@@ -259,6 +304,8 @@ Test(patterns, lighting_with_stripe_pattern_applied)
 	cr_assert(eq(dbl, c2.r, 0));
 	cr_assert(eq(dbl, c2.g, 0));
 	cr_assert(eq(dbl, c2.b, 0));
+	free(m.pattern.a);
+	free(m.pattern.b);
 }
 
 Test(patterns, stripes_with_object_transformation)
@@ -271,7 +318,8 @@ Test(patterns, stripes_with_object_transformation)
 
 	object = new_sphere();
 	set_transform(&object, scaling(2, 2, 2));
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	p = new_point(1.5, 0, 0);
 	res = pattern_at_shape(&pattern, &object, &p);
 	expected = WHITE;
@@ -279,6 +327,8 @@ Test(patterns, stripes_with_object_transformation)
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, stripes_with_pattern_transformation)
@@ -290,7 +340,8 @@ Test(patterns, stripes_with_pattern_transformation)
 	t_point		p;
 
 	object = new_sphere();
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	set_pattern_transform(&pattern, scaling(2, 2, 2));
 	p = new_point(1.5, 0, 0);
 	res = pattern_at_shape(&pattern, &object, &p);
@@ -299,6 +350,8 @@ Test(patterns, stripes_with_pattern_transformation)
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, stripes_with_object_and_pattern_transformation)
@@ -311,7 +364,8 @@ Test(patterns, stripes_with_object_and_pattern_transformation)
 
 	object = new_sphere();
 	set_transform(&object, scaling(2, 2, 2));
-	pattern = new_stripe_pattern(WHITE, BLACK);
+	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	set_pattern_transform(&pattern, translation(0.5, 0, 0));
 	p = new_point(2.5, 0, 0);
 	res = pattern_at_shape(&pattern, &object, &p);
@@ -320,6 +374,8 @@ Test(patterns, stripes_with_object_and_pattern_transformation)
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, gradient_linear_interpolation)
@@ -329,7 +385,8 @@ Test(patterns, gradient_linear_interpolation)
 	t_color		expected;
 	t_point		p;
 
-	pattern = new_gradient_pattern(WHITE, BLACK);
+	pattern = new_gradient_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	p = new_point(0, 0, 0);
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
@@ -354,6 +411,8 @@ Test(patterns, gradient_linear_interpolation)
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, ring_pattern)
@@ -362,7 +421,8 @@ Test(patterns, ring_pattern)
 	t_color		res;
 	t_color		expected;
 	t_point		p;
-	pattern = new_ring_pattern(WHITE, BLACK);
+	pattern = new_ring_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	p = new_point(0, 0, 0);
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
@@ -387,6 +447,8 @@ Test(patterns, ring_pattern)
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, checkers_should_repeat_in_x)
@@ -396,7 +458,8 @@ Test(patterns, checkers_should_repeat_in_x)
 	t_color		expected;
 	t_point		p;
 
-	pattern = new_checkers_pattern(WHITE, BLACK);
+	pattern = new_checkers_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	p = new_point(0, 0, 0);
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
@@ -415,6 +478,8 @@ Test(patterns, checkers_should_repeat_in_x)
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, checkers_should_repeat_in_y)
@@ -424,7 +489,8 @@ Test(patterns, checkers_should_repeat_in_y)
 	t_color		expected;
 	t_point		p;
 
-	pattern = new_checkers_pattern(WHITE, BLACK);
+	pattern = new_checkers_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	p = new_point(0, 0, 0);
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
@@ -443,6 +509,8 @@ Test(patterns, checkers_should_repeat_in_y)
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
 
 Test(patterns, checkers_should_repeat_in_z)
@@ -452,7 +520,8 @@ Test(patterns, checkers_should_repeat_in_z)
 	t_color		expected;
 	t_point		p;
 
-	pattern = new_checkers_pattern(WHITE, BLACK);
+	pattern = new_checkers_pattern(new_solid_pattern(WHITE),
+		new_solid_pattern(BLACK));
 	p = new_point(0, 0, 0);
 	res = pattern.pattern_at(&pattern, &p);
 	expected = WHITE;
@@ -471,4 +540,6 @@ Test(patterns, checkers_should_repeat_in_z)
 	cr_assert(eq(dbl, res.r, expected.r));
 	cr_assert(eq(dbl, res.g, expected.g));
 	cr_assert(eq(dbl, res.b, expected.b));
+	free(pattern.a);
+	free(pattern.b);
 }
