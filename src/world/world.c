@@ -9,6 +9,7 @@ t_world	new_world(void)
 		.lights_count = 0,
 		.lights = NULL,
 		.ambient = new_color(0.1, 0.1, 0.1),
+		.remaining_recursion = 5,
 	});
 }
 
@@ -40,23 +41,26 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray)
 	else
 		comps.inside = false;
 	comps.over_point = add(comps.point, multiply(comps.view.normal_v, EPSILON));
+	comps.reflect_v = reflect(ray->direction, comps.view.normal_v);
 	return (comps);
 }
 
 t_color	shade_hit(t_world *world, t_comps *comps)
 {
 	int		i;
-	t_color	color;
+	t_color	surface; 
+	t_color	reflected;
 
 	i = -1;
-	color = new_color(0, 0, 0);
+	surface = new_color(0, 0, 0);
 	while (++i < world->lights_count)
 	{
 		world->lights[i].in_shadow = is_shadowed(world, &comps->over_point, i);
-		color = add_color(color, lighting(comps->obj,
+		surface = add_color(surface, lighting(comps->obj,
 					&world->lights[i], &comps->over_point, &comps->view));
 	}
-	return (color);
+	reflected = reflected_color(world, comps);
+	return (add_color(surface, reflected));
 }
 
 t_color	color_at(t_world *world, t_ray *ray)

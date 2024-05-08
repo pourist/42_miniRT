@@ -12,6 +12,9 @@ typedef struct s_material
 	double		specular;
 	double		shininess;
 	t_pattern	pattern;
+	double		reflective;
+	double		transparency;
+	double		refractive_index;
 }	t_material;
 
 typedef struct s_lighting_params

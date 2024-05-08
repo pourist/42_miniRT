@@ -14,6 +14,9 @@ t_material	new_material(void)
 		.specular = 0.9,
 		.shininess = 200.0,
 		.pattern.has_pattern = false,
+		.reflective = 0.0,
+		.transparency = 0.0,
+		.refractive_index = 1.0,
 	});
 }
 

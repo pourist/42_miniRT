@@ -53,6 +53,7 @@ typedef struct s_discriminant
 
 // Sphere Shape
 t_shape		new_sphere(void);
+t_shape		new_glass_sphere(void);
 // Plane Shape
 t_shape		new_plane(void);
 
