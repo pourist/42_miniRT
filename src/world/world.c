@@ -24,7 +24,21 @@ t_hit	*intersect_world(t_world *world, t_ray *ray)
 	return (world->xs);
 }
 
-t_comps	prepare_computations(t_hit *intersect, t_ray *ray)
+void	find_refractive_indices(t_comps *comps, t_hit *i, t_hit *xs)
+{
+	t_hit	*containers;
+	int	size;
+	int	x;
+	
+	size = intersect_count(xs);
+	containers = (t_hit *)malloc(sizeof(t_hit) * size);
+	if (!containers)
+		return ;
+	x = -1;
+	// while (++x )
+}
+
+t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs)
 {
 	t_comps	comps;
 
@@ -33,6 +47,8 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray)
 	comps.point = position(*ray, comps.t);
 	comps.view.eye_v = negate(ray->direction);
 	comps.view.normal_v = normal_at(comps.obj, comps.point);
+	comps.n1 = 1;
+	comps.n2 = 1;
 	if (dot(comps.view.normal_v, comps.view.eye_v) < 0)
 	{
 		comps.inside = true;
@@ -40,6 +56,8 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray)
 	}
 	else
 		comps.inside = false;
+	if (xs != NULL)
+		find_refractive_indices(&comps, intersect, xs);
 	comps.over_point = add(comps.point, multiply(comps.view.normal_v, EPSILON));
 	comps.reflect_v = reflect(ray->direction, comps.view.normal_v);
 	return (comps);

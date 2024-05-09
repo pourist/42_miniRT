@@ -25,6 +25,8 @@ typedef struct s_comps
 	t_point				under_point;
 	bool				inside;
 	t_vector			reflect_v;
+	double				n1;
+	double				n2;
 }	t_comps;
 
 t_world	new_world(void);
