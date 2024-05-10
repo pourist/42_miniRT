@@ -33,6 +33,8 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs)
 	comps.point = position(*ray, comps.t);
 	comps.view.eye_v = negate(ray->direction);
 	comps.view.normal_v = normal_at(comps.obj, comps.point);
+	comps.n1 = 1;
+	comps.n2 = 1;
 	if (dot(comps.view.normal_v, comps.view.eye_v) < 0)
 	{
 		comps.inside = true;
