@@ -179,12 +179,18 @@ Test(intersections,finding_n1_and_n2_at_various_intersections)
 	insert_intersection(&i, intersection(5.25, &c));
 	insert_intersection(&i, intersection(6, &a));
 
-	printf("i->t: %f\n", i->t);
-	printf("i->next->t: %f\n", i->next->t);
-	printf("i->next->next->t: %f\n", i->next->next->t);
-	printf("i->next->next->next->t: %f\n", i->next->next->next->t);
-	printf("i->next->next->next->next->t: %f\n", i->next->next->next->next->t);
-	printf("i->next->next->next->next->next->t: %f\n", i->next->next->next->next->next->t);
+	// printf("i->t: %f\n", i->t);
+	// printf("i->next->t: %f\n", i->next->t);
+	// printf("i->next->next->t: %f\n", i->next->next->t);
+	// printf("i->next->next->next->t: %f\n", i->next->next->next->t);
+	// printf("i->next->next->next->next->t: %f\n", i->next->next->next->next->t);
+	// printf("i->next->next->next->next->next->t: %f\n", i->next->next->next->next->next->t);
+	// printf("i->obj->material.refractive_index: %f\n", i->obj->material.refractive_index);
+	// printf("i->next->obj->material.refractive_index: %f\n", i->next->obj->material.refractive_index);
+	// printf("i->next->next->obj->material.refractive_index: %f\n", i->next->next->obj->material.refractive_index);
+	// printf("i->next->next->next->obj->material.refractive_index: %f\n", i->next->next->next->obj->material.refractive_index);
+	// printf("i->next->next->next->next->obj->material.refractive_index: %f\n", i->next->next->next->next->obj->material.refractive_index);
+	// printf("i->next->next->next->next->next->obj->material.refractive_index: %f\n", i->next->next->next->next->next->obj->material.refractive_index);
 	comps = prepare_computations(i, &r, i);
 	printf("comps.n1: %f\n", comps.n1);
 	printf("comps.n2: %f\n", comps.n2);

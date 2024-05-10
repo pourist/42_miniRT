@@ -1,44 +1,35 @@
 #include "world.h"
 
-static t_hit	*last(t_hit *xs)
+static bool	is_included(t_list *container, t_shape *obj)
 {
-	t_hit	*tmp;
+	t_list	*tmp;
 
-	tmp = xs;
-	while (tmp && tmp->next)
-		tmp = tmp->next;
-	return (tmp);
-}
-
-static bool	is_included(t_hit **container, t_hit *hit)
-{
-	t_hit	*tmp;
-
-	tmp = *container;
+	tmp = container;
 	while (tmp)
 	{
-		if (tmp->obj == hit->obj)
+		if (tmp->content == obj)
 			return (true);
 		tmp = tmp->next;
 	}
 	return (false);
 }
 
-static void	remove_hit(t_hit **container, t_hit *hit)
+static void	remove_hit(t_list **container, t_shape *obj)
 {
-	t_hit	*tmp;
-	t_hit	*prev;
+	t_list	*tmp;
+	t_list	*prev;
 
 	tmp = *container;
 	prev = NULL;
 	while (tmp)
 	{
-		if (tmp->obj == hit->obj)
+		if (tmp->content == obj)
 		{
 			if (prev)
 				prev->next = tmp->next;
 			else
 				*container = tmp->next;
+			free(tmp);
 			return ;
 		}
 		prev = tmp;
@@ -46,24 +37,24 @@ static void	remove_hit(t_hit **container, t_hit *hit)
 	}
 }
 
-static void	append_hit(t_hit **container, t_hit *hit)
+void	free_lst(t_list *container)
 {
-	t_hit	*tmp;
+	t_list	*tmp;
 
-	tmp = *container;
-	if (!tmp)
-	{
-		*container = hit;
+	if (!container)
 		return ;
+	while (container->next)
+	{
+		tmp = container;
+		container = container->next;
+		free(tmp);
 	}
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = hit;
+	free(container);
 }
 
 void	find_refractive_indices(t_comps *comps, t_hit *i, t_hit *xs)
 {
-	t_hit	*container; 
+	t_list	*container;
 
 	container = NULL;
 	while (xs) 
@@ -73,20 +64,21 @@ void	find_refractive_indices(t_comps *comps, t_hit *i, t_hit *xs)
 			if (!container) 
 				comps->n1 = 1;
 			else
-				comps->n1 = last(container)->obj->material.refractive_index;
+				comps->n1 = ((t_shape *)ft_lstlast(container)->content)->material.refractive_index;
 		}
-		if (is_included(&container, xs))
-			remove_hit(&container, xs);
+		if (xs && is_included(container, xs->obj))
+			remove_hit(&container, xs->obj);
 		else
-			append_hit(&container, xs);
+			ft_lstadd_back(&container, ft_lstnew(xs->obj));
 		if (i == xs) 
 		{
 			if (!container)
 				comps->n2 = 1;
 			else
-				comps->n2 = last(container)->obj->material.refractive_index;
+				comps->n2 = ((t_shape *)ft_lstlast(container)->content)->material.refractive_index;
 			break ;
 		}
-		xs = (xs)->next;
+		xs = xs->next;
 	}
+	free_lst(container);
 }
