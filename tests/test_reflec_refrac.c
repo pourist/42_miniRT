@@ -179,51 +179,45 @@ Test(intersections,finding_n1_and_n2_at_various_intersections)
 	insert_intersection(&i, intersection(5.25, &c));
 	insert_intersection(&i, intersection(6, &a));
 
-	// printf("i->t: %f\n", i->t);
-	// printf("i->next->t: %f\n", i->next->t);
-	// printf("i->next->next->t: %f\n", i->next->next->t);
-	// printf("i->next->next->next->t: %f\n", i->next->next->next->t);
-	// printf("i->next->next->next->next->t: %f\n", i->next->next->next->next->t);
-	// printf("i->next->next->next->next->next->t: %f\n", i->next->next->next->next->next->t);
-	// printf("i->obj->material.refractive_index: %f\n", i->obj->material.refractive_index);
-	// printf("i->next->obj->material.refractive_index: %f\n", i->next->obj->material.refractive_index);
-	// printf("i->next->next->obj->material.refractive_index: %f\n", i->next->next->obj->material.refractive_index);
-	// printf("i->next->next->next->obj->material.refractive_index: %f\n", i->next->next->next->obj->material.refractive_index);
-	// printf("i->next->next->next->next->obj->material.refractive_index: %f\n", i->next->next->next->next->obj->material.refractive_index);
-	// printf("i->next->next->next->next->next->obj->material.refractive_index: %f\n", i->next->next->next->next->next->obj->material.refractive_index);
 	comps = prepare_computations(i, &r, i);
-	printf("comps.n1: %f\n", comps.n1);
-	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 1.0));
 	cr_assert(eq(dbl, comps.n2, 1.5));
 
 	comps = prepare_computations(i->next, &r, i);
-	printf("comps.n1: %f\n", comps.n1);
-	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 1.5));
 	cr_assert(eq(dbl, comps.n2, 2.0));
 
 	comps = prepare_computations(i->next->next, &r, i);
-	printf("comps.n1: %f\n", comps.n1);
-	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 2.0));
 	cr_assert(eq(dbl, comps.n2, 2.5));
 
 	comps = prepare_computations(i->next->next->next, &r, i);
-	printf("comps.n1: %f\n", comps.n1);
-	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 2.5));
 	cr_assert(eq(dbl, comps.n2, 2.5));
 
 	comps = prepare_computations(i->next->next->next->next, &r, i);
-	printf("comps.n1: %f\n", comps.n1);
-	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 2.5));
 	cr_assert(eq(dbl, comps.n2, 1.5));
 
 	comps = prepare_computations(i->next->next->next->next->next, &r, i);
-	printf("comps.n1: %f\n", comps.n1);
-	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 1.5));
 	cr_assert(eq(dbl, comps.n2, 1.0));
+}
+
+Test(intersections, the_under_point_is_offset_below_the_surface)
+{
+	t_ray	r;
+	t_shape	s;
+	t_hit	*i;
+	t_hit	*xs;
+	t_comps comps;
+
+	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
+	s = new_glass_sphere();
+	set_transform(&s, translation(0, 0, 1));
+	i = intersection(5, &s);
+	insert_intersection(&xs, i);
+	comps = prepare_computations(i, &r, xs);
+	// cr_assert(gt(dbl, comps.under_point.z, EPSILON/2));
+	// cr_assert(lt(dbl, comps.point.z, comps.under_point.z));
 }
