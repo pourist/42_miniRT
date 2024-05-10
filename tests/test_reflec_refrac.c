@@ -18,7 +18,7 @@ Test(intersections, precomputing_the_reflection_vector)
 	s = new_plane();
 	r = new_ray(new_point(0, 1, -1), new_vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	i = intersection(sqrt(2), &s);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i, &r, NULL);
 	result = comps.reflect_v;
 	cr_assert(epsilon_eq(dbl, result.x, 0, EPSILON));
 	cr_assert(epsilon_eq(dbl, result.y, sqrt(2)/2, EPSILON));
@@ -37,7 +37,7 @@ Test(world, reflected_color_for_a_nonreflective_material)
 	r = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
 	world.objs[1].material.ambient = new_color(1, 1, 1);
 	i = intersection(1, &world.objs[0]);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i, &r, NULL);
 	color = reflected_color(&world, &comps);
 	cr_assert(color_eq(color, new_color(0, 0, 0)));
 }
@@ -57,7 +57,7 @@ Test(world, reflected_color_for_a_reflective_material)
 	set_transform(&world.objs[1], translation(0, -1, 0));
 	r = new_ray(new_point(0, 0, -3), new_vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	i = intersection(sqrt(2), &world.objs[1]);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i, &r, NULL);
 	color = reflected_color(&world, &comps);
 	result = new_color(0.19032, 0.2379, 0.14274);
 	// cr_assert(epsilon_eq(dbl, color.r, result.r, EPSILON));
@@ -80,7 +80,7 @@ Test(world, shade_hit_with_a_reflective_material)
 	set_transform(&world.objs[1], translation(0, -1, 0));
 	r = new_ray(new_point(0, 0, -3), new_vector(0, sqrt(2)/-2, sqrt(2)/2));
 	i = intersection(sqrt(2), &world.objs[1]);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i, &r, NULL);
 	color = shade_hit(&world, &comps);
 	result = new_color(0.87677, 0.92436, 0.82918);
 	// cr_assert(epsilon_eq(dbl, color.r, result.r, EPSILON));
@@ -126,7 +126,7 @@ Test(world, reflected_color_at_the_maximum_recursive_depth)
 		set_transform(&world.objs[0], translation(0, -1, 0));
 		r = new_ray(new_point(0, 0, -3), new_vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 		i = intersection(sqrt(2), &world.objs[1]);
-		comps = prepare_computations(i, &r);
+		comps = prepare_computations(i, &r, NULL);
 		color = reflected_color(&world, &comps);
 		result = new_color(0, 0, 0);
 		cr_assert(epsilon_eq(dbl, color.r, result.r, EPSILON));
@@ -171,35 +171,53 @@ Test(intersections,finding_n1_and_n2_at_various_intersections)
 	c.material.refractive_index = 2.5;
 	set_transform(&c, translation(0, 0, 0.25));
 	r = new_ray(new_point(0, 0, -4), new_vector(0, 0, 1));
+	i = NULL;
+	insert_intersection(&i, intersection(2, &a));
+	insert_intersection(&i, intersection(2.75, &b));
+	insert_intersection(&i, intersection(3.25, &c));
+	insert_intersection(&i, intersection(4.75, &b));
+	insert_intersection(&i, intersection(5.25, &c));
+	insert_intersection(&i, intersection(6, &a));
 
-	// insert_intersection(xs, intersection(d.t1, shape));
-	i = intersection(2, &a);
-	comps = prepare_computations(i, &r);
+	printf("i->t: %f\n", i->t);
+	printf("i->next->t: %f\n", i->next->t);
+	printf("i->next->next->t: %f\n", i->next->next->t);
+	printf("i->next->next->next->t: %f\n", i->next->next->next->t);
+	printf("i->next->next->next->next->t: %f\n", i->next->next->next->next->t);
+	printf("i->next->next->next->next->next->t: %f\n", i->next->next->next->next->next->t);
+	comps = prepare_computations(i, &r, i);
+	printf("comps.n1: %f\n", comps.n1);
+	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 1.0));
 	cr_assert(eq(dbl, comps.n2, 1.5));
 
-	i = intersection(2.75, &b);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i->next, &r, i);
+	printf("comps.n1: %f\n", comps.n1);
+	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 1.5));
 	cr_assert(eq(dbl, comps.n2, 2.0));
 
-	i = intersection(3.25, &c);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i->next->next, &r, i);
+	printf("comps.n1: %f\n", comps.n1);
+	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 2.0));
 	cr_assert(eq(dbl, comps.n2, 2.5));
 
-	i = intersection(4.75, &b);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i->next->next->next, &r, i);
+	printf("comps.n1: %f\n", comps.n1);
+	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 2.5));
 	cr_assert(eq(dbl, comps.n2, 2.5));
 
-	i = intersection(5.25, &c);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i->next->next->next->next, &r, i);
+	printf("comps.n1: %f\n", comps.n1);
+	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 2.5));
 	cr_assert(eq(dbl, comps.n2, 1.5));
 
-	i = intersection(6, &a);
-	comps = prepare_computations(i, &r);
+	comps = prepare_computations(i->next->next->next->next->next, &r, i);
+	printf("comps.n1: %f\n", comps.n1);
+	printf("comps.n2: %f\n", comps.n2);
 	cr_assert(eq(dbl, comps.n1, 1.5));
 	cr_assert(eq(dbl, comps.n2, 1.0));
 }
