@@ -5,7 +5,7 @@
 # include "materials.h"
 # include "patterns.h"
 
-# define MAX_NODES	511
+# define MAX_NODES	255
 # define EPSILON	1e-5
 
 typedef struct s_sphere {
