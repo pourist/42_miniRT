@@ -91,13 +91,13 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 ##                                COMPILATION                                 ##
 ################################################################################
 
-all: submodules $(NAME)
+all: $(NAME) | submodules
 
-test: submodules $(NAME)
+test: $(NAME) | submodules
 	@make $(T) -C tests -s
 	@make fclean -C tests -s
 
-ex: submodules $(NAME)
+ex: $(NAME) | submodules
 	@make $(X) -C exs -s
 	@make fclean -C exs -s
 
@@ -123,11 +123,9 @@ $(OBJ_DIR):
 	@printf "Created successfully!\n"
 
 $(LIBFT):
-	@git submodule update --init -q;
 	@make -C $(LIBFT_DIR) -s
 
 $(MLX):
-	@git submodule update --init -q
 	@cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
 	@cmake --build $(MLX_DIR)/build -j4
 
@@ -152,7 +150,6 @@ fclean: clean
 	@printf "🧹🧹$(DEFAULT)\n"
 
 re: fclean all
-	@git submodule update --remote -q
 
 submodules:
 	@git submodule update --init --remote --recursive -q

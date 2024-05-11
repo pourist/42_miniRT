@@ -17,7 +17,7 @@ WHITE       := \033[0;97m
 ################################################################################
 
 ifndef EX
-	EX								:= ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch10
+	EX								:= ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch10 ch11
 endif
 RM								:= rm -rf
 	
@@ -44,7 +44,7 @@ OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 ##                                   FLAGS                                    ##
 ################################################################################
 
-CFLAGS						:= -Wall -Wextra -Werror -O3 -g3
+CFLAGS						:= -Wall -Wextra -Werror -O3
 INCLUDE						:= $(addprefix -I, $(INC_DIRS))
 LDFLAGS						:= -L$(LIBFT_DIR) -L$(MLX_DIR)/build
 LDLIBS						:= -lft -lmlx42 -lglfw
@@ -103,6 +103,10 @@ ch09: $(OBJECTS) ch09.c
 
 .PHONY: ch10
 ch10: $(OBJECTS) ch10.c
+	@$(call run, "$^")
+
+.PHONY: ch11
+ch11: $(OBJECTS) ch11.c
 	@$(call run, "$^")
 
 $(OBJECTS):
