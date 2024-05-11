@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/18 21:46:03 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/19 14:07:57 by johnavar         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 ################################################################################
 ##                                   COLORS                                   ##
 ################################################################################
@@ -28,7 +16,9 @@ WHITE       := \033[0;97m
 ##                                   MINIRT                                   ##
 ################################################################################
 
-TESTS							:= tuples
+TESTS							:= tuples colors canvas matrices transformations rays spheres \
+										 lights materials world view_transform camera shapes planes \
+										 patterns reflec_refrac
 RM								:= rm -rf
 	
 ################################################################################
@@ -40,17 +30,16 @@ SRC_DIR						:= ../src
 LIB_DIR						:= ../lib
 LIBFT_DIR					:= $(LIB_DIR)/libft
 MLX_DIR						:= $(LIB_DIR)/MLX42
-INC_DIRS						:= ./ ../include $(LIBFT_DIR)/include $(MLX_DIR)/include
+INC_DIRS					:= ./ ../include $(LIBFT_DIR)/include $(MLX_DIR)/include
+SRC_DIRS  				:= $(shell find $(SRC_DIR) -type d)
 
-vpath %.c $(SRC_DIR) ./
-vpath %.h $(INC_DIRS) ./
+vpath %.c $(SRC_DIRS)
+vpath %.h $(INC_DIRS)
 vpath %.o $(OBJ_DIR)
 
 SOURCE						:= $(shell find $(SRC_DIR) -name '*.c' -exec basename {} \;)
 SOURCE						:= $(filter-out main.c, $(SOURCE))
-TEST							:= test.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
-# OBJECTS						+= $(TEST:.c=.o)
 	
 ################################################################################
 ##                                   FLAGS                                    ##
@@ -80,6 +69,66 @@ all: $(TESTS) clean
 
 .PHONY: tuples
 tuples: $(OBJECTS) test_tuples.c
+	@$(call run, "$^")
+
+.PHONY: colors
+colors: $(OBJECTS) test_colors.c
+	@$(call run, "$^")
+
+.PHONY: canvas
+canvas: $(OBJECTS) test_canvas.c
+	@$(call run, "$^")
+
+.PHONY: matrices
+matrices: $(OBJECTS) test_matrices.c
+	@$(call run, "$^")
+
+.PHONY: transformations
+transformations: $(OBJECTS) test_transformations.c
+	@$(call run, "$^")
+
+.PHONY: rays
+rays: $(OBJECTS) test_rays.c
+	@$(call run, "$^")
+
+.PHONY: spheres
+spheres: $(OBJECTS) test.c test_spheres.c
+	@$(call run, "$^")
+
+.PHONY: lights
+lights: $(OBJECTS) test.c test_lights.c
+	@$(call run, "$^")
+
+.PHONY: materials
+materials: $(OBJECTS) test.c test_materials.c
+	@$(call run, "$^")
+
+.PHONY: world
+world: $(OBJECTS) test.c test_world.c
+	@$(call run, "$^")
+
+.PHONY: view_transform
+view_transform: $(OBJECTS) test.c test_view_transform.c
+	@$(call run, "$^")
+
+.PHONY: camera
+camera: $(OBJECTS) test.c test_camera.c
+	@$(call run, "$^")
+
+.PHONY: shapes
+shapes: $(OBJECTS) test.c test_shapes.c
+	@$(call run, "$^")
+
+.PHONY: planes
+planes: $(OBJECTS) test.c test_planes.c
+	@$(call run, "$^")
+
+.PHONY: patterns
+patterns: $(OBJECTS) test_patterns.c
+	@$(call run, "$^")
+
+.PHONY: reflec_refrac
+reflec_refrac: $(OBJECTS) test.c test_reflec_refrac.c
 	@$(call run, "$^")
 
 $(OBJECTS):

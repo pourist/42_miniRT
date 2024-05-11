@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   basic_math.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 09:47:19 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 16:35:56 by johnavar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "tuples.h"
 
 t_tuple	add(t_tuple t1, t_tuple t2)
@@ -44,6 +32,10 @@ t_tuple	negate(t_tuple t)
 
 t_tuple	multiply(t_tuple t, double scalar)
 {
+	if (scalar == 0)
+		return ((t_tuple){0, 0, 0, 0});
+	else if (scalar == 1)
+		return (t);
 	return ((t_tuple){
 		t.x * scalar,
 		t.y * scalar,
@@ -52,17 +44,15 @@ t_tuple	multiply(t_tuple t, double scalar)
 	});
 }
 
-t_tuple	division(t_tuple t, double scalar)
+t_tuple	divide(t_tuple t, double scalar)
 {
-	return ((t_tuple){
-		t.x / scalar,
-		t.y / scalar,
-		t.z / scalar,
-		t.w / scalar,
-	});
-}
+	double	inverse_scalar;
 
-double	magnitude(t_vector v)
-{
-	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w));
+	inverse_scalar = 1.0 / scalar;
+	return ((t_tuple){
+		t.x * inverse_scalar,
+		t.y * inverse_scalar,
+		t.z * inverse_scalar,
+		t.w * inverse_scalar,
+	});
 }
