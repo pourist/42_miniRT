@@ -91,17 +91,17 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 ##                                COMPILATION                                 ##
 ################################################################################
 
-all: $(NAME)
+all: submodules $(NAME)
 
-test: $(NAME)
+test: submodules $(NAME)
 	@make $(T) -C tests -s
 	@make fclean -C tests -s
 
-ex: $(NAME)
+ex: submodules $(NAME)
 	@make $(X) -C exs -s
 	@make fclean -C exs -s
 
-$(NAME): $(OBJECTS) | $(LIBFT) $(MLX)
+$(NAME): $(OBJECTS) | submodules $(LIBFT) $(MLX)
 	@printf "\n$(MAGENTA)[$(NAME)] $(DEFAULT)Linking "
 	@printf "($(BLUE)$(NAME)$(DEFAULT))..."
 	@$(CC) $(CFLAGS) $^ $(LDFLAGS) $(LDLIBS) -o $@
@@ -154,4 +154,7 @@ fclean: clean
 re: fclean all
 	@git submodule update --remote -q
 
-.PHONY: all clean fclean re test atest
+submodules:
+	@git submodule update --init --remote --recursive -q
+
+.PHONY: all clean fclean re test ex submodules
