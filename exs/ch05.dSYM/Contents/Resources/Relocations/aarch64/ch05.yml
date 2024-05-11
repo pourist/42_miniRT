@@ -1,9 +1,0 @@
----
-triple:          'arm64-apple-darwin'
-binary-path:     ch05
-relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _render_sphere, symObjAddr: 0x0, symBinAddr: 0x100004108, symSize: 0x154 }
-  - { offsetInCU: 0x3AF, offset: 0x3AF, size: 0x8, addend: 0x0, symName: _render_sphere, symObjAddr: 0x0, symBinAddr: 0x100004108, symSize: 0x154 }
-  - { offsetInCU: 0x90A, offset: 0x90A, size: 0x8, addend: 0x0, symName: _set_params, symObjAddr: 0x154, symBinAddr: 0x10000425C, symSize: 0x154 }
-  - { offsetInCU: 0xA44, offset: 0xA44, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x2A8, symBinAddr: 0x1000043B0, symSize: 0xB0 }
-...
