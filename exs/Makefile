@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/18 21:45:49 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/18 21:45:50 by sebasnadu        ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 ################################################################################
 ##                                   COLORS                                   ##
 ################################################################################
@@ -29,7 +17,7 @@ WHITE       := \033[0;97m
 ################################################################################
 
 ifndef EX
-	EX								:= ch01
+	EX								:= ch01 ch02 ch03 ch04 ch05 ch06 ch07 ch08 ch09 ch10
 endif
 RM								:= rm -rf
 	
@@ -42,7 +30,7 @@ SRC_DIR						:= ../src
 LIB_DIR						:= ../lib
 LIBFT_DIR					:= $(LIB_DIR)/libft
 MLX_DIR						:= $(LIB_DIR)/MLX42
-INC_DIRS						:= include $(LIBFT_DIR)/include $(MLX_DIR)/include
+INC_DIRS					:= ../include $(LIBFT_DIR)/include $(MLX_DIR)/include
 
 vpath %.c $(SRC_DIR) ./
 vpath %.h $(INC_DIRS)
@@ -67,14 +55,55 @@ else
 	LDLIBS				+= -ldl -pthread -lm
 endif
 
+define run
+	$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) $(LDLIBS) -o $@ && ./$@ --verbose
+endef
+
 ################################################################################
 ##                                COMPILATION                                 ##
 ################################################################################
 
-all: $(EX)
+all: $(EX) clean
 
-$(EX): $(OBJECTS) $(EX).c
-	@$(CC) $(CFLAGS) $(INCLUDE) $^ $(LDFLAGS) $(LDLIBS) -o $@ && ./$@
+.PHONY: ch01
+ch01: $(OBJECTS) ch01.c
+	@$(call run, "$^")
+
+.PHONY: ch02
+ch02: $(OBJECTS) ch02.c
+	@$(call run, "$^")
+
+.PHONY: ch03
+ch03: $(OBJECTS) ch03.c
+	@$(call run, "$^")
+
+.PHONY: ch04
+ch04: $(OBJECTS) ch04.c
+	@$(call run, "$^")
+
+.PHONY: ch05
+ch05: $(OBJECTS) ch05.c
+	@$(call run, "$^")
+
+.PHONY: ch06
+ch06: $(OBJECTS) ch06.c
+	@$(call run, "$^")
+
+.PHONY: ch07
+ch07: $(OBJECTS) ch07.c
+	@$(call run, "$^")
+
+.PHONY: ch08
+ch08: $(OBJECTS) ch08.c
+	@$(call run, "$^")
+
+.PHONY: ch09
+ch09: $(OBJECTS) ch09.c
+	@$(call run, "$^")
+
+.PHONY: ch10
+ch10: $(OBJECTS) ch10.c
+	@$(call run, "$^")
 
 $(OBJECTS):
 	@make -C .. -s

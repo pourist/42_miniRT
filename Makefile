@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/18 21:45:39 by sebasnadu         #+#    #+#              #
-#    Updated: 2024/04/19 13:47:03 by johnavar         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 ################################################################################
 ##                                   COLORS                                   ##
 ################################################################################
@@ -36,13 +24,14 @@ RM								:= rm -rf
 ################################################################################
 
 OBJ_DIR						:= obj
-SRC_DIRS					:= tuples
+SRC_DIRS					:= tuples utils canvas matrices rays shapes lights materials \
+										 world camera patterns
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
 LIBFT_DIR					:= $(LIB_DIR)/libft
 MLX_DIR						:= $(LIB_DIR)/MLX42
-INC_DIRS						:= include $(LIBFT_DIR)/include $(MLX_DIR)/include
+INC_DIRS					:= include $(LIBFT_DIR)/include $(MLX_DIR)/include
 
 vpath %.c $(SRC_DIRS)
 vpath %.h $(INC_DIRS)
@@ -50,8 +39,16 @@ vpath %.o $(OBJ_DIR)
 
 LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
-HEADERS						:= tuples.h
-SOURCE						:= main.c tuples.c basic_math.c
+HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h \
+										 lights.h materials.h world.h camera.h patterns.h
+SOURCE						:= main.c tuple.c basic_math.c vector_math.c eq_dbl.c \
+										 color.c canvas.c save.c hooks.c mx.c mx_operations.c \
+										 mx_attributes.c mx_transformations.c mx_rotations.c \
+										 ray.c sphere.c intersection.c shape.c light.c material.c \
+										 world.c view_transform.c camera.c render.c is_shadowed.c \
+										 plane.c pattern.c stripe.c gradient.c ring.c checkers.c \
+										 full_gradient.c radial_gradient.c solid_pattern.c \
+										 blended.c reflection.c refraction.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
@@ -94,18 +91,17 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 ##                                COMPILATION                                 ##
 ################################################################################
 
-all: $(NAME)
+all: submodules $(NAME)
 
-atest: $(NAME)
-	@make -C tests -s
-
-test: $(NAME)
+test: submodules $(NAME)
 	@make $(T) -C tests -s
+	@make fclean -C tests -s
 
-ex: $(NAME)
-	@make $(EX) -C exs -s
+ex: submodules $(NAME)
+	@make $(X) -C exs -s
+	@make fclean -C exs -s
 
-$(NAME): $(OBJECTS) | $(LIBFT) $(MLX)
+$(NAME): $(OBJECTS) | submodules $(LIBFT) $(MLX)
 	@printf "\n$(MAGENTA)[$(NAME)] $(DEFAULT)Linking "
 	@printf "($(BLUE)$(NAME)$(DEFAULT))..."
 	@$(CC) $(CFLAGS) $^ $(LDFLAGS) $(LDLIBS) -o $@
@@ -158,4 +154,7 @@ fclean: clean
 re: fclean all
 	@git submodule update --remote -q
 
-.PHONY: all clean fclean re test atest
+submodules:
+	@git submodule update --init --remote --recursive -q
+
+.PHONY: all clean fclean re test ex submodules

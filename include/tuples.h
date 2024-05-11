@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tuples.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 21:47:17 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/04/19 16:36:13 by johnavar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef TUPLES_H
 # define TUPLES_H
 
@@ -30,30 +18,45 @@ typedef struct s_tuple {
 	double	w;
 }	t_tuple;
 
-/*  
-@brief the type t_point is an alias for t_tuple who has w = 1
-*/
+/* @brief the type t_point is an alias for t_tuple who has w = 1 */
 typedef t_tuple	t_point;
-/*  
-@brief the type t_vector is an alias for t_tuple who has w = 0
-*/
+/* @brief the type t_vector is an alias for t_tuple who has w = 0 */
 typedef t_tuple	t_vector;
 
-/*
-Tuples creation functions
-*/
-t_tuple	tuple(double x, double y, double z, double w);
-t_tuple	point(double x, double y, double z);
-t_tuple	vector(double x, double y, double z);
+/* @brief t_color is a struct that represents a rgb color, 1.0 is
+ * the max value, 0.0 is the min value	*/
+typedef struct s_color {
+	double	r;
+	double	g;
+	double	b;
+}	t_color;
 
-/*
-Tuples basic math operations
-*/
-t_tuple	add(t_tuple t1, t_tuple t2);
-t_tuple	subtract(t_tuple t1, t_tuple t2);
-t_tuple	negate(t_tuple t);
-t_tuple	multiply(t_tuple t, double scalar);
-t_tuple	division(t_tuple t, double scalar);
-double	magnitude(t_vector v);
+/* Tuples creation functions */
+t_tuple		new_tuple(double x, double y, double z, double w);
+t_tuple		new_point(double x, double y, double z);
+t_tuple		new_vector(double x, double y, double z);
+
+/* Tuples basic math operations */
+t_tuple		add(t_tuple t1, t_tuple t2);
+t_tuple		subtract(t_tuple t1, t_tuple t2);
+t_tuple		negate(t_tuple t);
+t_tuple		multiply(t_tuple t, double scalar);
+t_tuple		divide(t_tuple t, double scalar);
+
+/* Vector math operations */
+double		magnitude_squared(t_vector a);
+t_vector	normalize(t_vector a);
+double		dot(t_vector a, t_vector b);
+t_vector	cross(t_vector a, t_vector b);
+t_tuple		reflect(t_vector in, t_vector normal);
+
+/* Color creation  */
+t_color		new_color(double r, double g, double b);
+
+/*  Color operations */
+t_color		add_color(t_color c1, t_color c2);
+t_color		subtract_color(t_color c1, t_color c2);
+t_color		multiply_color(t_color c, double scalar);
+t_color		hadamard_product(t_color c1, t_color c2);
 
 #endif
