@@ -40,6 +40,7 @@ t_color	lighting(t_shape *shape, t_light *light, t_point *point,
 
 static t_color	darken(t_material *m, t_lighting_params *lp)
 {
+	(void)m;
 	lp->ambient = hadamard_product(lp->effective_color, m->ambient);
 	lp->diffuse = new_color(0, 0, 0);
 	lp->specular = new_color(0, 0, 0);

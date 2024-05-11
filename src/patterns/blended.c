@@ -1,6 +1,6 @@
 #include "patterns.h"
 
-t_color	blended_at(t_pattern *pattern, t_point *shape_point);
+static t_color	blended_at(t_pattern *pattern, t_point *shape_point);
 
 t_pattern	new_blended_pattern(t_pattern a, t_pattern b)
 {
@@ -23,7 +23,7 @@ t_pattern	new_blended_pattern(t_pattern a, t_pattern b)
 	return (pattern);
 }
 
-t_color	blended_at(t_pattern *pattern, t_point *shape_point)
+static t_color	blended_at(t_pattern *pattern, t_point *shape_point)
 {
 	double	t;
 	t_point	pattern_point;
