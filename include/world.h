@@ -34,11 +34,13 @@ t_hit	*intersect_world(t_world *world, t_ray *ray);
 t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs);
 t_color	shade_hit(t_world *world, t_comps *comps);
 t_color	color_at(t_world *world, t_ray *ray);
+double	schlick(t_comps *comps);
 // is_shadowed
 bool	is_shadowed(t_world *world, t_point *point, int index);
 // reflection
 t_color	reflected_color(t_world *world, t_comps *comps);
 // refraction
 void	find_refractive_indices(t_comps *comps, t_hit *i, t_hit *xs);
+t_color	refracted_color(t_world *world, t_comps *comps);
 
 #endif

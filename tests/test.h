@@ -20,9 +20,10 @@
 # include "camera.h"
 # include "patterns.h"
 
-bool	matrix_eq(t_matrix a, t_matrix b);
-bool	tuple_eq(t_tuple a, t_tuple b);
-bool	color_eq(t_color a, t_color b);
-t_world	default_world(void);
+bool		matrix_eq(t_matrix a, t_matrix b);
+bool		tuple_eq(t_tuple a, t_tuple b);
+bool		color_eq(t_color a, t_color b);
+t_world		default_world(void);
+t_pattern	new_test_pattern(void);
 
 #endif

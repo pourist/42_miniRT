@@ -62,3 +62,24 @@ t_world	default_world(void)
 	w.lights[0] = new_light(new_point(-10, 10, -10), new_color(1, 1, 1));
 	return (w);
 }
+
+// #include "patterns.h"
+// #include <stdio.h>
+
+static t_color	test_at(t_pattern *pattern, t_point *shape_point);
+
+t_pattern	new_test_pattern(void)
+{
+	t_pattern	test;
+
+	test = new_pattern();
+	test.pattern_at = test_at;
+	test.has_pattern = true;
+	return (test);
+}
+
+static t_color	test_at(t_pattern *pattern, t_point *shape_point)
+{
+	(void)pattern;
+	return (new_color(shape_point->x, shape_point->y, shape_point->z));
+}
