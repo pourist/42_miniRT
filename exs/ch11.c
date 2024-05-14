@@ -3,66 +3,32 @@
 #include "materials.h"
 #include "patterns.h"
 
-#define WIDTH	1024
-#define HEIGHT	1024
-#define N_OBJS	7
+#define WIDTH	512
+#define HEIGHT	512
+#define N_OBJS	6
 
 void	create_background(t_world *world)
 {
-	t_shape		floor;
-	t_shape		front_wall;
-	t_shape		left_wall;
-	t_shape		right_wall;
-	t_color		a;
-	t_color		b;
-	t_matrix	multi;
+	t_shape		water;
+	t_shape		water_bed;
 
-	a = new_color(0.5, 0.5, 0.5);
-	b = new_color(0.7, 0.7, 0.7);
-	floor = new_plane();
-	floor.material.specular = 0;
-	floor.material.pattern = new_checkers_pattern(new_solid_pattern(a),
-			new_solid_pattern(b));
-	*floor.material.pattern.a = new_stripe_pattern(
-			new_solid_pattern(new_color(0.9, 0.3, 0.3)),
-			new_solid_pattern(new_color(0.6, 0.3, 0.3)));
-	set_pattern_transform(floor.material.pattern.a, scaling(0.1, 0.1, 0.1));
-	*floor.material.pattern.b = new_stripe_pattern(
-			new_solid_pattern(a), new_solid_pattern(b));
-	set_pattern_transform(floor.material.pattern.b, scaling(0.1, 0.1, 0.1));
-	front_wall = new_plane();
-	front_wall.material = floor.material;
-	front_wall.material.pattern = new_blended_pattern(
-			new_solid_pattern(a), new_solid_pattern(b));
-	*front_wall.material.pattern.a = new_stripe_pattern(
-			new_solid_pattern(new_color(0, 0.5, 0.1)),
-			new_solid_pattern(new_color(0.8, 0.8, 0.8)));
-	*front_wall.material.pattern.b = new_stripe_pattern(
-			new_solid_pattern(new_color(0, 0.5, 0.1)),
-			new_solid_pattern(new_color(0.8, 0.8, 0.8)));
-	multi = transformations(2, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
-			translation(0, 0, 5));
-	set_transform(&front_wall, multi);
-	set_pattern_transform(&front_wall.material.pattern, multi);
-	set_pattern_transform(front_wall.material.pattern.a, rotation_z(cos(M_PI / 4), sin(M_PI / 4)));
-	set_pattern_transform(front_wall.material.pattern.b, rotation_z(cos(-M_PI / 4), sin(-M_PI / 4)));
-	right_wall = new_plane();
-	right_wall.material = floor.material;
-	right_wall.material.pattern = new_checkers_pattern(new_solid_pattern(a),
-			new_solid_pattern(b));
-	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
-			rotation_y(cos(M_PI / 3), sin(M_PI / 3)), translation(5, 0, 5));
-	set_transform(&right_wall, multi);
-	left_wall = new_plane();
-	left_wall.material.pattern = new_checkers_pattern(new_solid_pattern(a),
-			new_solid_pattern(b));
-	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
-			rotation_y(cos(-M_PI / 3), sin(-M_PI / 3)), translation(-5, 0, 5));
-	set_transform(&left_wall, multi);
-	world->objs[0] = floor;
-	world->objs[1] = front_wall;
-	world->objs[2] = right_wall;
-	world->objs[3] = left_wall;
+	water = new_plane();
+	water.material.color = new_color(0.0, 0.4, 0.8);
+	water.material.diffuse = 0.3;
+	water.material.reflective = 0.4;
+	water.material.transparency = 0.9;
+	water.material.refractive_index = WATER;
+	water.cast_shadow = false;
+	water_bed = new_plane();
+	water_bed.material.color = new_color(0.5, 0.25, 0.1);
+	set_transform(&water_bed, translation(0, -5, 0));
+	water_bed.material.diffuse = 0.9;
+	water_bed.material.reflective = 0.0;
+	water_bed.material.transparency = 0.0;
+	water_bed.material.specular = 0.0;
+	water_bed.material.refractive_index = AIR;
+	world->objs[0] = water;
+	world->objs[1] = water_bed;
 }
 
 void	create_spheres(t_world *world)
@@ -70,42 +36,46 @@ void	create_spheres(t_world *world)
 	t_shape		middle;
 	t_shape		right;
 	t_shape		left;
-	t_color		a;
+	t_shape		behind;
 	t_matrix	m;
 
-	a = new_color(1, 1, 1);
 	middle = new_sphere();
-	middle.material.color = new_color(0.1, 1, 0.5);
-	middle.material.pattern = new_checkers_pattern(new_solid_pattern(a),
-			new_solid_pattern(middle.material.color));
-	m = translation(-0.5, 1, 0.5);
+	middle.material.color = new_color(0.9, 0.9, 0.9);
+	m = translation(-0.5, 0, 0.5);
 	set_transform(&middle, m);
-	m = scaling(0.4, 0.4, 0.4);
-	set_pattern_transform(&middle.material.pattern, m);
+	middle.material.ambient = new_color(0.1, 0.1, 0.1);
+	middle.material.diffuse = 0.1;
+	middle.material.specular = 5.0;
+	middle.material.shininess = 1200.0;
+	middle.material.reflective = 0.9;
+	middle.material.transparency = 0.9;
+	middle.material.refractive_index = GLASS;
 	right = new_sphere();
-	right.material.color = new_color(0.5, 1, 0.1);
-	right.material.pattern = new_ring_pattern(new_solid_pattern(a),
-			new_solid_pattern(right.material.color));
-	m = multiply_matrices(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5));
+	right.material.color = new_color(5, 0.5, 0.1);
+	m = multiply_matrices(translation(2, -0.5, 0), scaling(0.2, 0.2, 0.2));
 	set_transform(&right, m);
-	set_pattern_transform(&right.material.pattern, m);
 	left = new_sphere();
-	left.material.color = new_color(1, 0.8, 0.1);
-	left.material.pattern = new_full_gradient_pattern(new_solid_pattern(a),
+	left.material.reflective = 0.9;
+	left.material.color = new_color(0, 0, 0);
+	left.material.pattern = new_full_gradient_pattern(new_solid_pattern(new_color(1, 0, 0)),
 			new_solid_pattern(left.material.color));
-	m = multiply_matrices(translation(-1.5, 0.33, -0.75), scaling(0.33, 0.33, 0.33));
+	m = multiply_matrices(translation(-2, -0.2, -1), scaling(0.33, 0.33, 0.33));
 	set_transform(&left, m);
-	set_pattern_transform(&left.material.pattern, m);
-	world->objs[4] = middle;
-	world->objs[5] = right;
-	world->objs[6] = left;
+	behind = new_sphere();
+	behind.material.color = new_color(0.8, 0, 0);
+	m = multiply_matrices(translation(-0.2, 0.2, -0.2), scaling(0.33, 0.33, 0.33));
+	set_transform(&behind, m);
+	world->objs[2] = middle;
+	world->objs[3] = right;
+	world->objs[4] = left;
+	world->objs[5] = behind;
 }
 
 void	create_ligts(t_world *world)
 {
 	world->lights = malloc(sizeof(t_light));
 	world->lights_count = 1;
-	world->lights[0] = new_light(new_point(-10, 10, -10), new_color(1, 1, 1));
+	world->lights[0] = new_light(new_point(-5, 5, -5), new_color(1, 1, 1));
 }
 
 void	create_camera(t_camera *camera)
@@ -114,9 +84,9 @@ void	create_camera(t_camera *camera)
 	t_point		to;
 	t_vector	up;
 
-	*camera = new_camera(WIDTH, HEIGHT, M_PI / 2);
-	from = new_point(0, 1, -5);
-	to = new_point(0, 1, 0);
+	*camera = new_camera(WIDTH, HEIGHT, M_PI / 3);
+	from = new_point(0, 1, -8);
+	to = new_point(0, 0, 0);
 	up = new_vector(0, 1, 0);
 	set_transform_camera(camera, view_transform(&from, &to, &up));
 }
@@ -139,20 +109,6 @@ int	main(void)
 	mlx_close_hook(canvas.mlx, &quit, &canvas);
 	mlx_key_hook(canvas.mlx, &handle_keyhook, &canvas);
 	mlx_loop(canvas.mlx);
-	free(world.objs[0].material.pattern.a);
-	free(world.objs[0].material.pattern.b);
-	free(world.objs[1].material.pattern.a);
-	free(world.objs[1].material.pattern.b);
-	free(world.objs[2].material.pattern.a);
-	free(world.objs[2].material.pattern.b);
-	free(world.objs[3].material.pattern.a);
-	free(world.objs[3].material.pattern.b);
-	free(world.objs[4].material.pattern.a);
-	free(world.objs[4].material.pattern.b);
-	free(world.objs[5].material.pattern.a);
-	free(world.objs[5].material.pattern.b);
-	free(world.objs[6].material.pattern.a);
-	free(world.objs[6].material.pattern.b);
 	free(world.objs);
 	free(world.lights);
 	mlx_terminate(canvas.mlx);

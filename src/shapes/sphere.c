@@ -12,8 +12,8 @@ t_shape	new_sphere(void)
 	shape.sphere.radius = 1.0;
 	shape.intersect_fn = intersect_sphere;
 	shape.normal_at = normal_at_sphere;
-	// shape.material.diffuse = 0.7;
-	// shape.material.specular = 0.3;
+	shape.material.diffuse = 0.7;
+	shape.material.specular = 0.3;
 	return (shape);
 }
 
@@ -23,7 +23,7 @@ t_shape	new_glass_sphere(void)
 
 	shape = new_sphere();
 	shape.material.transparency = 1.0;
-	shape.material.refractive_index = 1.5;
+	shape.material.refractive_index = GLASS;
 	return (shape);
 }
 
