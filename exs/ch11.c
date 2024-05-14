@@ -13,13 +13,14 @@ void	create_background(t_world *world)
 	t_shape		water_bed;
 
 	water = new_plane();
-	water.material.color = new_color(0.0, 1, 2);
+	water.material.color = new_color(0.0, 0.4, 0.8);
 	water.material.diffuse = 0.3;
 	water.material.reflective = 0.4;
 	water.material.transparency = 0.9;
 	water.material.refractive_index = WATER;
+	water.cast_shadow = false;
 	water_bed = new_plane();
-	water_bed.material.color = new_color(0.6, 0.3, 0.0);
+	water_bed.material.color = new_color(0.5, 0.25, 0.1);
 	set_transform(&water_bed, translation(0, -5, 0));
 	water_bed.material.diffuse = 0.9;
 	water_bed.material.reflective = 0.0;
@@ -46,8 +47,8 @@ void	create_spheres(t_world *world)
 	middle.material.diffuse = 0.1;
 	middle.material.specular = 5.0;
 	middle.material.shininess = 1200.0;
-	middle.material.reflective = 1.0;
-	middle.material.transparency = 1.0;
+	middle.material.reflective = 0.9;
+	middle.material.transparency = 0.9;
 	middle.material.refractive_index = GLASS;
 	right = new_sphere();
 	right.material.color = new_color(5, 0.5, 0.1);
@@ -84,8 +85,8 @@ void	create_camera(t_camera *camera)
 	t_vector	up;
 
 	*camera = new_camera(WIDTH, HEIGHT, M_PI / 3);
-	from = new_point(0, 3, -10);
-	to = new_point(0, 1, 9);
+	from = new_point(0, 1, -8);
+	to = new_point(0, 0, 0);
 	up = new_vector(0, 1, 0);
 	set_transform_camera(camera, view_transform(&from, &to, &up));
 }
