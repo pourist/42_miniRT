@@ -7,6 +7,7 @@ t_shape	new_shape(void)
 		.inverse = get_identity_matrix(),
 		.transpose = get_identity_matrix(),
 		.material = new_material(),
+		.cast_shadow = true,
 	});
 }
 

@@ -48,5 +48,5 @@ t_vector	cross(t_vector a, t_vector b)
 
 t_tuple	reflect(t_vector in, t_vector normal)
 {
-	return (subtract(in, multiply(normal, 2 * dot(in, normal))));
+	return (subtract(in, multiply(normal, 2.0 * dot(in, normal))));
 }

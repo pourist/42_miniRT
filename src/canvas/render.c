@@ -17,6 +17,7 @@ bool	render(t_canvas *canvas, t_world *world, t_camera *camera)
 		while (++x < camera->hsize - 1)
 		{
 			ray = ray_for_pixel(camera, x, y);
+			// world->remaining_recursion = MAX_RECURSION;
 			color = color_at(world, &ray);
 			write_pixel(canvas->img, x, y, color);
 		}

@@ -4,6 +4,8 @@
 # include "shapes.h"
 # include "lights.h"
 
+# define MAX_RECURSION	4
+
 typedef struct s_world
 {
 	t_hit		*xs;
@@ -29,12 +31,25 @@ typedef struct s_comps
 	double				n2;
 }	t_comps;
 
+typedef struct s_refrac_params
+{
+	double		n_ratio;
+	double		cos_i;
+	double		sin2_t;
+	double		cos_t;
+	t_vector	direction;
+	t_ray		refract_ray;
+	t_color		refracted_color;
+}	t_refrac_params;
+
 t_world	new_world(void);
 t_hit	*intersect_world(t_world *world, t_ray *ray);
 t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs);
 t_color	shade_hit(t_world *world, t_comps *comps);
 t_color	color_at(t_world *world, t_ray *ray);
 double	schlick(t_comps *comps);
+// reflec_and_reflac
+t_color	reflec_and_refrac(t_world *world, t_comps *comps, t_color *surface);
 // is_shadowed
 bool	is_shadowed(t_world *world, t_point *point, int index);
 // reflection
