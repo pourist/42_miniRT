@@ -19,6 +19,7 @@ bool	render(t_canvas *canvas, t_world *world, t_camera *camera)
 			ray = ray_for_pixel(camera, x, y);
 			color = color_at(world, &ray);
 			write_pixel(canvas->img, x, y, color);
+			world->remaining_recursion = MAX_RECURSION;
 		}
 	}
 	printf("\rRendering: 100%%\n");

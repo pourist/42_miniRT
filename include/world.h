@@ -4,6 +4,8 @@
 # include "shapes.h"
 # include "lights.h"
 
+# define MAX_RECURSION	4
+
 typedef struct s_world
 {
 	t_hit		*xs;
