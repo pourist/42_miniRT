@@ -4,9 +4,9 @@
 # include "rays.h"
 # include "materials.h"
 # include "patterns.h"
+# include "utils.h"
 
 # define MAX_NODES	511
-# define EPSILON	1e-5
 
 typedef struct s_sphere {
 	t_point	origin;
@@ -17,6 +17,10 @@ typedef struct s_plane {
 	t_point	origin;
 }	t_plane;
 
+typedef struct s_cube {
+	t_point	origin;
+}	t_cube;
+
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
 typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
@@ -26,6 +30,7 @@ typedef struct s_shape {
 	union {
 		t_sphere	sphere;
 		t_plane		plane;
+		t_cube		cube;
 	};
 	t_intersect_fn	intersect_fn;
 	t_normal_fn		normal_at;
@@ -57,6 +62,8 @@ t_shape		new_sphere(void);
 t_shape		new_glass_sphere(void);
 // Plane Shape
 t_shape		new_plane(void);
+// Cube Shape
+t_shape		new_cube(void);
 
 // Intersections general
 void		intersect(t_hit **xs, t_shape *s, t_ray r);
