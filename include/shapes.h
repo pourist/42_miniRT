@@ -33,6 +33,7 @@ typedef struct s_shape {
 	t_matrix		inverse;
 	t_matrix		transpose;
 	t_material		material;
+	bool			cast_shadow;
 }	t_shape;
 
 typedef struct s_hit {
