@@ -10,12 +10,12 @@ t_color	refracted_color(t_world *world, t_comps *comps)
 	t_ray			refract_ray;
 	t_color		refracted_color;
 
-	(void)world;
-	if (world->remaining_recursion == 0 || comps->obj->material.transparency == 0)
+	if (world->remaining_recursion == 0
+		|| comps->obj->material.transparency < EPSILON)
 		return (new_color(0, 0, 0));
 	n_ratio = comps->n1 / comps->n2;
 	cos_i = dot(comps->view.eye_v, comps->view.normal_v);
-	sin2_t = n_ratio * n_ratio * (1 - cos_i * cos_i);
+	sin2_t = n_ratio * n_ratio * (1 - (cos_i * cos_i));
 	if (sin2_t > 1)
 		return (new_color(0, 0, 0));
 	cos_t = sqrt(1.0 - sin2_t);
@@ -78,7 +78,7 @@ static t_list	*new_lst(t_shape *shape)
 
 static void	set_indices(t_list *container, double *n)
 {
-	if (!container) 
+	if (!ft_lstsize(container))
 		*n = 1;
 	else
 		*n = ((t_shape *)ft_lstlast(container)
@@ -88,21 +88,23 @@ static void	set_indices(t_list *container, double *n)
 void	find_refractive_indices(t_comps *comps, t_hit *i, t_hit *xs)
 {
 	t_list	*container;
+	t_hit	*tmp;
 
 	container = NULL;
-	while (xs) 
+	tmp = xs;
+	while (tmp) 
 	{
-		if (i == xs) 
+		if (i == tmp) 
 			set_indices(container, &comps->n1);
-		if (xs && is_included(container, xs->obj))
-			remove_obj(&container, xs->obj);
+		if (tmp && is_included(container, tmp->obj))
+			remove_obj(&container, tmp->obj);
 		else
-			ft_lstadd_back(&container, new_lst(xs->obj));
-		if (i == xs) 
+			ft_lstadd_back(&container, new_lst(tmp->obj));
+		if (i == tmp) 
 		{
 			set_indices(container, &comps->n2);
-			break ;
+			return ;
 		}
-		xs = xs->next;
+		tmp = tmp->next;
 	}
 }

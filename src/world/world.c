@@ -9,7 +9,7 @@ t_world	new_world(void)
 		.lights_count = 0,
 		.lights = NULL,
 		.ambient = new_color(0.1, 0.1, 0.1),
-		.remaining_recursion = 5,
+		.remaining_recursion = MAX_RECURSION,
 	});
 }
 
@@ -31,8 +31,8 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs)
 	comps.t = intersect->t;
 	comps.obj = intersect->obj;
 	comps.point = position(*ray, comps.t);
-	comps.view.eye_v = negate(ray->direction);
-	comps.view.normal_v = normal_at(comps.obj, comps.point);
+	comps.view.eye_v = negate(normalize(ray->direction));
+	comps.view.normal_v = normalize(normal_at(comps.obj, comps.point));
 	comps.n1 = 1;
 	comps.n2 = 1;
 	if (dot(comps.view.normal_v, comps.view.eye_v) < 0)
@@ -92,6 +92,7 @@ t_color	shade_hit(t_world *world, t_comps *comps)
 					&world->lights[i], &comps->over_point, &comps->view));
 	}
 	reflected = reflected_color(world, comps);
+	world->remaining_recursion = MAX_RECURSION;
 	refracted = refracted_color(world, comps);
 	if (comps->obj->material.reflective > 0 && comps->obj->material.transparency > 0)
 	{
@@ -100,7 +101,7 @@ t_color	shade_hit(t_world *world, t_comps *comps)
 					multiply_color(reflected, reflectance),
 					multiply_color(refracted, 1.0 - reflectance))));
 	}
-	return (add_color(add_color(surface, reflected), refracted));
+	return (add_color(surface, add_color(reflected, refracted)));
 }
 
 t_color	color_at(t_world *world, t_ray *ray)

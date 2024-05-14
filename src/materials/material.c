@@ -16,7 +16,7 @@ t_material	new_material(void)
 		.pattern.has_pattern = false,
 		.reflective = 0.0,
 		.transparency = 0.0,
-		.refractive_index = 1.0,
+		.refractive_index = VACUUM,
 	});
 }
 

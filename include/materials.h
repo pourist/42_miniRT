@@ -4,6 +4,12 @@
 # include "lights.h"
 # include "patterns.h"
 
+# define VACUUM 1.0
+# define AIR 1.00029
+# define WATER 1.333
+# define GLASS 1.52
+# define DIAMOND 2.417
+
 typedef struct s_material
 {
 	t_color		color;
