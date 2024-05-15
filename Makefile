@@ -44,12 +44,12 @@ HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h \
 SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 color.c canvas.c save.c hooks.c mx.c mx_operations.c \
 										 mx_attributes.c mx_transformations.c mx_rotations.c \
-										 ray.c sphere.c intersection.c shape.c light.c material.c \
+										 ray.c sphere.c intersections.c shape.c light.c material.c \
 										 world.c view_transform.c camera.c render.c color_at.c \
 										 plane.c pattern.c stripe.c gradient.c ring.c checkers.c \
 										 full_gradient.c radial_gradient.c solid_pattern.c \
 										 blended.c refrac_indices.c reflec_and_refrac.c cube.c \
-										 cylinder.c
+										 cylinder.c cone.c discriminants.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
