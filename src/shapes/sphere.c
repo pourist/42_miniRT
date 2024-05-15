@@ -27,38 +27,23 @@ t_shape	new_glass_sphere(void)
 	return (shape);
 }
 
-static t_discriminant	sphere_discriminant(t_sphere *sphere, t_ray ray)
-{
-	double	a;
-	double	b;
-	double	c;
-	double	discrim_and_sqrtd[2];
-	t_tuple	sphere_to_ray;
-
-	sphere_to_ray = subtract(ray.origin, sphere->origin);
-	a = dot(ray.direction, ray.direction);
-	b = 2.0 * dot(ray.direction, sphere_to_ray);
-	c = dot(sphere_to_ray, sphere_to_ray) - (sphere->radius * sphere->radius);
-	discrim_and_sqrtd[0] = (b * b) - (4.0 * a * c);
-	discrim_and_sqrtd[1] = sqrt(discrim_and_sqrtd[0]);
-	return ((t_discriminant){
-		a,
-		b,
-		c,
-		.t1 = (-b - discrim_and_sqrtd[1]) / (2.0 * a),
-		.t2 = (-b + discrim_and_sqrtd[1]) / (2.0 * a),
-		.discriminant = discrim_and_sqrtd[0]});
-}
-
-// TODO: check in the future if we dont need the negative values of t1 and t2
-// avoid inserting them in the intersection list
 static bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray)
 {
 	t_discriminant	d;
+	t_vector		sphere_to_ray;
+	double			sqrt_d;
 
-	d = sphere_discriminant(&shape->sphere, ray);
+	sphere_to_ray = subtract(ray.origin, shape->sphere.origin);
+	d.a = dot(ray.direction, ray.direction);
+	d.b = 2.0 * dot(ray.direction, sphere_to_ray);
+	d.c = dot(sphere_to_ray, sphere_to_ray)
+		- (shape->sphere.radius * shape->sphere.radius);
+	d.discriminant = (d.b * d.b) - (4.0 * d.a * d.c);
 	if (d.discriminant < 0)
 		return (false);
+	sqrt_d = sqrt(d.discriminant);
+	d.t1 = (-d.b - sqrt_d) / (2.0 * d.a);
+	d.t2 = (-d.b + sqrt_d) / (2.0 * d.a);
 	insert_intersection(xs, intersection(d.t1, shape));
 	if (d.discriminant != 0)
 		insert_intersection(xs, intersection(d.t2, shape));

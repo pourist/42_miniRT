@@ -48,7 +48,8 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 world.c view_transform.c camera.c render.c color_at.c \
 										 plane.c pattern.c stripe.c gradient.c ring.c checkers.c \
 										 full_gradient.c radial_gradient.c solid_pattern.c \
-										 blended.c refrac_indices.c reflec_and_refrac.c cube.c
+										 blended.c refrac_indices.c reflec_and_refrac.c cube.c \
+										 cylinder.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
