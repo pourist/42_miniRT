@@ -26,6 +26,7 @@ typedef struct s_cylinder {
 	double	radius;
 	double	min;
 	double	max;
+	bool	closed;
 }	t_cylinder;
 
 typedef struct s_hit	t_hit;
