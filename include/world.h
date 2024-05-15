@@ -4,7 +4,7 @@
 # include "shapes.h"
 # include "lights.h"
 
-# define MAX_RECURSION	4
+# define MAX_RECURSION	5
 
 typedef struct s_world
 {
