@@ -10,6 +10,8 @@ t_shape	new_cylinder(void)
 	shape = new_shape();
 	shape.cyl.origin = new_point(0, 0, 0);
 	shape.cyl.radius = 1.0;
+	shape.cyl.min = -INFINITY;
+	shape.cyl.max = INFINITY;
 	shape.intersect_fn = intersect_cylinder;
 	shape.normal_at = normal_at_cylinder;
 	return (shape);
@@ -19,6 +21,7 @@ static bool	intersect_cylinder(t_hit **xs, t_shape *shape, t_ray ray)
 {
 	t_discriminant	d;
 	double			sqrt_d;
+	double			y_pos;
 
 	d.a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
 	if (d.a < EPSILON && d.a > -EPSILON)
@@ -32,8 +35,14 @@ static bool	intersect_cylinder(t_hit **xs, t_shape *shape, t_ray ray)
 	sqrt_d = sqrt(d.discriminant);
 	d.t1 = (-d.b - sqrt_d) / (2 * d.a);
 	d.t2 = (-d.b + sqrt_d) / (2 * d.a);
-	insert_intersection(xs, intersection(d.t1, shape));
-	insert_intersection(xs, intersection(d.t2, shape));
+	if (d.t1 > d.t2)
+		ft_swap(&d.t1, &d.t2);
+	y_pos = ray.origin.y + d.t1 * ray.direction.y;
+	if (shape->cyl.min < y_pos && y_pos < shape->cyl.max)
+		insert_intersection(xs, intersection(d.t1, shape));
+	y_pos = ray.origin.y + d.t2 * ray.direction.y;
+	if (shape->cyl.min < y_pos && y_pos < shape->cyl.max)
+		insert_intersection(xs, intersection(d.t2, shape));
 	return (true);
 }
 

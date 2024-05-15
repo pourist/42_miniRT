@@ -77,3 +77,49 @@ Test(cylinder, normal_vector_on_a_cylinder)
 	cr_assert(eq(dbl, norm.y, 0));
 	cr_assert(eq(dbl, norm.z, 0));
 }
+
+Test(cylinder, the_default_minimum_and_maximum_for_a_cylinder)
+{
+	t_shape	cyl;
+
+	cyl = new_cylinder();
+	cr_assert(eq(dbl, cyl.cyl.min, -INFINITY));
+	cr_assert(eq(dbl, cyl.cyl.max, INFINITY));
+}
+
+Test(cylinder, intersecting_a_constrained_cylinder)
+{
+	t_shape	cyl;
+	t_vector	dir;
+	t_ray			r;
+	t_hit			*xs;
+
+	cyl = new_cylinder();
+	cyl.cyl.min = 1;
+	cyl.cyl.max = 2;
+	xs = NULL;
+	dir = normalize(new_vector(0.1, 1, 0));
+	r = new_ray(new_point(0, 1.5, 0), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
+	dir = normalize(new_vector(0, 0, 1));
+	r = new_ray(new_point(0, 3, -5), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
+	dir = normalize(new_vector(0, 0, 1));
+	r = new_ray(new_point(0, 0, -5), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
+	dir = normalize(new_vector(0, 0, 1));
+	r = new_ray(new_point(0, 2, -5), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
+	dir = normalize(new_vector(0, 0, 1));
+	r = new_ray(new_point(0, 1, -5), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
+	dir = normalize(new_vector(0, 0, 1));
+	r = new_ray(new_point(0, 1.5, -2), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 2));
+}
