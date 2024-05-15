@@ -53,3 +53,27 @@ Test(cylinder, a_ray_strikes_a_cylinder)
 	cr_assert(epsilon_eq(dbl, xs->t, 6.80798, EPSILON));
 	cr_assert(epsilon_eq(dbl, xs->next->t, 7.08872, EPSILON));
 }
+
+Test(cylinder, normal_vector_on_a_cylinder)
+{
+	t_shape	cyl;
+	t_vector	norm;
+
+	cyl = new_cylinder();
+	norm = cyl.normal_at(&cyl, new_point(1, 0, 0));
+	cr_assert(eq(dbl, norm.x, 1));
+	cr_assert(eq(dbl, norm.y, 0));
+	cr_assert(eq(dbl, norm.z, 0));
+	norm = cyl.normal_at(&cyl, new_point(0, 5, -1));
+	cr_assert(eq(dbl, norm.x, 0));
+	cr_assert(eq(dbl, norm.y, 0));
+	cr_assert(eq(dbl, norm.z, -1));
+	norm = cyl.normal_at(&cyl, new_point(0, -2, 1));
+	cr_assert(eq(dbl, norm.x, 0));
+	cr_assert(eq(dbl, norm.y, 0));
+	cr_assert(eq(dbl, norm.z, 1));
+	norm = cyl.normal_at(&cyl, new_point(-1, 1, 0));
+	cr_assert(eq(dbl, norm.x, -1));
+	cr_assert(eq(dbl, norm.y, 0));
+	cr_assert(eq(dbl, norm.z, 0));
+}

@@ -1,6 +1,7 @@
 #include "shapes.h"
 
-static bool	intersect_cylinder(t_hit **xs, t_shape *cyl, t_ray ray);
+static bool		intersect_cylinder(t_hit **xs, t_shape *cyl, t_ray ray);
+static t_vector	normal_at_cylinder(t_shape *shape, t_point object_point);
 
 t_shape	new_cylinder(void)
 {
@@ -10,6 +11,7 @@ t_shape	new_cylinder(void)
 	shape.cyl.origin = new_point(0, 0, 0);
 	shape.cyl.radius = 1.0;
 	shape.intersect_fn = intersect_cylinder;
+	shape.normal_at = normal_at_cylinder;
 	return (shape);
 }
 
@@ -33,4 +35,10 @@ static bool	intersect_cylinder(t_hit **xs, t_shape *shape, t_ray ray)
 	insert_intersection(xs, intersection(d.t1, shape));
 	insert_intersection(xs, intersection(d.t2, shape));
 	return (true);
+}
+
+static t_vector	normal_at_cylinder(t_shape *shape, t_point object_point)
+{
+	(void)shape;
+	return (new_vector(object_point.x, 0, object_point.z));
 }
