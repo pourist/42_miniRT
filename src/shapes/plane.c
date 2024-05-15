@@ -1,6 +1,6 @@
 #include "shapes.h"
 
-static t_vector	normal_at_plain(t_shape *plane, t_point object_point);
+static t_vector	normal_at_plain(t_shape *plane, t_point local_point);
 static bool	intersect_plane(t_hit **xs, t_shape *shape, t_ray ray);
 
 t_shape	new_plane(void)
@@ -14,9 +14,9 @@ t_shape	new_plane(void)
 	return (shape);
 }
 
-static t_vector	normal_at_plain(t_shape *plane, t_point object_point)
+static t_vector	normal_at_plain(t_shape *plane, t_point local_point)
 {
-	(void)object_point;
+	(void)local_point;
 	(void)plane;
 	return (new_vector(0, 1, 0));
 }
