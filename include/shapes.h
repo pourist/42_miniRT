@@ -24,6 +24,8 @@ typedef struct s_cube {
 typedef struct s_cylinder {
 	t_point	origin;
 	double	radius;
+	double	min;
+	double	max;
 }	t_cylinder;
 
 typedef struct s_hit	t_hit;
