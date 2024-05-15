@@ -135,6 +135,10 @@ reflec_refrac: $(OBJECTS) test.c test_reflec_refrac.c
 cubes: $(OBJECTS) test.c test_cubes.c
 	@$(call run, "$^")
 
+.PHONY: cylinders
+cylinders: $(OBJECTS) test.c test_cylinders.c
+	@$(call run, "$^")
+
 $(OBJECTS):
 	@make -C .. -s
 

@@ -1,0 +1,55 @@
+#include "test.h"
+
+Test(cylinders, a_ray_misses_a_cylinder)
+{
+	t_shape		cyl;
+	t_vector	dir;
+	t_ray			r;
+	t_hit			*xs;
+
+	cyl = new_cylinder();
+	xs = NULL;
+	dir = normalize(new_vector(0, 1, 0));
+	r = new_ray(new_point(1, 0, 0), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
+	dir = normalize(new_vector(0, 1, 0));
+	r = new_ray(new_point(0, 0, 0), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
+	dir = normalize(new_vector(1, 1, 1));
+	r = new_ray(new_point(0, 0, -5), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 0));
+}
+
+Test(cylinder, a_ray_strikes_a_cylinder)
+{
+  t_shape		cyl;
+  t_vector	dir;
+  t_ray			r;
+  t_hit			*xs;
+
+	cyl = new_cylinder();
+	xs = NULL;
+	dir = normalize(new_vector(0, 0, 1));
+	r = new_ray(new_point(1, 0, -5), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	cr_assert(epsilon_eq(dbl, xs->t, 5, EPSILON));
+	cr_assert(epsilon_eq(dbl, xs->next->t, 5, EPSILON));
+	xs = NULL;
+	dir = normalize(new_vector(0, 0, 1));
+	r = new_ray(new_point(0, 0, -5), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	cr_assert(epsilon_eq(dbl, xs->t, 4, EPSILON));
+	cr_assert(epsilon_eq(dbl, xs->next->t, 6, EPSILON));
+	xs = NULL;
+	dir = normalize(new_vector(0.1, 1, 1));
+	r = new_ray(new_point(0.5, 0, -5), dir);
+	intersect(&xs, &cyl, r);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	cr_assert(epsilon_eq(dbl, xs->t, 6.80798, EPSILON));
+	cr_assert(epsilon_eq(dbl, xs->next->t, 7.08872, EPSILON));
+}
