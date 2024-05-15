@@ -149,7 +149,7 @@ Test(spheres, helper_for_producing_a_sphere_with_a_glassy_material)
 
 	s = new_glass_sphere();
 	cr_assert(eq(dbl, s.material.transparency, 1.0));
-	cr_assert(eq(dbl, s.material.refractive_index, 1.5));
+	cr_assert(eq(dbl, s.material.refractive_index, 1.52));
 }
 
 Test(intersections,finding_n1_and_n2_at_various_intersections)
@@ -377,7 +377,9 @@ Test(intersections, the_schlick_approximation_with_a_perpendicular_viewing_angle
 	insert_intersection(&i, intersection(1, &s));
 	comps = prepare_computations(hit(i), &r, i);
 	reflectance = schlick(&comps);
-	cr_assert(epsilon_eq(dbl, reflectance, 0.04, EPSILON));
+	// Old test
+	// cr_assert(epsilon_eq(dbl, reflectance, 0.04, EPSILON));
+	cr_assert(epsilon_eq(dbl, reflectance, 0.0425799, EPSILON));
 }
 
 Test(intersections, the_schlick_approximation_with_small_angle_and_n2_greater_than_n1)
@@ -394,7 +396,9 @@ Test(intersections, the_schlick_approximation_with_small_angle_and_n2_greater_th
 	insert_intersection(&i, intersection(1.8589, &s));
 	comps = prepare_computations(hit(i), &r, i);
 	reflectance = schlick(&comps);
-	cr_assert(epsilon_eq(dbl, reflectance, 0.48873, EPSILON));
+	// Old test
+	// cr_assert(epsilon_eq(dbl, reflectance, 0.48873, EPSILON));
+	cr_assert(epsilon_eq(dbl, reflectance, 0.49010, EPSILON));
 }
 
 Test(world, shade_hit_with_a_reflective_transparent_material)

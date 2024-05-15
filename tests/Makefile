@@ -18,7 +18,7 @@ WHITE       := \033[0;97m
 
 TESTS							:= tuples colors canvas matrices transformations rays spheres \
 										 lights materials world view_transform camera shapes planes \
-										 patterns reflec_refrac
+										 patterns reflec_refrac cubes
 RM								:= rm -rf
 	
 ################################################################################
@@ -129,6 +129,10 @@ patterns: $(OBJECTS) test_patterns.c
 
 .PHONY: reflec_refrac
 reflec_refrac: $(OBJECTS) test.c test_reflec_refrac.c
+	@$(call run, "$^")
+
+.PHONY: cubes
+cubes: $(OBJECTS) test.c test_cubes.c
 	@$(call run, "$^")
 
 $(OBJECTS):
