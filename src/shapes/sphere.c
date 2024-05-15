@@ -39,13 +39,13 @@ static bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray ray)
 	d.c = dot(sphere_to_ray, sphere_to_ray)
 		- (shape->sphere.radius * shape->sphere.radius);
 	d.discriminant = (d.b * d.b) - (4.0 * d.a * d.c);
-	if (d.discriminant < 0)
+	if (d.discriminant < 0.0)
 		return (false);
 	sqrt_d = sqrt(d.discriminant);
 	d.t1 = (-d.b - sqrt_d) / (2.0 * d.a);
 	d.t2 = (-d.b + sqrt_d) / (2.0 * d.a);
 	insert_intersection(xs, intersection(d.t1, shape));
-	if (d.discriminant != 0)
+	if (d.discriminant != 0.0)
 		insert_intersection(xs, intersection(d.t2, shape));
 	return (true);
 }
