@@ -13,7 +13,7 @@ bool	is_shadowed(t_world *world, t_point *point, int index)
 	r = new_ray(*point, normalize(v));
 	xs = intersect_world(world, &r);
 	h = hit(xs);
-	if (h && h->t < distance && h->obj->cast_shadow)
+	if (h && h->obj->cast_shadow == true && h->t < distance)
 		return (true);
 	return (false);
 }
