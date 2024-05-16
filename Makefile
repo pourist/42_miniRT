@@ -25,7 +25,7 @@ RM								:= rm -rf
 
 OBJ_DIR						:= obj
 SRC_DIRS					:= tuples utils canvas matrices rays shapes lights materials \
-										 world camera patterns
+										 world camera patterns groups
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
@@ -49,7 +49,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 plane.c pattern.c stripe.c gradient.c ring.c checkers.c \
 										 full_gradient.c radial_gradient.c solid_pattern.c \
 										 blended.c refrac_indices.c reflec_and_refrac.c cube.c \
-										 cylinder.c cone.c discriminants.c group.c
+										 cylinder.c cone.c discriminants.c group.c group_tree.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
