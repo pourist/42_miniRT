@@ -8,6 +8,7 @@ t_shape	new_shape(void)
 		.transpose = get_identity_matrix(),
 		.material = new_material(),
 		.cast_shadow = true,
+		.parent = NULL
 	});
 }
 
