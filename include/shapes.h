@@ -41,14 +41,6 @@ typedef struct s_group	t_group;
 typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
 typedef t_tuple			(*t_normal_fn)(t_shape *, t_point);
 
-typedef struct s_group
-{
-	t_shape	shape;
-	t_group	*left;
-	t_group	*right;
-	t_group	*parent;
-}	t_group;
-
 typedef struct s_shape {
 	union {
 		t_sphere	sphere;
@@ -65,8 +57,15 @@ typedef struct s_shape {
 	t_matrix		transpose;
 	t_material		material;
 	bool			cast_shadow;
-	t_group			*parent;
+	t_shape			*parent;
 }	t_shape;
+
+typedef struct s_group
+{
+	t_shape	*shape;
+	t_group	*left;
+	t_group	*right;
+}	t_group;
 
 typedef struct s_hit {
 	double	t;
@@ -97,6 +96,8 @@ t_shape		new_cylinder(void);
 t_shape		new_cone(void);
 // Groups
 t_shape		new_group(void);
+void		add_child(t_shape *group, t_shape *child);
+t_point		world_to_object(t_shape *shape, t_point world_point);
 // discriminants
 void		cone_discriminant(t_ray *ray, t_discriminant *d);
 void		cylinder_discriminant(t_ray *ray, t_discriminant *d);
