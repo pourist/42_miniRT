@@ -5,6 +5,7 @@
 # include <math.h>
 
 # include "tuples.h"
+# include "shapes.h"
 
 # define EPSILON	1e-5
 
