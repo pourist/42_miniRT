@@ -1,4 +1,5 @@
 #include "shapes.h"
+#include "groups.h"
 
 static bool		intersect_cylinder(t_hit **xs, t_shape *cyl, t_ray r);
 static t_vector	normal_at_cylinder(t_shape *shape, t_point local_point);
@@ -14,6 +15,8 @@ t_shape	new_cylinder(void)
 	shape.intersect_fn = intersect_cylinder;
 	shape.normal_at = normal_at_cylinder;
 	shape.cyl.closed = false;
+	shape.bounds_fn = cylinder_bounds;
+	shape.is_bounds_precal = false;
 	return (shape);
 }
 

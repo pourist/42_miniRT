@@ -19,6 +19,7 @@
 # include "world.h"
 # include "camera.h"
 # include "patterns.h"
+# include "groups.h"
 
 bool		matrix_eq(t_matrix a, t_matrix b);
 bool		tuple_eq(t_tuple a, t_tuple b);

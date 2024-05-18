@@ -110,3 +110,143 @@ Test(groups, converting_a_point_from_world_to_object_space)
 	cr_assert(epsilon_eq(dbl, p.y, 0, EPSILON));
 	cr_assert(epsilon_eq(dbl, p.z, -1, EPSILON));
 }
+
+Test(groups, converting_a_normal_from_object_to_world_space)
+{
+  t_shape	g1;
+  t_shape	g2;
+  t_shape	s;
+  t_vector	n;
+
+	g1 = new_group();
+	set_transform(&g1, rotation_y(cos(M_PI_2), sin(M_PI_2)));
+	g2 = new_group();
+	set_transform(&g2, scaling(1, 2, 3));
+	add_child(&g1, &g2);
+	s = new_sphere();
+	set_transform(&s, translation(5, 0, 0));
+	add_child(&g2, &s);
+	n = normal_to_world(&s, new_vector(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
+	cr_assert(epsilon_eq(dbl, n.x, 0.28571, EPSILON));
+	cr_assert(epsilon_eq(dbl, n.y, 0.42857, EPSILON));
+	cr_assert(epsilon_eq(dbl, n.z, -0.85714, EPSILON));
+}
+
+Test(groups, finding_the_normal_on_a_child_object)
+{
+	t_shape	g1;
+	t_shape	g2;
+	t_shape	s;
+	t_vector	n;
+
+	g1 = new_group();
+	set_transform(&g1, rotation_y(cos(M_PI_2), sin(M_PI_2)));
+	g2 = new_group();
+	set_transform(&g2, scaling(1, 2, 3));
+	add_child(&g1, &g2);
+	s = new_sphere();
+	set_transform(&s, translation(5, 0, 0));
+	add_child(&g2, &s);
+	n = normal_at(&s, new_point(1.7321, 1.1547, -5.5774));
+	cr_assert(epsilon_eq(dbl, n.x, 0.2857, EPSILON));
+	cr_assert(epsilon_eq(dbl, n.y, 0.42854, EPSILON));
+	cr_assert(epsilon_eq(dbl, n.z, -0.85716, EPSILON));
+}
+
+Test(groups, groups_have_bounding_box)
+{
+	t_shape	g1;
+  t_shape	s;
+	t_ray		r1;
+	t_ray		r2;
+	t_ray		r3;
+	t_hit		*xs;
+
+	g1 = new_group();
+	s = new_sphere();
+  add_child(&g1, &s);
+	r1 = new_ray(new_point(0, 0, -2), new_vector(0, 0, 1));
+	r2 = new_ray(new_point(0.9, 0.9, -2), new_vector(0, 0, 1));
+	r3 = new_ray(new_point(1.1, 1.1, -2), new_vector(0, 0, 1));
+	xs = NULL;
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r1, g1.inverse)), true));
+	xs = NULL;
+	intersect(&xs, &g1, r1);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	xs = NULL;
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r2, g1.inverse)), true));
+	xs = NULL;
+	intersect(&xs, &g1, r2);
+  cr_assert(eq(int, intersect_count(xs), 0));
+  xs = NULL;
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r3, g1.inverse)), false));
+	xs = NULL;
+  intersect(&xs, &g1, r3);
+  cr_assert(eq(int, intersect_count(xs), 0));
+}
+
+Test(groups, groups_have_bounding_box_with_transform)
+{
+	t_shape	g1;
+	t_shape	s;
+	t_ray		r1;
+	t_ray		r2;
+	t_ray		r3;
+	t_hit		*xs;
+
+	g1 = new_group();
+	s = new_sphere();
+	add_child(&g1, &s);
+	set_transform(&g1, translation(3, 3, 0));
+	r1 = new_ray(new_point(3, 3, -2), new_vector(0, 0, 1));
+	r2 = new_ray(new_point(3.9, 3.9, -2), new_vector(0, 0, 1));
+	r3 = new_ray(new_point(5, 5, -2), new_vector(0, 0, 1));
+	xs = NULL;
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r1, g1.inverse)), true));
+	xs = NULL;
+	intersect(&xs, &g1, r1);
+	cr_assert(eq(int, intersect_count(xs), 2));
+	xs = NULL;
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r2, g1.inverse)), true));
+	xs = NULL;
+	intersect(&xs, &g1, r2);
+	cr_assert(eq(int, intersect_count(xs), 0));
+  xs = NULL;
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r3, g1.inverse)), false));
+	xs = NULL;
+	intersect(&xs, &g1, r3);
+	cr_assert(eq(int, intersect_count(xs), 0));
+}
+
+Test(groups, groups_have_bounding_box_with_group_transform)
+{
+	t_shape	g1;
+  t_shape	s;
+  t_ray		r1;
+  t_ray		r2;
+  t_ray		r3;
+  t_hit		*xs;
+
+	g1 = new_group();
+	set_transform(&g1, translation(1, 1, 0));
+	s = new_sphere();
+	add_child(&g1, &s);
+	set_transform(&s, translation(3, 3, 0));
+	r1 = new_ray(new_point(4, 4, -2), new_vector(0, 0, 1));
+	r2 = new_ray(new_point(4.9, 4.9, -2), new_vector(0, 0, 1));
+	r3 = new_ray(new_point(5.1, 5.1, -2), new_vector(0, 0, 1));
+	xs = NULL;
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r1, g1.inverse)), true));
+  xs = NULL;
+  intersect(&xs, &g1, r1);
+  cr_assert(eq(int, intersect_count(xs), 2));
+  xs = NULL;
+  cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r2, g1.inverse)), true));
+  xs = NULL;
+  intersect(&xs, &g1, r2);
+  cr_assert(eq(int, intersect_count(xs), 0));
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r3, g1.inverse)), false));
+  xs = NULL;
+  intersect(&xs, &g1, r3);
+  cr_assert(eq(int, intersect_count(xs), 0));
+}

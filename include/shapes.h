@@ -35,11 +35,24 @@ typedef struct s_cone {
 	bool	closed;
 }	t_cone;
 
+typedef struct s_bounds
+{
+	t_point	min;
+	t_point	max;
+}	t_bounds;
+
+typedef struct s_range
+{
+	double	min;
+	double	max;
+}	t_range;
+
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
 typedef struct s_group	t_group;
 typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
 typedef t_tuple			(*t_normal_fn)(t_shape *, t_point);
+typedef void			(*t_bounds_fn)(t_shape *);
 
 typedef struct s_shape {
 	union {
@@ -58,6 +71,9 @@ typedef struct s_shape {
 	t_material		material;
 	bool			cast_shadow;
 	t_shape			*parent;
+	t_bounds_fn		bounds_fn;
+	bool			is_bounds_precal;
+	t_bounds		bounds;
 }	t_shape;
 
 typedef struct s_group
@@ -94,10 +110,6 @@ t_shape		new_cube(void);
 t_shape		new_cylinder(void);
 // Cone Shape
 t_shape		new_cone(void);
-// Groups
-t_shape		new_group(void);
-void		add_child(t_shape *group, t_shape *child);
-t_point		world_to_object(t_shape *shape, t_point world_point);
 // discriminants
 void		cone_discriminant(t_ray *ray, t_discriminant *d);
 void		cylinder_discriminant(t_ray *ray, t_discriminant *d);
@@ -117,5 +129,8 @@ t_color		lighting(t_shape *shape, t_light *light, t_point *point,
 // pattern.c
 t_color		pattern_at_shape(t_pattern *pattern, t_shape *shape,
 				t_point *world_point);
+// Groups checks
+t_point		world_to_object(t_shape *shape, t_point world_point);
+t_vector	normal_to_world(t_shape *shape, t_vector object_normal);
 
 #endif

@@ -1,6 +1,8 @@
-#include "shapes.h"
+#include "groups.h"
 
-static bool	intersect_group(t_hit **xs, t_shape *group, t_ray r);
+static bool		intersect_group(t_hit **xs, t_shape *shape, t_ray r);
+static t_vector	normal_at_group(t_shape *shape, t_point local_point);
+static void		group_bounds(t_shape *shape);
 
 t_shape	new_group(void)
 {
@@ -9,34 +11,35 @@ t_shape	new_group(void)
 	shape = new_shape();
 	shape.g = NULL;
 	shape.intersect_fn = intersect_group;
-	// shape.normal_at = normal_at_group;
+	shape.normal_at = normal_at_group;
+	shape.bounds_fn = group_bounds;
+	shape.is_bounds_precal = false;
 	return (shape);
 }
 
-static void	intersect_btree_prefix(t_group *root, t_hit **xs, t_ray *r)
+static bool	intersect_group(t_hit **xs, t_shape *shape, t_ray r)
 {
-	if (root)
+	shape->bounds_fn(shape);
+	if (!intersect_bounds(&shape->bounds, &r))
+		return (false);
+	intersect_btree_prefix(shape->g, xs, &r);
+	return (true);
+}
+
+static t_vector	normal_at_group(t_shape *shape, t_point local_point)
+{
+	(void)shape;
+	(void)local_point;
+	printf("Exception: Attempted to get a normal from a group object.\n");
+	return ((t_vector){0, 0, 0, 0});
+}
+
+static void	group_bounds(t_shape *shape)
+{
+	if (!shape->is_bounds_precal)
 	{
-		intersect(xs, root->shape, *r);
-		if (root->left)
-			intersect_btree_prefix(root->left, xs, r);
-		if (root->right)
-			intersect_btree_prefix(root->right, xs, r);
+		shape->is_bounds_precal = true;
+		shape->bounds = new_bounds(new_point(0, 0, 0), new_point(0, 0, 0));
+		get_group_max_bounds(shape->g, &shape->bounds);
 	}
-}
-
-static bool	intersect_group(t_hit **xs, t_shape *group, t_ray r)
-{
-	t_group	*group_tree; 
-
-	group_tree = group->g;
-	intersect_btree_prefix(group_tree, xs, &r);
-	return (intersect_count(*xs) > 0);
-}
-
-t_point	world_to_object(t_shape *shape, t_point world_point)
-{
-	if (shape->parent)
-		world_point = world_to_object(shape->parent, world_point);
-	return (multiply_matrix_by_tuple(shape->inverse, world_point));
 }
