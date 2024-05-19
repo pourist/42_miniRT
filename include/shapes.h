@@ -100,7 +100,7 @@ typedef struct s_hit {
 	t_hit	*next;
 }	t_hit;
 
-typedef struct s_discriminant
+typedef struct s_intersect_params
 {
 	double	a;
 	double	b;
@@ -108,7 +108,19 @@ typedef struct s_discriminant
 	double	t1;
 	double	t2;
 	double	discriminant;
-}	t_discriminant;
+}	t_intersect_params;
+
+typedef struct s_intersect_tri_params
+{
+	t_vector	dir_cross_e2;
+	double		det;
+	double		f;
+	t_point		p1_to_origin;
+	double		u;
+	t_vector	origin_cross_e1;
+	double		v;
+	double		t;
+}	t_intersect_tri_params;
 
 // Sphere Shape
 t_shape		new_sphere(void);
@@ -124,8 +136,8 @@ t_shape		new_cone(void);
 // Triangle Shape
 t_shape		new_triangle(t_point p1, t_point p2, t_point p3);
 // discriminants
-void		cone_discriminant(t_ray *ray, t_discriminant *d);
-void		cylinder_discriminant(t_ray *ray, t_discriminant *d);
+void		cone_discriminant(t_ray *ray, t_intersect_params *p);
+void		cylinder_discriminant(t_ray *ray, t_intersect_params *p);
 // Intersections general
 void		intersect(t_hit **xs, t_shape *s, t_ray r);
 t_hit		*intersection(double t, t_shape	*shape);

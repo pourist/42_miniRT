@@ -27,29 +27,22 @@ static	t_vector	normal_at_triangle(t_shape *shape, t_point local_point)
 
 static bool	intersect_triangle(t_hit **xs, t_shape *shape, t_ray r)
 {
-	t_vector	dir_cross_e2;
-	double		det;
-	double		f;
-	t_point		p1_to_origin;
-	double		u;
-	t_vector	origin_cross_e1;
-	double		v;
-	double		t;
+	t_intersect_tri_params	p;
 
-	dir_cross_e2 = cross(r.direction, shape->tri.e2);
-	det = dot(shape->tri.e1, dir_cross_e2);
-	if (fabs(det) < EPSILON)
+	p.dir_cross_e2 = cross(r.direction, shape->tri.e2);
+	p.det = dot(shape->tri.e1, p.dir_cross_e2);
+	if (fabs(p.det) < EPSILON)
 		return (false);
-	f = 1.0 / det;
-	p1_to_origin = subtract(r.origin, shape->tri.p1);
-	u = f * dot(p1_to_origin, dir_cross_e2);
-	if (u < 0.0 || u > 1.0)
+	p.f = 1.0 / p.det;
+	p.p1_to_origin = subtract(r.origin, shape->tri.p1);
+	p.u = p.f * dot(p.p1_to_origin, p.dir_cross_e2);
+	if (p.u < 0.0 || p.u > 1.0)
 		return (false);
-	origin_cross_e1 = cross(p1_to_origin, shape->tri.e1);
-	v = f * dot(r.direction, origin_cross_e1);
-	if (v < 0.0 || u + v > 1.0)
+	p.origin_cross_e1 = cross(p.p1_to_origin, shape->tri.e1);
+	p.v = p.f * dot(r.direction, p.origin_cross_e1);
+	if (p.v < 0.0 || p.u + p.v > 1.0)
 		return (false);
-	t = f * dot(shape->tri.e2, origin_cross_e1);
-	insert_intersection(xs, intersection(t, shape));
+	p.t = p.f * dot(shape->tri.e2, p.origin_cross_e1);
+	insert_intersection(xs, intersection(p.t, shape));
 	return (true);
 }
