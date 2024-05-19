@@ -1,0 +1,14 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     ch14
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _random_double, symObjAddr: 0x0, symBinAddr: 0x100009150, symSize: 0x54 }
+  - { offsetInCU: 0x33, offset: 0x33, size: 0x8, addend: 0x0, symName: _random_double, symObjAddr: 0x0, symBinAddr: 0x100009150, symSize: 0x54 }
+  - { offsetInCU: 0x69, offset: 0x69, size: 0x8, addend: 0x0, symName: _random_translation, symObjAddr: 0x54, symBinAddr: 0x1000091A4, symSize: 0x60C }
+  - { offsetInCU: 0xB4, offset: 0xB4, size: 0x8, addend: 0x0, symName: _random_color, symObjAddr: 0x660, symBinAddr: 0x1000097B0, symSize: 0x430 }
+  - { offsetInCU: 0xE0, offset: 0xE0, size: 0x8, addend: 0x0, symName: _create_scene1, symObjAddr: 0xA90, symBinAddr: 0x100009BE0, symSize: 0xC10 }
+  - { offsetInCU: 0x1B9, offset: 0x1B9, size: 0x8, addend: 0x0, symName: _create_ligts1, symObjAddr: 0x16A0, symBinAddr: 0x10000A7F0, symSize: 0x6F4 }
+  - { offsetInCU: 0x1DE, offset: 0x1DE, size: 0x8, addend: 0x0, symName: _create_camera1, symObjAddr: 0x1D94, symBinAddr: 0x10000AEE4, symSize: 0x78C }
+  - { offsetInCU: 0x23A, offset: 0x23A, size: 0x8, addend: 0x0, symName: _render_lots_of_spheres, symObjAddr: 0x2520, symBinAddr: 0x10000B670, symSize: 0x538 }
+  - { offsetInCU: 0x288, offset: 0x288, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x2A58, symBinAddr: 0x10000BBA8, symSize: 0x38 }
+...

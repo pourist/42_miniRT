@@ -13,7 +13,7 @@ t_shape	new_group(void)
 	shape.intersect_fn = intersect_group;
 	shape.normal_at = normal_at_group;
 	shape.bounds_fn = group_bounds;
-	shape.is_bounds_precal = false;
+	shape.is_group = true;
 	return (shape);
 }
 
@@ -22,7 +22,7 @@ static bool	intersect_group(t_hit **xs, t_shape *shape, t_ray r)
 	shape->bounds_fn(shape);
 	if (!intersect_bounds(&shape->bounds, &r))
 		return (false);
-	intersect_btree_prefix(shape->g, xs, &r);
+	intersect_group_shapes(&shape->g, xs, &r);
 	return (true);
 }
 
@@ -39,7 +39,9 @@ static void	group_bounds(t_shape *shape)
 	if (!shape->is_bounds_precal)
 	{
 		shape->is_bounds_precal = true;
-		shape->bounds = new_bounds(new_point(0, 0, 0), new_point(0, 0, 0));
-		get_group_max_bounds(shape->g, &shape->bounds);
+		shape->bounds = new_bounds(new_point(INFINITY, INFINITY, INFINITY),
+				new_point(-INFINITY, -INFINITY, -INFINITY));
+		get_group_bounds(&shape->g, &shape->bounds);
+		get_bounds(shape, &shape->bounds);
 	}
 }

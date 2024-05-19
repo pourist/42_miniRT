@@ -17,10 +17,10 @@ static void	new_box(t_bounds *bounds, t_point box[8])
 	box[7] = new_point(bounds->max.x, bounds->max.y, bounds->max.z);
 }
 
-void	get_max_bounds(t_shape *shape)
+void	get_bounds(t_shape *shape, t_bounds *new_bounds)
 {
-	t_point	box[8];
-	int		i;
+	t_point		box[8];
+	int			i;
 
 	new_box(&shape->bounds, box);
 	i = -1;
@@ -28,18 +28,18 @@ void	get_max_bounds(t_shape *shape)
 		box[i] = multiply_matrix_by_tuple(shape->transform, box[i]);
 	while (--i >= 0)
 	{
-		if (box[i].x < shape->bounds.min.x)
-			shape->bounds.min.x = box[i].x;
-		if (box[i].y < shape->bounds.min.y)
-			shape->bounds.min.y = box[i].y;
-		if (box[i].z < shape->bounds.min.z)
-			shape->bounds.min.z = box[i].z;
-		if (box[i].x > shape->bounds.max.x)
-			shape->bounds.max.x = box[i].x;
-		if (box[i].y > shape->bounds.max.y)
-			shape->bounds.max.y = box[i].y;
-		if (box[i].z > shape->bounds.max.z)
-			shape->bounds.max.z = box[i].z;
+		if (box[i].x < new_bounds->min.x)
+			new_bounds->min.x = box[i].x;
+		if (box[i].y < new_bounds->min.y)
+			new_bounds->min.y = box[i].y;
+		if (box[i].z < new_bounds->min.z)
+			new_bounds->min.z = box[i].z;
+		if (box[i].x > new_bounds->max.x)
+			new_bounds->max.x = box[i].x;
+		if (box[i].y > new_bounds->max.y)
+			new_bounds->max.y = box[i].y;
+		if (box[i].z > new_bounds->max.z)
+			new_bounds->max.z = box[i].z;
 	}
 }
 

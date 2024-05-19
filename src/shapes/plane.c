@@ -13,7 +13,6 @@ t_shape	new_plane(void)
 	shape.intersect_fn = intersect_plane;
 	shape.plane.origin = new_point(0, 0, 0);
 	shape.bounds_fn = plane_bounds;
-	shape.is_bounds_precal = false;
 	return (shape);
 }
 

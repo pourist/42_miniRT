@@ -16,7 +16,6 @@ t_shape	new_cylinder(void)
 	shape.normal_at = normal_at_cylinder;
 	shape.cyl.closed = false;
 	shape.bounds_fn = cylinder_bounds;
-	shape.is_bounds_precal = false;
 	return (shape);
 }
 

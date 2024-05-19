@@ -13,7 +13,6 @@ t_shape	new_cube(void)
 	shape.intersect_fn = intersect_cube;
 	shape.normal_at = normal_at_cube;
 	shape.bounds_fn = cube_bounds;
-	shape.is_bounds_precal = false;
 	return (shape);
 }
 
