@@ -47,6 +47,16 @@ typedef struct s_range
 	double	max;
 }	t_range;
 
+typedef struct s_triangle
+{
+	t_point		p1;
+	t_point		p2;
+	t_point		p3;
+	t_vector	e1;
+	t_vector	e2;
+	t_vector	normal;
+}	t_triangle;
+
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
 typedef struct s_group	t_group;
@@ -61,6 +71,7 @@ typedef struct s_shape {
 		t_cube		cube;
 		t_cylinder	cyl;
 		t_cone		cone;
+		t_triangle	tri;
 		t_group		*g;
 	};
 	t_intersect_fn	intersect_fn;
@@ -110,6 +121,8 @@ t_shape		new_cube(void);
 t_shape		new_cylinder(void);
 // Cone Shape
 t_shape		new_cone(void);
+// Triangle Shape
+t_shape		new_triangle(t_point p1, t_point p2, t_point p3);
 // discriminants
 void		cone_discriminant(t_ray *ray, t_discriminant *d);
 void		cylinder_discriminant(t_ray *ray, t_discriminant *d);
