@@ -1,6 +1,7 @@
 #include "shapes.h"
+#include "groups.h"
 
-static bool		intersect_cone(t_hit **xs, t_shape *cyl, t_ray r);
+static bool		intersect_cone(t_hit **xs, t_shape *shape, t_ray r);
 static t_vector	normal_at_cone(t_shape *shape, t_point local_point);
 
 t_shape	new_cone(void)
@@ -8,12 +9,13 @@ t_shape	new_cone(void)
 	t_shape	shape;
 
 	shape = new_shape();
-	shape.cyl.origin = new_point(0, 0, 0);
-	shape.cyl.min = -INFINITY;
-	shape.cyl.max = INFINITY;
+	shape.cone.origin = new_point(0, 0, 0);
+	shape.cone.min = -INFINITY;
+	shape.cone.max = INFINITY;
 	shape.intersect_fn = intersect_cone;
 	shape.normal_at = normal_at_cone;
-	shape.cyl.closed = false;
+	shape.cone.closed = false;
+	shape.bounds_fn = cone_bounds;
 	return (shape);
 }
 
@@ -32,12 +34,12 @@ static void	intersect_caps(t_hit **xs, t_shape *shape, t_ray *ray)
 {
 	double			t;
 
-	if (!shape->cyl.closed || fabs(ray->direction.y) < EPSILON)
+	if (!shape->cone.closed || fabs(ray->direction.y) < EPSILON)
 		return ;
-	t = (shape->cyl.min - ray->origin.y) / ray->direction.y;
+	t = (shape->cone.min - ray->origin.y) / ray->direction.y;
 	if (check_cap(ray, t))
 		insert_intersection(xs, intersection(t, shape));
-	t = (shape->cyl.max - ray->origin.y) / ray->direction.y;
+	t = (shape->cone.max - ray->origin.y) / ray->direction.y;
 	if (check_cap(ray, t))
 		insert_intersection(xs, intersection(t, shape));
 }
@@ -75,9 +77,9 @@ static t_vector	normal_at_cone(t_shape *shape, t_point local_point)
 	double	y;
 
 	dist = pow(local_point.x, 2) + pow(local_point.z, 2);
-	if (dist < 1.0 && local_point.y >= shape->cyl.max - EPSILON)
+	if (dist < 1.0 && local_point.y >= shape->cone.max - EPSILON)
 		return (new_vector(0, 1, 0));
-	else if (dist < 1.0 && local_point.y <= shape->cyl.min + EPSILON)
+	else if (dist < 1.0 && local_point.y <= shape->cone.min + EPSILON)
 		return (new_vector(0, -1, 0));
 	else
 	{

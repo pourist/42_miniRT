@@ -39,7 +39,7 @@ t_ray	ray_for_pixel(t_camera *camera, double px, double py)
 	world_x = camera->half_width - ((px + 0.5) * camera->pixel_size);
 	world_y = camera->half_height - ((py + 0.5) * camera->pixel_size);
 	pixel = multiply_matrix_by_tuple(camera->inverse,
-			new_point(world_x, world_y, -1));
+			new_point(world_x, world_y, -1.0));
 	origin = multiply_matrix_by_tuple(camera->inverse, new_point(0, 0, 0));
 	direction = normalize(subtract(pixel, origin));
 	return (new_ray(origin, direction));

@@ -18,7 +18,7 @@ WHITE       := \033[0;97m
 
 TESTS							:= tuples colors canvas matrices transformations rays spheres \
 										 lights materials world view_transform camera shapes planes \
-										 patterns reflec_refrac cubes cones
+										 patterns reflec_refrac cubes cones groups
 RM								:= rm -rf
 	
 ################################################################################
@@ -141,6 +141,10 @@ cylinders: $(OBJECTS) test.c test_cylinders.c
 
 .PHONY: cones
 cones: $(OBJECTS) test.c test_cones.c
+	@$(call run, "$^")
+
+.PHONY: groups
+groups: $(OBJECTS) test.c test_groups.c
 	@$(call run, "$^")
 
 $(OBJECTS):
