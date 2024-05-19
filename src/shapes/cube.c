@@ -1,7 +1,8 @@
 #include "shapes.h"
+#include "groups.h"
 
-static bool		intersect_cube(t_hit **xs, t_shape *cube, t_ray r);
-static t_vector	normal_at_cube(t_shape *cube, t_point local_point);
+static bool		intersect_cube(t_hit **xs, t_shape *shape, t_ray r);
+static t_vector	normal_at_cube(t_shape *shape, t_point local_point);
 
 t_shape	new_cube(void)
 {
@@ -11,59 +12,57 @@ t_shape	new_cube(void)
 	shape.cube.origin = new_point(0, 0, 0);
 	shape.intersect_fn = intersect_cube;
 	shape.normal_at = normal_at_cube;
+	shape.bounds_fn = cube_bounds;
 	return (shape);
 }
 
-static void	check_axis(double origin, double direction,
-				double t_min_max[2])
+static void	check_axis(double origin, double direction, t_range *t)
 {
-	double	t_min_numerator;
-	double	t_max_numerator;
+	t_range	t_numerator;
 
-	t_min_numerator = (-1 - origin);
-	t_max_numerator = (1 - origin);
+	t_numerator.min = (-1 - origin);
+	t_numerator.max = (1 - origin);
 	if (fabs(direction) >= EPSILON)
 	{
-		t_min_max[0] = t_min_numerator / direction;
-		t_min_max[1] = t_max_numerator / direction;
+		t->min = t_numerator.min / direction;
+		t->max = t_numerator.max / direction;
 	}
 	else
 	{
-		t_min_max[0] = t_min_numerator * INFINITY;
-		t_min_max[1] = t_max_numerator * INFINITY;
+		t->min = t_numerator.min * INFINITY;
+		t->max = t_numerator.max * INFINITY;
 	}
-	if (t_min_max[0] > t_min_max[1])
-		ft_swap(&t_min_max[0], &t_min_max[1]);
+	if (t->min > t->max)
+		ft_swap(&t->min, &t->max);
 }
 
-static bool	intersect_cube(t_hit **xs, t_shape *cube, t_ray r)
+static bool	intersect_cube(t_hit **xs, t_shape *shape, t_ray r)
 {
-	double	xt_min_max[2];
-	double	yt_min_max[2];
-	double	zt_min_max[2];
-	double	t_min;
-	double	t_max;
+	t_range	xt;
+	t_range	yt;
+	t_range	zt;
+	t_range	t;
 
-	check_axis(r.origin.x, r.direction.x, xt_min_max);
-	check_axis(r.origin.y, r.direction.y, yt_min_max);
-	check_axis(r.origin.z, r.direction.z, zt_min_max);
-	t_min = ft_max(xt_min_max[0], yt_min_max[0], zt_min_max[0]);
-	t_max = ft_min(xt_min_max[1], yt_min_max[1], zt_min_max[1]);
-	if (t_min > t_max)
+	check_axis(r.origin.x, r.direction.x, &xt);
+	check_axis(r.origin.y, r.direction.y, &yt);
+	check_axis(r.origin.z, r.direction.z, &zt);
+	t.min = ft_max(xt.min, yt.min, zt.min);
+	t.max = ft_min(xt.max, yt.max, zt.max);
+	if (t.min > t.max)
 		return (false);
-	insert_intersection(xs, intersection(t_min, cube));
-	insert_intersection(xs, intersection(t_max, cube));
+	insert_intersection(xs, intersection(t.min, shape));
+	insert_intersection(xs, intersection(t.max, shape));
 	return (true);
 }
 
-static t_vector	normal_at_cube(t_shape *cube, t_point local_point)
+static t_vector	normal_at_cube(t_shape *shape, t_point local_point)
 {
 	double	maxc;
 	double	absx;
 	double	absy;
 	double	absz;
 
-	(void)cube;
+	(void)shape;
 	absx = fabs(local_point.x);
 	absy = fabs(local_point.y);
 	absz = fabs(local_point.z);

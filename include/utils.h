@@ -5,6 +5,7 @@
 # include <math.h>
 
 # include "tuples.h"
+# include "shapes.h"
 
 # define EPSILON	1e-5
 
@@ -16,5 +17,7 @@ bool	eq_dbl(double a, double b);
 double	ft_max(double a, double b, double c);
 double	ft_min(double a, double b, double c);
 void	ft_swap(double *a, double *b);
+
+// free
 
 #endif

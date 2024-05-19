@@ -24,7 +24,7 @@ t_hit	*intersect_world(t_world *world, t_ray *ray)
 
 	i = -1;
 	world->xs = NULL;
-	while (++i < world->objs_count)
+	while (++i < world->objs_count && world->objs)
 		intersect(&world->xs, &world->objs[i], *ray);
 	return (world->xs);
 }
