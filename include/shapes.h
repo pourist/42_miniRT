@@ -74,13 +74,13 @@ typedef struct s_shape {
 	t_bounds_fn		bounds_fn;
 	bool			is_bounds_precal;
 	t_bounds		bounds;
+	bool			is_group;
 }	t_shape;
 
 typedef struct s_group
 {
 	t_shape	*shape;
-	t_group	*left;
-	t_group	*right;
+	t_group	*next;
 }	t_group;
 
 typedef struct s_hit {

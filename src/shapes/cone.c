@@ -16,7 +16,6 @@ t_shape	new_cone(void)
 	shape.normal_at = normal_at_cone;
 	shape.cone.closed = false;
 	shape.bounds_fn = cone_bounds;
-	shape.is_bounds_precal = false;
 	return (shape);
 }
 

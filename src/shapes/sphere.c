@@ -13,10 +13,9 @@ t_shape	new_sphere(void)
 	shape.sphere.radius = 1.0;
 	shape.intersect_fn = intersect_sphere;
 	shape.normal_at = normal_at_sphere;
-	shape.material.diffuse = 0.7;
-	shape.material.specular = 0.3;
+	shape.material.diffuse = 0.8;
+	shape.material.specular = 0.5;
 	shape.bounds_fn = sphere_bounds;
-	shape.is_bounds_precal = false;
 	return (shape);
 }
 

@@ -4,7 +4,7 @@
 # include "shapes.h"
 # include "lights.h"
 
-# define MAX_RECURSION	5
+# define MAX_RECURSION	4
 
 typedef struct s_world
 {
@@ -57,5 +57,7 @@ t_color	reflected_color(t_world *world, t_comps *comps);
 // refraction
 void	find_refractive_indices(t_comps *comps, t_hit *i, t_hit *xs);
 t_color	refracted_color(t_world *world, t_comps *comps);
+
+void	free_world(t_world *world);
 
 #endif

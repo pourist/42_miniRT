@@ -8,7 +8,9 @@ t_shape	new_shape(void)
 		.transpose = get_identity_matrix(),
 		.material = new_material(),
 		.cast_shadow = true,
-		.parent = NULL
+		.parent = NULL,
+		.is_bounds_precal = false,
+		.is_group = false,
 	});
 }
 
@@ -17,7 +19,10 @@ void	set_transform(t_shape *shape, t_matrix transform)
 	shape->transform = transform;
 	shape->inverse = inverse_matrix(transform);
 	shape->transpose = transpose_matrix(shape->inverse);
-	shape->is_bounds_precal = false;
+	if (shape->is_bounds_precal)
+		shape->is_bounds_precal = false;
+	if (shape->parent)
+		shape->parent->is_bounds_precal = false;
 }
 
 t_point	world_to_object(t_shape *shape, t_point world_point)

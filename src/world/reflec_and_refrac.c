@@ -63,10 +63,13 @@ t_color	reflec_and_refrac(t_world *world, t_comps *comps, t_color *surface)
 	t_color	reflected;
 	t_color	refracted;
 	double	reflectance;
+	int		local_remaining;
 
+	local_remaining = world->remaining_recursion;
 	reflected = reflected_color(world, comps);
+	world->remaining_recursion = local_remaining;
 	refracted = refracted_color(world, comps);
-	world->remaining_recursion = MAX_RECURSION;
+	world->remaining_recursion = local_remaining;
 	if (comps->obj->material.reflective > 0
 		&& comps->obj->material.transparency > 0)
 	{

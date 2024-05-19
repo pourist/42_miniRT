@@ -26,8 +26,7 @@ Test(groups, adding_a_child_to_group)
 	child = new_shape();
 	add_child(&group, &child);
 	cr_assert(eq(ptr, group.g->shape, &child));
-	cr_assert(eq(ptr, group.g->left, NULL));
-	cr_assert(eq(ptr, group.g->right, NULL));
+	cr_assert(eq(ptr, group.g->next, NULL));
 	cr_assert(eq(ptr, child.parent, &group));
 }
 
@@ -202,17 +201,17 @@ Test(groups, groups_have_bounding_box_with_transform)
 	r2 = new_ray(new_point(3.9, 3.9, -2), new_vector(0, 0, 1));
 	r3 = new_ray(new_point(5, 5, -2), new_vector(0, 0, 1));
 	xs = NULL;
-	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r1, g1.inverse)), true));
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, r1), true));
 	xs = NULL;
 	intersect(&xs, &g1, r1);
 	cr_assert(eq(int, intersect_count(xs), 2));
 	xs = NULL;
-	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r2, g1.inverse)), true));
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, r2), true));
 	xs = NULL;
 	intersect(&xs, &g1, r2);
 	cr_assert(eq(int, intersect_count(xs), 0));
   xs = NULL;
-	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r3, g1.inverse)), false));
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, r3), false));
 	xs = NULL;
 	intersect(&xs, &g1, r3);
 	cr_assert(eq(int, intersect_count(xs), 0));
@@ -236,17 +235,41 @@ Test(groups, groups_have_bounding_box_with_group_transform)
 	r2 = new_ray(new_point(4.9, 4.9, -2), new_vector(0, 0, 1));
 	r3 = new_ray(new_point(5.1, 5.1, -2), new_vector(0, 0, 1));
 	xs = NULL;
-	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r1, g1.inverse)), true));
-  xs = NULL;
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, r1), true));
+	xs = NULL;
   intersect(&xs, &g1, r1);
   cr_assert(eq(int, intersect_count(xs), 2));
   xs = NULL;
-  cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r2, g1.inverse)), true));
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, r2), true));
   xs = NULL;
   intersect(&xs, &g1, r2);
   cr_assert(eq(int, intersect_count(xs), 0));
-	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, transform(r3, g1.inverse)), false));
+	cr_assert(eq(int, g1.intersect_fn(&xs, &g1, r3), false));
   xs = NULL;
   intersect(&xs, &g1, r3);
   cr_assert(eq(int, intersect_count(xs), 0));
+}
+
+Test(groups, checking_bounds_values)
+{
+	t_shape	g;
+	t_shape	c;
+	t_matrix	m;
+
+	g = new_group();
+	set_transform(&g, translation(2, 0, 0));
+  c = new_cylinder();
+	c.cyl.min = 0;
+	c.cyl.max = 1;
+	c.cyl.closed = true;
+	m = multiply_matrices(translation(2, 0, 0), rotation_z(cos(M_PI / -4), sin(M_PI / -4)));
+	set_transform(&c, m);
+	add_child(&g, &c);
+	g.bounds_fn(&g);
+	cr_assert(epsilon_eq(dbl, g.bounds.min.x, 1.29289, EPSILON));
+  cr_assert(epsilon_eq(dbl, g.bounds.min.y, -0.70710, EPSILON));
+  cr_assert(epsilon_eq(dbl, g.bounds.min.z, -1.0, EPSILON));
+  cr_assert(epsilon_eq(dbl, g.bounds.max.x, 5.41421, EPSILON));
+  cr_assert(epsilon_eq(dbl, g.bounds.max.y, 1.41421, EPSILON));
+  cr_assert(epsilon_eq(dbl, g.bounds.max.z, 1.0, EPSILON));
 }
