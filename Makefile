@@ -50,7 +50,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 full_gradient.c radial_gradient.c solid_pattern.c \
 										 blended.c refrac_indices.c reflec_and_refrac.c cube.c \
 										 cylinder.c cone.c discriminants.c group.c group_utils.c \
-										 bounds.c local_bounds.c free.c
+										 bounds.c local_bounds.c free.c triangle.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
