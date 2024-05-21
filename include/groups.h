@@ -7,6 +7,7 @@
 t_shape		new_group(void);
 // Group tree
 void		add_child(t_shape *group, t_shape *child);
+void		insert_node(t_group **root, t_group *child);
 void		get_group_bounds(t_group **root, t_bounds *b);
 void		intersect_group_shapes(t_group **root, t_hit **xs, t_ray *r);
 // Bounds
