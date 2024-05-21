@@ -12,7 +12,7 @@ static t_group	*new_node(t_shape *shape)
 	return (node);
 }
 
-static void	insert_node(t_group **root, t_group *child)
+void	insert_node(t_group **root, t_group *child)
 {
 	t_group	*current;
 

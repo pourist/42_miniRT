@@ -51,7 +51,7 @@ static t_list	*new_lst(t_shape *shape)
 static void	set_indices(t_list *container, double *n)
 {
 	if (!ft_lstsize(container))
-		*n = 1;
+		*n = 1.0;
 	else
 		*n = ((t_shape *)ft_lstlast(container)
 				->content)->material.refractive_index;
