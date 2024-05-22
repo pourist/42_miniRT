@@ -5,7 +5,7 @@ Test(groups, creating_a_new_group)
 	t_shape	shape;
 
 	shape = new_group();
-	cr_assert(eq(int, shape.g == NULL, 1));
+	cr_assert(eq(int, shape.next == NULL, 1));
 	cr_assert(eq(int, matrix_eq(shape.transform, get_identity_matrix()), 1));
 }
 
@@ -25,8 +25,8 @@ Test(groups, adding_a_child_to_group)
 	group = new_group();
 	child = new_shape();
 	add_child(&group, &child);
-	cr_assert(eq(ptr, group.g->shape, &child));
-	cr_assert(eq(ptr, group.g->next, NULL));
+	cr_assert(eq(ptr, group.root, &child));
+	cr_assert(eq(ptr, group.root->next, NULL));
 	cr_assert(eq(ptr, child.parent, &group));
 }
 

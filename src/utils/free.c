@@ -10,15 +10,18 @@ static void	free_pattern(t_pattern *pattern)
 	}
 }
 
-static void	free_group(t_group *group)
+static void	free_group(t_shape *root)
 {
-	while (group)
+	t_shape	*tmp;
+
+	while (root)
 	{
-		if (group->shape->is_group)
-			free_group(group->shape->g);
-		free_pattern(&group->shape->material.pattern);
-		free(group->shape);
-		group = group->next;
+		if (root->is_group)
+			free_group(root->root);
+		free_pattern(&root->material.pattern);
+		tmp = root;
+		root = tmp->next;
+		free(tmp);
 	}
 }
 
@@ -31,7 +34,7 @@ void	free_world(t_world *world)
 	{
 		free_pattern(&world->objs[i].material.pattern);
 		if (world->objs[i].is_group)
-			free_group(world->objs[i].g);
+			free_group(world->objs[i].root);
 	}
 	free(world->lights);
 	free(world->objs);
