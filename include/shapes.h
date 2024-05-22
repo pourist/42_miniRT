@@ -63,7 +63,6 @@ typedef struct s_triangle
 
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
-typedef struct s_group	t_group;
 typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
 typedef t_tuple			(*t_normal_fn)(t_shape *, t_point);
 typedef void			(*t_bounds_fn)(t_shape *);
@@ -76,7 +75,7 @@ typedef struct s_shape {
 		t_cylinder	cyl;
 		t_cone		cone;
 		t_triangle	tri;
-		t_group		*g;
+		t_shape		*root;
 	};
 	t_intersect_fn	intersect_fn;
 	t_normal_fn		normal_at;
@@ -90,13 +89,8 @@ typedef struct s_shape {
 	bool			is_bounds_precal;
 	t_bounds		bounds;
 	bool			is_group;
+	t_shape			*next;
 }	t_shape;
-
-typedef struct s_group
-{
-	t_shape	*shape;
-	t_group	*next;
-}	t_group;
 
 typedef struct s_hit {
 	double	t;
