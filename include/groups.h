@@ -20,5 +20,6 @@ void		cylinder_bounds(t_shape *shape);
 void		cone_bounds(t_shape *shape);
 void		cube_bounds(t_shape *shape);
 void		plane_bounds(t_shape *shape);
+void		triangle_bounds(t_shape *shape);
 
 #endif
