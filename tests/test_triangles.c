@@ -21,9 +21,9 @@ Test(triangles, constructing_a_triangle)
 	cr_assert(eq(dbl, s.tri.e2.x, 1));
 	cr_assert(eq(dbl, s.tri.e2.y, -1));
 	cr_assert(eq(dbl, s.tri.e2.z, 0));
-	cr_assert(eq(dbl, s.tri.normal.x, 0));
-  cr_assert(eq(dbl, s.tri.normal.y, 0));
-  cr_assert(eq(dbl, s.tri.normal.z, -1));
+	cr_assert(eq(dbl, s.tri.n1.x, 0));
+  cr_assert(eq(dbl, s.tri.n1.y, 0));
+  cr_assert(eq(dbl, s.tri.n1.z, -1));
 }
 
 Test(triangle, finding_the_normal_on_a_triangle)
@@ -38,15 +38,15 @@ Test(triangle, finding_the_normal_on_a_triangle)
 	n1 = s.normal_at(&s, new_point(0, 0.5, 0));
 	n2 = s.normal_at(&s, new_point(-0.5, 0.75, 0));
 	n3 = s.normal_at(&s, new_point(0.5, 0.25, 0));
-	cr_assert(eq(dbl, n1.x, s.tri.normal.x));
-	cr_assert(eq(dbl, n1.y, s.tri.normal.y));
-	cr_assert(eq(dbl, n1.z, s.tri.normal.z));
-	cr_assert(eq(dbl, n2.x, s.tri.normal.x));
-	cr_assert(eq(dbl, n2.y, s.tri.normal.y));
-	cr_assert(eq(dbl, n2.z, s.tri.normal.z));
-	cr_assert(eq(dbl, n3.x, s.tri.normal.x));
-	cr_assert(eq(dbl, n3.y, s.tri.normal.y));
-	cr_assert(eq(dbl, n3.z, s.tri.normal.z));
+	cr_assert(eq(dbl, n1.x, s.tri.n1.x));
+	cr_assert(eq(dbl, n1.y, s.tri.n1.y));
+	cr_assert(eq(dbl, n1.z, s.tri.n1.z));
+	cr_assert(eq(dbl, n2.x, s.tri.n1.x));
+	cr_assert(eq(dbl, n2.y, s.tri.n1.y));
+	cr_assert(eq(dbl, n2.z, s.tri.n1.z));
+	cr_assert(eq(dbl, n3.x, s.tri.n1.x));
+	cr_assert(eq(dbl, n3.y, s.tri.n1.y));
+	cr_assert(eq(dbl, n3.z, s.tri.n1.z));
 }
 
 Test(triangle, intresecting_a_ray_parallel_to_the_triangle)
