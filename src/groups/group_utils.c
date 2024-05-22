@@ -1,12 +1,22 @@
 #include "groups.h"
 
+// static t_group	*new_node(t_shape *shape)
+// {
+// 	static t_group	pool[MAX_NODES + 1];
+// 	static size_t	index = 0;
+// 	t_group			*node;
+
+// 	node = &pool[index++ & (MAX_NODES)];
+// 	node->shape = shape;
+// 	node->next = NULL;
+// 	return (node);
+// }
+
 static t_group	*new_node(t_shape *shape)
 {
-	static t_group	pool[MAX_NODES + 1];
-	static size_t	index = 0;
 	t_group			*node;
 
-	node = &pool[index++ & (MAX_NODES)];
+	node = malloc(sizeof(t_group));
 	node->shape = shape;
 	node->next = NULL;
 	return (node);
