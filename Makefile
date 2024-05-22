@@ -52,7 +52,9 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 blended.c refrac_indices.c reflec_and_refrac.c cube.c \
 										 cylinder.c cone.c discriminants.c group.c group_utils.c \
 										 bounds.c local_bounds.c free.c triangle.c obj_loader.c	\
-										 ft_atof.c
+										 ft_atof.c	obj_loader_utils.c set_max_values.c \
+										 obj_file_parcer.c obj_vertice_parcer.c obj_face_parcer.c \
+										 obj_group_parcer.c obj_normal_parcer.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

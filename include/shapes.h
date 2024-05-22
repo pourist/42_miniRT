@@ -54,7 +54,11 @@ typedef struct s_triangle
 	t_point		p3;
 	t_vector	e1;
 	t_vector	e2;
-	t_vector	normal;
+	t_vector	n1;
+	t_vector	n2;
+	t_vector	n3;
+	double		u;
+	double		v;
 }	t_triangle;
 
 typedef struct s_hit	t_hit;
@@ -135,6 +139,7 @@ t_shape		new_cylinder(void);
 t_shape		new_cone(void);
 // Triangle Shape
 t_shape		new_triangle(t_point p1, t_point p2, t_point p3);
+t_shape		new_smooth_triangle(t_point v[3], t_vector n[3]);
 // discriminants
 void		cone_discriminant(t_ray *ray, t_intersect_params *p);
 void		cylinder_discriminant(t_ray *ray, t_intersect_params *p);

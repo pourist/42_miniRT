@@ -17,14 +17,14 @@ typedef struct s_obj_loader
 {
 	int			ignored_lines;
 	t_point		*vertices;
-	int			vertices_count;
-	int			vertices_max;
+	int			v_count;
+	int			v_max;
 	t_vector	*normals;
-	int			normals_count;
-	int			normals_max;
+	int			n_count;
+	int			n_max;
 	t_shape		*triangles;
-	int			tri_count;
-	int			tri_max;
+	int			t_count;
+	int			t_max;
 	t_shape		default_group;
 	t_shape		*groups;
 	int			g_count;
@@ -32,8 +32,30 @@ typedef struct s_obj_loader
 	t_shape		*current_g;
 }	t_obj_loader;
 
+// obj_loader.c
 t_obj_loader	new_obj_loader(void);
+void			free_loader(t_obj_loader *loader);
+bool			open_obj_file(char *filename, int *fd);
+// obj_file_parser.c
 bool			parse_obj_file(t_obj_loader *loader, char *filename);
-bool			obj_to_group(t_shape *g, t_obj_loader *loader);
+bool			check_extension(char *filename, char *ext);
+// obj_loader_utils.c
+bool			print_ignore_message(int line_nb);
+int				ft_matrix_len(char **matrix);
+bool			is_float(char *str);
+bool			are_floats(char *str1, char *str2, char *str3);
+void			free_array(char **array);
+// obj_faces_parser.c
+bool			parse_triangle(t_obj_loader *loader, char **params,
+					int *line_nb);
+// obj_group_parser.c
+bool			parse_group(t_obj_loader *loader, char **params, int *line_nb);
+// obj_normal_parser.c
+bool			parse_normal(t_obj_loader *loader, char **params, int *line_nb);
+// obj_vertice_parser.c
+bool			parse_vertice(t_obj_loader *loader, char **params,
+					int *line_nb);
+// set_max_values.c
+bool			set_max_values(t_obj_loader *loader, char *filename);
 
 #endif
