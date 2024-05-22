@@ -122,6 +122,10 @@ ch13: $(OBJECTS) ch13.c
 ch14: $(OBJECTS) ch14.c
 	@$(call run, "$^")
 
+.PHONY: ch15
+ch15: $(OBJECTS) ch15.c
+	@$(call run, "$^")
+
 $(OBJECTS):
 	@make -C .. -s
 

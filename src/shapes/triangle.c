@@ -1,4 +1,5 @@
 #include "shapes.h"
+#include "groups.h"
 
 static	t_vector	normal_at_triangle(t_shape *shape, t_point local_point);
 static bool		intersect_triangle(t_hit **xs, t_shape *shape, t_ray r);
@@ -20,6 +21,7 @@ t_shape	new_triangle(t_point p1, t_point p2, t_point p3)
 	shape.tri.v = 0.0;
 	shape.normal_at = normal_at_triangle;
 	shape.intersect_fn = intersect_triangle;
+	shape.bounds_fn = triangle_bounds;
 	return (shape);
 }
 
@@ -40,6 +42,7 @@ t_shape	new_smooth_triangle(t_point v[3], t_vector n[3])
 	shape.tri.v = 0.0;
 	shape.normal_at = normal_at_triangle;
 	shape.intersect_fn = intersect_triangle;
+	shape.bounds_fn = triangle_bounds;
 	return (shape);
 }
 
