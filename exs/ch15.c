@@ -16,7 +16,9 @@ void	create_scene1(t_world *world)
 	world->objs = malloc(1 * sizeof(t_shape));
 	world->objs_count = 1;
 	loader = new_obj_loader();
-	parse_obj_file(&loader, "../obj_files/teapot_low.obj");
+	parse_obj_file(&loader, "../obj_files/teapot.obj");
+	set_transform(&loader.default_group,
+		rotation_x(cos(-M_PI / 2.0), sin(-M_PI / 2.0)));
 	world->objs[0] = loader.default_group;
 }
 
@@ -35,8 +37,8 @@ void	create_camera1(t_camera *camera)
 	t_vector	up;
 
 	*camera = new_camera(WIDTH, HEIGHT, M_PI / 3.0);
-	from = new_point(0, 20, -35);
-	to = new_point(0, 0, 0);
+	from = new_point(0, 15, -45);
+	to = new_point(0, 10, 0);
 	up = new_vector(0, 1, 0);
 	set_transform_camera(camera, view_transform(&from, &to, &up));
 }
