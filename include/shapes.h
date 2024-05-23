@@ -67,6 +67,20 @@ typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
 typedef t_tuple			(*t_normal_fn)(t_shape *, t_point);
 typedef void			(*t_bounds_fn)(t_shape *);
 
+typedef enum e_operation
+{
+	DIFFERENCE,
+	INTERSECT,
+	UNION,
+}	t_operation;
+
+typedef struct s_csg
+{
+	t_operation	operation;
+	t_shape		*left;
+	t_shape		*right;
+}	t_csg;
+
 typedef struct s_shape {
 	union {
 		t_sphere	sphere;
@@ -76,6 +90,7 @@ typedef struct s_shape {
 		t_cone		cone;
 		t_triangle	tri;
 		t_shape		*root;
+		t_csg		csg;
 	};
 	t_intersect_fn	intersect_fn;
 	t_normal_fn		normal_at;
@@ -90,6 +105,7 @@ typedef struct s_shape {
 	t_bounds		bounds;
 	bool			is_group;
 	t_shape			*next;
+	bool			is_csg;
 }	t_shape;
 
 typedef struct s_hit {
@@ -120,20 +136,28 @@ typedef struct s_intersect_tri_params
 	double		t;
 }	t_intersect_tri_params;
 
+// Shapes
+t_shape		*new_shape(t_shape *shape);
+void		set_transform(t_shape *shape, t_matrix transform);
+t_vector	normal_at(t_shape *shape, t_point point);
 // Sphere Shape
-t_shape		new_sphere(void);
-t_shape		new_glass_sphere(void);
+t_shape		*new_sphere(t_shape *shape);
+t_shape		*new_glass_sphere(t_shape *shape);
 // Plane Shape
-t_shape		new_plane(void);
+t_shape		*new_plane(t_shape *shape);
 // Cube Shape
-t_shape		new_cube(void);
+t_shape		*new_cube(t_shape *shape);
 // Cylinder Shape
-t_shape		new_cylinder(void);
+t_shape		*new_cylinder(t_shape *shape);
 // Cone Shape
-t_shape		new_cone(void);
+t_shape		*new_cone(t_shape *shape);
 // Triangle Shape
-t_shape		new_triangle(t_point p1, t_point p2, t_point p3);
-t_shape		new_smooth_triangle(t_point v[3], t_vector n[3]);
+t_shape		*new_triangle(t_point p1, t_point p2, t_point p3, t_shape *shape);
+t_shape		*new_smooth_triangle(t_point v[3], t_vector n[3], t_shape *shape);
+// CSG Shape
+t_shape		*new_csg(t_operation operation, t_shape *left, t_shape *right,
+				t_shape *csg);
+bool		intersect_allowed(t_operation op, bool lhit, bool inl, bool inr);
 // discriminants
 void		cone_discriminant(t_ray *ray, t_intersect_params *p);
 void		cylinder_discriminant(t_ray *ray, t_intersect_params *p);
@@ -143,10 +167,6 @@ t_hit		*intersection(double t, t_shape	*shape);
 void		insert_intersection(t_hit **xs, t_hit *hit);
 int			intersect_count(t_hit	*xs);
 t_hit		*hit(t_hit *xs);
-// Shapes
-t_shape		new_shape(void);
-void		set_transform(t_shape *shape, t_matrix transform);
-t_vector	normal_at(t_shape *shape, t_point point);
 // Material.c 
 t_color		lighting(t_shape *shape, t_light *light, t_point *point,
 				t_eye_normal *view);

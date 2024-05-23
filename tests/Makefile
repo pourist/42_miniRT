@@ -156,6 +156,10 @@ triangles: $(OBJECTS) test.c test_triangles.c
 obj_loader: $(OBJECTS) test.c test_obj_loader.c
 	@$(call run, "$^")
 
+.PHONY: csg
+csg: $(OBJECTS) test.c test_csg.c
+	@$(call run, "$^")
+
 $(OBJECTS):
 	@make -C .. -s
 

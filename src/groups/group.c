@@ -4,16 +4,14 @@ static bool		intersect_group(t_hit **xs, t_shape *shape, t_ray r);
 static t_vector	normal_at_group(t_shape *shape, t_point local_point);
 static void		group_bounds(t_shape *shape);
 
-t_shape	new_group(void)
+t_shape	*new_group(t_shape *shape)
 {
-	t_shape	shape; 
-
-	shape = new_shape();
-	shape.root = NULL;
-	shape.intersect_fn = intersect_group;
-	shape.normal_at = normal_at_group;
-	shape.bounds_fn = group_bounds;
-	shape.is_group = true;
+	new_shape(shape);
+	shape->root = NULL;
+	shape->intersect_fn = intersect_group;
+	shape->normal_at = normal_at_group;
+	shape->bounds_fn = group_bounds;
+	shape->is_group = true;
 	return (shape);
 }
 

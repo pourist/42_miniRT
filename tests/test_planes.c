@@ -7,7 +7,7 @@ Test(planes, the_normal_of_a_plane_is_constant_everywhere)
 	t_vector	normal_2;
 	t_vector	normal_3;
 
-	plane = new_plane();
+	new_plane(&plane); 
 	normal_1 = plane.normal_at(&plane, new_point(0, 0, 0));
 	normal_2 = plane.normal_at(&plane, new_point(10, 0, -10));
 	normal_3 = plane.normal_at(&plane, new_point(-5, 0, 150));
@@ -29,7 +29,7 @@ Test(planes, intersect_with_a_ray_parallel_to_the_plane)
 	t_hit		*xs;
 
 	xs = NULL;
-	plane = new_plane();
+	new_plane(&plane); 
 	r = new_ray(new_point(0, 10, 0), new_vector(0, 0, 1));
 	intersect(&xs, &plane, r);
 	cr_assert(eq(dbl, intersect_count(xs), 0));
@@ -42,7 +42,7 @@ Test(planes, intersect_with_a_coplanar_ray)
 	t_hit		*xs;
 
 	xs = NULL;
-	plane = new_plane();
+	new_plane(&plane); 
 	r = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
 	intersect(&xs, &plane, r);
 	cr_assert(eq(dbl, intersect_count(xs), 0));
@@ -55,7 +55,7 @@ Test(plains, a_ray_intersectiong_a_plane_from_above)
 	t_hit		*xs;
 
 	xs = NULL;
-	plane = new_plane();
+	new_plane(&plane); 
 	r = new_ray(new_point(0, 1, 0), new_vector(0, -1, 0));
 	intersect(&xs, &plane, r);
 	cr_assert(eq(dbl, intersect_count(xs), 1));
@@ -70,7 +70,7 @@ Test(plains, a_ray_intersectiong_a_plane_from_below)
 	t_hit		*xs;
 
 	xs = NULL;
-	plane = new_plane();
+	new_plane(&plane); 
 	r = new_ray(new_point(0, -1, 0), new_vector(0, 1, 0));
 	intersect(&xs, &plane, r);
 	cr_assert(eq(dbl, intersect_count(xs), 1));

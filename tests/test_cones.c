@@ -8,7 +8,7 @@ Test(cones, intersecting_a_cone_with_a_ray)
 	t_hit			*xs;
 
 	xs = NULL;
-	cone = new_cone();
+	new_cone(&cone); 
 	dir = normalize(new_vector(0, 0, 1));
 	r = new_ray(new_point(0, 0, -5), dir);
 	intersect(&xs, &cone, r);
@@ -38,7 +38,7 @@ Test(cones, intersecting_a_cone_with_a_ray_parallel_to_one_of_its_halves)
   t_ray			r;
   t_hit			*xs;
 
-	cone = new_cone();
+	new_cone(&cone); 
 	dir = normalize(new_vector(0, 1, 1));
 	r = new_ray(new_point(0, 0, -1), dir);
 	xs = NULL;
@@ -54,7 +54,7 @@ Test(cones, intersecting_a_cone_end_caps)
 	t_ray			r;
 	t_hit			*xs;
 
-	cone = new_cone();
+	new_cone(&cone); 
 	cone.cyl.min = -0.5;
 	cone.cyl.max = 0.5;
 	cone.cyl.closed = true;
@@ -80,7 +80,7 @@ Test(cones, computing_the_normal_vector_on_a_cone)
 	t_shape		cone;
 	t_vector	norm;
 
-	cone = new_cone();
+	new_cone(&cone); 
 	norm = cone.normal_at(&cone, new_point(0, 0, 0));
 	cr_assert(eq(dbl, norm.x, 0));
 	cr_assert(eq(dbl, norm.y, 0));

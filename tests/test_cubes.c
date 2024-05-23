@@ -7,7 +7,7 @@ Test(cubes, a_ray_intersects_a_cube)
 	t_hit		*xs;
 
 	xs = NULL;
-	c = new_cube();
+	new_cube(&c); 
 	r = new_ray(new_point(5, 0.5, 0), new_vector(-1, 0, 0));
 	intersect(&xs, &c, r);
 	cr_assert(eq(int, intersect_count(xs), 2));
@@ -58,7 +58,7 @@ Test(cubes, a_ray_misses_a_cube)
 	t_shape	c;
 	t_hit		*xs;
 	xs = NULL;
-	c = new_cube();
+	new_cube(&c); 
 	r = new_ray(new_point(-2, 0, 0), new_vector(0.2673, 0.5345, 0.8018));
 	intersect(&xs, &c, r);
 	cr_assert(eq(int, intersect_count(xs), 0));
@@ -84,7 +84,7 @@ Test(cubes, the_normal_on_the_surface_of_a_cube)
 		t_shape	c;
 		t_vector	normal;
 
-		c = new_cube();
+		new_cube(&c); 
 		normal = c.normal_at(&c, new_point(1, 0.5, -0.8));
 		cr_assert(eq(dbl, normal.x, 1));
 		cr_assert(eq(dbl, normal.y, 0));

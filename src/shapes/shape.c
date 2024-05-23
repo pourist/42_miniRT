@@ -1,18 +1,18 @@
 #include "shapes.h"
 
-t_shape	new_shape(void)
+t_shape	*new_shape(t_shape *shape)
 {
-	return ((t_shape){
-		.transform = get_identity_matrix(),
-		.inverse = get_identity_matrix(),
-		.transpose = get_identity_matrix(),
-		.material = new_material(),
-		.cast_shadow = true,
-		.parent = NULL,
-		.is_bounds_precal = false,
-		.is_group = false,
-		.next = NULL,
-	});
+	shape->transform = get_identity_matrix();
+	shape->inverse = get_identity_matrix();
+	shape->transpose = get_identity_matrix();
+	shape->material = new_material();
+	shape->cast_shadow = true;
+	shape->parent = NULL;
+	shape->is_bounds_precal = false;
+	shape->is_group = false;
+	shape->next = NULL;
+	shape->is_csg = false;
+	return (shape);
 }
 
 void	set_transform(t_shape *shape, t_matrix transform)

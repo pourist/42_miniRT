@@ -8,7 +8,7 @@ Test(spheres, a_ray_intersects_a_sphere_at_two_points)
 
 	xs = NULL;
 	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	s = new_sphere();
+	new_sphere(&s);
 	intersect(&xs, &s, r);
 	cr_assert(eq(int, intersect_count(xs), 2));
 	cr_assert(eq(dbl, xs->t, 4));
@@ -23,7 +23,7 @@ Test(spheres, a_ray_intersects_a_sphere_at_a_tangent)
 
 	xs = NULL;
 	r = new_ray(new_point(0, 1, -5), new_vector(0, 0, 1));
-	s = new_sphere();
+	new_sphere(&s);
 	intersect(&xs, &s, r);
 	cr_assert(eq(int, intersect_count(xs), 1));
 	cr_assert(eq(dbl, xs->t, 5.0));
@@ -38,7 +38,7 @@ Test(spheres, a_ray_misses_a_sphere)
 
 	xs = NULL;
 	r = new_ray(new_point(0, 2, -5), new_vector(0, 0, 1));
-	s = new_sphere();
+	new_sphere(&s);
 	intersect(&xs, &s, r);
 	cr_assert(eq(int, intersect_count(xs), 0));
 }
@@ -51,7 +51,7 @@ Test(spheres, a_ray_originates_inside_a_sphere)
 
 	xs = NULL;
 	r = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
-	s = new_sphere();
+	new_sphere(&s);
 	intersect(&xs, &s, r);
 	cr_assert(eq(int, intersect_count(xs), 2));
 	cr_assert(eq(dbl, xs->t, -1.0));
@@ -66,7 +66,7 @@ Test(spheres, a_sphere_is_behind_a_ray)
 
 	xs = NULL;
 	r = new_ray(new_point(0, 0, 5), new_vector(0, 0, 1));
-	s = new_sphere();
+	new_sphere(&s);
 	intersect(&xs, &s, r);
 	cr_assert(eq(int, intersect_count(xs), 2));
 	cr_assert(eq(dbl, xs->t, -6.0));
@@ -78,7 +78,7 @@ Test(spheres, an_intersection_encapsulates_t_and_object)
 	t_shape				s;
 	t_hit					*xs;
 
-	s = new_sphere();
+	new_sphere(&s);
 	xs = intersection(3.5, &s);
 	cr_assert(eq(int, intersect_count(xs), 1));
 	cr_assert(eq(dbl, xs->t, 3.5));
@@ -93,7 +93,7 @@ Test(spheres, aggregating_intersections)
 	t_hit		*xs;
 
 	xs = NULL;
-	s = new_sphere();
+	new_sphere(&s);
 	i1 = intersection(1, &s);
 	i2 = intersection(2, &s);
 	insert_intersection(&xs, i1);
@@ -110,7 +110,7 @@ Test(spheres, intersect_sets_object_on_intersection)
 	t_hit		*xs;
 
 	xs = NULL;
-	s = new_sphere();
+	new_sphere(&s);
 	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
 	intersect(&xs, &s, r);
 	cr_assert(xs->obj == &s);
@@ -123,7 +123,7 @@ Test(spheres, hit_when_all_intersections_have_positive_t)
 	t_hit		*xs;
 	t_hit		*i;
 	xs = NULL;
-	s = new_sphere();
+	new_sphere(&s);
 	insert_intersection(&xs, intersection(2, &s));
 	insert_intersection(&xs, intersection(1, &s));
 	i = hit(xs);
@@ -139,7 +139,7 @@ Test(spheres, hit_when_some_intersections_have_negative_t)
 	t_hit		*i;
 
 	xs = NULL;
-	s = new_sphere();
+	new_sphere(&s);
 	insert_intersection(&xs, intersection(1, &s));
 	insert_intersection(&xs, intersection(-1, &s));
 	i = hit(xs);
@@ -155,7 +155,7 @@ Test(spheres, hit_when_all_intersections_have_negative_t)
 	t_hit		*i;
 
 	xs = NULL;
-	s = new_sphere();
+	new_sphere(&s);
 	insert_intersection(&xs, intersection(-2, &s));
 	insert_intersection(&xs, intersection(-3, &s));
 	i = hit(xs);
@@ -169,7 +169,7 @@ Test(spheres, hit_is_always_lowest_nonnegative_intersection)
 	t_hit		*xs;
 	t_hit		*i;
 	xs = NULL;
-	s = new_sphere();
+	new_sphere(&s);
 	insert_intersection(&xs, intersection(5, &s));
 	insert_intersection(&xs, intersection(7, &s));
 	insert_intersection(&xs, intersection(-3, &s));
@@ -183,7 +183,7 @@ Test(spheres, hit_is_always_lowest_nonnegative_intersection)
 Test(spheres, a_sphere_default_transformations)
 {
 	t_shape	s;
-	s = new_sphere();
+	new_sphere(&s);
 	cr_assert(matrix_eq(s.transform, get_identity_matrix()));
 }
 
@@ -192,7 +192,7 @@ Test(spheres, changing_a_sphere_transformation)
 	t_shape	s;
 	t_matrix	t;
 
-	s = new_sphere();
+	new_sphere(&s);
 	t = translation(2, 3, 4);
 	set_transform(&s, t);
 	cr_assert(matrix_eq(s.transform, t));
@@ -206,7 +206,7 @@ Test(spheres, intersecting_a_scaled_sphere_with_a_ray)
 
 	xs = NULL;
 	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	s = new_sphere();
+	new_sphere(&s);
 	set_transform(&s, scaling(2, 2, 2));
 	intersect(&xs, &s, r);
 	cr_assert(eq(int, intersect_count(xs), 2));
@@ -222,7 +222,7 @@ Test(spheres, intersecting_a_translated_sphere_with_a_ray)
 
 	xs = NULL;
 	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	s = new_sphere();
+	new_sphere(&s);
 	set_transform(&s, translation(5, 0, 0));
 	intersect(&xs, &s, r);
 	cr_assert(eq(int, intersect_count(xs), 0));
@@ -233,7 +233,7 @@ Test(spheres, normal_on_a_sphere_at_a_point_on_x_axis)
 	t_shape	s;
 	t_vector	n;
 
-	s = new_sphere();
+	new_sphere(&s);
 	n = normal_at(&s, new_point(1, 0, 0));
 	cr_assert(tuple_eq(n, new_vector(1, 0, 0)));
 }
@@ -243,7 +243,7 @@ Test(spheres, normal_on_a_sphere_at_a_point_on_y_axis)
 	t_shape	s;
 	t_vector	n;
 
-	s = new_sphere();
+	new_sphere(&s);
 	n = normal_at(&s, new_point(0, 1, 0));
 	cr_assert(tuple_eq(n, new_vector(0, 1, 0)));
 }
@@ -253,7 +253,7 @@ Test(spheres, normal_on_a_sphere_at_a_point_on_z_axis)
 	t_shape	s;
 	t_vector	n;
 
-	s = new_sphere();
+	new_sphere(&s);
 	n = normal_at(&s, new_point(0, 0, 1));
 	cr_assert(tuple_eq(n, new_vector(0, 0, 1)));
 }
@@ -263,7 +263,7 @@ Test(spheres, normal_on_a_sphere_at_a_nonaxial_point)
 	t_shape	s;
 	t_vector	n;
 
-	s = new_sphere();
+	new_sphere(&s);
 	n = normal_at(&s, new_point(sqrt(3)/3, sqrt(3)/3, sqrt(3)/3));
 	cr_assert(tuple_eq(n, new_vector(sqrt(3)/3, sqrt(3)/3, sqrt(3)/3)));
 }
@@ -273,7 +273,7 @@ Test(spheres, normal_is_a_normalized_vector)
 	t_shape	s;
 	t_vector	n;
 
-	s = new_sphere();
+	new_sphere(&s);
 	n = normal_at(&s, new_point(sqrt(3)/3, sqrt(3)/3, sqrt(3)/3));
 	cr_assert(tuple_eq(n, normalize(n)));
 }
@@ -283,7 +283,7 @@ Test(spheres, normal_on_a_translated_sphere)
 	t_shape	s;
 	t_vector	n;
 
-	s = new_sphere();
+	new_sphere(&s);
 	set_transform(&s, translation(0, 1, 0));
 	n = normal_at(&s, new_point(0, 1.70711, -0.70711));
 	cr_assert(tuple_eq(n, new_vector(0, 0.70711, -0.70711)));
@@ -295,7 +295,7 @@ Test(spheres, normal_on_a_transformed_sphere)
 	t_vector	n;
 	t_matrix	m;
 
-	s = new_sphere();
+	new_sphere(&s);
 	m = multiply_matrices(scaling(1, 0.5, 1), rotation_z(cos(M_PI/5), sin(M_PI/5)));
 	set_transform(&s, m);
 	n = normal_at(&s, new_point(0, sqrt(2)/2, -sqrt(2)/2));
@@ -307,7 +307,7 @@ Test(spheres, a_sphere_has_a_default_material)
 	t_shape	s;
 	t_material	m;
 
-	s = new_sphere();
+	new_sphere(&s);
 	s.material.diffuse = 0.9;
 	s.material.specular = 0.9;
 	m = new_material();
@@ -323,7 +323,7 @@ Test(spheres, a_sphere_may_be_assigned_a_material)
 	t_shape	s;
 	t_material	*m;
 
-	s = new_sphere();
+	new_sphere(&s);
 	s.material.diffuse = 0.9;
 	s.material.specular = 0.9;
 	m = &s.material;
@@ -343,7 +343,7 @@ Test(intersections, hit_should_offset_the_intersection)
 	t_comps		comps;
 
 	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	shape = new_sphere();
+	new_sphere(&shape);
 	set_transform(&shape, translation(0, 0, 1));
 	i = intersection(5, &shape);
 	comps = prepare_computations(i, &r, i);

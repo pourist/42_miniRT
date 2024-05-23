@@ -14,7 +14,7 @@ t_obj_loader	new_obj_loader(void)
 	loader.triangles = NULL;
 	loader.t_count = 0;
 	loader.t_max = 0;
-	loader.default_group = new_group();
+	new_group(&loader.default_group);
 	loader.groups = NULL;
 	loader.g_count = 0;
 	loader.g_max = 0;
