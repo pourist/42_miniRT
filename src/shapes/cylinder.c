@@ -45,21 +45,21 @@ static void	intersect_caps(t_hit **xs, t_shape *shape, t_ray *ray)
 
 static bool	intersect_cylinder(t_hit **xs, t_shape *shape, t_ray r)
 {
-	t_discriminant	d;
-	double			y_pos;
+	t_intersect_params	p;
+	double				y_pos;
 
 	intersect_caps(xs, shape, &r);
-	cylinder_discriminant(&r, &d);
-	if (fabs(d.a) < EPSILON || d.discriminant < 0.0)
+	cylinder_discriminant(&r, &p);
+	if (fabs(p.a) < EPSILON || p.discriminant < 0.0)
 		return (false);
-	if (d.t1 > d.t2)
-		ft_swap(&d.t1, &d.t2);
-	y_pos = r.origin.y + d.t2 * r.direction.y;
+	if (p.t1 > p.t2)
+		ft_swap(&p.t1, &p.t2);
+	y_pos = r.origin.y + p.t2 * r.direction.y;
 	if (shape->cyl.min < y_pos && y_pos < shape->cyl.max)
-		insert_intersection(xs, intersection(d.t2, shape));
-	y_pos = r.origin.y + d.t1 * r.direction.y;
+		insert_intersection(xs, intersection(p.t2, shape));
+	y_pos = r.origin.y + p.t1 * r.direction.y;
 	if (shape->cyl.min < y_pos && y_pos < shape->cyl.max)
-		insert_intersection(xs, intersection(d.t1, shape));
+		insert_intersection(xs, intersection(p.t1, shape));
 	return (true);
 }
 

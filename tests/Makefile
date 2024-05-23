@@ -18,7 +18,8 @@ WHITE       := \033[0;97m
 
 TESTS							:= tuples colors canvas matrices transformations rays spheres \
 										 lights materials world view_transform camera shapes planes \
-										 patterns reflec_refrac cubes cones groups
+										 patterns reflec_refrac cubes cones groups triangles \
+										 obj_loader
 RM								:= rm -rf
 	
 ################################################################################
@@ -145,6 +146,14 @@ cones: $(OBJECTS) test.c test_cones.c
 
 .PHONY: groups
 groups: $(OBJECTS) test.c test_groups.c
+	@$(call run, "$^")
+
+.PHONY: triangles
+triangles: $(OBJECTS) test.c test_triangles.c
+	@$(call run, "$^")
+
+.PHONY: obj_loader
+obj_loader: $(OBJECTS) test.c test_obj_loader.c
 	@$(call run, "$^")
 
 $(OBJECTS):

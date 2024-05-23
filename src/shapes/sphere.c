@@ -13,8 +13,8 @@ t_shape	new_sphere(void)
 	shape.sphere.radius = 1.0;
 	shape.intersect_fn = intersect_sphere;
 	shape.normal_at = normal_at_sphere;
-	shape.material.diffuse = 0.8;
-	shape.material.specular = 0.5;
+	shape.material.diffuse = 0.9;
+	shape.material.specular = 0.6;
 	shape.bounds_fn = sphere_bounds;
 	return (shape);
 }
@@ -31,23 +31,23 @@ t_shape	new_glass_sphere(void)
 
 static bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray r)
 {
-	t_discriminant	d;
-	t_vector		sphere_to_ray;
-	double			sqrt_d;
+	t_intersect_params	p;
+	t_vector			sphere_to_ray;
+	double				sqrt_d;
 
 	sphere_to_ray = subtract(r.origin, shape->sphere.origin);
-	d.a = dot(r.direction, r.direction);
-	d.b = 2.0 * dot(r.direction, sphere_to_ray);
-	d.c = dot(sphere_to_ray, sphere_to_ray) - 1.0;
-	d.discriminant = pow(d.b, 2) - (4.0 * d.a * d.c);
-	if (d.discriminant < 0.0)
+	p.a = dot(r.direction, r.direction);
+	p.b = 2.0 * dot(r.direction, sphere_to_ray);
+	p.c = dot(sphere_to_ray, sphere_to_ray) - 1.0;
+	p.discriminant = pow(p.b, 2) - (4.0 * p.a * p.c);
+	if (p.discriminant < 0.0)
 		return (false);
-	sqrt_d = sqrt(d.discriminant);
-	d.t1 = (-d.b - sqrt_d) / (2.0 * d.a);
-	d.t2 = (-d.b + sqrt_d) / (2.0 * d.a);
-	insert_intersection(xs, intersection(d.t1, shape));
-	if (d.discriminant != 0.0)
-		insert_intersection(xs, intersection(d.t2, shape));
+	sqrt_d = sqrt(p.discriminant);
+	p.t1 = (-p.b - sqrt_d) / (2.0 * p.a);
+	p.t2 = (-p.b + sqrt_d) / (2.0 * p.a);
+	insert_intersection(xs, intersection(p.t1, shape));
+	if (p.discriminant != 0.0)
+		insert_intersection(xs, intersection(p.t2, shape));
 	return (true);
 }
 
