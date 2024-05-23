@@ -77,7 +77,7 @@ void	set_params(t_params *params)
 	params->ray_origin = new_point(0, 0, -5);
 	params->sphere_color = new_color(0.6, 0.1, 0.1);
 	params->bg_color = 0xFF000000;
-	params->sphere = new_sphere();
+	new_sphere(&params->sphere);
 	params->sphere.material.color.g = 0.2;
 	params->light = new_light(new_point(-10, 10, -10), new_color(1, 1, 1));
 	params->sphere.material.ambient = new_color(0.1, 0.1, 0.1);

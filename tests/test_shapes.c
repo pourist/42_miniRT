@@ -6,7 +6,7 @@ Test(shapes, the_default_transformation)
 {
 	t_shape	s;
 
-	s = new_shape();
+	new_shape(&s);
 	cr_assert(matrix_eq(s.transform, get_identity_matrix()));
 }
 
@@ -16,7 +16,7 @@ Test(shapes, assigning_a_transformation)
 	t_shape		s;
 	t_matrix	expected;
 
-	s = new_shape();
+	new_shape(&s);
 	expected = translation(2, 3, 3);
 	set_transform(&s, expected);
 	cr_assert(matrix_eq(s.transform, expected));
@@ -29,7 +29,7 @@ Test(shapes, the_default_material)
 	t_material	result;
 	t_material	expected;
 
-	s = new_shape();
+	new_shape(&s);
 	result = s.material;
 	expected = new_material();
 
@@ -50,7 +50,7 @@ Test(shapes, assigning_a_material)
 	t_shape		s;
 	t_material	expected;
 
-	s = new_shape();
+	new_shape(&s);
 	expected = new_material();
 	expected.ambient = new_color(1, 1, 1);
 	s.material = expected;
@@ -73,7 +73,7 @@ Test(shapes, normal_on_a_translated_shape)
 	t_shape		s;
 	t_vector	n;
 
-	s = new_sphere();
+	new_sphere(&s);
 	set_transform(&s, translation(0, 1, 0));
 	n = normal_at(&s, new_point(0, 1.70711, -0.70711));
 
@@ -90,7 +90,7 @@ Test(shapes, normal_on_a_transformed_shape)
 	t_matrix	m;
 	t_vector	n;
 
-	s = new_sphere();
+	new_sphere(&s);
 	m = multiply_matrices(scaling(1, 0.5, 1), rotation_z(cos(M_PI/5), sin(M_PI/5)));
 	set_transform(&s, m);
 	n = normal_at(&s, new_point(0, sqrtf(2)/2, -sqrtf(2)/2));

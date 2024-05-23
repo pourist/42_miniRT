@@ -4,18 +4,16 @@
 static bool		intersect_cylinder(t_hit **xs, t_shape *cyl, t_ray r);
 static t_vector	normal_at_cylinder(t_shape *shape, t_point local_point);
 
-t_shape	new_cylinder(void)
+t_shape	*new_cylinder(t_shape *shape)
 {
-	t_shape	shape;
-
-	shape = new_shape();
-	shape.cyl.origin = new_point(0, 0, 0);
-	shape.cyl.min = -INFINITY;
-	shape.cyl.max = INFINITY;
-	shape.intersect_fn = intersect_cylinder;
-	shape.normal_at = normal_at_cylinder;
-	shape.cyl.closed = false;
-	shape.bounds_fn = cylinder_bounds;
+	new_shape(shape);
+	shape->cyl.origin = new_point(0, 0, 0);
+	shape->cyl.min = -INFINITY;
+	shape->cyl.max = INFINITY;
+	shape->cyl.closed = false;
+	shape->intersect_fn = intersect_cylinder;
+	shape->normal_at = normal_at_cylinder;
+	shape->bounds_fn = cylinder_bounds;
 	return (shape);
 }
 

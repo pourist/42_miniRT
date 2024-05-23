@@ -58,7 +58,7 @@ void	set_params(t_params *params)
 	params->ray_origin = new_point(0, 0, -5);
 	params->sphere_color = new_color(0.6, 0.1, 0.1);
 	params->bg_color = new_color(0.1, 0.2, 0.3);
-	params->sphere = new_sphere();
+	new_sphere(&params->sphere);
 	// set_transform(&params->sphere, scaling(1, 0.5, 1));
 	// set_transform(&params->sphere, scaling(0.5, 1, 1));
 	// set_transform(&params->sphere, multiply_matrices(

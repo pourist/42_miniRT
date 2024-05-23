@@ -15,7 +15,7 @@ Test(intersections, precomputing_the_reflection_vector)
 	t_comps		comps;
 	t_vector		result;
 
-	s = new_plane();
+	new_plane(&s);
 	r = new_ray(new_point(0, 1, -1), new_vector(0, -sqrt(2) / 2, sqrt(2) / 2));
 	i = intersection(sqrt(2), &s);
 	comps = prepare_computations(i, &r, NULL);
@@ -52,7 +52,7 @@ Test(world, reflected_color_for_a_reflective_material)
 	t_color		result;
 
 	world = default_world();
-	world.objs[1] = new_plane();
+	new_plane(&world.objs[1]);
 	world.objs[1].material.reflective = 0.5;
 	set_transform(&world.objs[1], translation(0, -1, 0));
 	r = new_ray(new_point(0, 0, -3), new_vector(0, -sqrt(2) / 2, sqrt(2) / 2));
@@ -75,7 +75,7 @@ Test(world, shade_hit_with_a_reflective_material)
 	t_color		result;
 
 	world = default_world();
-	world.objs[1] = new_plane();
+	new_plane(&world.objs[1]);
 	world.objs[1].material.reflective = 0.5;
 	set_transform(&world.objs[1], translation(0, -1, 0));
 	r = new_ray(new_point(0, 0, -3), new_vector(0, sqrt(2)/-2, sqrt(2)/2));
@@ -100,10 +100,10 @@ Test(world, color_at_with_mutually_reflective_surfaces)
 	world.lights[0] = new_light(new_point(0, 0, 0), new_color(1, 1, 1));
 	world.objs = malloc(sizeof(t_shape) * 2);
 	world.objs_count = 2;
-	world.objs[0] = new_plane();
+	new_plane(&world.objs[0]);
 	world.objs[0].material.reflective = 1;
 	set_transform(&world.objs[0], translation(0, -1, 0));
-	world.objs[1] = new_plane();
+	new_plane(&world.objs[1]);
 	world.objs[1].material.reflective = 1;
 	set_transform(&world.objs[1], translation(0, 1, 0));
 	r = new_ray(new_point(0, 0, 0), new_vector(0, 1, 0));
@@ -121,7 +121,7 @@ Test(world, reflected_color_at_the_maximum_recursive_depth)
 		t_color		result;
 
 		world = default_world();
-		world.objs[0] = new_plane();
+		new_plane(&world.objs[0]);
 		world.objs[0].material.reflective = 0.5;
 		set_transform(&world.objs[0], translation(0, -1, 0));
 		r = new_ray(new_point(0, 0, -3), new_vector(0, -sqrt(2) / 2, sqrt(2) / 2));
@@ -147,7 +147,7 @@ Test(spheres, helper_for_producing_a_sphere_with_a_glassy_material)
 {
 	t_shape	s;
 
-	s = new_glass_sphere();
+	new_glass_sphere(&s);
 	cr_assert(eq(dbl, s.material.transparency, 1.0));
 	cr_assert(eq(dbl, s.material.refractive_index, 1.52));
 }
@@ -161,13 +161,13 @@ Test(intersections,finding_n1_and_n2_at_various_intersections)
 	t_hit		*i;
 	t_comps		comps;
 
-	a = new_glass_sphere();
+	new_glass_sphere(&a);
 	a.material.refractive_index = 1.5;
 	set_transform(&a, scaling(2, 2, 2));
-	b = new_glass_sphere();
+	new_glass_sphere(&b);
 	b.material.refractive_index = 2.0;
 	set_transform(&b, translation(0, 0, -0.25));
-	c = new_glass_sphere();
+	new_glass_sphere(&c);
 	c.material.refractive_index = 2.5;
 	set_transform(&c, translation(0, 0, 0.25));
 	r = new_ray(new_point(0, 0, -4), new_vector(0, 0, 1));
@@ -214,7 +214,7 @@ Test(intersections, the_under_point_is_offset_below_the_surface)
 
 	xs = NULL;
 	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	s = new_glass_sphere();
+	new_glass_sphere(&s);
 	set_transform(&s, translation(0, 0, 1));
 	i = intersection(5, &s);
 	insert_intersection(&xs, i);
@@ -326,11 +326,11 @@ Test(world, shade_hit_with_a_reflective_material2)
 
 	i = NULL;
 	world = default_world();
-	world.objs[0] = new_plane();
+	new_plane(&world.objs[0]);
 	world.objs[0].material.transparency = 0.5;
 	world.objs[0].material.refractive_index = 1.5;
 	set_transform(&world.objs[0], translation(0, -1, 0));
-	world.objs[1] = new_sphere();
+	new_sphere(&world.objs[1]);
 	world.objs[1].material.color = new_color(1, 0, 0);
 	world.objs[1].material.ambient = new_color(0.5, 0.5, 0.5);
 	set_transform(&world.objs[1], translation(0, -3.5, -0.5));
@@ -352,7 +352,7 @@ Test(intersections, the_schlick_approximation_under_total_internal_reflection)
 	t_comps	comps;
 	double	reflectance;
 
-	s = new_glass_sphere();
+	new_glass_sphere(&s);
 	r = new_ray(new_point(0, 0, sqrt(2)/2), new_vector(0, 1, 0));
 	i = NULL;
 	insert_intersection(&i, intersection(-sqrt(2)/2, &s));
@@ -370,7 +370,7 @@ Test(intersections, the_schlick_approximation_with_a_perpendicular_viewing_angle
 	t_comps	comps;
 	double	reflectance;
 
-	s = new_glass_sphere();
+	new_glass_sphere(&s);
 	r = new_ray(new_point(0, 0, 0), new_vector(0, 1, 0));
 	i = NULL;
 	insert_intersection(&i, intersection(-1, &s));
@@ -390,7 +390,7 @@ Test(intersections, the_schlick_approximation_with_small_angle_and_n2_greater_th
 	t_comps	comps;
 	double	reflectance;
 
-	s = new_glass_sphere();
+	new_glass_sphere(&s);
 	r = new_ray(new_point(0, 0.99, -2), new_vector(0, 0, 1));
 	i = NULL;
 	insert_intersection(&i, intersection(1.8589, &s));
@@ -413,12 +413,12 @@ Test(world, shade_hit_with_a_reflective_transparent_material)
 	i = NULL;
 	world = default_world();
 	r = new_ray(new_point(0, 0, -3), new_vector(0, -sqrt(2)/2, sqrt(2)/2));
-	world.objs[0] = new_plane();
+	new_plane(&world.objs[0]);
 	world.objs[0].material.reflective = 0.5;
 	world.objs[0].material.transparency = 0.5;
 	world.objs[0].material.refractive_index = 1.5;
 	set_transform(&world.objs[0], translation(0, -1, 0));
-	world.objs[1] = new_sphere();
+	new_sphere(&world.objs[1]);
 	world.objs[1].material.color = new_color(1, 0, 0);
 	world.objs[1].material.ambient = new_color(0.5, 0.5, 0.5);
 	set_transform(&world.objs[1], translation(0, -3.5, -0.5));

@@ -54,7 +54,8 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 bounds.c local_bounds.c free.c triangle.c obj_loader.c	\
 										 ft_atof.c	obj_loader_utils.c set_max_values.c \
 										 obj_file_parser.c obj_vertice_parser.c obj_face_parser.c \
-										 obj_group_parser.c obj_normal_parser.c triangle_bounds.c
+										 obj_group_parser.c obj_normal_parser.c triangle_bounds.c \
+										 csg.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

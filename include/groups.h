@@ -4,7 +4,7 @@
 # include "shapes.h"
 
 // Group
-t_shape		new_group(void);
+t_shape		*new_group(t_shape *shape);
 // Group tree
 void		add_child(t_shape *group, t_shape *child);
 void		insert_node(t_shape **root, t_shape *child);

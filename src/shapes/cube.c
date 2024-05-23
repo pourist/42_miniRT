@@ -4,15 +4,13 @@
 static bool		intersect_cube(t_hit **xs, t_shape *shape, t_ray r);
 static t_vector	normal_at_cube(t_shape *shape, t_point local_point);
 
-t_shape	new_cube(void)
+t_shape	*new_cube(t_shape *shape)
 {
-	t_shape	shape; 
-
-	shape = new_shape();
-	shape.cube.origin = new_point(0, 0, 0);
-	shape.intersect_fn = intersect_cube;
-	shape.normal_at = normal_at_cube;
-	shape.bounds_fn = cube_bounds;
+	new_shape(shape);
+	shape->cube.origin = new_point(0, 0, 0);
+	shape->intersect_fn = intersect_cube;
+	shape->normal_at = normal_at_cube;
+	shape->bounds_fn = cube_bounds;
 	return (shape);
 }
 
