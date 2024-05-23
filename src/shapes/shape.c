@@ -11,6 +11,7 @@ t_shape	new_shape(void)
 		.parent = NULL,
 		.is_bounds_precal = false,
 		.is_group = false,
+		.next = NULL,
 	});
 }
 

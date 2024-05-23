@@ -32,7 +32,7 @@ void	light_and_shading(t_canvas *rt, t_params *params, int xy[2])
 		pos = position(params->ray, params->hits->t);
 		params->view.normal_v = normal_at(&params->sphere, pos);
 		params->view.eye_v = negate(params->ray.direction);
-		params->sphere_color = lighting(&params->sphere.material,
+		params->sphere_color = lighting(&params->sphere,
 				&params->light, &pos, &params->view);
 		write_pixel(rt->img, xy[0], xy[1], params->sphere_color);
 	}

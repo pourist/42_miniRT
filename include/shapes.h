@@ -47,9 +47,22 @@ typedef struct s_range
 	double	max;
 }	t_range;
 
+typedef struct s_triangle
+{
+	t_point		p1;
+	t_point		p2;
+	t_point		p3;
+	t_vector	e1;
+	t_vector	e2;
+	t_vector	n1;
+	t_vector	n2;
+	t_vector	n3;
+	double		u;
+	double		v;
+}	t_triangle;
+
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
-typedef struct s_group	t_group;
 typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
 typedef t_tuple			(*t_normal_fn)(t_shape *, t_point);
 typedef void			(*t_bounds_fn)(t_shape *);
@@ -61,7 +74,8 @@ typedef struct s_shape {
 		t_cube		cube;
 		t_cylinder	cyl;
 		t_cone		cone;
-		t_group		*g;
+		t_triangle	tri;
+		t_shape		*root;
 	};
 	t_intersect_fn	intersect_fn;
 	t_normal_fn		normal_at;
@@ -75,13 +89,8 @@ typedef struct s_shape {
 	bool			is_bounds_precal;
 	t_bounds		bounds;
 	bool			is_group;
+	t_shape			*next;
 }	t_shape;
-
-typedef struct s_group
-{
-	t_shape	*shape;
-	t_group	*next;
-}	t_group;
 
 typedef struct s_hit {
 	double	t;
@@ -89,7 +98,7 @@ typedef struct s_hit {
 	t_hit	*next;
 }	t_hit;
 
-typedef struct s_discriminant
+typedef struct s_intersect_params
 {
 	double	a;
 	double	b;
@@ -97,7 +106,19 @@ typedef struct s_discriminant
 	double	t1;
 	double	t2;
 	double	discriminant;
-}	t_discriminant;
+}	t_intersect_params;
+
+typedef struct s_intersect_tri_params
+{
+	t_vector	dir_cross_e2;
+	double		det;
+	double		f;
+	t_point		p1_to_origin;
+	double		u;
+	t_vector	origin_cross_e1;
+	double		v;
+	double		t;
+}	t_intersect_tri_params;
 
 // Sphere Shape
 t_shape		new_sphere(void);
@@ -110,9 +131,12 @@ t_shape		new_cube(void);
 t_shape		new_cylinder(void);
 // Cone Shape
 t_shape		new_cone(void);
+// Triangle Shape
+t_shape		new_triangle(t_point p1, t_point p2, t_point p3);
+t_shape		new_smooth_triangle(t_point v[3], t_vector n[3]);
 // discriminants
-void		cone_discriminant(t_ray *ray, t_discriminant *d);
-void		cylinder_discriminant(t_ray *ray, t_discriminant *d);
+void		cone_discriminant(t_ray *ray, t_intersect_params *p);
+void		cylinder_discriminant(t_ray *ray, t_intersect_params *p);
 // Intersections general
 void		intersect(t_hit **xs, t_shape *s, t_ray r);
 t_hit		*intersection(double t, t_shape	*shape);

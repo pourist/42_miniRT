@@ -1,30 +1,13 @@
 #include "groups.h"
 
-static t_group	*new_node(t_shape *shape)
+void	insert_node(t_shape **root, t_shape *child)
 {
-	static t_group	pool[MAX_NODES + 1];
-	static size_t	index = 0;
-	t_group			*node;
+	t_shape	*current;
 
-	node = &pool[index++ & (MAX_NODES)];
-	node->shape = shape;
-	node->next = NULL;
-	return (node);
-}
-
-static void	insert_node(t_group **root, t_group *child)
-{
-	t_group	*current;
-
-	if (*root == NULL)
-		*root = child;
-	else
-	{
-		current = *root;
-		while (current->next)
-			current = current->next;
-		current->next = child;
-	}
+	current = *root;
+	while (current->next)
+		current = current->next;
+	current->next = child;
 }
 
 void	add_child(t_shape *group, t_shape *child)
@@ -32,49 +15,45 @@ void	add_child(t_shape *group, t_shape *child)
 	if (!group || !child)
 		return ;
 	child->parent = group;
-	if (!group->g)
-		group->g = new_node(child);
+	if (!group->root)
+		group->root = child;
 	else
-		insert_node(&group->g, new_node(child));
+		insert_node(&group->root, child);
 }
 
-void	get_group_bounds(t_group **root, t_bounds *b)
+void	get_group_bounds(t_shape **root, t_bounds *b)
 {
-	t_group	*current;
+	t_shape	*current;
 
 	current = *root;
 	while (current)
 	{
-		if (current->shape)
-		{
-			if (!current->shape->is_bounds_precal)
-				current->shape->bounds_fn(current->shape);
-			if (current->shape->bounds.min.x < b->min.x)
-				b->min.x = current->shape->bounds.min.x;
-			if (current->shape->bounds.min.y < b->min.y)
-				b->min.y = current->shape->bounds.min.y;
-			if (current->shape->bounds.min.z < b->min.z)
-				b->min.z = current->shape->bounds.min.z;
-			if (current->shape->bounds.max.x > b->max.x)
-				b->max.x = current->shape->bounds.max.x;
-			if (current->shape->bounds.max.y > b->max.y)
-				b->max.y = current->shape->bounds.max.y;
-			if (current->shape->bounds.max.z > b->max.z)
-				b->max.z = current->shape->bounds.max.z;
-		}
+		if (!current->is_bounds_precal)
+			current->bounds_fn(current);
+		if (current->bounds.min.x < b->min.x)
+			b->min.x = current->bounds.min.x;
+		if (current->bounds.min.y < b->min.y)
+			b->min.y = current->bounds.min.y;
+		if (current->bounds.min.z < b->min.z)
+			b->min.z = current->bounds.min.z;
+		if (current->bounds.max.x > b->max.x)
+			b->max.x = current->bounds.max.x;
+		if (current->bounds.max.y > b->max.y)
+			b->max.y = current->bounds.max.y;
+		if (current->bounds.max.z > b->max.z)
+			b->max.z = current->bounds.max.z;
 		current = current->next;
 	}
 }
 
-void	intersect_group_shapes(t_group **root, t_hit **xs, t_ray *r)
+void	intersect_group_shapes(t_shape **root, t_hit **xs, t_ray *r)
 {
-	t_group	*current;
+	t_shape	*current;
 
 	current = *root;
 	while (current)
 	{
-		if (current->shape)
-			intersect(xs, current->shape, *r);
+		intersect(xs, current, *r);
 		current = current->next;
 	}
 }
