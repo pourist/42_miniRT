@@ -25,7 +25,7 @@ RM								:= rm -rf
 
 OBJ_DIR						:= obj
 SRC_DIRS					:= tuples utils canvas matrices rays shapes lights materials \
-										 world camera patterns groups obj_loader
+										 world camera patterns bounds obj_loader
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
@@ -55,7 +55,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 ft_atof.c	obj_loader_utils.c set_max_values.c \
 										 obj_file_parser.c obj_vertice_parser.c obj_face_parser.c \
 										 obj_group_parser.c obj_normal_parser.c triangle_bounds.c \
-										 csg.c
+										 csg.c csg_utils.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

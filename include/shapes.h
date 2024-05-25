@@ -76,7 +76,7 @@ typedef enum e_operation
 
 typedef struct s_csg
 {
-	t_operation	operation;
+	t_operation	op;
 	t_shape		*left;
 	t_shape		*right;
 }	t_csg;
@@ -158,6 +158,8 @@ t_shape		*new_smooth_triangle(t_point v[3], t_vector n[3], t_shape *shape);
 t_shape		*new_csg(t_operation operation, t_shape *left, t_shape *right,
 				t_shape *csg);
 bool		intersect_allowed(t_operation op, bool lhit, bool inl, bool inr);
+t_hit		*filter_intersections(t_hit *xs, t_shape *csg, t_hit **result);
+void		get_csg_bounds(t_shape *current, t_bounds *b);
 // discriminants
 void		cone_discriminant(t_ray *ray, t_intersect_params *p);
 void		cylinder_discriminant(t_ray *ray, t_intersect_params *p);
