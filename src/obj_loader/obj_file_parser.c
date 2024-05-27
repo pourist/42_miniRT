@@ -47,7 +47,7 @@ bool	parse_obj_file(t_obj_loader *loader, char *filename)
 	line = get_next_line(fd);
 	while (line)
 	{
-		params = ft_subsplit(line, " \n");
+		params = ft_subsplit(line, "\n ");
 		if (!parse_line(loader, params, &line_nb))
 			return (free(line), free_array(params), close(fd),
 				free_loader(loader), false);
