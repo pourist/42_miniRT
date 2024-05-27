@@ -52,7 +52,6 @@ t_hit	*filter_intersections(t_hit *xs, t_shape *csg, t_hit **result)
 
 	inl = false;
 	inr = false;
-	*result = NULL;
 	while (xs)
 	{
 		lhit = is_left_hit(csg->csg.left, xs->obj);
