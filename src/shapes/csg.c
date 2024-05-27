@@ -39,7 +39,6 @@ static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray r)
 	t_hit	*l_xs; 
 	t_hit	*r_xs; 
 	t_hit	*all_xs;
-	// t_ray	local_ray;
 
 	csg->bounds_fn(csg);
 	if (!intersect_bounds(&csg->bounds, &r))
@@ -47,7 +46,6 @@ static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray r)
 	l_xs = NULL;
 	r_xs = NULL;
 	all_xs = NULL;
-	// local_ray = transform(r, csg->inverse);
 	intersect(&l_xs, csg->csg.left, r);
 	intersect(&r_xs, csg->csg.right, r);
 	merge_intersections(&all_xs, l_xs);
