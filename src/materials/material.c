@@ -20,12 +20,12 @@ t_material	new_material(void)
 	});
 }
 
-t_shape	*get_parent(t_shape *shape)
+t_shape	*get_parent(t_shape **shape)
 {
 	t_shape	*parent;
 
-	parent = shape;
-	while (parent->parent != NULL)
+	parent = *shape;
+	while (parent->parent != NULL && parent->parent->is_csg == false)
 		parent = parent->parent;
 	return (parent);
 }
@@ -37,7 +37,7 @@ t_color	lighting(t_shape *shape, t_light *light, t_point *point,
 	t_color				color;
 	t_shape				*parent;
 
-	parent = get_parent(shape);
+	parent = get_parent(&shape);
 	if (parent->material.pattern.has_pattern == true)
 		color = pattern_at_shape(&parent->material.pattern, parent, point);
 	else
