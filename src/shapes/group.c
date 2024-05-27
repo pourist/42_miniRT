@@ -17,9 +17,12 @@ t_shape	*new_group(t_shape *shape)
 
 static bool	intersect_group(t_hit **xs, t_shape *shape, t_ray r)
 {
+	// t_ray	trans_ray;
+
 	shape->bounds_fn(shape);
 	if (!intersect_bounds(&shape->bounds, &r))
 		return (false);
+	// trans_ray = transform(r, shape->inverse);
 	intersect_group_shapes(&shape->root, xs, &r);
 	return (true);
 }

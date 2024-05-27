@@ -5,7 +5,10 @@ void	intersect(t_hit **xs, t_shape *s, t_ray r)
 	t_ray	local_ray;
 
 	local_ray = transform(r, s->inverse);
-	s->intersect_fn(xs, s, local_ray);
+	if (s->is_group || s->is_csg)
+		s->intersect_fn(xs, s, r);
+	else
+		s->intersect_fn(xs, s, local_ray);
 }
 
 /*  To increase performance, we keep an array of MAX_NODES intersections

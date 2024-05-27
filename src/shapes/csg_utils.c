@@ -8,9 +8,9 @@ bool	intersect_allowed(t_operation op, bool lhit, bool inl, bool inr)
 {
 	if (op == UNION)
 		return ((lhit && !inr) || (!lhit && !inl));
-	if (op == INTERSECT)
+	else if (op == INTERSECT)
 		return ((lhit && inr) || (!lhit && inl));
-	if (op == DIFFERENCE)
+	else if (op == DIFFERENCE)
 		return ((lhit && !inr) || (!lhit && inl));
 	return (false);
 }
@@ -37,7 +37,7 @@ static bool	is_left_hit(t_shape *left, t_shape *shape)
 {
 	if (left->is_csg)
 		return (is_left_hit(left->csg.left, shape));
-	if (left->is_group)
+	else if (left->is_group)
 		return (is_group_hit(&left->root, shape));
 	if (left == shape)
 		return (true);
