@@ -50,8 +50,7 @@ static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray r)
 	intersect(&r_xs, csg->csg.right, r);
 	merge_intersections(&all_xs, l_xs);
 	merge_intersections(&all_xs, r_xs);
-	filter_intersections(all_xs, csg, xs);
-	return (true);
+	return (filter_intersections(all_xs, csg, xs) != NULL);
 }
 
 static t_vector	normal_at_csg(t_shape *shape, t_point local_point)

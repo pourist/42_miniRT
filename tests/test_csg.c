@@ -83,6 +83,7 @@ Test(csg, filtering_a_list_of_intersections)
 	new_cube(&s2);
 	new_csg(UNION, &s1, &s2, &csg);
 	xs = NULL;
+	result = NULL;
 	insert_intersection(&xs, intersection(1, &s1));
 	insert_intersection(&xs, intersection(2, &s2));
 	insert_intersection(&xs, intersection(3, &s1));
@@ -92,11 +93,13 @@ Test(csg, filtering_a_list_of_intersections)
 	cr_assert(eq(dbl, result->t, 1));
   cr_assert(eq(dbl, result->next->t, 4));
 	csg.csg.op = INTERSECT;
+	result = NULL;
 	filter_intersections(xs, &csg, &result);
 	cr_assert(eq(int, intersect_count(result), 2));
 	cr_assert(eq(dbl, result->t, 2));
 	cr_assert(eq(dbl, result->next->t, 3));
 	csg.csg.op = DIFFERENCE;
+	result = NULL;
   filter_intersections(xs, &csg, &result);
   cr_assert(eq(int, intersect_count(result), 2));
 	cr_assert(eq(dbl, result->t, 1));
