@@ -30,6 +30,7 @@ void	free_world(t_world *world)
 	int		i;
 
 	i = -1;
+	close(world->fd);
 	while (++i < world->objs_count)
 	{
 		free_pattern(&world->objs[i].material.pattern);
