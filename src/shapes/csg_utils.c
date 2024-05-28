@@ -22,12 +22,17 @@ static bool	is_group_hit(t_shape **root, t_shape *shape)
 	tmp = *root;
 	while (tmp)
 	{
-		if (tmp->is_group && is_group_hit(&tmp->root, shape))
-			return (true);
-		if (tmp->is_csg && is_left_hit(tmp->csg.left, shape))
-			return (true);
 		if (tmp == shape)
 			return (true);
+		if (tmp->is_group && is_group_hit(&tmp->root, shape))
+			return (true);
+		if (tmp->is_csg)
+		{
+			if (is_left_hit(tmp->csg.left, shape))
+				return (true);
+			if (is_left_hit(tmp->csg.right, shape))
+				return (true);
+		}
 		tmp = tmp->next;
 	}
 	return (false);
@@ -35,11 +40,16 @@ static bool	is_group_hit(t_shape **root, t_shape *shape)
 
 static bool	is_left_hit(t_shape *left, t_shape *shape)
 {
-	if (left->is_csg)
-		return (is_left_hit(left->csg.left, shape));
-	else if (left->is_group)
-		return (is_group_hit(&left->root, shape));
 	if (left == shape)
+		return (true);
+	if (left->is_csg)
+	{
+		if (is_left_hit(left->csg.left, shape))
+			return (true);
+		if (is_left_hit(left->csg.right, shape))
+			return (true);
+	}
+	if (left->is_group && is_group_hit(&left->root, shape))
 		return (true);
 	return (false);
 }
@@ -57,11 +67,11 @@ t_hit	*filter_intersections(t_hit *xs, t_shape *csg, t_hit **result)
 		lhit = is_left_hit(csg->csg.left, xs->obj);
 		if (intersect_allowed(csg->csg.op, lhit, inl, inr))
 			insert_intersection(result, intersection(xs->t, xs->obj));
+		xs = xs->next;
 		if (lhit)
 			inl = !inl;
 		else
 			inr = !inr;
-		xs = xs->next;
 	}
 	return (*result);
 }
