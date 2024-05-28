@@ -10,18 +10,18 @@ bool	render(t_canvas *canvas, t_world *world, t_camera *camera)
 	if (!new_canvas(canvas, camera->hsize, camera->vsize, "MiniRT"))
 		return (false);
 	y = -1;
-	while (++y < camera->vsize - 1)
+	while (++y < *canvas->height)
 	{
-		printf("\rRendering: %d%%", (int)(y / (camera->vsize - 1) * 100));
+		ft_printf("\rRendering: %d%%", (int)(y / (camera->vsize - 1) * 100));
 		x = -1;
-		while (++x < camera->hsize - 1)
+		while (++x < *canvas->width)
 		{
 			ray = ray_for_pixel(camera, x, y);
 			color = color_at(world, &ray);
 			write_pixel(canvas->img, x, y, &color);
 		}
 	}
-	printf("\rRendering: 100%%\n");
+	ft_printf("\rRendering: 100%%\n");
 	return (true);
 }
 
