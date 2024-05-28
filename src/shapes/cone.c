@@ -1,8 +1,8 @@
 #include "shapes.h"
 #include "groups.h"
 
-static bool		intersect_cone(t_hit **xs, t_shape *shape, t_ray r);
-static t_vector	normal_at_cone(t_shape *shape, t_point local_point);
+static bool		intersect_cone(t_hit **xs, t_shape *shape, t_ray *r);
+static t_vector	normal_at_cone(t_shape *shape, t_point *local_point);
 
 t_shape	*new_cone(t_shape *shape)
 {
@@ -28,27 +28,27 @@ static bool	check_cap(t_ray *ray, double t)
 		<= fabs(ray->origin.y + t * ray->direction.y));
 }
 
-static void	intersect_caps(t_hit **xs, t_shape *shape, t_ray *ray)
+static void	intersect_caps(t_hit **xs, t_shape *shape, t_ray *r)
 {
 	double			t;
 
-	if (!shape->cone.closed || fabs(ray->direction.y) < EPSILON)
+	if (!shape->cone.closed || fabs(r->direction.y) < EPSILON)
 		return ;
-	t = (shape->cone.min - ray->origin.y) / ray->direction.y;
-	if (check_cap(ray, t))
+	t = (shape->cone.min - r->origin.y) / r->direction.y;
+	if (check_cap(r, t))
 		insert_intersection(xs, intersection(t, shape));
-	t = (shape->cone.max - ray->origin.y) / ray->direction.y;
-	if (check_cap(ray, t))
+	t = (shape->cone.max - r->origin.y) / r->direction.y;
+	if (check_cap(r, t))
 		insert_intersection(xs, intersection(t, shape));
 }
 
-static bool	intersect_cone(t_hit **xs, t_shape *shape, t_ray ray)
+static bool	intersect_cone(t_hit **xs, t_shape *shape, t_ray *r)
 {
 	t_intersect_params	p;
 	double				y_pos;
 
-	intersect_caps(xs, shape, &ray);
-	cone_discriminant(&ray, &p);
+	intersect_caps(xs, shape, r);
+	cone_discriminant(r, &p);
 	if (fabs(p.a) < EPSILON)
 	{
 		if (fabs(p.b) < EPSILON)
@@ -60,30 +60,30 @@ static bool	intersect_cone(t_hit **xs, t_shape *shape, t_ray ray)
 		return (false);
 	if (p.t1 > p.t2)
 		ft_swap(&p.t1, &p.t2);
-	y_pos = ray.origin.y + p.t2 * ray.direction.y;
+	y_pos = r->origin.y + p.t2 * r->direction.y;
 	if (shape->cone.min < y_pos && y_pos < shape->cone.max)
 		insert_intersection(xs, intersection(p.t2, shape));
-	y_pos = ray.origin.y + p.t1 * ray.direction.y;
+	y_pos = r->origin.y + p.t1 * r->direction.y;
 	if (shape->cone.min < y_pos && y_pos < shape->cone.max)
 		insert_intersection(xs, intersection(p.t1, shape));
 	return (true);
 }
 
-static t_vector	normal_at_cone(t_shape *shape, t_point local_point)
+static t_vector	normal_at_cone(t_shape *shape, t_point *local_point)
 {
 	double	dist;
 	double	y;
 
-	dist = pow(local_point.x, 2) + pow(local_point.z, 2);
-	if (dist < 1.0 && local_point.y >= shape->cone.max - EPSILON)
+	dist = pow(local_point->x, 2) + pow(local_point->z, 2);
+	if (dist < 1.0 && local_point->y >= shape->cone.max - EPSILON)
 		return (new_vector(0, 1, 0));
-	else if (dist < 1.0 && local_point.y <= shape->cone.min + EPSILON)
+	else if (dist < 1.0 && local_point->y <= shape->cone.min + EPSILON)
 		return (new_vector(0, -1, 0));
 	else
 	{
 		y = sqrt(dist);
-		if (local_point.y > 0.0)
+		if (local_point->y > 0.0)
 			y = -y;
-		return (new_vector(local_point.x, y, local_point.z));
+		return (new_vector(local_point->x, y, local_point->z));
 	}
 }

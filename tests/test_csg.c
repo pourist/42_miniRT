@@ -119,7 +119,7 @@ Test(csg, a_ray_misses_a_CSG_object)
   new_cube(&c);
   new_csg(UNION, &c, &s, &csg);
 	r = new_ray(new_point(0, 2, -5), new_vector(0, 0, 1));
-	csg.intersect_fn(&xs, &csg, r);
+	csg.intersect_fn(&xs, &csg, &r);
   cr_assert(eq(ptr, xs, NULL));
 }
 
@@ -137,7 +137,7 @@ Test(csg, a_ray_hits_a_CSG_object)
 	new_csg(UNION, &s1, &s2, &csg);
   r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
   xs = NULL;
-  csg.intersect_fn(&xs, &csg, r);
+  csg.intersect_fn(&xs, &csg, &r);
   cr_assert(eq(int, intersect_count(xs), 2));
 	cr_assert(eq(dbl, xs->t, 4));
 	cr_assert(eq(ptr, xs->obj, &s1));
