@@ -24,7 +24,7 @@ static bool	check_cap(t_ray *ray, double t)
 
 	x = ray->origin.x + t * ray->direction.x;
 	z = ray->origin.z + t * ray->direction.z;
-	return (pow(x, 2) + pow(z, 2) <= 1.0);
+	return ((x * x) + (z * z) <= 1.0);
 }
 
 static void	intersect_caps(t_hit **xs, t_shape *shape, t_ray *ray)
@@ -65,7 +65,8 @@ static t_vector	normal_at_cylinder(t_shape *shape, t_point *local_point)
 {
 	double	dist;
 
-	dist = pow(local_point->x, 2) + pow(local_point->z, 2);
+	dist = (local_point->x * local_point->x)
+		+ (local_point->z * local_point->z);
 	if (dist < 1.0 && local_point->y >= shape->cyl.max - EPSILON)
 		return (new_vector(0, 1, 0));
 	else if (dist < 1.0 && local_point->y <= shape->cyl.min + EPSILON)

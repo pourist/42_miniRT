@@ -35,7 +35,7 @@ static bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray *r)
 	p.a = dot(r->direction, r->direction);
 	p.b = 2.0 * dot(r->direction, sphere_to_ray);
 	p.c = dot(sphere_to_ray, sphere_to_ray) - 1.0;
-	p.discriminant = pow(p.b, 2) - (4.0 * p.a * p.c);
+	p.discriminant = (p.b * p.b) - (4.0 * p.a * p.c);
 	if (p.discriminant < 0.0)
 		return (false);
 	sqrt_d = sqrt(p.discriminant);
