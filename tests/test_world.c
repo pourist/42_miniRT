@@ -55,7 +55,7 @@ Test(world, precomputing_state_of_intersection)
 	t_comps		comps;
 
 	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	sphere = new_sphere();
+	new_sphere(&sphere); 
 	i = intersection(4, &sphere);
 	comps = prepare_computations(i, &r, i);
 	cr_assert(eq(dbl, comps.t, i->t));
@@ -73,7 +73,7 @@ Test(world, hit_when_intersection_occurs_on_outside)
 	t_comps		comps;
 
 	r = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
-	sphere = new_sphere();
+	new_sphere(&sphere); 
 	i = intersection(4, &sphere);
 	comps = prepare_computations(i, &r, i);
 	cr_assert(eq(int, comps.inside, false));
@@ -87,7 +87,7 @@ Test(world, hit_when_intersection_occurs_on_inside)
 	t_comps		comps;
 
 	r = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
-	sphere = new_sphere();
+	new_sphere(&sphere); 
 	i = intersection(1, &sphere);
 	comps = prepare_computations(i, &r, i);
 	cr_assert(eq(int, tuple_eq(comps.point, new_point(0, 0, 1)), true));
@@ -248,8 +248,8 @@ Test(world, shade_hit_is_given_an_intersection_in_shadow)
 	w.lights[0] = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
 	w.objs = malloc(sizeof(t_shape) * 2);
 	w.objs_count = 2;
-	w.objs[0] = new_sphere();
-	w.objs[1] = new_sphere();
+	new_sphere(&w.objs[0]);
+	new_sphere(&w.objs[1]);
 	set_transform(&w.objs[1], translation(0, 0, 10));
 	r = new_ray(new_point(0, 0, 5), new_vector(0, 0, 1));
 	i = intersection(4, &w.objs[1]);

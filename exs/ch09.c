@@ -17,35 +17,35 @@ void	create_background(t_world *world)
 	t_shape		back;
 	t_matrix	multi;
 
-	floor = new_plane();
+	new_plane(&floor);
 	floor.material.color = new_color(1, 0.9, 0.9);
 	floor.material.specular = 0;
-	front = new_plane();
+	new_plane(&front);
 	front.material = floor.material;
 	multi = transformations(2, 
 			rotation_x(cos(M_PI / 2), sin(M_PI / 2)), translation(0, 0, 12));
 	set_transform(&front, multi);
-	l_top = new_plane();
+	new_plane(&l_top);
 	l_top.material = floor.material;
 	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
 			rotation_y(cos(-M_PI / 4), sin(-M_PI / 4)), translation(-12, 0, 12));
 	set_transform(&l_top, multi);
-	r_top = new_plane();
+	new_plane(&r_top);
 	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
 			rotation_y(cos(M_PI / 4), sin(M_PI / 4)), translation(12, 0, 12));
 	set_transform(&r_top, multi);
 	r_top.material = floor.material;
-	l_bottom = new_plane();
+	new_plane(&l_bottom);
 	l_bottom.material = floor.material;
 	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
 			rotation_y(cos(-M_PI * 0.75), sin(-M_PI * 0.75)), translation(-12, 0, -12));
 	set_transform(&l_bottom, multi);
-	r_bottom = new_plane();
+	new_plane(&r_bottom);
 	r_bottom.material = floor.material;
 	multi = transformations(3, rotation_x(cos(M_PI / 2), sin(M_PI / 2)),
 			rotation_y(cos(M_PI * 0.75), sin(M_PI * 0.75)), translation(12, 0, -12));
 	set_transform(&r_bottom, multi);
-	back = new_plane();
+	new_plane(&back);
 	back.material = floor.material;
 	multi = transformations(2, 
 			rotation_x(cos(M_PI / 2), sin(M_PI / 2)), translation(0, 0, -12));
@@ -65,18 +65,18 @@ void	create_spheres(t_world *world)
 	t_shape		right;
 	t_shape		left;
 
-	middle = new_sphere();
+	new_sphere(&middle);
 	middle.material.color = new_color(0.1, 1, 0.5);
 	middle.material.diffuse = 0.7;
 	middle.material.specular = 0.3;
 	set_transform(&middle, translation(-0.5, 1, 0.5));
-	right = new_sphere();
+	new_sphere(&right);
 	set_transform(&right, transformations(2, scaling(0.5, 0.5, 0.5),
 			translation(1.5, 0.5, -0.5)));
 	right.material.color = new_color(0.5, 1, 0.1);
 	right.material.diffuse = 0.7;
 	right.material.specular = 0.3;
-	left = new_sphere();
+	new_sphere(&left);
 	set_transform(&left, transformations(2, scaling(0.33, 0.33, 0.33),
 			translation(-1.5, 0.33, -0.75)));
 	left.material.color = new_color(1, 0.8, 0.1);

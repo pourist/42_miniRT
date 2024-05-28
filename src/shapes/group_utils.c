@@ -1,24 +1,21 @@
 #include "groups.h"
 
-void	insert_node(t_shape **root, t_shape *child)
+void	add_child(t_shape *group, t_shape *child)
 {
 	t_shape	*current;
 
-	current = *root;
-	while (current->next)
-		current = current->next;
-	current->next = child;
-}
-
-void	add_child(t_shape *group, t_shape *child)
-{
 	if (!group || !child)
 		return ;
 	child->parent = group;
 	if (!group->root)
 		group->root = child;
 	else
-		insert_node(&group->root, child);
+	{
+		current = group->root;
+		while (current->next)
+			current = current->next;
+		current->next = child;
+	}
 }
 
 void	get_group_bounds(t_shape **root, t_bounds *b)

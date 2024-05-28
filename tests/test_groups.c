@@ -4,7 +4,7 @@ Test(groups, creating_a_new_group)
 {
 	t_shape	shape;
 
-	shape = new_group();
+	new_group(&shape);
 	cr_assert(eq(int, shape.next == NULL, 1));
 	cr_assert(eq(int, matrix_eq(shape.transform, get_identity_matrix()), 1));
 }
@@ -13,7 +13,7 @@ Test(groups, a_shape_has_a_parent_attribute)
 {
 	t_shape	shape;
 
-	shape = new_shape();
+	new_shape(&shape);
 	cr_assert(eq(ptr, shape.parent, NULL));
 }
 
@@ -22,8 +22,8 @@ Test(groups, adding_a_child_to_group)
 	t_shape	group;
 	t_shape	child;
 
-	group = new_group();
-	child = new_shape();
+	new_group(&group); 
+	new_shape(&child);
 	add_child(&group, &child);
 	cr_assert(eq(ptr, group.root, &child));
 	cr_assert(eq(ptr, group.root->next, NULL));
@@ -37,7 +37,7 @@ Test(groups, intersecting_a_ray_with_an_empty_group)
 	t_hit	*xs;
 
 	xs = NULL;
-	group = new_group();
+	new_group(&group); 
 	ray = new_ray(new_point(0, 0, 0), new_vector(0, 0, 1));
 	intersect(&xs, &group, ray);
 	cr_assert(eq(int, intersect_count(xs), 0));
@@ -53,10 +53,10 @@ Test(groups, intersecting_a_ray_with_a_nonempty_group)
 	t_hit	*xs;
 
 	xs = NULL;
-	group = new_group();
-	s1 = new_sphere();
-	s2 = new_sphere();
-	s3 = new_sphere();
+	new_group(&group); 
+	new_sphere(&s1); 
+	new_sphere(&s2);
+	new_sphere(&s3);
 	set_transform(&s2, translation(0, 0, -3));
 	set_transform(&s3, translation(5, 0, 0));
 	add_child(&group, &s1);
@@ -79,9 +79,9 @@ Test(groups, intersecting_a_transformed_group)
 	t_hit	*xs;
 
 	xs = NULL;
-	group = new_group();
+	new_group(&group); 
 	set_transform(&group, scaling(2, 2, 2));
-	s1 = new_sphere();
+	new_sphere(&s1); 
 	set_transform(&s1, translation(5, 0, 0));
 	add_child(&group, &s1);
 	ray = new_ray(new_point(10, 0, -10), new_vector(0, 0, 1));
@@ -96,12 +96,12 @@ Test(groups, converting_a_point_from_world_to_object_space)
 	t_shape	s1;
 	t_point	p;
 
-	g1 = new_group();
+	new_group(&g1);
 	set_transform(&g1, rotation_y(cos(M_PI_2), sin(M_PI_2)));
-	g2 = new_group();
+	new_group(&g2);
 	set_transform(&g2, scaling(2, 2, 2));
 	add_child(&g1, &g2);
-	s1 = new_sphere();
+	new_sphere(&s1);
 	set_transform(&s1, translation(5, 0, 0));
 	add_child(&g2, &s1);
 	p = world_to_object(&s1, new_point(-2, 0, -10));
@@ -117,12 +117,12 @@ Test(groups, converting_a_normal_from_object_to_world_space)
   t_shape	s;
   t_vector	n;
 
-	g1 = new_group();
+	new_group(&g1);
 	set_transform(&g1, rotation_y(cos(M_PI_2), sin(M_PI_2)));
-	g2 = new_group();
+	new_group(&g2);
 	set_transform(&g2, scaling(1, 2, 3));
 	add_child(&g1, &g2);
-	s = new_sphere();
+	new_sphere(&s);
 	set_transform(&s, translation(5, 0, 0));
 	add_child(&g2, &s);
 	n = normal_to_world(&s, new_vector(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3));
@@ -138,12 +138,12 @@ Test(groups, finding_the_normal_on_a_child_object)
 	t_shape	s;
 	t_vector	n;
 
-	g1 = new_group();
+	new_group(&g1);
 	set_transform(&g1, rotation_y(cos(M_PI_2), sin(M_PI_2)));
-	g2 = new_group();
+	new_group(&g2);
 	set_transform(&g2, scaling(1, 2, 3));
 	add_child(&g1, &g2);
-	s = new_sphere();
+	new_sphere(&s);
 	set_transform(&s, translation(5, 0, 0));
 	add_child(&g2, &s);
 	n = normal_at(&s, new_point(1.7321, 1.1547, -5.5774));
@@ -161,8 +161,8 @@ Test(groups, groups_have_bounding_box)
 	t_ray		r3;
 	t_hit		*xs;
 
-	g1 = new_group();
-	s = new_sphere();
+	new_group(&g1);
+	new_sphere(&s);
   add_child(&g1, &s);
 	r1 = new_ray(new_point(0, 0, -2), new_vector(0, 0, 1));
 	r2 = new_ray(new_point(0.9, 0.9, -2), new_vector(0, 0, 1));
@@ -193,8 +193,8 @@ Test(groups, groups_have_bounding_box_with_transform)
 	t_ray		r3;
 	t_hit		*xs;
 
-	g1 = new_group();
-	s = new_sphere();
+	new_group(&g1);
+	new_sphere(&s);
 	add_child(&g1, &s);
 	set_transform(&g1, translation(3, 3, 0));
 	r1 = new_ray(new_point(3, 3, -2), new_vector(0, 0, 1));
@@ -226,9 +226,9 @@ Test(groups, groups_have_bounding_box_with_group_transform)
   t_ray		r3;
   t_hit		*xs;
 
-	g1 = new_group();
+	new_group(&g1);
 	set_transform(&g1, translation(1, 1, 0));
-	s = new_sphere();
+	new_sphere(&s);
 	add_child(&g1, &s);
 	set_transform(&s, translation(3, 3, 0));
 	r1 = new_ray(new_point(4, 4, -2), new_vector(0, 0, 1));
@@ -256,9 +256,9 @@ Test(groups, checking_bounds_values)
 	t_shape	c;
 	t_matrix	m;
 
-	g = new_group();
+	new_group(&g);
 	set_transform(&g, translation(2, 0, 0));
-  c = new_cylinder();
+  new_cylinder(&c);
 	c.cyl.min = 0;
 	c.cyl.max = 1;
 	c.cyl.closed = true;

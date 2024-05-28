@@ -58,12 +58,12 @@ void	create_scene1(t_world *world)
 		for (int y = 0; y < num_spheres; y++)
 		{
 			g = &world->objs[x * num_spheres + y];
-			*g = new_group();
+			new_group(g);
 			set_transform(g, translation(x * offset, y * offset, 0));
       for (int i = 0; i < num_spheres; i++)
       {
         tmp = &s[x * num_spheres * num_spheres + y * num_spheres + i];
-				*tmp = new_sphere();
+				new_sphere(tmp);
 				set_transform(tmp, random_translation(bounds));
 				tmp->material.color = random_color();
 				if (i % 2 == 0)
@@ -83,7 +83,7 @@ void	create_scene1(t_world *world)
 			}
 		}
 	}
-	plane = new_plane();
+	new_plane(&plane);
 	plane.material.color = new_color(0.5, 0.5, 0.5);
 	m = multiply_matrices(rotation_x(cos(-M_PI / 8), sin(-M_PI / 8)),
 			translation(0, -10, 0));
@@ -98,13 +98,13 @@ void	hexagon_side(t_shape *side)
 	t_matrix	m;
 
 	corner = malloc(1 * sizeof(t_shape));
-	*corner = new_sphere();
+	new_sphere(corner);
 	corner->material.diffuse = 0.9;
 	corner->material.specular = 0.9;
 	m = multiply_matrices(translation(0, 0, -1), scaling(0.25, 0.25, 0.25));
 	set_transform(corner, m);
 	edge = malloc(1 * sizeof(t_shape));
-	*edge = new_cylinder();
+	new_cylinder(edge);
 	edge->cyl.min = 0;
 	edge->cyl.max = 1;
 	m = multiply_matrices(translation(0, 0, -1),
@@ -112,7 +112,7 @@ void	hexagon_side(t_shape *side)
 	m = multiply_matrices(m, rotation_z(cos(M_PI / -2), sin(M_PI / -2)));
 	m = multiply_matrices(m, scaling(0.25, 1.0, 0.25));
 	set_transform(edge, m);
-	*side = new_group();
+	new_group(side);
 	add_child(side, corner);
 	add_child(side, edge);
 }
@@ -124,7 +124,7 @@ void	create_scene2(t_world *world)
 	world->objs = malloc(1 * sizeof(t_shape));
 	world->objs_count = 1;
 	hexagon = world->objs;
-	*hexagon = new_group();
+	new_group(hexagon);
 	sides = malloc(6 * sizeof(t_shape));
 	for (int i = 0; i < 6; i++)
 	{

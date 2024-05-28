@@ -13,11 +13,11 @@ void	create_background(t_world *world)
 	t_shape		right_wall;
 	t_matrix	multi;
 
-	floor = new_sphere();
+	new_sphere(&floor);
 	set_transform(&floor, scaling(10, 0.01, 10));
 	floor.material.color = new_color(1, 0.9, 0.9);
 	floor.material.specular = 0;
-	left_wall = new_sphere();
+	new_sphere(&left_wall);
 	multi = multiply_matrices(
 			multiply_matrices(
 				multiply_matrices(
@@ -27,7 +27,7 @@ void	create_background(t_world *world)
 			scaling(10, 0.01, 10));
 	set_transform(&left_wall, multi);
 	left_wall.material = floor.material;
-	right_wall = new_sphere();
+	new_sphere(&right_wall);
 	multi = multiply_matrices(
 			multiply_matrices(
 				multiply_matrices(
@@ -48,18 +48,18 @@ void	create_spheres(t_world *world)
 	t_shape		right;
 	t_shape		left;
 
-	middle = new_sphere();
+	new_sphere(&middle);
 	middle.material.color = new_color(0.1, 1, 0.5);
 	middle.material.diffuse = 0.7;
 	middle.material.specular = 0.3;
 	set_transform(&middle, translation(-0.5, 1, 0.5));
-	right = new_sphere();
+	new_sphere(&right);
 	set_transform(&right, transformations(2, scaling(0.5, 0.5, 0.5),
 			translation(1.5, 0.5, -0.5)));
 	right.material.color = new_color(0.5, 1, 0.1);
 	right.material.diffuse = 0.7;
 	right.material.specular = 0.3;
-	left = new_sphere();
+	new_sphere(&left);
 	set_transform(&left, transformations(2, scaling(0.33, 0.33, 0.33),
 			translation(-1.5, 0.33, -0.75)));
 	left.material.color = new_color(1, 0.8, 0.1);

@@ -4,18 +4,16 @@
 static bool		intersect_cone(t_hit **xs, t_shape *shape, t_ray r);
 static t_vector	normal_at_cone(t_shape *shape, t_point local_point);
 
-t_shape	new_cone(void)
+t_shape	*new_cone(t_shape *shape)
 {
-	t_shape	shape;
-
-	shape = new_shape();
-	shape.cone.origin = new_point(0, 0, 0);
-	shape.cone.min = -INFINITY;
-	shape.cone.max = INFINITY;
-	shape.intersect_fn = intersect_cone;
-	shape.normal_at = normal_at_cone;
-	shape.cone.closed = false;
-	shape.bounds_fn = cone_bounds;
+	new_shape(shape);
+	shape->cone.origin = new_point(0, 0, 0);
+	shape->cone.min = -INFINITY;
+	shape->cone.max = INFINITY;
+	shape->cone.closed = false;
+	shape->intersect_fn = intersect_cone;
+	shape->normal_at = normal_at_cone;
+	shape->bounds_fn = cone_bounds;
 	return (shape);
 }
 
