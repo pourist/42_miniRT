@@ -43,14 +43,14 @@ t_vector	normal_to_world(t_shape *shape, t_vector object_normal)
 	return (object_normal);
 }
 
-t_vector	normal_at(t_shape *shape, t_point world_point)
+t_vector	normal_at(t_shape *shape, t_point *world_point)
 {
 	t_point		object_point;
 	t_vector	object_normal;
 	t_vector	world_normal;
 
-	object_point = world_to_object(shape, world_point);
-	object_normal = shape->normal_at(shape, object_point);
+	object_point = world_to_object(shape, *world_point);
+	object_normal = shape->normal_at(shape, &object_point);
 	world_normal = normal_to_world(shape, object_normal);
 	return (world_normal);
 }

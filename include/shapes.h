@@ -63,8 +63,8 @@ typedef struct s_triangle
 
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
-typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray);
-typedef t_tuple			(*t_normal_fn)(t_shape *, t_point);
+typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray *);
+typedef t_tuple			(*t_normal_fn)(t_shape *, t_point *);
 typedef void			(*t_bounds_fn)(t_shape *);
 
 typedef enum e_operation
@@ -139,7 +139,7 @@ typedef struct s_intersect_tri_params
 // Shapes
 t_shape		*new_shape(t_shape *shape);
 void		set_transform(t_shape *shape, t_matrix transform);
-t_vector	normal_at(t_shape *shape, t_point point);
+t_vector	normal_at(t_shape *shape, t_point *point);
 // Sphere Shape
 t_shape		*new_sphere(t_shape *shape);
 t_shape		*new_glass_sphere(t_shape *shape);
@@ -164,7 +164,7 @@ void		get_csg_bounds(t_shape *current, t_bounds *b);
 void		cone_discriminant(t_ray *ray, t_intersect_params *p);
 void		cylinder_discriminant(t_ray *ray, t_intersect_params *p);
 // Intersections general
-void		intersect(t_hit **xs, t_shape *s, t_ray r);
+void		intersect(t_hit **xs, t_shape *s, t_ray *r);
 t_hit		*intersection(double t, t_shape	*shape);
 void		insert_intersection(t_hit **xs, t_hit *hit);
 int			intersect_count(t_hit	*xs);

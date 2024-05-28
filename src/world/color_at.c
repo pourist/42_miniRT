@@ -25,7 +25,7 @@ t_hit	*intersect_world(t_world *world, t_ray *ray)
 	i = -1;
 	world->xs = NULL;
 	while (++i < world->objs_count && world->objs)
-		intersect(&world->xs, &world->objs[i], *ray);
+		intersect(&world->xs, &world->objs[i], ray);
 	return (world->xs);
 }
 
@@ -35,9 +35,9 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs)
 
 	comps.t = intersect->t;
 	comps.obj = intersect->obj;
-	comps.point = position(*ray, comps.t);
+	comps.point = position(ray, comps.t);
 	comps.view.eye_v = negate(normalize(ray->direction));
-	comps.view.normal_v = normalize(normal_at(comps.obj, comps.point));
+	comps.view.normal_v = normalize(normal_at(comps.obj, &comps.point));
 	comps.n1 = 1;
 	comps.n2 = 1;
 	if (dot(comps.view.normal_v, comps.view.eye_v) < 0)

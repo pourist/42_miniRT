@@ -1,8 +1,8 @@
 #include "shapes.h"
 #include "groups.h"
 
-static bool		intersect_cylinder(t_hit **xs, t_shape *cyl, t_ray r);
-static t_vector	normal_at_cylinder(t_shape *shape, t_point local_point);
+static bool		intersect_cylinder(t_hit **xs, t_shape *cyl, t_ray *r);
+static t_vector	normal_at_cylinder(t_shape *shape, t_point *local_point);
 
 t_shape	*new_cylinder(t_shape *shape)
 {
@@ -41,35 +41,35 @@ static void	intersect_caps(t_hit **xs, t_shape *shape, t_ray *ray)
 		insert_intersection(xs, intersection(t, shape));
 }
 
-static bool	intersect_cylinder(t_hit **xs, t_shape *shape, t_ray r)
+static bool	intersect_cylinder(t_hit **xs, t_shape *shape, t_ray *r)
 {
 	t_intersect_params	p;
 	double				y_pos;
 
-	intersect_caps(xs, shape, &r);
-	cylinder_discriminant(&r, &p);
+	intersect_caps(xs, shape, r);
+	cylinder_discriminant(r, &p);
 	if (fabs(p.a) < EPSILON || p.discriminant < 0.0)
 		return (false);
 	if (p.t1 > p.t2)
 		ft_swap(&p.t1, &p.t2);
-	y_pos = r.origin.y + p.t2 * r.direction.y;
+	y_pos = r->origin.y + p.t2 * r->direction.y;
 	if (shape->cyl.min < y_pos && y_pos < shape->cyl.max)
 		insert_intersection(xs, intersection(p.t2, shape));
-	y_pos = r.origin.y + p.t1 * r.direction.y;
+	y_pos = r->origin.y + p.t1 * r->direction.y;
 	if (shape->cyl.min < y_pos && y_pos < shape->cyl.max)
 		insert_intersection(xs, intersection(p.t1, shape));
 	return (true);
 }
 
-static t_vector	normal_at_cylinder(t_shape *shape, t_point local_point)
+static t_vector	normal_at_cylinder(t_shape *shape, t_point *local_point)
 {
 	double	dist;
 
-	dist = pow(local_point.x, 2) + pow(local_point.z, 2);
-	if (dist < 1.0 && local_point.y >= shape->cyl.max - EPSILON)
+	dist = pow(local_point->x, 2) + pow(local_point->z, 2);
+	if (dist < 1.0 && local_point->y >= shape->cyl.max - EPSILON)
 		return (new_vector(0, 1, 0));
-	else if (dist < 1.0 && local_point.y <= shape->cyl.min + EPSILON)
+	else if (dist < 1.0 && local_point->y <= shape->cyl.min + EPSILON)
 		return (new_vector(0, -1, 0));
 	else
-		return (new_vector(local_point.x, 0, local_point.z));
+		return (new_vector(local_point->x, 0, local_point->z));
 }

@@ -50,7 +50,7 @@ void	intersect_group_shapes(t_shape **root, t_hit **xs, t_ray *r)
 	current = *root;
 	while (current)
 	{
-		intersect(xs, current, *r);
+		intersect(xs, current, r);
 		current = current->next;
 	}
 }
