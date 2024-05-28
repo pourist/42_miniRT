@@ -20,7 +20,7 @@ Test(materials, lighting_with_the_eye_between_the_light_and_the_surface)
 	t_light		light;
 	t_color		result;
 
-	s = new_shape();
+	new_shape(&s); 
 	position = new_point(0.0, 0.0, 0.0);
 	eye_normal.eye_v = new_vector(0.0, 0.0, -1.0);
 	eye_normal.normal_v = new_vector(0.0, 0.0, -1.0);
@@ -39,7 +39,7 @@ Test(materials, lighting_with_the_eye_between_light_and_surface_offset_45)
 	t_light		light;
 	t_color		result;
 
-	s = new_shape();
+	new_shape(&s); 
 	position = new_point(0.0, 0.0, 0.0);
 	eye_normal.eye_v = new_vector(0.0, sqrt(2.0) / 2.0, -sqrt(2.0) / 2.0);
 	eye_normal.normal_v = new_vector(0.0, 0.0, -1.0);
@@ -58,7 +58,7 @@ Test(materials, lighting_with_eye_opposite_surface_light_offset_45)
 	t_light		light;
 	t_color		result;
 
-	s = new_shape();
+	new_shape(&s); 
 	position = new_point(0.0, 0.0, 0.0);
 	eye_normal.eye_v = new_vector(0.0, 0.0, -1.0);
 	eye_normal.normal_v = new_vector(0.0, 0.0, -1.0);
@@ -77,7 +77,7 @@ Test(materials, lighting_with_eye_in_the_path_of_the_light)
 	t_light		light;
 	t_color		result;
 
-	s = new_shape();
+	new_shape(&s); 
 	position = new_point(0.0, 0.0, 0.0);
 	eye_normal.eye_v = new_vector(0.0, -sqrt(2.0) / 2.0, -sqrt(2.0) / 2.0);
 	eye_normal.normal_v = new_vector(0.0, 0.0, -1.0);
@@ -96,7 +96,7 @@ Test(materials, lighting_with_the_light_behind_the_surface)
 	t_light		light;
 	t_color		result;
 
-	s = new_shape();
+	new_shape(&s); 
 	position = new_point(0.0, 0.0, 0.0);
 	eye_normal.eye_v = new_vector(0.0, 0.0, -1.0);
 	eye_normal.normal_v = new_vector(0.0, 0.0, -1.0);
@@ -116,7 +116,7 @@ Test(materials, lighting_with_the_surface_in_shadow)
 	t_shape			s;
 	t_tuple			position;
 
-	s = new_shape();
+	new_shape(&s); 
 	eye.eye_v = new_vector(0, 0, 1);
 	eye.normal_v = new_vector(0, 0, -1);
 	position = new_point(0, 0, 0);

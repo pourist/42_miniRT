@@ -20,14 +20,28 @@ t_material	new_material(void)
 	});
 }
 
-t_shape	*get_parent(t_shape *shape)
+t_shape	*check_parents(t_shape *shape)
 {
-	t_shape	*parent;
+	t_shape	*current;
+	t_shape	*found;
+	t_color	default_color;
 
-	parent = shape;
-	while (parent->parent != NULL)
-		parent = parent->parent;
-	return (parent);
+	current = shape;
+	found = NULL;
+	default_color = new_color(1.0, 1.0, 1.0);
+	while (current->parent)
+	{
+		current = current->parent;
+		if (current->material.pattern.has_pattern
+			|| (current->material.color.r != default_color.r
+				|| current->material.color.g != default_color.g
+				|| current->material.color.b != default_color.b))
+			found = current;
+	}
+	if (found)
+		return (found);
+	else
+		return (shape);
 }
 
 t_color	lighting(t_shape *shape, t_light *light, t_point *point,
@@ -37,7 +51,7 @@ t_color	lighting(t_shape *shape, t_light *light, t_point *point,
 	t_color				color;
 	t_shape				*parent;
 
-	parent = get_parent(shape);
+	parent = check_parents(shape);
 	if (parent->material.pattern.has_pattern == true)
 		color = pattern_at_shape(&parent->material.pattern, parent, point);
 	else

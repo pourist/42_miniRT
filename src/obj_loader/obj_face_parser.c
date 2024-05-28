@@ -38,10 +38,10 @@ static void	create_triangle(t_obj_loader *loader, int *vert_i, int *norm_i, int 
 			n[0] = loader->normals[norm_i[0] - 1];
 			n[1] = loader->normals[norm_i[i] - 1];
 			n[2] = loader->normals[norm_i[i + 1] - 1];
-			loader->triangles[loader->t_count] = new_smooth_triangle(v, n);
+			new_smooth_triangle(v, n, &loader->triangles[loader->t_count]);
 		}
 		else
-			loader->triangles[loader->t_count] = new_triangle(v[0], v[1], v[2]);
+			new_triangle(v[0], v[1], v[2], &loader->triangles[loader->t_count]);
 	}
 }
 

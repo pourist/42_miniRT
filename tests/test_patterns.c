@@ -280,7 +280,7 @@ Test(patterns, lighting_with_stripe_pattern_applied)
 	t_shape		shape;
 	t_point		p;
 
-	shape = new_sphere();
+	new_sphere(&shape);
 	m = new_material();
 	m.pattern = new_stripe_pattern(new_solid_pattern(WHITE),
 		new_solid_pattern(BLACK));
@@ -316,7 +316,7 @@ Test(patterns, stripes_with_object_transformation)
 	t_color		expected;
 	t_point		p;
 
-	object = new_sphere();
+	new_sphere(&object);
 	set_transform(&object, scaling(2, 2, 2));
 	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
 		new_solid_pattern(BLACK));
@@ -339,7 +339,7 @@ Test(patterns, stripes_with_pattern_transformation)
 	t_color		expected;
 	t_point		p;
 
-	object = new_sphere();
+	new_sphere(&object); 
 	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
 		new_solid_pattern(BLACK));
 	set_pattern_transform(&pattern, scaling(2, 2, 2));
@@ -362,7 +362,7 @@ Test(patterns, stripes_with_object_and_pattern_transformation)
 	t_color		expected;
 	t_point		p;
 
-	object = new_sphere();
+	new_sphere(&object); 
 	set_transform(&object, scaling(2, 2, 2));
 	pattern = new_stripe_pattern(new_solid_pattern(WHITE),
 		new_solid_pattern(BLACK));

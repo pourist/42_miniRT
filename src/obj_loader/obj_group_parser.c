@@ -12,7 +12,7 @@ bool	parse_group(t_obj_loader *loader, char **params, int *line_nb)
 		if (!loader->groups)
 			return (false);
 	}
-	loader->groups[loader->g_count] = new_group();
+	new_group(&loader->groups[loader->g_count]);
 	loader->current_g = &loader->groups[loader->g_count];
 	add_child(&loader->default_group, loader->current_g);
 	loader->g_count++;

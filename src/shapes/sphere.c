@@ -4,28 +4,24 @@
 static bool		intersect_sphere(t_hit **xs, t_shape *shape, t_ray r);
 static t_vector	normal_at_sphere(t_shape *sphere, t_point local_point);
 
-t_shape	new_sphere(void)
+t_shape	*new_sphere(t_shape *shape)
 {
-	t_shape	shape;
-
-	shape = new_shape();
-	shape.sphere.origin = new_point(0, 0, 0);
-	shape.sphere.radius = 1.0;
-	shape.intersect_fn = intersect_sphere;
-	shape.normal_at = normal_at_sphere;
-	shape.material.diffuse = 0.9;
-	shape.material.specular = 0.6;
-	shape.bounds_fn = sphere_bounds;
+	new_shape(shape);
+	shape->sphere.origin = new_point(0, 0, 0);
+	shape->sphere.radius = 1.0;
+	shape->material.diffuse = 0.9;
+	shape->material.specular = 0.6;
+	shape->intersect_fn = intersect_sphere;
+	shape->normal_at = normal_at_sphere;
+	shape->bounds_fn = sphere_bounds;
 	return (shape);
 }
 
-t_shape	new_glass_sphere(void)
+t_shape	*new_glass_sphere(t_shape *shape)
 {
-	t_shape	shape;
-
-	shape = new_sphere();
-	shape.material.transparency = 1.0;
-	shape.material.refractive_index = GLASS;
+	new_sphere(shape);
+	shape->material.transparency = 1.0;
+	shape->material.refractive_index = GLASS;
 	return (shape);
 }
 
