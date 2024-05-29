@@ -18,10 +18,16 @@ typedef struct s_canvas {
 	int					*height;
 }	t_canvas;
 
+typedef struct s_mini_rt {
+	t_canvas	canvas;
+	t_world		world;
+	t_camera	camera;
+}	t_mini_rt;
+
 // Canvas
 bool		new_canvas(t_canvas *canvas, int width, int height, char *title);
 // Render
-bool		render(t_canvas *canvas, t_world *world, t_camera *camera);
+bool		render(t_mini_rt *rt);
 uint32_t	get_rgb(t_color *color);
 void		write_pixel(mlx_image_t *img, uint32_t x, uint32_t y,
 				t_color *color);

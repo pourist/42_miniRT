@@ -1,24 +1,22 @@
 #include "canvas.h"
 
-bool	render(t_canvas *canvas, t_world *world, t_camera *camera)
+bool	render(t_mini_rt	*rt)
 {
 	double		x;
 	double		y;
 	t_ray		ray;
 	t_color		color;
 
-	if (!new_canvas(canvas, camera->hsize, camera->vsize, "MiniRT"))
-		return (false);
 	y = -1;
-	while (++y < *canvas->height)
+	while (++y < *rt->canvas.height)
 	{
-		ft_printf("\rRendering: %d%%", (int)(y / (camera->vsize - 1) * 100));
+		ft_printf("\rRendering: %d%%", (int)(y / (rt->camera.vsize - 1) * 100));
 		x = -1;
-		while (++x < *canvas->width)
+		while (++x < *rt->canvas.width)
 		{
-			ray = ray_for_pixel(camera, x, y);
-			color = color_at(world, &ray);
-			write_pixel(canvas->img, x, y, &color);
+			ray = ray_for_pixel(&rt->camera, x, y);
+			color = color_at(&rt->world, &ray);
+			write_pixel(rt->canvas.img, x, y, &color);
 		}
 	}
 	ft_printf("\rRendering: 100%%\n");
