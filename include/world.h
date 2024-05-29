@@ -51,7 +51,9 @@ double	schlick(t_comps *comps);
 // reflec_and_reflac
 t_color	reflec_and_refrac(t_world *world, t_comps *comps, t_color *surface);
 // is_shadowed
-bool	is_shadowed(t_world *world, t_point *point, int index);
+// bool	is_shadowed(t_world *world, t_point *point, int index);
+bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point);
+double	intensity_at(t_world *world, t_point *point, int index);
 // reflection
 t_color	reflected_color(t_world *world, t_comps *comps);
 // refraction

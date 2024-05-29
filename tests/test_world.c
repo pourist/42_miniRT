@@ -203,17 +203,109 @@ Test(world, is_shadow_tests_for_occlusion_between_two_points)
 	w = default_world();
 	light_p = new_point(-10, -10, -10);
 	p = new_point(-10, -10, 10);
-	w.lights[0].position = light_p;
-	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+	cr_assert(eq(int, is_shadowed(&w, &light_p, &p), false));
 	p = new_point(10, 10, 10);
-	w.lights[0].position = light_p;
-	cr_assert(eq(int, is_shadowed(&w, &p, 0), true));
+	cr_assert(eq(int, is_shadowed(&w, &light_p, &p), true));
 	p = new_point(-20, -20, -20);
-	w.lights[0].position = light_p;
-	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+	cr_assert(eq(int, is_shadowed(&w, &light_p, &p), false));
 	p = new_point(-5, -5, -5);
-	w.lights[0].position = light_p;
-	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+	cr_assert(eq(int, is_shadowed(&w, &light_p, &p), false));
+}
+
+Test(world, point_lights_evaluate_the_light_intesity_at_a_given_pos)
+{
+	t_world	w;
+	t_point	p;
+	double	intensity;
+
+	w = default_world();
+	p = new_point(0, 1.0001, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
+	p = new_point(-1.0001, 0, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
+	p = new_point(0, 0, -1.0001);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
+	p = new_point(0, 0, 1.0001);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+	p = new_point(1.0001, 0, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+	p = new_point(0, -1.0001, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+	p = new_point(0, 0, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+}
+
+Test(world, lighting_fn_uses_light_intesity_to_attenuate_color)
+{
+	t_world		w;
+	t_point		p;
+	t_eye_normal	eye;
+	t_color		result;
+	t_color		expected;
+
+	w = default_world();
+	w.lights[0] = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
+	w.objs[0].material.ambient = new_color(0.1, 0.1, 0.1);
+	w.objs[0].material.diffuse = 0.9;
+	w.objs[0].material.specular = 0;
+	w.objs[0].material.color = new_color(1, 1, 1);
+	p = new_point(0, 0, -1);
+	eye.eye_v = new_vector(0, 0, -1);
+	eye.normal_v = new_vector(0, 0, -1);
+	w.lights[0].global_intensity = 1.0;
+	result = lighting(&w.objs[0], &w.lights[0], &p, &eye);
+	expected = new_color(1, 1, 1);
+	cr_assert(epsilon_eq(dbl, result.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.b, expected.b, EPSILON));
+	w.lights[0].global_intensity = 0.5;
+	result = lighting(&w.objs[0], &w.lights[0], &p, &eye);
+	expected = new_color(0.55, 0.55, 0.55);
+	cr_assert(epsilon_eq(dbl, result.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.b, expected.b, EPSILON));
+	w.lights[0].global_intensity = 0.0;
+	result = lighting(&w.objs[0], &w.lights[0], &p, &eye);
+	expected = new_color(0.1, 0.1, 0.1);
+	cr_assert(epsilon_eq(dbl, result.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.b, expected.b, EPSILON));
+}
+
+Test(world, creating_an_area_light)
+{
+	t_area_light_params lp;
+	t_light		l;
+
+	lp.corner = new_point(0, 0, 0);
+	lp.full_uvec = new_vector(2, 0, 0);
+	lp.full_vvec = new_vector(0, 0, 1);
+	lp.usteps = 4;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	l = area_light(&lp);
+	cr_assert(eq(dbl, l.corner.x, 0));
+	cr_assert(eq(dbl, l.corner.y, 0));
+	cr_assert(eq(dbl, l.corner.z, 0));
+	cr_assert(eq(dbl, l.uvec.x, 0.5));
+	cr_assert(eq(dbl, l.uvec.y, 0));
+	cr_assert(eq(dbl, l.uvec.z, 0));
+	cr_assert(eq(int, l.usteps, 4));
+	cr_assert(eq(dbl, l.vvec.x, 0));
+	cr_assert(eq(dbl, l.vvec.y, 0));
+	cr_assert(eq(dbl, l.vvec.z, 0.5));
+	cr_assert(eq(int, l.vsteps, 2));
+	cr_assert(eq(int, l.samples, 8));
+	cr_assert(eq(dbl, l.position.x, 1));
+	cr_assert(eq(dbl, l.position.y, 0));
+	cr_assert(eq(dbl, l.position.z, 0.5));
 }
 
 /*

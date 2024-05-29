@@ -1,6 +1,24 @@
 #include "world.h"
 
-bool	is_shadowed(t_world *world, t_point *point, int index)
+// bool	is_shadowed(t_world *world, t_point *point, int index)
+// {
+// 	t_vector	v;
+// 	double		distance;
+// 	t_ray		r;
+// 	t_hit		*xs;
+// 	t_hit		*h;
+
+// 	v = subtract(world->lights[index].position, *point);
+// 	distance = sqrt(magnitude_squared(v));
+// 	r = new_ray(*point, normalize(v));
+// 	xs = intersect_world(world, &r);
+// 	h = hit(xs);
+// 	if (h && h->obj->cast_shadow == true && h->t < distance)
+// 		return (true);
+// 	return (false);
+// }
+
+bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point)
 {
 	t_vector	v;
 	double		distance;
@@ -8,7 +26,7 @@ bool	is_shadowed(t_world *world, t_point *point, int index)
 	t_hit		*xs;
 	t_hit		*h;
 
-	v = subtract(world->lights[index].position, *point);
+	v = subtract(*light_pos, *point);
 	distance = sqrt(magnitude_squared(v));
 	r = new_ray(*point, normalize(v));
 	xs = intersect_world(world, &r);
@@ -16,6 +34,13 @@ bool	is_shadowed(t_world *world, t_point *point, int index)
 	if (h && h->obj->cast_shadow == true && h->t < distance)
 		return (true);
 	return (false);
+}
+
+double	intensity_at(t_world *world, t_point *point, int index)
+{
+	if (is_shadowed(world, &world->lights[index].position, point))
+		return (0.0);
+	return (1.0);
 }
 
 t_hit	*intersect_world(t_world *world, t_ray *ray)
@@ -65,7 +90,9 @@ t_color	shade_hit(t_world *world, t_comps *comps)
 	surface = new_color(0, 0, 0);
 	while (++i < world->lights_count)
 	{
-		world->lights[i].in_shadow = is_shadowed(world, &comps->over_point, i);
+		// world->lights[i].in_shadow = is_shadowed(world, &comps->over_point, i);
+		world->lights[i].global_intensity = intensity_at(
+				world, &comps->over_point, i);
 		surface = add_color(surface, lighting(comps->obj,
 					&world->lights[i], &comps->over_point, &comps->view));
 	}

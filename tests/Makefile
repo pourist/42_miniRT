@@ -160,6 +160,10 @@ obj_loader: $(OBJECTS) test.c test_obj_loader.c
 csg: $(OBJECTS) test.c test_csg.c
 	@$(call run, "$^")
 
+.PHONY: random
+random: $(OBJECTS) test.c test_random.c
+	@$(call run, "$^")
+
 $(OBJECTS):
 	@make -C .. -s
 
