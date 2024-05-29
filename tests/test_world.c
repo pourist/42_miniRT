@@ -194,6 +194,30 @@ Test(world, color_with_intersection_behind_ray)
 	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
 }
 
+Test(world, is_shadow_tests_for_occlusion_between_two_points)
+{
+	t_world	w;
+	t_point	light_p;
+	t_point	p;
+
+	w = default_world();
+	light_p = new_point(-10, -10, -10);
+	p = new_point(-10, -10, 10);
+	w.lights[0].position = light_p;
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+	p = new_point(10, 10, 10);
+	w.lights[0].position = light_p;
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), true));
+	p = new_point(-20, -20, -20);
+	w.lights[0].position = light_p;
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+	p = new_point(-5, -5, -5);
+	w.lights[0].position = light_p;
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+}
+
+/*
+ * Previous tests for hard shadows
 Test(world, no_shadow_when_nothing_is_collinear_with_point_and_light)
 {
 	t_world	w;
@@ -259,4 +283,4 @@ Test(world, shade_hit_is_given_an_intersection_in_shadow)
 	cr_assert(epsilon_eq(dbl, c.r, expected.r, EPSILON));
 	cr_assert(epsilon_eq(dbl, c.g, expected.g, EPSILON));
 	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
-}
+} */
