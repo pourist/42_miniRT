@@ -32,7 +32,7 @@ static void	intersect_caps(t_hit **xs, t_shape *shape, t_ray *r)
 {
 	double			t;
 
-	if (!shape->cone.closed || fabs(r->direction.y) < EPSILON)
+	if (!shape->cone.closed || eq_dbl(r->direction.y, 0.0))
 		return ;
 	t = (shape->cone.min - r->origin.y) / r->direction.y;
 	if (check_cap(r, t))
@@ -49,14 +49,14 @@ static bool	intersect_cone(t_hit **xs, t_shape *shape, t_ray *r)
 
 	intersect_caps(xs, shape, r);
 	cone_discriminant(r, &p);
-	if (fabs(p.a) < EPSILON)
+	if (eq_dbl(0, p.a))
 	{
-		if (fabs(p.b) < EPSILON)
+		if (eq_dbl(0, p.b))
 			return (false);
-		insert_intersection(xs, intersection((-p.c) / (2.0 * p.b), shape));
+		insert_intersection(xs, intersection((-p.c) / (2 * p.b), shape));
 		return (true);
 	}
-	if (p.discriminant < 0.0)
+	if (p.discriminant < 0)
 		return (false);
 	if (p.t1 > p.t2)
 		ft_swap(&p.t1, &p.t2);

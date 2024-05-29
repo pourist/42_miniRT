@@ -1,4 +1,5 @@
 #include "tuples.h"
+#include "utils.h"
 
 double	magnitude_squared(t_vector a)
 {
@@ -12,14 +13,14 @@ double	magnitude_squared(t_vector a)
 
 t_vector	normalize(t_vector a)
 {
-	double	sqrt_magnitude;
+	double	magnitude;
 	double	inverse_magnitude;
 
-	sqrt_magnitude = magnitude_squared(a);
-	if (sqrt_magnitude == 0)
-		return (a);
-	inverse_magnitude = 1.0 / sqrt(sqrt_magnitude);
-	return ((t_tuple){
+	magnitude = sqrt(magnitude_squared(a));
+	if (eq_dbl(0, magnitude))
+		return ((t_vector){0, 0, 0, 0});
+	inverse_magnitude = 1.0 / magnitude;
+	return ((t_vector){
 		a.x * inverse_magnitude,
 		a.y * inverse_magnitude,
 		a.z * inverse_magnitude,

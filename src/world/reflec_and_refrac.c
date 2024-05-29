@@ -5,7 +5,7 @@ t_color	refracted_color(t_world *world, t_comps *comps)
 	t_refrac_params	p;
 
 	if (world->remaining_recursion == 0
-		|| comps->obj->material.transparency < EPSILON)
+		|| eq_dbl(comps->obj->material.transparency, 0))
 		return (new_color(0, 0, 0));
 	p.n_ratio = comps->n1 / comps->n2;
 	p.cos_i = dot(comps->view.eye_v, comps->view.normal_v);
@@ -27,8 +27,8 @@ t_color	reflected_color(t_world *world, t_comps *comps)
 {
 	t_ray	reflect_ray;
 
-	if (comps->obj->material.reflective < EPSILON
-		|| world->remaining_recursion == 0)
+	if (world->remaining_recursion == 0
+		|| eq_dbl(comps->obj->material.reflective, 0))
 		return (new_color(0, 0, 0));
 	world->remaining_recursion--;
 	reflect_ray = new_ray(comps->over_point, comps->reflect_v);
