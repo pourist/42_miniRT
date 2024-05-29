@@ -56,7 +56,8 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 obj_file_parser.c obj_vertice_parser.c obj_face_parser.c \
 										 obj_group_parser.c obj_normal_parser.c triangle_bounds.c \
 										 csg.c csg_utils.c \
-										 parser.c parser_utils.c
+										 parser.c parser_utils.c element_counter.c free_print.c\
+										 init_ambient.c init_mini_rt.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
@@ -101,11 +102,11 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 
 all: submodules $(NAME)
 
-test: submodules $(NAME)
+test: $(NAME)
 	@make $(T) -C tests -s
 	@make fclean -C tests -s
 
-ex: submodules $(NAME)
+ex: $(NAME)
 	@make $(X) -C exs -s
 	@make fclean -C exs -s
 
@@ -130,10 +131,10 @@ $(OBJ_DIR):
 	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(DEFAULT)($(BLUE)$(OBJ_DIR)/$(DEFAULT)) "
 	@printf "Created successfully!\n"
 
-$(LIBFT): submodules
+$(LIBFT): 
 	@make -C $(LIBFT_DIR) -s
 
-$(MLX): submodules
+$(MLX): 
 	@cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
 	@cmake --build $(MLX_DIR)/build -j4
 
