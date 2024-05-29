@@ -54,6 +54,7 @@ t_color	reflec_and_refrac(t_world *world, t_comps *comps, t_color *surface);
 // bool	is_shadowed(t_world *world, t_point *point, int index);
 bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point);
 double	intensity_at(t_world *world, t_point *point, int index);
+t_point	point_on_light(t_light *light, double u, double v);
 // reflection
 t_color	reflected_color(t_world *world, t_comps *comps);
 // refraction

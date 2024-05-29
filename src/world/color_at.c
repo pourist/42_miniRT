@@ -1,22 +1,10 @@
 #include "world.h"
 
-// bool	is_shadowed(t_world *world, t_point *point, int index)
-// {
-// 	t_vector	v;
-// 	double		distance;
-// 	t_ray		r;
-// 	t_hit		*xs;
-// 	t_hit		*h;
-
-// 	v = subtract(world->lights[index].position, *point);
-// 	distance = sqrt(magnitude_squared(v));
-// 	r = new_ray(*point, normalize(v));
-// 	xs = intersect_world(world, &r);
-// 	h = hit(xs);
-// 	if (h && h->obj->cast_shadow == true && h->t < distance)
-// 		return (true);
-// 	return (false);
-// }
+t_point	point_on_light(t_light *light, double u, double v)
+{
+	return (add(light->corner, add(multiply(light->uvec, u + 0.5),
+				multiply(light->vvec, v + 0.5))));
+}
 
 bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point)
 {
@@ -38,9 +26,30 @@ bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point)
 
 double	intensity_at(t_world *world, t_point *point, int index)
 {
-	if (is_shadowed(world, &world->lights[index].position, point))
-		return (0.0);
-	return (1.0);
+	double	total;
+	double	u;
+	double	v;
+	t_point	light_position;
+
+	if (world->lights[index].is_area_light == false)
+	{
+		if (is_shadowed(world, &world->lights[index].position, point))
+			return (0.0);
+		return (1.0);
+	}
+	total = 0.0;
+	v = -1;
+	while (++v < world->lights[index].vsteps)
+	{
+		u = -1;
+		while (++u < world->lights[index].usteps)
+		{
+			light_position = point_on_light(&world->lights[index], u, v);
+			if (!is_shadowed(world, &light_position, point))
+				total += 1.0;
+		}
+	}
+	return (total / world->lights[index].samples);
 }
 
 t_hit	*intersect_world(t_world *world, t_ray *ray)
@@ -90,7 +99,6 @@ t_color	shade_hit(t_world *world, t_comps *comps)
 	surface = new_color(0, 0, 0);
 	while (++i < world->lights_count)
 	{
-		// world->lights[i].in_shadow = is_shadowed(world, &comps->over_point, i);
 		world->lights[i].global_intensity = intensity_at(
 				world, &comps->over_point, i);
 		surface = add_color(surface, lighting(comps->obj,
