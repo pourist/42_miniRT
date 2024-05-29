@@ -1,26 +1,50 @@
 #include "parser.h"
 
+void    set_type(t_line_parse_env    *parse)
+{
+    if (parse->line[0] == NULL)
+        parse->type = EMPTY_LINE;
+    else if (!ft_strncmp(parse->line[0], "A", 2))
+        parse->type = AMBIENT;
+    else if (!ft_strncmp(parse->line[0], "C", 2))
+        parse->type = CAMERA;
+    else if (!ft_strncmp(parse->line[0], "L", 2))
+        parse->type = LIGHT;
+    else if (!ft_strncmp(parse->line[0], "sp", 2))
+        parse->type = SPHERE;
+    else if (!ft_strncmp(parse->line[0], "cy", 2))
+        parse->type = CYLINDER;
+    else if (!ft_strncmp(parse->line[0], "pl", 2))
+        parse->type = PLANE;
+}
+
+int    parse_line(int fd, t_line_parse_env    *parse)
+{
+        parse->line_number++;
+        parse->temp = get_next_line(fd);
+		if (!parse->temp || parse->temp[0] == '\0')
+		{
+			free(parse->temp);
+			return (1);
+		}
+		parse->line = ft_subsplit (parse->temp, " \t\n");
+		free(parse->temp);
+        set_type(parse);
+        return (0);
+}
+
 int read_lines_init(t_world *world, int fd)
 {
-    char    *temp_line;
-    char    **line;
+    t_line_parse_env    parse;
 
+    parse.line_number = -1;
     while (1)
     {
-        temp_line = get_next_line(fd);
-		if (!temp_line || temp_line[0] == '\0')
-		{
-			free(temp_line);
-			break ;
-		}
-		line = ft_subsplit (temp_line, " \t\n");
-		free(temp_line);
-        if (line[0] && !ft_strncmp(line[0], "A", 2) && init_ambient(line, world))
-            return (free_s(line));
-        if (L)
-
-        C
-        free_s(line);
+        if(parse_line(fd, &parse))
+            break;
+        if (parse.type == AMBIENT && init_ambient(&parse, world))
+            return (free_s(parse.line));
+        free_s(parse.line);
     }
     return (0);
 }
