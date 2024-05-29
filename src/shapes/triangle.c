@@ -61,11 +61,11 @@ static bool	intersect_triangle(t_hit **xs, t_shape *shape, t_ray *r)
 	p.f = 1.0 / p.det;
 	p.p1_to_origin = subtract(r->origin, shape->tri.p1);
 	p.u = p.f * dot(p.p1_to_origin, p.dir_cross_e2);
-	if (p.u < 0.0 || p.u > 1.0)
+	if (p.u < 0 || p.u > 1)
 		return (false);
 	p.origin_cross_e1 = cross(p.p1_to_origin, shape->tri.e1);
 	p.v = p.f * dot(r->direction, p.origin_cross_e1);
-	if (p.v < 0.0 || p.u + p.v > 1.0)
+	if (p.v < 0 || p.u + p.v > 1)
 		return (false);
 	p.t = p.f * dot(shape->tri.e2, p.origin_cross_e1);
 	shape->tri.u = p.u;

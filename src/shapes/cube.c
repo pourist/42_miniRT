@@ -65,9 +65,9 @@ static t_vector	normal_at_cube(t_shape *shape, t_point *local_point)
 	absy = fabs(local_point->y);
 	absz = fabs(local_point->z);
 	maxc = ft_max(absx, absy, absz);
-	if (maxc == absx)
+	if (eq_dbl(maxc, absx))
 		return (new_vector(local_point->x, 0, 0));
-	if (maxc == absy)
+	if (eq_dbl(maxc, absy))
 		return (new_vector(0, local_point->y, 0));
 	return (new_vector(0, 0, local_point->z));
 }

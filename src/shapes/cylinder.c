@@ -31,7 +31,7 @@ static void	intersect_caps(t_hit **xs, t_shape *shape, t_ray *ray)
 {
 	double			t;
 
-	if (!shape->cyl.closed || fabs(ray->direction.y) < EPSILON)
+	if (!shape->cyl.closed || eq_dbl(ray->direction.y, 0))
 		return ;
 	t = (shape->cyl.min - ray->origin.y) / ray->direction.y;
 	if (check_cap(ray, t))
@@ -48,7 +48,7 @@ static bool	intersect_cylinder(t_hit **xs, t_shape *shape, t_ray *r)
 
 	intersect_caps(xs, shape, r);
 	cylinder_discriminant(r, &p);
-	if (fabs(p.a) < EPSILON || p.discriminant < 0.0)
+	if (eq_dbl(0, p.a) || p.discriminant < 0)
 		return (false);
 	if (p.t1 > p.t2)
 		ft_swap(&p.t1, &p.t2);
