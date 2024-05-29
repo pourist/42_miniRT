@@ -50,9 +50,23 @@ int	str_valid_numbers(char **str)
 	return (1);
 }
 
-int	is_inrange(int numb, int min, int max)
+int	is_in_range(double numb, double min, double max)
 {
 	if (numb < min || numb > max)
 		return (0);
+	return (1);
+}
+
+int	are_in_range(char **arr, double min, double max)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		if (!is_in_range(atof(arr[i]), min, max))
+			return (0);
+		i++;
+	}
 	return (1);
 }
