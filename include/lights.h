@@ -16,6 +16,7 @@ typedef struct s_light
 	t_vector	vvec;
 	int			vsteps;
 	int			samples;
+	bool		is_area_light;
 }	t_light;
 
 typedef struct s_eye_normal
@@ -24,7 +25,7 @@ typedef struct s_eye_normal
 	t_vector	normal_v;
 }	t_eye_normal;
 
-typedef struct s_area_light_params
+typedef struct s_alight_params
 {
 	t_point		corner;
 	t_vector	full_uvec;
@@ -32,9 +33,9 @@ typedef struct s_area_light_params
 	t_vector	full_vvec;
 	int			vsteps;
 	t_color		intensity;
-}	t_area_light_params;
+}	t_alight_params;
 
 t_light	new_light(t_point position, t_color intensity);
-t_light	area_light(t_area_light_params *lp);
+void	new_area_light(t_alight_params *lp, t_light *light);
 
 #endif

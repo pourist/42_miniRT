@@ -281,7 +281,7 @@ Test(world, lighting_fn_uses_light_intesity_to_attenuate_color)
 
 Test(world, creating_an_area_light)
 {
-	t_area_light_params lp;
+	t_alight_params lp;
 	t_light		l;
 
 	lp.corner = new_point(0, 0, 0);
@@ -290,7 +290,7 @@ Test(world, creating_an_area_light)
 	lp.usteps = 4;
 	lp.vsteps = 2;
 	lp.intensity = new_color(1, 1, 1);
-	l = area_light(&lp);
+	new_area_light(&lp, &l);
 	cr_assert(eq(dbl, l.corner.x, 0));
 	cr_assert(eq(dbl, l.corner.y, 0));
 	cr_assert(eq(dbl, l.corner.z, 0));
@@ -306,6 +306,73 @@ Test(world, creating_an_area_light)
 	cr_assert(eq(dbl, l.position.x, 1));
 	cr_assert(eq(dbl, l.position.y, 0));
 	cr_assert(eq(dbl, l.position.z, 0.5));
+}
+
+Test(world, finding_a_single_point_on_an_area_light)
+{
+	t_alight_params lp;
+	t_light	l;
+	t_point	p;
+
+	lp.corner = new_point(0, 0, 0);
+	lp.full_uvec = new_vector(2, 0, 0);
+	lp.full_vvec = new_vector(0, 0, 1);
+	lp.usteps = 4;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &l);
+	p = point_on_light(&l, 0, 0);
+	cr_assert(eq(dbl, p.x, 0.25));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.25));
+	p = point_on_light(&l, 1, 0);
+	cr_assert(eq(dbl, p.x, 0.75));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.25));
+	p = point_on_light(&l, 0, 1);
+	cr_assert(eq(dbl, p.x, 0.25));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.75));
+	p = point_on_light(&l, 2, 0);
+	cr_assert(eq(dbl, p.x, 1.25));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.25));
+	p = point_on_light(&l, 3, 1);
+	cr_assert(eq(dbl, p.x, 1.75));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.75));
+}
+
+Test(world, the_area_light_intensity_function)
+{
+	t_world	w;
+	t_alight_params	lp;
+	t_point	p;
+	double	intensity;
+
+	w = default_world();
+	lp.corner = new_point(-0.5, -0.5, -5);
+	lp.full_uvec = new_vector(1, 0, 0);
+	lp.full_vvec = new_vector(0, 1, 0);
+	lp.usteps = 2;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &w.lights[0]);
+	p = new_point(0, 0, 2);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+	p = new_point(1, -1, 2);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.25, EPSILON));
+	p = new_point(1.5, 0, 2);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.5, EPSILON));
+	p = new_point(1.25, 1.25, 3);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.75, EPSILON));
+	p = new_point(0, 0, -2);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
 }
 
 /*
