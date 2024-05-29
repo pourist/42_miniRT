@@ -1,8 +1,8 @@
 #include "shapes.h"
 #include "groups.h"
 
-static t_vector	normal_at_plain(t_shape *plane, t_point local_point);
-static bool		intersect_plane(t_hit **xs, t_shape *shape, t_ray ray);
+static t_vector	normal_at_plain(t_shape *plane, t_point *local_point);
+static bool		intersect_plane(t_hit **xs, t_shape *shape, t_ray *r);
 
 t_shape	*new_plane(t_shape *shape)
 {
@@ -14,20 +14,20 @@ t_shape	*new_plane(t_shape *shape)
 	return (shape);
 }
 
-static t_vector	normal_at_plain(t_shape *plane, t_point local_point)
+static t_vector	normal_at_plain(t_shape *plane, t_point *local_point)
 {
 	(void)local_point;
 	(void)plane;
 	return (new_vector(0, 1, 0));
 }
 
-static bool	intersect_plane(t_hit **xs, t_shape *shape, t_ray ray)
+static bool	intersect_plane(t_hit **xs, t_shape *shape, t_ray *r)
 {
 	double	t;
 
-	if (fabs(ray.direction.y) < EPSILON)
+	if (fabs(r->direction.y) < EPSILON)
 		return (false);
-	t = -ray.origin.y / ray.direction.y;
+	t = -r->origin.y / r->direction.y;
 	insert_intersection(xs, intersection(t, shape));
 	return (true);
 }

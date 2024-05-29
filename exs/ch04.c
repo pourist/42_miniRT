@@ -25,7 +25,7 @@ static void	write_circle(mlx_image_t *img, int xy[2], int radius,
 			distance = (x_start_end[0] - xy[0]) * (x_start_end[0] - xy[0])
 				+ (y_start_end[0] - xy[1]) * (y_start_end[0] - xy[1]);
 			if (distance <= square_r)
-				write_pixel(img, x_start_end[0], y_start_end[0], color);
+				write_pixel(img, x_start_end[0], y_start_end[0], &color);
 			y_start_end[0]++;
 		}
 		x_start_end[0]++;
@@ -65,8 +65,10 @@ static void	render_background(t_canvas *canvas)
 	int			y;
 	int			x;
 	uint32_t	color;
+	t_color	c_tmp;
 
-	color = get_rgb(new_color(0.3, 0.3, 1));
+	c_tmp = new_color(0.3, 0.3, 1);
+	color = get_rgb(&c_tmp);
 	y = -1;
 	while (++y < *canvas->height)
 	{
