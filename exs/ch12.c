@@ -108,23 +108,22 @@ void	create_camera(t_camera *camera)
 
 int	main(void)
 {
-	t_world		world;
-	t_camera	camera;
-	t_canvas	canvas;
+	t_mini_rt	rt;
 
-	world = new_world();
-	world.objs = malloc(sizeof(t_shape) * N_OBJS);
-	world.objs_count = N_OBJS;
-	create_scene(&world);
-	create_ligts(&world);
-	create_camera(&camera);
-	render(&canvas, &world, &camera);
-	mlx_image_to_window(canvas.mlx, canvas.img, 0, 0);
-	mlx_close_hook(canvas.mlx, &quit, &canvas);
-	mlx_key_hook(canvas.mlx, &handle_keyhook, &canvas);
-	mlx_loop(canvas.mlx);
-	free(world.objs);
-	free(world.lights);
-	mlx_terminate(canvas.mlx);
+	rt.world = new_world();
+	rt.world.objs = malloc(sizeof(t_shape) * N_OBJS);
+	rt.world.objs_count = N_OBJS;
+	create_scene(&rt.world);
+	create_ligts(&rt.world);
+	create_camera(&rt.camera);
+	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 12");
+	render(&rt);
+	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
+	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);
+	mlx_key_hook(rt.canvas.mlx, &handle_keyhook, &rt.canvas);
+	mlx_loop(rt.canvas.mlx);
+	free(rt.world.objs);
+	free(rt.world.lights);
+	mlx_terminate(rt.canvas.mlx);
 	return (0);
 }

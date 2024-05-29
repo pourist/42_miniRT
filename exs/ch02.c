@@ -35,15 +35,15 @@ static t_projectile	tick(t_environment env, t_projectile proj)
 
 static void	write_dot(mlx_image_t *img, int x, int y, t_color color)
 {
-	write_pixel(img, x, y, color);
-	write_pixel(img, x + 1, y, color);
-	write_pixel(img, x, y + 1, color);
-	write_pixel(img, x + 1, y + 1, color);
-	write_pixel(img, x - 1, y, color);
-	write_pixel(img, x, y - 1, color);
-	write_pixel(img, x - 1, y - 1, color);
-	write_pixel(img, x - 1, y + 1, color);
-	write_pixel(img, x + 1, y - 1, color);
+	write_pixel(img, x, y, &color);
+	write_pixel(img, x + 1, y, &color);
+	write_pixel(img, x, y + 1, &color);
+	write_pixel(img, x + 1, y + 1, &color);
+	write_pixel(img, x - 1, y, &color);
+	write_pixel(img, x, y - 1, &color);
+	write_pixel(img, x - 1, y - 1, &color);
+	write_pixel(img, x - 1, y + 1, &color);
+	write_pixel(img, x + 1, y - 1, &color);
 }
 
 static void	render_projectile_motion(t_canvas *canvas)

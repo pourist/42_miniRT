@@ -243,20 +243,18 @@ void	create_camera(t_camera *camera)
 
 int	main(void)
 {
-	t_world		world;
-	t_camera	camera;
-	t_canvas	canvas;
+	t_mini_rt	rt;
 
-	world = new_world();
-	create_lights(&world);
-	create_camera(&camera);
-	create_scene(&world);
-	render(&canvas, &world, &camera);
-	mlx_image_to_window(canvas.mlx, canvas.img, 0, 0);
-	mlx_close_hook(canvas.mlx, &quit, &canvas);
-	mlx_key_hook(canvas.mlx, &handle_keyhook, &canvas);
-	mlx_loop(canvas.mlx);
-	free_world(&world);
-	mlx_terminate(canvas.mlx);
-	return (0);
+	rt.world = new_world();
+	create_lights(&rt.world);
+	create_camera(&rt.camera);
+	create_scene(&rt.world);
+	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 16");
+	render(&rt);
+	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
+	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);
+	mlx_key_hook(rt.canvas.mlx, &handle_keyhook, &rt.canvas);
+	mlx_loop(rt.canvas.mlx);
+	free_world(&rt.world);
+	mlx_terminate(rt.canvas.mlx);
 }
