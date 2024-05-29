@@ -72,10 +72,12 @@ Test(shapes, normal_on_a_translated_shape)
 {
 	t_shape		s;
 	t_vector	n;
+	t_point		p;
 
 	new_sphere(&s);
 	set_transform(&s, translation(0, 1, 0));
-	n = normal_at(&s, new_point(0, 1.70711, -0.70711));
+	p = new_point(0, 1.70711, -0.70711);
+	n = normal_at(&s, &p);
 
 	cr_assert(epsilon_eq(n.x, 0, EPSILON));
 	cr_assert(epsilon_eq(n.y, 0.70711, EPSILON));
@@ -89,11 +91,13 @@ Test(shapes, normal_on_a_transformed_shape)
 	t_shape		s;
 	t_matrix	m;
 	t_vector	n;
+	t_point		p;
 
 	new_sphere(&s);
 	m = multiply_matrices(scaling(1, 0.5, 1), rotation_z(cos(M_PI/5), sin(M_PI/5)));
 	set_transform(&s, m);
-	n = normal_at(&s, new_point(0, sqrtf(2)/2, -sqrtf(2)/2));
+	p = new_point(0, sqrtf(2)/2, -sqrtf(2)/2);
+	n = normal_at(&s, &p);
 
 	cr_assert(epsilon_eq(n.x, 0, EPSILON));
 	cr_assert(epsilon_eq(n.y, 0.97014, EPSILON));

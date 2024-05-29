@@ -1,8 +1,8 @@
 #include "shapes.h"
 #include "groups.h"
 
-static bool		intersect_csg(t_hit **xs, t_shape *shape, t_ray r);
-static t_vector	normal_at_csg(t_shape *shape, t_point local_point);
+static bool		intersect_csg(t_hit **xs, t_shape *shape, t_ray *r);
+static t_vector	normal_at_csg(t_shape *shape, t_point *local_point);
 static void		csg_bounds(t_shape *shape);
 
 t_shape	*new_csg(t_operation operation, t_shape *left, t_shape *right,
@@ -34,14 +34,14 @@ static void	merge_intersections(t_hit **all_xs, t_hit *new_xs)
 	}
 }
 
-static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray r)
+static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray *r)
 {
 	t_hit	*l_xs; 
 	t_hit	*r_xs; 
 	t_hit	*all_xs;
 
 	csg->bounds_fn(csg);
-	if (!intersect_bounds(&csg->bounds, &r))
+	if (!intersect_bounds(&csg->bounds, r))
 		return (false);
 	l_xs = NULL;
 	r_xs = NULL;
@@ -53,7 +53,7 @@ static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray r)
 	return (filter_intersections(all_xs, csg, xs) != NULL);
 }
 
-static t_vector	normal_at_csg(t_shape *shape, t_point local_point)
+static t_vector	normal_at_csg(t_shape *shape, t_point *local_point)
 {
 	(void)shape;
 	(void)local_point;

@@ -29,12 +29,12 @@ void	light_and_shading(t_canvas *rt, t_params *params, int xy[2])
 
 	if (params->hits)
 	{
-		pos = position(params->ray, params->hits->t);
-		params->view.normal_v = normal_at(&params->sphere, pos);
+		pos = position(&params->ray, params->hits->t);
+		params->view.normal_v = normal_at(&params->sphere, &pos);
 		params->view.eye_v = negate(params->ray.direction);
 		params->sphere_color = lighting(&params->sphere,
 				&params->light, &pos, &params->view);
-		write_pixel(rt->img, xy[0], xy[1], params->sphere_color);
+		write_pixel(rt->img, xy[0], xy[1], &params->sphere_color);
 	}
 	else
 		write_pixel_32(rt->img, xy[0], xy[1], params->bg_color);
@@ -59,7 +59,7 @@ void	render_sphere(t_canvas *rt, t_params *params)
 					params->wall_z);
 			params->ray = new_ray(params->ray_origin,
 					normalize(subtract(position, params->ray_origin)));
-			intersect(&xs, &params->sphere, params->ray);
+			intersect(&xs, &params->sphere, &params->ray);
 			params->hits = hit(xs);
 			light_and_shading(rt, params, xy);
 		}

@@ -61,7 +61,7 @@ t_matrix	inverse_matrix(t_matrix m)
 	int		col;
 
 	inverse_det = 1.0 / get_determinant(m);
-	if (!is_invertible(m) || inverse_det == 0.0)
+	if (!is_invertible(m) || inverse_det == 0)
 		return (get_identity_matrix());
 	row = -1;
 	while (++row < m.size)

@@ -1,7 +1,7 @@
 #include "groups.h"
 
-static bool		intersect_group(t_hit **xs, t_shape *shape, t_ray r);
-static t_vector	normal_at_group(t_shape *shape, t_point local_point);
+static bool		intersect_group(t_hit **xs, t_shape *shape, t_ray *r);
+static t_vector	normal_at_group(t_shape *shape, t_point *local_point);
 static void		group_bounds(t_shape *shape);
 
 t_shape	*new_group(t_shape *shape)
@@ -15,16 +15,16 @@ t_shape	*new_group(t_shape *shape)
 	return (shape);
 }
 
-static bool	intersect_group(t_hit **xs, t_shape *shape, t_ray r)
+static bool	intersect_group(t_hit **xs, t_shape *shape, t_ray *r)
 {
 	shape->bounds_fn(shape);
-	if (!intersect_bounds(&shape->bounds, &r))
+	if (!intersect_bounds(&shape->bounds, r))
 		return (false);
-	intersect_group_shapes(&shape->root, xs, &r);
+	intersect_group_shapes(&shape->root, xs, r);
 	return (true);
 }
 
-static t_vector	normal_at_group(t_shape *shape, t_point local_point)
+static t_vector	normal_at_group(t_shape *shape, t_point *local_point)
 {
 	(void)shape;
 	(void)local_point;
