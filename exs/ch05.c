@@ -38,11 +38,11 @@ void	render_sphere(t_canvas *rt, t_params *params)
 					params->world_z);
 			ray = new_ray(params->ray_origin,
 					normalize(subtract(position, params->ray_origin)));
-			intersect(&xs, &params->sphere, ray);
+			intersect(&xs, &params->sphere, &ray);
 			if (hit(xs))
-				write_pixel(rt->img, xy[0], xy[1], params->sphere_color);
+				write_pixel(rt->img, xy[0], xy[1], &params->sphere_color);
 			else
-				write_pixel(rt->img, xy[0], xy[1], params->bg_color);
+				write_pixel(rt->img, xy[0], xy[1], &params->bg_color);
 		}
 	}
 }

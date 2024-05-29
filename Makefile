@@ -98,17 +98,17 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 ##                                COMPILATION                                 ##
 ################################################################################
 
-all: $(NAME) | submodules
+all: submodules $(NAME)
 
-test: $(NAME) | submodules
+test: submodules $(NAME)
 	@make $(T) -C tests -s
 	@make fclean -C tests -s
 
-ex: $(NAME) | submodules
+ex: submodules $(NAME)
 	@make $(X) -C exs -s
 	@make fclean -C exs -s
 
-$(NAME): $(OBJECTS) | submodules $(LIBFT) $(MLX)
+$(NAME): $(OBJECTS) $(LIBFT) $(MLX)
 	@printf "\n$(MAGENTA)[$(NAME)] $(DEFAULT)Linking "
 	@printf "($(BLUE)$(NAME)$(DEFAULT))..."
 	@$(CC) $(CFLAGS) $^ $(LDFLAGS) $(LDLIBS) -o $@
@@ -129,10 +129,10 @@ $(OBJ_DIR):
 	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(DEFAULT)($(BLUE)$(OBJ_DIR)/$(DEFAULT)) "
 	@printf "Created successfully!\n"
 
-$(LIBFT):
+$(LIBFT): submodules
 	@make -C $(LIBFT_DIR) -s
 
-$(MLX):
+$(MLX): submodules
 	@cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
 	@cmake --build $(MLX_DIR)/build -j4
 

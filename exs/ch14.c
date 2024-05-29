@@ -175,40 +175,38 @@ void	create_camera2(t_camera *camera)
 
 void	render_lots_of_spheres(void)
 {
-	t_world		world;
-	t_camera	camera;
-	t_canvas	canvas;
+	t_mini_rt	rt;
 
-	world = new_world();
-	create_scene1(&world);
-	create_lights1(&world);
-	create_camera1(&camera);
-	render(&canvas, &world, &camera);
-	mlx_image_to_window(canvas.mlx, canvas.img, 0, 0);
-	mlx_close_hook(canvas.mlx, &quit, &canvas);
-	mlx_key_hook(canvas.mlx, &handle_keyhook, &canvas);
-	mlx_loop(canvas.mlx);
-	free_world(&world);
-	mlx_terminate(canvas.mlx);
+	rt.world = new_world();
+	create_scene1(&rt.world);
+	create_lights1(&rt.world);
+	create_camera1(&rt.camera);
+	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 14 - Lots of Spheres");
+	render(&rt);
+	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
+	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);
+	mlx_key_hook(rt.canvas.mlx, &handle_keyhook, &rt.canvas);
+	mlx_loop(rt.canvas.mlx);
+	free_world(&rt.world);
+	mlx_terminate(rt.canvas.mlx);
 }
 
 void	render_hexagon(void)
 {
-	t_world		world;
-	t_camera	camera;
-	t_canvas	canvas;
+	t_mini_rt	rt;
 
-	world = new_world();
-	create_lights1(&world);
-	create_camera2(&camera);
-	create_scene2(&world);
-	render(&canvas, &world, &camera);
-	mlx_image_to_window(canvas.mlx, canvas.img, 0, 0);
-	mlx_close_hook(canvas.mlx, &quit, &canvas);
-	mlx_key_hook(canvas.mlx, &handle_keyhook, &canvas);
-	mlx_loop(canvas.mlx);
-	free_world(&world);
-	mlx_terminate(canvas.mlx);
+	rt.world = new_world();
+	create_lights1(&rt.world);
+	create_camera2(&rt.camera);
+	create_scene2(&rt.world);
+	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 14 - Hexagon");
+	render(&rt);
+	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
+	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);
+	mlx_key_hook(rt.canvas.mlx, &handle_keyhook, &rt.canvas);
+	mlx_loop(rt.canvas.mlx);
+	free_world(&rt.world);
+	mlx_terminate(rt.canvas.mlx);
 }
 
 int	main(void)

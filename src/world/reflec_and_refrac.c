@@ -5,7 +5,7 @@ t_color	refracted_color(t_world *world, t_comps *comps)
 	t_refrac_params	p;
 
 	if (world->remaining_recursion == 0
-		|| comps->obj->material.transparency < EPSILON)
+		|| eq_dbl(comps->obj->material.transparency, 0))
 		return (new_color(0, 0, 0));
 	p.n_ratio = comps->n1 / comps->n2;
 	p.cos_i = dot(comps->view.eye_v, comps->view.normal_v);
@@ -27,8 +27,8 @@ t_color	reflected_color(t_world *world, t_comps *comps)
 {
 	t_ray	reflect_ray;
 
-	if (comps->obj->material.reflective < EPSILON
-		|| world->remaining_recursion == 0)
+	if (world->remaining_recursion == 0
+		|| eq_dbl(comps->obj->material.reflective, 0))
 		return (new_color(0, 0, 0));
 	world->remaining_recursion--;
 	reflect_ray = new_ray(comps->over_point, comps->reflect_v);
@@ -42,7 +42,7 @@ double	schlick(t_comps *comps)
 	double	n_ratio;
 	double	sin2_t;
 	double	cos_t;
-	double	r0;
+	double	r0[2];
 
 	cos_i = dot(comps->view.eye_v, comps->view.normal_v);
 	if (comps->n1 > comps->n2)
@@ -54,8 +54,9 @@ double	schlick(t_comps *comps)
 		cos_t = sqrt(1.0 - sin2_t);
 		cos_i = cos_t;
 	}
-	r0 = pow((comps->n1 - comps->n2) / (comps->n1 + comps->n2), 2);
-	return (r0 + (1 - r0) * pow(1 - cos_i, 5));
+	r0[1] = (comps->n1 - comps->n2) / (comps->n1 + comps->n2);
+	r0[0] = r0[1] * r0[1];
+	return (r0[0] + (1.0 - r0[0]) * pow(1.0 - cos_i, 5));
 }
 
 t_color	reflec_and_refrac(t_world *world, t_comps *comps, t_color *surface)
