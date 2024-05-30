@@ -1,5 +1,16 @@
 #include "parser.h"
 
+char    *find_error_2(int type)
+{
+    if (type == OR)
+        return (OR_M);
+    if (type == OR_INVALID)
+        return (OR_INVALID_M);
+    if (type == OR_RANGE)
+        return (OR_RANGE_M);
+    return (NULL);
+}
+
 char    *find_error(int type)
 {
     if (type == RATIO)
@@ -12,7 +23,18 @@ char    *find_error(int type)
         return (RGB_INVALID);
     else if (type == RGB_OUT_RANGE)
         return (RGB_RANGE);
-    return (NULL);
+    else if (type == FOV)
+        return (FOV_M);
+    else if (type == FOV_RANGE)
+        return (FOV_RANGE_M);
+    else if (type == POV)
+        return (POV_M);
+    else if (type == POV_INVALID)
+        return (POV_INVALID_M);
+    else if (type == POV_RANGE)
+        return (POV_RANGE_M);
+    else
+        return (find_error_2(type));
 }
 
 
