@@ -6,11 +6,11 @@ int	arg_checker(int argc, char **argv)
 
 	format = ft_strrchr(argv[1], '.');
 	if (argc < 2)
-		return (print_error("Error\nMissing .rt file argument."));
+		return (print_error(ARG_FEW));
 	if (argc > 2)
-		return (print_error("Error\nToo many arguments."));
+		return (print_error(ARG_MANY));
 	if (format == NULL || ft_strncmp(format, ".rt", 4) != 0)
-		return (print_error("Error\nInvalid file extension."));
+		return (print_error(FILE_FORMAT));
 	return (0);
 }
 
