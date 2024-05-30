@@ -291,7 +291,7 @@ Test(patterns, lighting_with_stripe_pattern_applied)
 	view.eye_v = new_vector(0, 0, -1);
 	view.normal_v = new_vector(0, 0, -1);
 	light = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
-	light.in_shadow = false;
+	light.intensity_ratio = 1.0;
 	p = new_point(0.9, 0, 0);
 	c1 = lighting(&shape, &light, &p, &view);
 	p = new_point(1.1, 0, 0);

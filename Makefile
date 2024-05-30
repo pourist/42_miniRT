@@ -55,7 +55,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 ft_atof.c	obj_loader_utils.c set_max_values.c \
 										 obj_file_parser.c obj_vertice_parser.c obj_face_parser.c \
 										 obj_group_parser.c obj_normal_parser.c triangle_bounds.c \
-										 csg.c csg_utils.c
+										 csg.c csg_utils.c shadow_calculations.c sequencer.c light_shading.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
@@ -129,10 +129,10 @@ $(OBJ_DIR):
 	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(DEFAULT)($(BLUE)$(OBJ_DIR)/$(DEFAULT)) "
 	@printf "Created successfully!\n"
 
-$(LIBFT): submodules
+$(LIBFT):
 	@make -C $(LIBFT_DIR) -s
 
-$(MLX): submodules
+$(MLX):
 	@cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
 	@cmake --build $(MLX_DIR)/build -j4
 
