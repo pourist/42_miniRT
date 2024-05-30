@@ -38,11 +38,13 @@ static void	remove_obj(t_list **container, t_shape *obj)
 
 static t_list	*new_lst(t_shape *shape)
 {
-	static t_list	pool[MAX_NODES + 1];
+	static t_list	pool[MAX_NODES];
 	static size_t	index = 0;
 	t_list			*node;
 
-	node = &pool[index++ & (MAX_NODES)];
+	node = &pool[index++];
+	if (index >= MAX_NODES)
+		index = 0;
 	node->content = shape;
 	node->next = NULL;
 	return (node);

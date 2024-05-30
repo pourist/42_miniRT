@@ -1,23 +1,5 @@
 #include "world.h"
 
-bool	is_shadowed(t_world *world, t_point *point, int index)
-{
-	t_vector	v;
-	double		distance;
-	t_ray		r;
-	t_hit		*xs;
-	t_hit		*h;
-
-	v = subtract(world->lights[index].position, *point);
-	distance = sqrt(magnitude_squared(v));
-	r = new_ray(*point, normalize(v));
-	xs = intersect_world(world, &r);
-	h = hit(xs);
-	if (h && h->obj->cast_shadow == true && h->t < distance)
-		return (true);
-	return (false);
-}
-
 t_hit	*intersect_world(t_world *world, t_ray *ray)
 {
 	int		i;
@@ -56,18 +38,49 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs)
 	return (comps);
 }
 
+static t_shape	*check_parents(t_shape *shape)
+{
+	t_shape	*current;
+	t_shape	*found;
+	t_color	default_color;
+
+	current = shape;
+	found = NULL;
+	default_color = new_color(1.0, 1.0, 1.0);
+	while (current->parent)
+	{
+		current = current->parent;
+		if (current->material.pattern.has_pattern
+			|| (current->material.color.r != default_color.r
+				|| current->material.color.g != default_color.g
+				|| current->material.color.b != default_color.b))
+			found = current;
+	}
+	if (found)
+		return (found);
+	else
+		return (shape);
+}
+
 t_color	shade_hit(t_world *world, t_comps *comps)
 {
 	int		i;
 	t_color	surface; 
+	t_shape	*parent;
 
 	i = -1;
 	surface = new_color(0, 0, 0);
+	parent = check_parents(comps->obj);
 	while (++i < world->lights_count)
 	{
-		world->lights[i].in_shadow = is_shadowed(world, &comps->over_point, i);
-		surface = add_color(surface, lighting(comps->obj,
-					&world->lights[i], &comps->over_point, &comps->view));
+		world->lights[i].intensity_ratio = intensity_at(
+				world, &comps->over_point, i);
+		if (world->lights[i].is_area_light == false)
+			surface = add_color(surface, lighting(parent,
+						&world->lights[i], &comps->over_point, &comps->view));
+		else
+			surface = add_color(surface, area_lighting(parent,
+						&world->lights[i], &comps->over_point, &comps->view));
 	}
 	return (reflec_and_refrac(world, comps, &surface));
 }
