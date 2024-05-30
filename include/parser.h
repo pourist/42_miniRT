@@ -5,8 +5,26 @@
 # include "world.h"
 # include "canvas.h"
 
-#define ERR_INC_AMB "Incorrect ambient lighting elements"
-#define OUT_RANGE "out of range"
+#define ERR_INC_AMB "Too many elements\nExpected format: A <ambient_ratio> <R,G,B>"
+#define ERR_INC_CAM "Too many elements\nExpected format: C <x,y,z> <orientation x,y,z> <FOV>"
+#define	RATIO_INVALID "Invalid ambient lighting ratio"
+#define RATIO_RANGE "Ambient lighting ratio out of range"
+#define RGB_LEN "RGB elements count incorrect."
+#define RGB_INVALID "Invalid RGB numbers."
+#define RGB_RANGE "RGB values out of range"
+#define MALLOC_FAIL "Error\nMemory allocation failed"
+#define	ARG_MANY "Error\nToo many arguments"
+#define ARG_FEW "Error\nMissing .rt file argument"
+#define FILE_FORMAT "Error\nInvalid file extension"
+
+typedef enum e_error_type
+{
+	RATIO,
+	RATIO_OUT_RANGE,
+	RGB,
+	RGB_VALID,
+	RGB_OUT_RANGE,
+}	t_error_type;
 
 typedef struct s_e_counts
 {
@@ -40,12 +58,6 @@ typedef enum e_element_type
 	EMPTY_LINE,
 }	t_element_type;
 
-typedef enum e_error_type
-{
-	A_RATIO,
-	A_OUT_RANGE,
-}	t_error_type;
-
 // free_print
 int		print_error(char	*text);
 int     free_print_error(t_world *minirt, char *str);
@@ -65,5 +77,13 @@ int init_ambient(t_line_parse_env *env, t_world *world);
 void    make_ambient(char **rgb, double ratio, t_world *minirt);
 // element_counter
 int		init_counter_fd(t_e_counts *count, char *file);
+// error
+int		file_error(t_line_parse_env *parse, char *text);
+char    *find_error(int type);
+// valid args
+int solo(char *number, double min, double max, t_line_parse_env *env);
+int triplets(char **triple, double min, double max, t_line_parse_env *env);
+// line parser
+int read_lines_init(t_world *world, int fd);
 
 #endif
