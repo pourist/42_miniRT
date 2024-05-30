@@ -59,7 +59,7 @@ t_color	lighting(t_shape *shape, t_light *light, t_point *point,
 	lp.effective_color = hadamard_product(color, light->intensity);
 	lp.light_v = normalize(subtract(light->position, *point));
 	lp.light_dot_normal = dot(lp.light_v, view->normal_v);
-	if (lp.light_dot_normal < 0 || light->global_intensity <= 0)
+	if (lp.light_dot_normal < 0 || light->intensity_ratio <= 0)
 		return (darken(&parent->material, &lp));
 	return (lighten(&parent->material, &lp, light, view));
 }
@@ -86,7 +86,7 @@ static t_color	lighten(t_material *m, t_lighting_params *lp, t_light *light,
 	else
 		lp->specular = multiply_color(light->intensity, m->specular
 				* pow(lp->reflect_dot_eye, m->shininess));
-	lp->diffuse = multiply_color(lp->diffuse, light->global_intensity);
-	lp->specular = multiply_color(lp->specular, light->global_intensity);
+	lp->diffuse = multiply_color(lp->diffuse, light->intensity_ratio);
+	lp->specular = multiply_color(lp->specular, light->intensity_ratio);
 	return (add_color(lp->ambient, add_color(lp->diffuse, lp->specular)));
 }

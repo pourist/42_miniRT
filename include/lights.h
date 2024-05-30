@@ -9,7 +9,7 @@ typedef struct s_light
 {
 	t_point		position;
 	t_color		intensity;
-	double		global_intensity;
+	double		intensity_ratio;
 	t_point		corner;
 	t_vector	uvec;
 	int			usteps;
