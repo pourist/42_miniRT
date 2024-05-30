@@ -7,12 +7,6 @@ int	print_error(char	*text)
 	return (1);
 }
 
-int	free_print_error(t_world *minirt, char *str)
-{
-	free_world(minirt);
-	return(print_error(str));
-}
-
 int	free_s(char **s)
 {
 	int	i;
@@ -27,4 +21,10 @@ int	free_s(char **s)
 	}
 	free(s);
 	return (1);
+}
+
+void	free_mini_rt(t_mini_rt *mini_rt)
+{
+	if (&(mini_rt->world))
+		free_world(&(mini_rt->world));
 }

@@ -58,7 +58,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 csg.c csg_utils.c \
 										 parser.c parser_utils.c element_counter.c free_print.c\
 										 init_ambient.c init_mini_rt.c error.c valid_args.c \
-										 line_parser.c
+										 line_parser.c init_camera.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

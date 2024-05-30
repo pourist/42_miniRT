@@ -33,19 +33,19 @@ int    parse_line(int fd, t_line_parse_env    *parse)
         return (0);
 }
 
-int read_lines_init(t_world *world, int fd)
+int read_lines_init(t_world *world, t_mini_rt *minirt, int fd)
 {
     t_line_parse_env    parse;
 
-    parse.line_number = -1;
+    parse.line_number = 0;
     while (1)
     {
         if(parse_line(fd, &parse))
             break;
         if (parse.type == AMBIENT && init_ambient(&parse, world))
             return (free_s(parse.line));
-        // if (parse.type == CAMERA && init_camera(&parse, world))
-        //     return (free_s(parse.line));
+        if (parse.type == CAMERA && init_camera(&parse, &(minirt->camera)))
+            return (free_s(parse.line));
         free_s(parse.line);
     }
     return (0);
