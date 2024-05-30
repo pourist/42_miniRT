@@ -3,6 +3,7 @@
 
 # include "shapes.h"
 # include "lights.h"
+# include "tuples.h"
 
 # define MAX_RECURSION	4
 
@@ -50,10 +51,6 @@ t_color	color_at(t_world *world, t_ray *ray);
 double	schlick(t_comps *comps);
 // reflec_and_reflac
 t_color	reflec_and_refrac(t_world *world, t_comps *comps, t_color *surface);
-// shadowing.c
-bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point);
-double	intensity_at(t_world *world, t_point *point, int index);
-t_point	point_on_light(t_light *light, double u, double v);
 // reflection
 t_color	reflected_color(t_world *world, t_comps *comps);
 // refraction
@@ -61,5 +58,11 @@ void	find_refractive_indices(t_comps *comps, t_hit *i, t_hit *xs);
 t_color	refracted_color(t_world *world, t_comps *comps);
 
 void	free_world(t_world *world);
+
+// lights
+// shadow_calculations.c
+bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point);
+double	intensity_at(t_world *world, t_point *point, int index);
+t_point	point_on_light(t_light *light, double u, double v);
 
 #endif
