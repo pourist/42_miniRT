@@ -121,7 +121,7 @@ Test(materials, lighting_with_the_surface_in_shadow)
 	eye.normal_v = new_vector(0, 0, -1);
 	position = new_point(0, 0, 0);
 	light = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
-	light.in_shadow = true;
+	light.intensity_ratio = 0.0;
 	result = lighting(&s, &light, &position, &eye);
 	expected = new_color(0.1, 0.1, 0.1);
 	cr_assert(epsilon_eq(dbl, result.r, expected.r, EPSILON));
