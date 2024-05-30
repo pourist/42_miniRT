@@ -2,8 +2,10 @@
 
 t_point	point_on_light(t_light *light, double u, double v)
 {
-	return (add(light->corner, add(multiply(light->uvec, u + 0.5),
-				multiply(light->vvec, v + 0.5))));
+	return (add(light->corner, add(
+				multiply(light->uvec, u + halton_sequence(&light->jitter_by)),
+				multiply(light->vvec, v + halton_sequence(&light->jitter_by))
+			)));
 }
 
 bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point)

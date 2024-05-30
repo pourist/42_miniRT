@@ -194,6 +194,75 @@ Test(world, color_with_intersection_behind_ray)
 	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
 }
 
+/*
+ * Previous tests for hard shadows
+Test(world, no_shadow_when_nothing_is_collinear_with_point_and_light)
+{
+	t_world	w;
+	t_point	p;
+
+	w = default_world();
+	p = new_point(0, 10, 0);
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+}
+
+Test(world, shadow_when_object_is_between_point_and_light)
+{
+	t_world	w;
+	t_point	p;
+
+	w = default_world();
+	p = new_point(10, -10, 10);
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), true));
+}
+
+Test(world, no_shadow_when_object_is_behind_light)
+{
+	t_world	w;
+	t_point	p;
+
+	w = default_world();
+	p = new_point(-20, 20, -20);
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+}
+
+Test(world, no_shadow_when_object_is_behind_point)
+{
+	t_world	w;
+	t_point	p;
+	w = default_world();
+	p = new_point(-2, 2, -2);
+	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
+}
+
+Test(world, shade_hit_is_given_an_intersection_in_shadow)
+{
+	t_world		w;
+	t_ray			r;
+	t_hit			*i;
+	t_comps		comps;
+	t_color		c;
+	t_color		expected;
+
+	w = new_world();
+	w.lights = malloc(sizeof(t_light));
+	w.lights_count = 1;
+	w.lights[0] = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
+	w.objs = malloc(sizeof(t_shape) * 2);
+	w.objs_count = 2;
+	new_sphere(&w.objs[0]);
+	new_sphere(&w.objs[1]);
+	set_transform(&w.objs[1], translation(0, 0, 10));
+	r = new_ray(new_point(0, 0, 5), new_vector(0, 0, 1));
+	i = intersection(4, &w.objs[1]);
+	comps = prepare_computations(i, &r, i);
+	c = shade_hit(&w, &comps);
+	expected = new_color(0.1, 0.1, 0.1);
+	cr_assert(epsilon_eq(dbl, c.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, c.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
+} */
+
 Test(world, is_shadow_tests_for_occlusion_between_two_points)
 {
 	t_world	w;
@@ -308,6 +377,8 @@ Test(world, creating_an_area_light)
 	cr_assert(eq(dbl, l.position.z, 0.5));
 }
 
+/*
+* test before the introduction of jittered area light
 Test(world, finding_a_single_point_on_an_area_light)
 {
 	t_alight_params lp;
@@ -341,8 +412,10 @@ Test(world, finding_a_single_point_on_an_area_light)
 	cr_assert(eq(dbl, p.x, 1.75));
 	cr_assert(eq(dbl, p.y, 0));
 	cr_assert(eq(dbl, p.z, 0.75));
-}
+} */
 
+/*
+* Test before the introduction of jittered area light
 Test(world, the_area_light_intensity_function)
 {
 	t_world	w;
@@ -373,73 +446,97 @@ Test(world, the_area_light_intensity_function)
 	p = new_point(0, 0, -2);
 	intensity = intensity_at(&w, &p, 0);
 	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
-}
+} */
 
 /*
- * Previous tests for hard shadows
-Test(world, no_shadow_when_nothing_is_collinear_with_point_and_light)
+ * Previous approach to generate jittered area light points
+Test(lights, finding_a_single_point_on_a_jittered_area_light)
 {
-	t_world	w;
+	t_alight_params	lp;
+	t_light	l;
 	t_point	p;
 
-	w = default_world();
-	p = new_point(0, 10, 0);
-	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
-}
-
-Test(world, shadow_when_object_is_between_point_and_light)
-{
-	t_world	w;
-	t_point	p;
-
-	w = default_world();
-	p = new_point(10, -10, 10);
-	cr_assert(eq(int, is_shadowed(&w, &p, 0), true));
-}
-
-Test(world, no_shadow_when_object_is_behind_light)
-{
-	t_world	w;
-	t_point	p;
-
-	w = default_world();
-	p = new_point(-20, 20, -20);
-	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
-}
-
-Test(world, no_shadow_when_object_is_behind_point)
-{
-	t_world	w;
-	t_point	p;
-	w = default_world();
-	p = new_point(-2, 2, -2);
-	cr_assert(eq(int, is_shadowed(&w, &p, 0), false));
-}
-
-Test(world, shade_hit_is_given_an_intersection_in_shadow)
-{
-	t_world		w;
-	t_ray			r;
-	t_hit			*i;
-	t_comps		comps;
-	t_color		c;
-	t_color		expected;
-
-	w = new_world();
-	w.lights = malloc(sizeof(t_light));
-	w.lights_count = 1;
-	w.lights[0] = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
-	w.objs = malloc(sizeof(t_shape) * 2);
-	w.objs_count = 2;
-	new_sphere(&w.objs[0]);
-	new_sphere(&w.objs[1]);
-	set_transform(&w.objs[1], translation(0, 0, 10));
-	r = new_ray(new_point(0, 0, 5), new_vector(0, 0, 1));
-	i = intersection(4, &w.objs[1]);
-	comps = prepare_computations(i, &r, i);
-	c = shade_hit(&w, &comps);
-	expected = new_color(0.1, 0.1, 0.1);
-	cr_assert(epsilon_eq(dbl, c.r, expected.r, EPSILON));
-	cr_assert(epsilon_eq(dbl, c.g, expected.g, EPSILON));
-	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
+	lp.corner = new_point(0, 0, 0);
+	lp.full_uvec = new_vector(2, 0, 0);
+	lp.full_vvec = new_vector(0, 0, 1);
+	lp.usteps = 4;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &l);
+	l.jitter_by = new_sequencer(2, 0.3, 0.7);
+	p = point_on_light(&l, 0, 0);
+	cr_assert(eq(dbl, p.x, 0.15));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.35));
+	p = point_on_light(&l, 1, 0);
+	cr_assert(eq(dbl, p.x, 0.65));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.35));
+	p = point_on_light(&l, 0, 1);
+	cr_assert(eq(dbl, p.x, 0.15));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.85));
+	p = point_on_light(&l, 2, 0);
+	cr_assert(eq(dbl, p.x, 1.15));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.35));
+	p = point_on_light(&l, 3, 1);
+	cr_assert(eq(dbl, p.x, 1.65));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.85));
 } */
+
+Test(lights, finding_a_single_point_on_a_jittered_area_light)
+{
+	t_alight_params	lp;
+	t_light	l;
+	t_point	p1;
+	t_point	p2;
+	t_point	p3;
+
+	lp.corner = new_point(0, 0, 0);
+	lp.full_uvec = new_vector(2, 0, 0);
+	lp.full_vvec = new_vector(0, 0, 1);
+	lp.usteps = 4;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &l);
+	p1 = point_on_light(&l, 3, 1);
+	p2 = point_on_light(&l, 3, 1);
+	p3 = point_on_light(&l, 3, 1);
+	cr_assert(eq(int, p1.x == p2.x && p2.x == p3.x, false));
+	cr_assert(eq(int, p1.y == p2.y && p2.y == p3.y, true));
+	cr_assert(eq(int, p1.z == p2.z && p2.z == p3.z, false));
+}
+
+Test(lights, the_area_light_with_jittered_samples)
+	{
+		t_world	w;
+		t_alight_params	lp;
+		t_point	p;
+		double	intensity;
+
+		w = default_world();
+		lp.corner = new_point(-0.5, -0.5, -5);
+		lp.full_uvec = new_vector(1, 0, 0);
+		lp.full_vvec = new_vector(0, 1, 0);
+		lp.usteps = 2;
+		lp.vsteps = 2;
+		lp.intensity = new_color(1, 1, 1);
+		new_area_light(&lp, &w.lights[0]);
+		p = new_point(0, 0, 2);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+		p = new_point(1, -1, 2);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 0.75, EPSILON));
+		p = new_point(1.5, 0, 2);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 0.5, EPSILON));
+		p = new_point(1.25, 1.25, 3);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 0.75, EPSILON));
+		p = new_point(0, 0, -2);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
+}

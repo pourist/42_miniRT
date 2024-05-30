@@ -6,7 +6,7 @@
 # include "patterns.h"
 # include "utils.h"
 
-# define MAX_NODES	511
+# define MAX_NODES	512
 
 typedef struct s_sphere {
 	t_point	origin;
