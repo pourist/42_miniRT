@@ -19,7 +19,7 @@ WHITE       := \033[0;97m
 TESTS							:= tuples colors canvas matrices transformations rays spheres \
 										 lights materials world view_transform camera shapes planes \
 										 patterns reflec_refrac cubes cones groups triangles \
-										 obj_loader csg
+										 obj_loader csg features
 RM								:= rm -rf
 	
 ################################################################################
@@ -160,8 +160,8 @@ obj_loader: $(OBJECTS) test.c test_obj_loader.c
 csg: $(OBJECTS) test.c test_csg.c
 	@$(call run, "$^")
 
-.PHONY: random
-random: $(OBJECTS) test.c test_random.c
+.PHONY: features
+features: $(OBJECTS) test.c test_features.c
 	@$(call run, "$^")
 
 $(OBJECTS):

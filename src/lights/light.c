@@ -29,4 +29,5 @@ void	new_area_light(t_alight_params *lp, t_light *light)
 	light->position = add(lp->corner,
 			add(multiply(lp->full_uvec, 0.5), multiply(lp->full_vvec, 0.5)));
 	light->intensity_ratio = 1.0;
+	new_sequencer(&light->jitter_by);
 }

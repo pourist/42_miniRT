@@ -4,6 +4,7 @@
 # include <stdbool.h>
 
 # include "tuples.h"
+# include "utils.h"
 
 typedef struct s_light
 {
@@ -16,6 +17,7 @@ typedef struct s_light
 	t_vector	vvec;
 	int			vsteps;
 	int			samples;
+	t_sequencer	jitter_by;
 	bool		is_area_light;
 }	t_light;
 
