@@ -5,6 +5,7 @@
 # include "materials.h"
 # include "patterns.h"
 # include "utils.h"
+// # include "lights.h"
 
 # define MAX_NODES	512
 
@@ -169,9 +170,6 @@ t_hit		*intersection(double t, t_shape	*shape);
 void		insert_intersection(t_hit **xs, t_hit *hit);
 int			intersect_count(t_hit	*xs);
 t_hit		*hit(t_hit *xs);
-// Material.c 
-t_color		lighting(t_shape *shape, t_light *light, t_point *point,
-				t_eye_normal *view);
 // pattern.c
 t_color		pattern_at_shape(t_pattern *pattern, t_shape *shape,
 				t_point *world_point);

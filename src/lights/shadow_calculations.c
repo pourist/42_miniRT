@@ -1,3 +1,4 @@
+#include "lights.h"
 #include "world.h"
 
 t_point	point_on_light(t_light *light, double u, double v)
