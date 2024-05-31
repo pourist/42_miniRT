@@ -4,8 +4,8 @@
 t_point	point_on_light(t_light *light, double u, double v)
 {
 	return (add(light->corner, add(
-				multiply(light->uvec, u + halton_sequence(&light->jitter_by)),
-				multiply(light->vvec, v + halton_sequence(&light->jitter_by))
+				multiply(light->uvec, u + next_sequence(&light->jitter_by)),
+				multiply(light->vvec, v + next_sequence(&light->jitter_by))
 			)));
 }
 
