@@ -36,8 +36,10 @@ int    parse_line(int fd, t_line_parse_env    *parse)
 int read_lines_init(t_world *world, t_mini_rt *minirt, int fd)
 {
     t_line_parse_env    parse;
+    int i;
 
     parse.line_number = 0;
+    i = 0;
     while (1)
     {
         if(parse_line(fd, &parse))
@@ -45,6 +47,8 @@ int read_lines_init(t_world *world, t_mini_rt *minirt, int fd)
         if (parse.type == AMBIENT && init_ambient(&parse, world))
             return (free_s(parse.line));
         if (parse.type == CAMERA && init_camera(&parse, &(minirt->camera)))
+            return (free_s(parse.line));
+        if (parse.type == LIGHT && init_light(&parse, &(world->lights[i++])))
             return (free_s(parse.line));
         free_s(parse.line);
     }

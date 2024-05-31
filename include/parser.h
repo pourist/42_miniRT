@@ -16,6 +16,7 @@
 
 #define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
 #define ERR_INC_CAM "Expected format: C <x,y,z> <orientation x,y,z> <FOV>"
+#define ERR_LIGHT "Expected format: L <x,y,z> <brightness_ratio> <R,G,B>"
 #define	RATIO_INVALID "Invalid ambient lighting ratio"
 #define RATIO_RANGE "Ambient lighting ratio out of range"
 #define RGB_LEN "RGB elements count incorrect."
@@ -33,6 +34,11 @@
 #define OR_M "Orientation Vector elements count incorrect."
 #define OR_INVALID_M "Invalid Orientation Vector numbers."
 #define OR_RANGE_M "Orientation Vector values out of range"
+#define L_RATIO_M "Invalid light brightness ratio"
+#define L_RATIO_RANGE_M "Light brightness ratio out of range"
+#define POS_M "Light point coordinates count incorrect"
+#define POS_INVALID_M "Invalid light point coordinates"
+#define POS_RANGE_M "Light point coordinates' values out of range"
 
 typedef enum e_error_type
 {
@@ -49,6 +55,11 @@ typedef enum e_error_type
 	OR,
 	OR_INVALID,
 	OR_RANGE,
+	L_RATIO,
+	L_RATIO_RANGE,
+	POS,
+	POS_INVALID,
+	POS_RANGE,
 }	t_error_type;
 
 typedef struct s_e_counts
@@ -112,6 +123,8 @@ int 	triplets(char **triple, double min, double max, t_line_parse_env *env);
 // line parser
 int 	read_lines_init(t_world *world, t_mini_rt *minirt, int fd);
 // camera
-int init_camera(t_line_parse_env *env, t_camera *camera);
+int		init_camera(t_line_parse_env *env, t_camera *camera);
+// light
+int init_light(t_line_parse_env *env, t_light *light);
 
 #endif

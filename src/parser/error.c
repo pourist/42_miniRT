@@ -8,6 +8,16 @@ char    *find_error_2(int type)
         return (OR_INVALID_M);
     if (type == OR_RANGE)
         return (OR_RANGE_M);
+    if (type == L_RATIO)
+        return (L_RATIO_M);
+    if (type == L_RATIO_RANGE)
+        return (L_RATIO_RANGE_M);
+    if (type == POS)
+        return (POS_M);
+    if (type == POS_INVALID)
+        return (POS_INVALID_M);
+    if (type == POS_RANGE)
+        return (POS_RANGE_M);
     return (NULL);
 }
 
