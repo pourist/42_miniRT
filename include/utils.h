@@ -29,5 +29,6 @@ void		ft_swap(double *a, double *b);
 double		ft_atof(char *str);
 void		new_sequencer(t_sequencer *gen);
 double		halton_sequence(t_sequencer *gen);
+double		next_sequence(t_sequencer *gen);
 
 #endif
