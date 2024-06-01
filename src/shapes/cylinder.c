@@ -13,7 +13,7 @@ t_shape	*new_cylinder(t_shape *shape)
 	shape->cyl.closed = false;
 	shape->intersect_fn = intersect_cylinder;
 	shape->normal_at = normal_at_cylinder;
-	shape->bounds_fn = cylinder_bounds;
+	shape->bounds_of = cylinder_bounds;
 	return (shape);
 }
 

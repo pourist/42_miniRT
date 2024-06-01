@@ -80,3 +80,9 @@ static t_color	test_at(t_pattern *pattern, t_point *shape_point)
 	(void)pattern;
 	return (new_color(shape_point->x, shape_point->y, shape_point->z));
 }
+
+void	new_test_shape(t_shape *shape)
+{
+	new_shape(shape);
+	shape->bounds = new_bounds(new_point(-1, -1, -1), new_point(1, 1, 1));
+}

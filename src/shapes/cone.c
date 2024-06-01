@@ -13,7 +13,7 @@ t_shape	*new_cone(t_shape *shape)
 	shape->cone.closed = false;
 	shape->intersect_fn = intersect_cone;
 	shape->normal_at = normal_at_cone;
-	shape->bounds_fn = cone_bounds;
+	shape->bounds_of = cone_bounds;
 	return (shape);
 }
 

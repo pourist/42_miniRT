@@ -17,7 +17,7 @@ t_shape	*new_csg(t_operation operation, t_shape *left, t_shape *right,
 	csg->csg.right->parent = csg;
 	csg->intersect_fn = intersect_csg;
 	csg->normal_at = normal_at_csg;
-	csg->bounds_fn = csg_bounds;
+	csg->bounds_of = csg_bounds;
 	return (csg);
 }
 
@@ -40,7 +40,7 @@ static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray *r)
 	t_hit	*r_xs; 
 	t_hit	*all_xs;
 
-	csg->bounds_fn(csg);
+	csg->bounds_of(csg);
 	if (!intersect_bounds(&csg->bounds, r))
 		return (false);
 	l_xs = NULL;

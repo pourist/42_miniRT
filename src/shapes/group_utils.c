@@ -26,7 +26,7 @@ void	get_group_bounds(t_shape **root, t_bounds *b)
 	while (current)
 	{
 		if (!current->is_bounds_precal)
-			current->bounds_fn(current);
+			current->bounds_of(current);
 		if (current->bounds.min.x < b->min.x)
 			b->min.x = current->bounds.min.x;
 		if (current->bounds.min.y < b->min.y)

@@ -10,7 +10,7 @@ t_shape	*new_cube(t_shape *shape)
 	shape->cube.origin = new_point(0, 0, 0);
 	shape->intersect_fn = intersect_cube;
 	shape->normal_at = normal_at_cube;
-	shape->bounds_fn = cube_bounds;
+	shape->bounds_of = cube_bounds;
 	return (shape);
 }
 

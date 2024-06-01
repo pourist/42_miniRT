@@ -13,7 +13,7 @@ t_shape	*new_sphere(t_shape *shape)
 	shape->material.specular = 0.6;
 	shape->intersect_fn = intersect_sphere;
 	shape->normal_at = normal_at_sphere;
-	shape->bounds_fn = sphere_bounds;
+	shape->bounds_of = sphere_bounds;
 	return (shape);
 }
 
