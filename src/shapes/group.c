@@ -10,14 +10,14 @@ t_shape	*new_group(t_shape *shape)
 	shape->root = NULL;
 	shape->intersect_fn = intersect_group;
 	shape->normal_at = normal_at_group;
-	shape->bounds_fn = group_bounds;
+	shape->bounds_of = group_bounds;
 	shape->is_group = true;
 	return (shape);
 }
 
 static bool	intersect_group(t_hit **xs, t_shape *shape, t_ray *r)
 {
-	shape->bounds_fn(shape);
+	shape->bounds_of(shape);
 	if (!intersect_bounds(&shape->bounds, r))
 		return (false);
 	intersect_group_shapes(&shape->root, xs, r);

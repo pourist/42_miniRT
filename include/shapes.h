@@ -101,7 +101,7 @@ typedef struct s_shape {
 	t_material		material;
 	bool			cast_shadow;
 	t_shape			*parent;
-	t_bounds_fn		bounds_fn;
+	t_bounds_fn		bounds_of;
 	bool			is_bounds_precal;
 	t_bounds		bounds;
 	bool			is_group;

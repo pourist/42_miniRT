@@ -88,7 +88,7 @@ void	get_csg_bounds(t_shape *current, t_bounds *b)
 		get_csg_bounds(current->csg.right, b);
 	}
 	if (!current->is_bounds_precal)
-		current->bounds_fn(current);
+		current->bounds_of(current);
 	if (current->bounds.min.x < b->min.x)
 		b->min.x = current->bounds.min.x;
 	if (current->bounds.min.y < b->min.y)

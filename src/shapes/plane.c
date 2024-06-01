@@ -10,7 +10,7 @@ t_shape	*new_plane(t_shape *shape)
 	shape->plane.origin = new_point(0, 0, 0);
 	shape->normal_at = normal_at_plain;
 	shape->intersect_fn = intersect_plane;
-	shape->bounds_fn = plane_bounds;
+	shape->bounds_of = plane_bounds;
 	return (shape);
 }
 

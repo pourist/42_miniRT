@@ -271,7 +271,7 @@ Test(groups, checking_bounds_values)
 	m = multiply_matrices(translation(2, 0, 0), rotation_z(cos(M_PI / -4), sin(M_PI / -4)));
 	set_transform(&c, m);
 	add_child(&g, &c);
-	g.bounds_fn(&g);
+	g.bounds_of(&g);
 	cr_assert(epsilon_eq(dbl, g.bounds.min.x, 1.29289, EPSILON));
   cr_assert(epsilon_eq(dbl, g.bounds.min.y, -0.70710, EPSILON));
   cr_assert(epsilon_eq(dbl, g.bounds.min.z, -1.0, EPSILON));

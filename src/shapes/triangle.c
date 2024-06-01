@@ -19,7 +19,7 @@ t_shape	*new_triangle(t_point p1, t_point p2, t_point p3, t_shape *shape)
 	shape->tri.v = 0.0;
 	shape->normal_at = normal_at_triangle;
 	shape->intersect_fn = intersect_triangle;
-	shape->bounds_fn = triangle_bounds;
+	shape->bounds_of = triangle_bounds;
 	return (shape);
 }
 
@@ -38,7 +38,7 @@ t_shape	*new_smooth_triangle(t_point v[3], t_vector n[3], t_shape *shape)
 	shape->tri.v = 0.0;
 	shape->normal_at = normal_at_triangle;
 	shape->intersect_fn = intersect_triangle;
-	shape->bounds_fn = triangle_bounds;
+	shape->bounds_of = triangle_bounds;
 	return (shape);
 }
 

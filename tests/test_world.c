@@ -509,6 +509,8 @@ Test(lights, finding_a_single_point_on_a_jittered_area_light)
 	cr_assert(eq(int, p1.z == p2.z && p2.z == p3.z, false));
 }
 
+/*
+ * Now it has a default 32 serie
 Test(lights, the_area_light_with_jittered_samples)
 	{
 		t_world	w;
@@ -539,4 +541,4 @@ Test(lights, the_area_light_with_jittered_samples)
 		p = new_point(0, 0, -2);
 		intensity = intensity_at(&w, &p, 0);
 		cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
-}
+} */
