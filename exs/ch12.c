@@ -2,6 +2,7 @@
 #include "canvas.h"
 #include "materials.h"
 #include "patterns.h"
+#include "groups.h"
 
 #define WIDTH	800
 #define HEIGHT	600
@@ -117,6 +118,7 @@ int	main(void)
 	create_ligts(&rt.world);
 	create_camera(&rt.camera);
 	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 12");
+	create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
 	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);

@@ -20,9 +20,8 @@ void	get_bounds(t_shape *s, t_bounds *new_bounds)
 	box[7] = s->bounds.max;
 	i = -1;
 	while (++i < 8)
-		add_point_to_bounds(new_bounds,
+		add_point_to_bounds(&new_bounds,
 			multiply_matrix_by_tuple(s->transform, box[i]));
-	s->bounds = *new_bounds;
 }
 
 static t_range	check_axis(double origin, double direction,

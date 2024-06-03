@@ -10,7 +10,8 @@ t_shape	*new_shape(t_shape *shape)
 	shape->parent = NULL;
 	shape->is_bounds_precal = false;
 	shape->is_group = false;
-	shape->next = NULL;
+	shape->left = NULL;
+	shape->right = NULL;
 	shape->is_csg = false;
 	return (shape);
 }

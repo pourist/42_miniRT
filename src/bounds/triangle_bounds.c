@@ -35,5 +35,8 @@ void	triangle_bounds(t_shape *shape)
 		shape->is_bounds_precal = true;
 		shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
 		get_triangle_bounds(shape);
+		shape->split_box[0] = shape->bounds;
+		shape->split_box[1] = shape->bounds;
+		split_bounds(shape->split_box);
 	}
 }
