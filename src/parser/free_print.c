@@ -3,7 +3,7 @@
 int	print_error(char	*text)
 {
 	write(1, text, ft_strlen(text));
-    write(1, "\n", 1);
+	write(1, "\n", 1);
 	return (1);
 }
 

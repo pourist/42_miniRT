@@ -1,23 +1,21 @@
 #include "parser.h"
 
-int ft_strarr_len(char **line)
+int	ft_strarr_len(char **line)
 {
-    int count;
-	
+	int	count;
+
 	count = 0;
-    while (line[count] != NULL)
-    {
-        count++;
-    }
-    return (count);
+	while (line[count] != NULL)
+		count++;
+	return (count);
 }
 
 int	is_valid_number(char *str)
 {
-	int	point;
-	int	i;
-	char *temp;
-	
+	int		point;
+	int		i;
+	char	*temp;
+
 	temp = str;
 	i = 0;
 	point = 0;

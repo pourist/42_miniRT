@@ -47,7 +47,7 @@ void	elements_counter(t_e_counts *count, char *line)
 	close(count->fd);
 }
 
-int elements_count_checker(t_e_counts *count)
+int	elements_count_checker(t_e_counts *count)
 {
 	char	*line;
 
@@ -58,7 +58,7 @@ int elements_count_checker(t_e_counts *count)
 	if (count->a_light > 1)
 		return (print_error("Error\nMultiple instances of Ambient Lighting found."));
 	else if (count->a_light == 0)
-	return (print_error("Error\nNo Ambient Lighting found."));
+		return (print_error("Error\nNo Ambient Lighting found."));
 	if (count->camera > 1)
 		return (print_error("Error\nMultiple instances of Camera found."));
 	else if (count->camera == 0)
@@ -67,7 +67,7 @@ int elements_count_checker(t_e_counts *count)
 		return (print_error("Error\nMultiple instances of Light found."));
 	else if (count->light == 0)
 		return (print_error("Error\nNo Light found."));
-    return (0);
+	return (0);
 }
 
 int	init_counter_fd(t_e_counts *count, char *file)
