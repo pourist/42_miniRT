@@ -23,7 +23,7 @@ int	parser(int argc, char **argv, t_mini_rt *minirt)
 	if (init_counter_fd(&count, argv[1]))
 		return (1);
 	if (init_minirt(minirt, &count))
-		return (free_mini_rt(minirt),1);
+		return (free_mini_rt(minirt), 1);
 	else
 		return (0);
 }
