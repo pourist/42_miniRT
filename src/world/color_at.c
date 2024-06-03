@@ -4,9 +4,12 @@ t_hit	*intersect_world(t_world *world, t_ray *ray)
 {
 	int		i;
 
-	i = -1;
 	world->xs = NULL;
-	while (++i < world->objs_count && world->objs)
+	// intersect(&world->xs, &world->bvh[0], ray);
+	i = -1;
+	// while (++i < 3)
+	// 	intersect(&world->xs, &world->bvh[i], ray);
+	while (++i < world->objs_count)
 		intersect(&world->xs, &world->objs[i], ray);
 	return (world->xs);
 }

@@ -56,7 +56,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 obj_file_parser.c obj_vertice_parser.c obj_face_parser.c \
 										 obj_group_parser.c obj_normal_parser.c triangle_bounds.c \
 										 csg.c csg_utils.c shadow_calculations.c sequencer.c \
-										 light_shading.c bounding_boxes.c
+										 light_shading.c bounding_boxes.c bvh.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

@@ -90,7 +90,6 @@ typedef struct s_shape {
 		t_cylinder	cyl;
 		t_cone		cone;
 		t_triangle	tri;
-		t_shape		*root;
 		t_csg		csg;
 	};
 	t_intersect_fn	intersect_fn;
@@ -105,7 +104,9 @@ typedef struct s_shape {
 	bool			is_bounds_precal;
 	t_bounds		bounds;
 	bool			is_group;
-	t_shape			*next;
+	t_bounds		split_box[2];
+	t_shape			*left;
+	t_shape			*right;
 	bool			is_csg;
 }	t_shape;
 

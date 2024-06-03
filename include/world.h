@@ -9,9 +9,11 @@
 
 typedef struct s_world
 {
+	t_shape		bvh[3];
 	t_hit		*xs;
 	int			objs_count;
 	t_shape		*objs;
+	t_shape		*elements_inside;
 	int			lights_count;
 	t_light		*lights;
 	t_color		ambient;

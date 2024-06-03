@@ -7,7 +7,6 @@ static void		group_bounds(t_shape *shape);
 t_shape	*new_group(t_shape *shape)
 {
 	new_shape(shape);
-	shape->root = NULL;
 	shape->intersect_fn = intersect_group;
 	shape->normal_at = normal_at_group;
 	shape->bounds_of = group_bounds;
@@ -17,10 +16,12 @@ t_shape	*new_group(t_shape *shape)
 
 static bool	intersect_group(t_hit **xs, t_shape *shape, t_ray *r)
 {
-	shape->bounds_of(shape);
+	if (!shape->is_bounds_precal)
+		shape->bounds_of(shape);
 	if (!intersect_bounds(&shape->bounds, r))
 		return (false);
-	intersect_group_shapes(&shape->root, xs, r);
+	intersect_group_shapes(shape->left, xs, r);
+	intersect_group_shapes(shape->right, xs, r);
 	return (true);
 }
 
@@ -34,12 +35,19 @@ static t_vector	normal_at_group(t_shape *shape, t_point *local_point)
 
 static void	group_bounds(t_shape *shape)
 {
-	if (!shape->is_bounds_precal)
+	t_bounds	tmp_bounds;
+
+	if (shape && !shape->is_bounds_precal)
 	{
 		shape->is_bounds_precal = true;
-		shape->bounds = new_bounds(new_point(INFINITY, INFINITY, INFINITY),
-				new_point(-INFINITY, -INFINITY, -INFINITY));
-		get_group_bounds(&shape->root, &shape->bounds);
-		get_bounds(shape, &shape->bounds);
+		shape->bounds = new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT),
+				new_point(-MAXFLOAT, -MAXFLOAT, -MAXFLOAT));
+		tmp_bounds = shape->bounds;
+		get_group_bounds(shape->right, &shape->bounds);
+		get_bounds(shape, &tmp_bounds);
+		shape->bounds = tmp_bounds;
+		shape->split_box[0] = shape->bounds;
+		shape->split_box[1] = shape->bounds;
+		split_bounds(shape->split_box);
 	}
 }
