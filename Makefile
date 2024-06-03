@@ -25,7 +25,7 @@ RM								:= rm -rf
 
 OBJ_DIR						:= obj
 SRC_DIRS					:= tuples utils canvas matrices rays shapes lights materials \
-										 world camera patterns bounds obj_loader
+										 world camera patterns bounds obj_loader parser
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
@@ -41,7 +41,7 @@ LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
 HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h \
 										 lights.h materials.h world.h camera.h patterns.h groups.h \
-										 obj_loader.h
+										 obj_loader.h parser.h
 SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 color.c canvas.c save.c hooks.c mx.c mx_operations.c \
 										 mx_attributes.c mx_transformations.c mx_rotations.c \
@@ -55,7 +55,10 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
 										 ft_atof.c	obj_loader_utils.c set_max_values.c \
 										 obj_file_parser.c obj_vertice_parser.c obj_face_parser.c \
 										 obj_group_parser.c obj_normal_parser.c triangle_bounds.c \
-										 csg.c csg_utils.c shadow_calculations.c sequencer.c light_shading.c
+										 csg.c csg_utils.c \
+										 parser.c parser_utils.c element_counter.c free_print.c\
+										 init_ambient.c init_mini_rt.c error.c valid_args.c \
+										 line_parser.c init_camera.c init_light.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
@@ -100,11 +103,11 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 
 all: submodules $(NAME)
 
-test: submodules $(NAME)
+test: $(NAME)
 	@make $(T) -C tests -s
 	@make fclean -C tests -s
 
-ex: submodules $(NAME)
+ex: $(NAME)
 	@make $(X) -C exs -s
 	@make fclean -C exs -s
 
@@ -129,10 +132,10 @@ $(OBJ_DIR):
 	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(DEFAULT)($(BLUE)$(OBJ_DIR)/$(DEFAULT)) "
 	@printf "Created successfully!\n"
 
-$(LIBFT):
+$(LIBFT): 
 	@make -C $(LIBFT_DIR) -s
 
-$(MLX):
+$(MLX): 
 	@cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
 	@cmake --build $(MLX_DIR)/build -j4
 
