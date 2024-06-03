@@ -1,5 +1,15 @@
 #include "parser.h"
 
+char	*find_error_3(int type)
+{
+	if (type == CENT_INVALID)
+		return (CENT_INVALID_M);
+	else if (CENT_RANGE)
+		return (CENT_RANGE_M);
+	else
+		return (NULL);
+}
+
 char	*find_error_2(int type)
 {
 	if (type == OR)
@@ -18,7 +28,13 @@ char	*find_error_2(int type)
 		return (POS_INVALID_M);
 	if (type == POS_RANGE)
 		return (POS_RANGE_M);
-	return (NULL);
+	if (type == D_SPHERE)
+		return (D_INVALID);
+	if (type == D_RANGE)
+		return (D_RANGE_M);
+	if (type == CENT)
+		return (CENT_M);
+	return (find_error_3(type));
 }
 
 char	*find_error(int type)

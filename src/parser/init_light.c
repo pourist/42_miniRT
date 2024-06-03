@@ -33,6 +33,6 @@ int	init_light(t_line_parse_env *env, t_light *light)
 	rgb = ft_subsplit(env->line[3], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(pos), 1);
-	create_light(rgb, ft_atof(env->line[2]), pos,light);
+	create_light(rgb, ft_atof(env->line[2]), pos, light);
 	return (0);
 }
