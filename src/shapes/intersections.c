@@ -14,11 +14,13 @@ void	intersect(t_hit **xs, t_shape *s, t_ray *r)
  *  of modulo. MAX_NODES should be a power of 2. */
 t_hit	*intersection(double t, t_shape	*shape)
 {
-	static t_hit	pool[MAX_NODES + 1];
+	static t_hit	pool[MAX_NODES];
 	static size_t	index = 0;
 	t_hit			*hit;
 
-	hit = &pool[index++ & (MAX_NODES)];
+	hit = &pool[index++];
+	if (index >= MAX_NODES)
+		index = 0;
 	hit->t = t;
 	hit->obj = shape;
 	hit->next = NULL;

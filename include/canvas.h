@@ -7,6 +7,7 @@
 # include "libft.h"
 # include "world.h"
 # include "camera.h"
+# include "lights.h"
 
 # define CANVAS_WIDTH	800
 # define CANVAS_HEIGHT 600

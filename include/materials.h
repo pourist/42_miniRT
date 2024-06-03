@@ -1,7 +1,7 @@
 #ifndef MATERIALS_H
 # define MATERIALS_H
 
-# include "lights.h"
+// # include "lights.h"
 # include "patterns.h"
 
 # define VACUUM 1.0
