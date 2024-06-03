@@ -194,6 +194,8 @@ Test(world, color_with_intersection_behind_ray)
 	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
 }
 
+/*
+ * Previous tests for hard shadows
 Test(world, no_shadow_when_nothing_is_collinear_with_point_and_light)
 {
 	t_world	w;
@@ -259,4 +261,282 @@ Test(world, shade_hit_is_given_an_intersection_in_shadow)
 	cr_assert(epsilon_eq(dbl, c.r, expected.r, EPSILON));
 	cr_assert(epsilon_eq(dbl, c.g, expected.g, EPSILON));
 	cr_assert(epsilon_eq(dbl, c.b, expected.b, EPSILON));
+} */
+
+Test(world, is_shadow_tests_for_occlusion_between_two_points)
+{
+	t_world	w;
+	t_point	light_p;
+	t_point	p;
+
+	w = default_world();
+	light_p = new_point(-10, -10, -10);
+	p = new_point(-10, -10, 10);
+	cr_assert(eq(int, is_shadowed(&w, &light_p, &p), false));
+	p = new_point(10, 10, 10);
+	cr_assert(eq(int, is_shadowed(&w, &light_p, &p), true));
+	p = new_point(-20, -20, -20);
+	cr_assert(eq(int, is_shadowed(&w, &light_p, &p), false));
+	p = new_point(-5, -5, -5);
+	cr_assert(eq(int, is_shadowed(&w, &light_p, &p), false));
+}
+
+Test(world, point_lights_evaluate_the_light_intesity_at_a_given_pos)
+{
+	t_world	w;
+	t_point	p;
+	double	intensity;
+
+	w = default_world();
+	p = new_point(0, 1.0001, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
+	p = new_point(-1.0001, 0, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
+	p = new_point(0, 0, -1.0001);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
+	p = new_point(0, 0, 1.0001);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+	p = new_point(1.0001, 0, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+	p = new_point(0, -1.0001, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+	p = new_point(0, 0, 0);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+}
+
+Test(world, lighting_fn_uses_light_intesity_to_attenuate_color)
+{
+	t_world		w;
+	t_point		p;
+	t_eye_normal	eye;
+	t_color		result;
+	t_color		expected;
+
+	w = default_world();
+	w.lights[0] = new_light(new_point(0, 0, -10), new_color(1, 1, 1));
+	w.objs[0].material.ambient = new_color(0.1, 0.1, 0.1);
+	w.objs[0].material.diffuse = 0.9;
+	w.objs[0].material.specular = 0;
+	w.objs[0].material.color = new_color(1, 1, 1);
+	p = new_point(0, 0, -1);
+	eye.eye_v = new_vector(0, 0, -1);
+	eye.normal_v = new_vector(0, 0, -1);
+	w.lights[0].intensity_ratio = 1.0;
+	result = lighting(&w.objs[0], &w.lights[0], &p, &eye);
+	expected = new_color(1, 1, 1);
+	cr_assert(epsilon_eq(dbl, result.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.b, expected.b, EPSILON));
+	w.lights[0].intensity_ratio = 0.5;
+	result = lighting(&w.objs[0], &w.lights[0], &p, &eye);
+	expected = new_color(0.55, 0.55, 0.55);
+	cr_assert(epsilon_eq(dbl, result.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.b, expected.b, EPSILON));
+	w.lights[0].intensity_ratio = 0.0;
+	result = lighting(&w.objs[0], &w.lights[0], &p, &eye);
+	expected = new_color(0.1, 0.1, 0.1);
+	cr_assert(epsilon_eq(dbl, result.r, expected.r, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.g, expected.g, EPSILON));
+	cr_assert(epsilon_eq(dbl, result.b, expected.b, EPSILON));
+}
+
+Test(world, creating_an_area_light)
+{
+	t_alight_params lp;
+	t_light		l;
+
+	lp.corner = new_point(0, 0, 0);
+	lp.full_uvec = new_vector(2, 0, 0);
+	lp.full_vvec = new_vector(0, 0, 1);
+	lp.usteps = 4;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &l);
+	cr_assert(eq(dbl, l.corner.x, 0));
+	cr_assert(eq(dbl, l.corner.y, 0));
+	cr_assert(eq(dbl, l.corner.z, 0));
+	cr_assert(eq(dbl, l.uvec.x, 0.5));
+	cr_assert(eq(dbl, l.uvec.y, 0));
+	cr_assert(eq(dbl, l.uvec.z, 0));
+	cr_assert(eq(int, l.usteps, 4));
+	cr_assert(eq(dbl, l.vvec.x, 0));
+	cr_assert(eq(dbl, l.vvec.y, 0));
+	cr_assert(eq(dbl, l.vvec.z, 0.5));
+	cr_assert(eq(int, l.vsteps, 2));
+	cr_assert(eq(int, l.samples, 8));
+	cr_assert(eq(dbl, l.position.x, 1));
+	cr_assert(eq(dbl, l.position.y, 0));
+	cr_assert(eq(dbl, l.position.z, 0.5));
+}
+
+/*
+* test before the introduction of jittered area light
+Test(world, finding_a_single_point_on_an_area_light)
+{
+	t_alight_params lp;
+	t_light	l;
+	t_point	p;
+
+	lp.corner = new_point(0, 0, 0);
+	lp.full_uvec = new_vector(2, 0, 0);
+	lp.full_vvec = new_vector(0, 0, 1);
+	lp.usteps = 4;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &l);
+	p = point_on_light(&l, 0, 0);
+	cr_assert(eq(dbl, p.x, 0.25));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.25));
+	p = point_on_light(&l, 1, 0);
+	cr_assert(eq(dbl, p.x, 0.75));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.25));
+	p = point_on_light(&l, 0, 1);
+	cr_assert(eq(dbl, p.x, 0.25));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.75));
+	p = point_on_light(&l, 2, 0);
+	cr_assert(eq(dbl, p.x, 1.25));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.25));
+	p = point_on_light(&l, 3, 1);
+	cr_assert(eq(dbl, p.x, 1.75));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.75));
+} */
+
+/*
+* Test before the introduction of jittered area light
+Test(world, the_area_light_intensity_function)
+{
+	t_world	w;
+	t_alight_params	lp;
+	t_point	p;
+	double	intensity;
+
+	w = default_world();
+	lp.corner = new_point(-0.5, -0.5, -5);
+	lp.full_uvec = new_vector(1, 0, 0);
+	lp.full_vvec = new_vector(0, 1, 0);
+	lp.usteps = 2;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &w.lights[0]);
+	p = new_point(0, 0, 2);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+	p = new_point(1, -1, 2);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.25, EPSILON));
+	p = new_point(1.5, 0, 2);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.5, EPSILON));
+	p = new_point(1.25, 1.25, 3);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 0.75, EPSILON));
+	p = new_point(0, 0, -2);
+	intensity = intensity_at(&w, &p, 0);
+	cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
+} */
+
+/*
+ * Previous approach to generate jittered area light points
+Test(lights, finding_a_single_point_on_a_jittered_area_light)
+{
+	t_alight_params	lp;
+	t_light	l;
+	t_point	p;
+
+	lp.corner = new_point(0, 0, 0);
+	lp.full_uvec = new_vector(2, 0, 0);
+	lp.full_vvec = new_vector(0, 0, 1);
+	lp.usteps = 4;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &l);
+	l.jitter_by = new_sequencer(2, 0.3, 0.7);
+	p = point_on_light(&l, 0, 0);
+	cr_assert(eq(dbl, p.x, 0.15));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.35));
+	p = point_on_light(&l, 1, 0);
+	cr_assert(eq(dbl, p.x, 0.65));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.35));
+	p = point_on_light(&l, 0, 1);
+	cr_assert(eq(dbl, p.x, 0.15));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.85));
+	p = point_on_light(&l, 2, 0);
+	cr_assert(eq(dbl, p.x, 1.15));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.35));
+	p = point_on_light(&l, 3, 1);
+	cr_assert(eq(dbl, p.x, 1.65));
+	cr_assert(eq(dbl, p.y, 0));
+	cr_assert(eq(dbl, p.z, 0.85));
+} */
+
+Test(lights, finding_a_single_point_on_a_jittered_area_light)
+{
+	t_alight_params	lp;
+	t_light	l;
+	t_point	p1;
+	t_point	p2;
+	t_point	p3;
+
+	lp.corner = new_point(0, 0, 0);
+	lp.full_uvec = new_vector(2, 0, 0);
+	lp.full_vvec = new_vector(0, 0, 1);
+	lp.usteps = 4;
+	lp.vsteps = 2;
+	lp.intensity = new_color(1, 1, 1);
+	new_area_light(&lp, &l);
+	p1 = point_on_light(&l, 3, 1);
+	p2 = point_on_light(&l, 3, 1);
+	p3 = point_on_light(&l, 3, 1);
+	cr_assert(eq(int, p1.x == p2.x && p2.x == p3.x, false));
+	cr_assert(eq(int, p1.y == p2.y && p2.y == p3.y, true));
+	cr_assert(eq(int, p1.z == p2.z && p2.z == p3.z, false));
+}
+
+Test(lights, the_area_light_with_jittered_samples)
+	{
+		t_world	w;
+		t_alight_params	lp;
+		t_point	p;
+		double	intensity;
+
+		w = default_world();
+		lp.corner = new_point(-0.5, -0.5, -5);
+		lp.full_uvec = new_vector(1, 0, 0);
+		lp.full_vvec = new_vector(0, 1, 0);
+		lp.usteps = 2;
+		lp.vsteps = 2;
+		lp.intensity = new_color(1, 1, 1);
+		new_area_light(&lp, &w.lights[0]);
+		p = new_point(0, 0, 2);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 0.0, EPSILON));
+		p = new_point(1, -1, 2);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 0.75, EPSILON));
+		p = new_point(1.5, 0, 2);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 0.5, EPSILON));
+		p = new_point(1.25, 1.25, 3);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 0.75, EPSILON));
+		p = new_point(0, 0, -2);
+		intensity = intensity_at(&w, &p, 0);
+		cr_assert(epsilon_eq(dbl, intensity, 1.0, EPSILON));
 }
