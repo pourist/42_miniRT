@@ -21,7 +21,7 @@ t_shape	*new_csg(t_operation operation, t_shape *left, t_shape *right,
 	return (csg);
 }
 
-static void	merge_intersections(t_hit **all_xs, t_hit *new_xs)
+void	merge_intersections(t_hit **all_xs, t_hit *new_xs)
 {
 	t_hit	*tmp;
 
@@ -40,7 +40,8 @@ static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray *r)
 	t_hit	*r_xs; 
 	t_hit	*all_xs;
 
-	csg->bounds_of(csg);
+	if (!csg->is_bounds_precal)
+		csg->bounds_of(csg);
 	if (!intersect_bounds(&csg->bounds, r))
 		return (false);
 	l_xs = NULL;
@@ -65,17 +66,19 @@ static void	csg_bounds(t_shape *shape)
 {
 	t_bounds	tmp_bounds;
 
-	if (shape && !shape->is_bounds_precal)
+	shape->is_bounds_precal = true;
+	shape->bounds = new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT),
+			new_point(-MAXFLOAT, -MAXFLOAT, -MAXFLOAT));
+	tmp_bounds = shape->bounds;
+	if (shape->csg.left || shape->csg.right)
 	{
-		shape->is_bounds_precal = true;
-		shape->bounds = new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT),
-				new_point(-MAXFLOAT, -MAXFLOAT, -MAXFLOAT));
-		tmp_bounds = shape->bounds;
-		get_csg_bounds(shape, &shape->bounds);
-		get_bounds(shape, &tmp_bounds);
-		shape->bounds = tmp_bounds;
-		shape->split_box[0] = shape->bounds;
-		shape->split_box[1] = shape->bounds;
-		split_bounds(shape->split_box);
+		get_csg_bounds(shape->csg.left, &tmp_bounds);
+		get_csg_bounds(shape->csg.right, &tmp_bounds);
 	}
+	get_bounds(shape, &tmp_bounds);
+	shape->bounds = tmp_bounds;
+	shape->subg_bounds = tmp_bounds;
+	shape->split_box[0] = tmp_bounds;
+	shape->split_box[1] = tmp_bounds;
+	split_bounds(shape->split_box);
 }

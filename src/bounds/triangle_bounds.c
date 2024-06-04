@@ -30,13 +30,21 @@ static void	get_triangle_bounds(t_shape *shape)
 
 void	triangle_bounds(t_shape *shape)
 {
-	if (!shape->is_bounds_precal)
-	{
-		shape->is_bounds_precal = true;
-		shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
-		get_triangle_bounds(shape);
-		shape->split_box[0] = shape->bounds;
-		shape->split_box[1] = shape->bounds;
-		split_bounds(shape->split_box);
-	}
+	t_bounds	tmp_bounds;
+
+	if (!shape)
+		return ;
+	tmp_bounds = (t_bounds){(t_point){MAXFLOAT, MAXFLOAT, MAXFLOAT, 1.0},
+		(t_point){-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, 1.0}};
+	shape->is_bounds_precal = true;
+	shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
+	get_triangle_bounds(shape);
+	// get_bounds(shape, &tmp_bounds);
+	// shape->bounds = tmp_bounds;
+	if (shape->left || shape->right)
+		get_group_bounds(shape, &tmp_bounds);
+	shape->subg_bounds = tmp_bounds;
+	shape->split_box[0] = tmp_bounds;
+	shape->split_box[1] = tmp_bounds;
+	split_bounds(shape->split_box);
 }
