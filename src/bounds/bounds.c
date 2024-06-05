@@ -22,6 +22,7 @@ void	get_bounds(t_shape *s, t_bounds *new_bounds)
 	while (++i < 8)
 		add_point_to_bounds(&new_bounds,
 			multiply_matrix_by_tuple(s->transform, box[i]));
+	s->bounds = *new_bounds;
 }
 
 static t_range	check_axis(double origin, double direction,
@@ -62,4 +63,11 @@ bool	intersect_bounds(t_bounds *b, t_ray *r)
 	if (t.min > t.max)
 		return (false);
 	return (true);
+}
+
+double	bounds_volume(t_bounds *bounds)
+{
+	return ((bounds->max.x - bounds->min.x)
+		* (bounds->max.y - bounds->min.y)
+		* (bounds->max.z - bounds->min.z));
 }

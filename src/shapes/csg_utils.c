@@ -2,7 +2,7 @@
 #include "groups.h"
 
 static bool	is_left_hit(t_shape *left, t_shape *shape);
-static bool	is_group_hit(t_shape *root, t_shape *shape);
+static bool	is_group_hit(t_shape **root, t_shape *shape);
 
 bool	intersect_allowed(t_operation op, bool lhit, bool inl, bool inr)
 {
@@ -15,23 +15,25 @@ bool	intersect_allowed(t_operation op, bool lhit, bool inl, bool inr)
 	return (false);
 }
 
-static bool	is_group_hit(t_shape *root, t_shape *shape)
+static bool	is_group_hit(t_shape **root, t_shape *shape)
 {
-	if (root)
+	t_shape	*tmp;
+
+	tmp = *root;
+	while (tmp)
 	{
-		if (root == shape)
+		if (tmp == shape)
 			return (true);
-		if (root->is_csg)
+		if (tmp->is_csg)
 		{
-			if (is_left_hit(root->csg.left, shape))
+			if (is_left_hit(tmp->csg.left, shape))
 				return (true);
-			if (is_left_hit(root->csg.right, shape))
+			if (is_left_hit(tmp->csg.right, shape))
 				return (true);
 		}
-		if (root->left && is_group_hit(root->left, shape))
+		if (tmp->is_group && is_group_hit(&tmp->root, shape))
 			return (true);
-		if (root->right && is_group_hit(root->right, shape))
-			return (true);
+		tmp = tmp->next;
 	}
 	return (false);
 }
@@ -47,7 +49,7 @@ static bool	is_left_hit(t_shape *left, t_shape *shape)
 		if (is_left_hit(left->csg.right, shape))
 			return (true);
 	}
-	if (left->is_group && is_group_hit(left->root, shape))
+	if (left->is_group && is_group_hit(&left->root, shape))
 		return (true);
 	return (false);
 }

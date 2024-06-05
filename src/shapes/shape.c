@@ -9,9 +9,9 @@ t_shape	*new_shape(t_shape *shape)
 	shape->cast_shadow = true;
 	shape->parent = NULL;
 	shape->is_bounds_precal = false;
+	shape->is_gbounds_precal = false;
 	shape->is_group = false;
-	shape->left = NULL;
-	shape->right = NULL;
+	shape->next = NULL;
 	shape->is_csg = false;
 	return (shape);
 }
@@ -22,7 +22,10 @@ void	set_transform(t_shape *shape, t_matrix transform)
 	shape->inverse = inverse_matrix(transform);
 	shape->transpose = transpose_matrix(shape->inverse);
 	if (shape->is_bounds_precal)
+	{
 		shape->is_bounds_precal = false;
+		shape->is_gbounds_precal = false;
+	}
 	if (shape->parent)
 		shape->parent->is_bounds_precal = false;
 }

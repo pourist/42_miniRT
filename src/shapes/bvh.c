@@ -26,76 +26,84 @@ void	split_bounds(t_bounds s_box[2])
 	}
 }
 
-void	insert_to(t_shape *left, t_shape *right, t_shape **root, t_bounds s_box[2])
+void	insert_shape(t_shape **root, t_shape *shape)
 {
+	t_shape	*current;
+
 	if (!root || !(*root))
-		return ;
-	if (box_contains_box(&s_box[0], &(*root)->bounds))
 	{
-		printf("left\n");
-		left->is_bounds_precal = false;
-		(*root)->is_bounds_precal = false;
-		if (!left->left)
-			left->left = *root;
-		else if (!left->right)
-			left->right = *root;
-		else
-			btree_insert(&left, *root);
+		if (root)
+			(*root) = shape;
+		return ;
 	}
-	else if (box_contains_box(&s_box[1], &(*root)->bounds))
+	shape->next = NULL;
+	current = *root;
+	while (current->next)
+		current = current->next;
+	current->next = shape;
+}
+
+void	partition_children(t_shape *group, t_shape **left, t_shape **right)
+{
+	t_shape	**current;
+	t_shape	*tmp;
+
+	if (!group) 
+		return ;
+	group->bounds_of(group);
+	current = &group->root;
+	while (*current)
 	{
-		printf("right\n");
-		right->is_bounds_precal = false;
-		(*root)->is_bounds_precal = false;
-		if (!right->left)
-			right->left = *root;
-		else if (!right->right)
-			right->right = *root;
+		tmp = *current;
+		if (!tmp->is_bounds_precal)
+			tmp->bounds_of(tmp);
+		if (box_contains_box(&group->split_box[0], &tmp->bounds))
+		{
+			*current = tmp->next;
+			insert_shape(left, tmp);
+		}
+		else if (box_contains_box(&group->split_box[1], &tmp->bounds))
+		{
+			*current = tmp->next;
+			insert_shape(right, tmp);
+		}
 		else
-			btree_insert(&right, *root);
+			current = &tmp->next;
 	}
 }
 
-void	partition_children_group(t_shape *root, t_shape *left, t_shape *right)
-{
-	if (!root)
-		return ;
-	root->bounds_of(root);
-	insert_to(left, right, &root, root->split_box);
-}
+// void	divide_tree(t_shape *root, t_shape *left, t_shape *right)
+// {
+// 	if (!root)
+// 		return ;
+// 	if (root->left)
+// 		divide_tree(root->left, left, right);
+// 	if (root->right)
+// 		divide_tree(root->right, left, right);
+// 	if (!root->left && !root->right)
+// 		return ;
+// 	partition_children_group(root, left, right);
+// }
 
-void	divide_tree(t_shape *root, t_shape *left, t_shape *right)
-{
-	if (!root)
-		return ;
-	if (root->left)
-		divide_tree(root->left, left, right);
-	if (root->right)
-		divide_tree(root->right, left, right);
-	if (!root->left && !root->right)
-		return ;
-	partition_children_group(root, left, right);
-}
+// void	create_bvh(t_world *world)
 
-void	create_bvh(t_world *world)
+// {
+// 	int	i;
 
-{
-	int	i;
-
-	if (!world)
-		return ;
-	new_group(&world->bvh[0]);
-	new_group(&world->bvh[1]);
-	new_group(&world->bvh[2]);
-	i = -1;
-	while (++i < world->objs_count)
-		add_child(&world->bvh[0], &world->objs[i]);
-	// world->bvh[0].bounds_of(&world->bvh[0]);
-	// divide_tree(&world->bvh[0], &world->bvh[1], &world->bvh[2]);
-	world->bvh[0].is_bounds_precal = false;
-	// world->bvh[1].is_bounds_precal = false;
-	// world->bvh[2].is_bounds_precal = false;
-	world->bvh[0].bounds_of(&world->bvh[0]);
-	// world->bvh[1].bounds_of(&world->bvh[1]);
-	// world->bvh[2].bounds_of(&world->bvh[2]);
-}
+// 	if (!world)
+// 		return ;
+// 	new_group(&world->bvh[0]);
+// 	new_group(&world->bvh[1]);
+// 	new_group(&world->bvh[2]);
+// 	i = -1;
+// 	while (++i < world->objs_count)
+// 		add_child(&world->bvh[0], &world->objs[i]);
+// 	// world->bvh[0].bounds_of(&world->bvh[0]);
+// 	// divide_tree(&world->bvh[0], &world->bvh[1], &world->bvh[2]);
+// 	world->bvh[0].is_bounds_precal = false;
+// 	// world->bvh[1].is_bounds_precal = false;
+// 	// world->bvh[2].is_bounds_precal = false;
+// 	world->bvh[0].bounds_of(&world->bvh[0]);
+// 	// world->bvh[1].bounds_of(&world->bvh[1]);
+// 	// world->bvh[2].bounds_of(&world->bvh[2]);
+// }

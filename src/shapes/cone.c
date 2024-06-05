@@ -8,8 +8,8 @@ t_shape	*new_cone(t_shape *shape)
 {
 	new_shape(shape);
 	shape->cone.origin = new_point(0, 0, 0);
-	shape->cone.min = -INFINITY;
-	shape->cone.max = INFINITY;
+	shape->cone.min = -MAXFLOAT;
+	shape->cone.max = MAXFLOAT;
 	shape->cone.closed = false;
 	shape->intersect_fn = intersect_cone;
 	shape->normal_at = normal_at_cone;

@@ -92,7 +92,6 @@ typedef struct s_shape {
 		t_triangle	tri;
 		t_csg		csg;
 		t_shape		*root;
-		t_bvh		bvh;
 	};
 	t_intersect_fn	intersect_fn;
 	t_normal_fn		normal_at;
@@ -104,12 +103,12 @@ typedef struct s_shape {
 	t_shape			*parent;
 	t_bounds_fn		bounds_of;
 	bool			is_bounds_precal;
+	bool			is_gbounds_precal;
 	t_bounds		bounds;
 	bool			is_group;
 	t_bounds		subg_bounds;
 	t_bounds		split_box[2];
-	t_shape			*left;
-	t_shape			*right;
+	t_shape			*next;
 	bool			is_csg;
 }	t_shape;
 
