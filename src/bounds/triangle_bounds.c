@@ -30,45 +30,10 @@ static void	get_triangle_bounds(t_shape *shape)
 
 void	triangle_bounds(t_shape *shape)
 {
-	// t_bounds	tmp_bounds;
-
-	// if (!shape)
-	// 	return ;
-	// tmp_bounds = (t_bounds){(t_point){MAXFLOAT, MAXFLOAT, MAXFLOAT, 1.0},
-	// 	(t_point){-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, 1.0}};
-	// shape->is_bounds_precal = true;
-	// shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
-	// get_triangle_bounds(shape);
-	// if (shape->next)
-	// 	get_group_bounds(shape, &tmp_bounds);
-	// shape->subg_bounds = tmp_bounds;
-	// shape->split_box[0] = tmp_bounds;
-	// shape->split_box[1] = tmp_bounds;
-	// split_bounds(shape->split_box);
-	//
-	// if (shape && !shape->is_bounds_precal)
-	// {
-	// 	tmp_bounds = (t_bounds){(t_point){MAXFLOAT, MAXFLOAT, MAXFLOAT, 1.0},
-	// 		(t_point){-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, 1.0}};
-	// 	shape->is_bounds_precal = true;
-	// 	shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
-	// 	get_triangle_bounds(shape);
-	// }
-	// if (shape && !shape->is_gbounds_precal && shape->next)
-	// {
-	// 	shape->is_gbounds_precal = true;
-	// 	tmp_bounds = (t_bounds){(t_point){MAXFLOAT, MAXFLOAT, MAXFLOAT, 1.0},
-	// 		(t_point){-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, 1.0}};
-	// 	get_group_bounds(shape, &tmp_bounds);
-	// 	shape->subg_bounds = tmp_bounds;
-	// 	shape->split_box[0] = tmp_bounds;
-	// 	shape->split_box[1] = tmp_bounds;
-	// 	split_bounds(shape->split_box);
-	//	}
-	if (!shape->is_bounds_precal)
-	{
-		shape->is_bounds_precal = true;
-		shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
-		get_triangle_bounds(shape);
-	}
+	if (!shape)
+		return ;
+	shape->is_bounds_precal = true;
+	shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
+	get_triangle_bounds(shape);
+	shape->bbx_volume = bounds_volume(&shape->bounds);
 }

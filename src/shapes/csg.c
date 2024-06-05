@@ -66,6 +66,8 @@ static void	csg_bounds(t_shape *shape)
 {
 	t_bounds	tmp_bounds;
 
+	if (!shape)
+		return ;
 	shape->is_bounds_precal = true;
 	shape->bounds = new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT),
 			new_point(-MAXFLOAT, -MAXFLOAT, -MAXFLOAT));
@@ -76,9 +78,5 @@ static void	csg_bounds(t_shape *shape)
 		get_csg_bounds(shape->csg.right, &shape->bounds);
 	}
 	get_bounds(shape, &tmp_bounds);
-	shape->bounds = tmp_bounds;
-	shape->subg_bounds = tmp_bounds;
-	shape->split_box[0] = tmp_bounds;
-	shape->split_box[1] = tmp_bounds;
-	split_bounds(shape->split_box);
+	shape->bbx_volume = bounds_volume(&shape->bounds);
 }

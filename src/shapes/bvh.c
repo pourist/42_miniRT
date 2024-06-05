@@ -43,26 +43,38 @@ void	insert_shape(t_shape **root, t_shape *shape)
 	current->next = shape;
 }
 
+bool	set_split_box(t_shape *group, t_bounds split_box[2])
+{
+	if (!group) 
+		return (false);
+	if (!group->is_bounds_precal)
+		group->bounds_of(group);
+	split_box[0] = group->bounds;
+	split_box[1] = group->bounds;
+	split_bounds(split_box);
+	return (true);
+}
+
 void	partition_children(t_shape *group, t_shape **left, t_shape **right)
 {
-	t_shape	**current;
-	t_shape	*tmp;
+	t_shape		**current;
+	t_shape		*tmp;
+	t_bounds	split_box[2];
 
-	if (!group) 
+	if (!set_split_box(group, split_box))
 		return ;
-	group->bounds_of(group);
 	current = &group->root;
 	while (*current)
 	{
 		tmp = *current;
 		if (!tmp->is_bounds_precal)
 			tmp->bounds_of(tmp);
-		if (box_contains_box(&group->split_box[0], &tmp->bounds))
+		if (box_contains_box(&split_box[0], &tmp->bounds))
 		{
 			*current = tmp->next;
 			insert_shape(left, tmp);
 		}
-		else if (box_contains_box(&group->split_box[1], &tmp->bounds))
+		else if (box_contains_box(&split_box[1], &tmp->bounds))
 		{
 			*current = tmp->next;
 			insert_shape(right, tmp);
