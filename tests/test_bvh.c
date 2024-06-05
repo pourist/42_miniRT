@@ -368,10 +368,10 @@ Test(group, partitioning_a_group_children)
 	cr_assert(eq(int, right == &s2, true));
 }
 
-Test(group, creating_subgroup_from_list_of_children)
-{
-	t_shape	s1;
-	t_shape	s2;
-	t_shape	*g;
-	t_shape	sub[2];
-}
+// Test(group, creating_subgroup_from_list_of_children)
+// {
+// 	t_shape	s1;
+// 	t_shape	s2;
+// 	t_shape	*g;
+// 	t_shape	sub[2];
+// }
