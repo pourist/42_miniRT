@@ -31,7 +31,7 @@ static bool	is_group_hit(t_shape **root, t_shape *shape)
 			if (is_left_hit(tmp->csg.right, shape))
 				return (true);
 		}
-		if (tmp->is_group && is_group_hit(&tmp->root, shape))
+		if (tmp->is_group && is_group_hit(&tmp->group.root, shape))
 			return (true);
 		tmp = tmp->next;
 	}
@@ -49,7 +49,7 @@ static bool	is_left_hit(t_shape *left, t_shape *shape)
 		if (is_left_hit(left->csg.right, shape))
 			return (true);
 	}
-	if (left->is_group && is_group_hit(&left->root, shape))
+	if (left->is_group && is_group_hit(&left->group.root, shape))
 		return (true);
 	return (false);
 }
@@ -86,7 +86,7 @@ void	get_csg_bounds(t_shape *current, t_bounds *b)
 			get_csg_bounds(current->csg.right, b);
 		}
 		if (current->is_group)
-			get_group_bounds(current->root, b);
+			get_group_bounds(current->group.root, b);
 		if (!current->is_bounds_precal)
 			current->bounds_of(current);
 		if (current->bounds.min.x < b->min.x)

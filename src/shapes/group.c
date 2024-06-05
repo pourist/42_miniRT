@@ -7,7 +7,8 @@ static void		group_bounds(t_shape *shape);
 t_shape	*new_group(t_shape *shape)
 {
 	new_shape(shape);
-	shape->root = NULL;
+	shape->group.count = 0;
+	shape->group.root = NULL;
 	shape->intersect_fn = intersect_group;
 	shape->normal_at = normal_at_group;
 	shape->bounds_of = group_bounds;
@@ -21,7 +22,7 @@ static bool	intersect_group(t_hit **xs, t_shape *shape, t_ray *r)
 		shape->bounds_of(shape);
 	if (!intersect_bounds(&shape->bounds, r))
 		return (false);
-	intersect_group_shapes(&shape->root, xs, r);
+	intersect_group_shapes(&shape->group.root, xs, r);
 	return (true);
 }
 
@@ -42,7 +43,7 @@ static void	group_bounds(t_shape *shape)
 	shape->is_bounds_precal = true;
 	shape->bounds = new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT),
 			new_point(-MAXFLOAT, -MAXFLOAT, -MAXFLOAT));
-	get_group_bounds(shape->root, &shape->bounds);
+	get_group_bounds(shape->group.root, &shape->bounds);
 	tmp_bounds = shape->bounds;
 	get_bounds(shape, &tmp_bounds);
 	shape->bbx_volume = bounds_volume(&shape->bounds);

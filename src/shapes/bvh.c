@@ -63,7 +63,7 @@ void	partition_children(t_shape *group, t_shape **left, t_shape **right)
 
 	if (!set_split_box(group, split_box))
 		return ;
-	current = &group->root;
+	current = &group->group.root;
 	while (*current)
 	{
 		tmp = *current;
