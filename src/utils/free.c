@@ -16,21 +16,18 @@ static void	free_pattern(t_pattern *pattern)
 
 static void	free_group(t_shape *root)
 {
-	if (root)
+	t_shape	*tmp;
+
+	while (root)
 	{
-		if (root->left)
-		{
-			free_group(root->left);
-			root->left = NULL;
-		}
-		if (root->right)
-		{
-			free_group(root->right);
-			root->right = NULL;
-		}
+		if (root->is_group)
+			free_group(root->root);
 		free_pattern(&root->material.pattern);
-		free(root);
+		tmp = root;
+		root = root->next;
+		free(tmp);
 	}
+	root = NULL;
 }
 
 static void	free_csg(t_shape *csg)
@@ -46,12 +43,10 @@ static void	free_csg(t_shape *csg)
 				free_csg(csg->csg.right);
 			csg->csg.right = NULL;
 		}
-		if (csg->is_group && (csg->left || csg->right))
+		if (csg->is_group)
 		{
-			free_group(csg->left);
-			free_group(csg->right);
-			csg->left = NULL;
-			csg->right = NULL;
+			free_group(csg->root);
+			csg->root = NULL;
 		}
 		free_pattern(&csg->material.pattern);
 		free(csg);
@@ -66,13 +61,10 @@ void	free_world(t_world *world)
 	while (++i < world->objs_count)
 	{
 		free_pattern(&world->objs[i].material.pattern);
-		if (world->objs[i].is_group
-			&& (world->objs[i].left || world->objs[i].right))
+		if (world->objs[i].is_group)
 		{
-			free_group(world->objs[i].left);
-			free_group(world->objs[i].right);
-			world->objs[i].left = NULL;
-			world->objs[i].right = NULL;
+			free_group(world->objs[i].root);
+			world->objs[i].root = NULL;
 		}
 		if (world->objs[i].is_csg)
 		{

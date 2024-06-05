@@ -76,14 +76,14 @@ Test(bounds, adding_one_bounding_box_to_another)
 	s2.bounds_of(&s2);
 	s1.bounds.min = new_point(-5, -2, 0);
 	s1.bounds.max = new_point(7, 4, 4);
+	s1.bbx_volume = bounds_volume(&s1.bounds);
 	s1.is_bounds_precal = true;
 	s2.bounds.min = new_point(8, -7, -2);
 	s2.bounds.max = new_point(14, 2, 8);
+	s2.bbx_volume = bounds_volume(&s2.bounds);
 	s2.is_bounds_precal = true;
 	add_child(&g, &s1);
 	add_child(&g, &s2);
-	printf("g.bounds.min = %f %f %f\n", g.bounds.min.x, g.bounds.min.y, g.bounds.min.z);
-	printf("g.bounds.max = %f %f %f\n", g.bounds.max.x, g.bounds.max.y, g.bounds.max.z);
 	cr_assert(eq(dbl, g.bounds.min.x, -5));
 	cr_assert(eq(dbl, g.bounds.min.y, -7));
 	cr_assert(eq(dbl, g.bounds.min.z, -2));
@@ -152,7 +152,6 @@ Test(bounds, a_group_has_a_bounding_box_that_contains_its_children)
 	set_transform(&c, m);
 	add_child(&g, &s);
 	add_child(&g, &c);
-	g.bounds_of(&g);
 	cr_assert(eq(dbl, g.bounds.min.x, -4.5));
 	cr_assert(eq(dbl, g.bounds.min.y, -3));
 	cr_assert(eq(dbl, g.bounds.min.z, -5));
@@ -257,4 +256,122 @@ Test(bounds, intersecting_a_ray_with_a_non_cubic_bounding_box)
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
 	r = new_ray(new_point(12, 5, 4), normalize(new_vector(-1, 0, 0)));
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
+}
+
+Test(bounds, splitting_a_perfect_cube)
+{
+	t_bounds box[2];
+
+	box[0] = new_bounds(new_point(-1, -4, -5), new_point(9, 6, 5));
+	box[1] = box[0];
+	split_bounds(box);
+	cr_assert(eq(dbl, box[0].min.x, -1));
+	cr_assert(eq(dbl, box[0].min.y, -4));
+	cr_assert(eq(dbl, box[0].min.z, -5));
+	cr_assert(eq(dbl, box[0].max.x, 4));
+	cr_assert(eq(dbl, box[0].max.y, 6));
+	cr_assert(eq(dbl, box[0].max.z, 5));
+	cr_assert(eq(dbl, box[1].min.x, 4));
+	cr_assert(eq(dbl, box[1].min.y, -4));
+	cr_assert(eq(dbl, box[1].min.z, -5));
+	cr_assert(eq(dbl, box[1].max.x, 9));
+	cr_assert(eq(dbl, box[1].max.y, 6));
+	cr_assert(eq(dbl, box[1].max.z, 5));
+}
+
+Test(bounds, splitting_an_xwide_box)
+{
+	t_bounds	box[2];
+
+	box[0] = new_bounds(new_point(-1, -2, -3), new_point(9, 5.5, 3));
+	box[1] = box[0];
+	split_bounds(box);
+	cr_assert(eq(dbl, box[0].min.x, -1));
+	cr_assert(eq(dbl, box[0].min.y, -2));
+	cr_assert(eq(dbl, box[0].min.z, -3));
+	cr_assert(eq(dbl, box[0].max.x, 4));
+	cr_assert(eq(dbl, box[0].max.y, 5.5));
+	cr_assert(eq(dbl, box[0].max.z, 3));
+	cr_assert(eq(dbl, box[1].min.x, 4));
+	cr_assert(eq(dbl, box[1].min.y, -2));
+	cr_assert(eq(dbl, box[1].min.z, -3));
+	cr_assert(eq(dbl, box[1].max.x, 9));
+	cr_assert(eq(dbl, box[1].max.y, 5.5));
+	cr_assert(eq(dbl, box[1].max.z, 3));
+}
+
+Test(bounds, splitting_a_ywide_box)
+{
+  t_bounds box[2];
+
+	box[0] = new_bounds(new_point(-1, -2, -3), new_point(5, 8, 3));
+	box[1] = box[0];
+	split_bounds(box);
+	cr_assert(eq(dbl, box[0].min.x, -1));
+	cr_assert(eq(dbl, box[0].min.y, -2));
+	cr_assert(eq(dbl, box[0].min.z, -3));
+	cr_assert(eq(dbl, box[0].max.x, 5));
+	cr_assert(eq(dbl, box[0].max.y, 3));
+	cr_assert(eq(dbl, box[0].max.z, 3));
+	cr_assert(eq(dbl, box[1].min.x, -1));
+	cr_assert(eq(dbl, box[1].min.y, 3));
+	cr_assert(eq(dbl, box[1].min.z, -3));
+	cr_assert(eq(dbl, box[1].max.x, 5));
+	cr_assert(eq(dbl, box[1].max.y, 8));
+	cr_assert(eq(dbl, box[1].max.z, 3));
+}
+
+Test(bounds, splitting_a_zwide_box)
+{
+  t_bounds box[2];
+
+	box[0] = new_bounds(new_point(-1, -2, -3), new_point(5, 3, 7));
+	box[1] = box[0];
+	split_bounds(box);
+	cr_assert(eq(dbl, box[0].min.x, -1));
+	cr_assert(eq(dbl, box[0].min.y, -2));
+	cr_assert(eq(dbl, box[0].min.z, -3));
+	cr_assert(eq(dbl, box[0].max.x, 5));
+	cr_assert(eq(dbl, box[0].max.y, 3));
+	cr_assert(eq(dbl, box[0].max.z, 2));
+	cr_assert(eq(dbl, box[1].min.x, -1));
+	cr_assert(eq(dbl, box[1].min.y, -2));
+	cr_assert(eq(dbl, box[1].min.z, 2));
+	cr_assert(eq(dbl, box[1].max.x, 5));
+	cr_assert(eq(dbl, box[1].max.y, 3));
+	cr_assert(eq(dbl, box[1].max.z, 7));
+}
+
+Test(group, partitioning_a_group_children)
+{
+	t_shape	g;
+	t_shape	s1;
+	t_shape	s2;
+	t_shape	s3;
+	t_shape	*left;
+	t_shape	*right;
+
+	left = NULL;
+	right = NULL;
+	new_group(&g);
+	new_sphere(&s1);
+	new_sphere(&s2);
+	new_sphere(&s3);
+	set_transform(&s1, translation(-2, 0, 0));
+	set_transform(&s2, translation(2, 0, 0));
+	add_child(&g, &s1);
+	add_child(&g, &s2);
+	add_child(&g, &s3);
+	partition_children(&g, &left, &right);
+	cr_assert(eq(int, g.root == &s3, true));
+	cr_assert(eq(int, left == &s1, true));
+	cr_assert(eq(int, right == &s2, true));
+}
+
+Test(group, creating_subgroup_from_list_of_children)
+{
+	t_shape	s1;
+	t_shape	s2;
+	t_shape	*g;
+	t_shape	sub[2];
 }

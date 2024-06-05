@@ -72,8 +72,8 @@ static void	csg_bounds(t_shape *shape)
 	tmp_bounds = shape->bounds;
 	if (shape->csg.left || shape->csg.right)
 	{
-		get_csg_bounds(shape->csg.left, &tmp_bounds);
-		get_csg_bounds(shape->csg.right, &tmp_bounds);
+		get_csg_bounds(shape->csg.left, &shape->bounds);
+		get_csg_bounds(shape->csg.right, &shape->bounds);
 	}
 	get_bounds(shape, &tmp_bounds);
 	shape->bounds = tmp_bounds;

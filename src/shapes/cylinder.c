@@ -8,8 +8,8 @@ t_shape	*new_cylinder(t_shape *shape)
 {
 	new_shape(shape);
 	shape->cyl.origin = new_point(0, 0, 0);
-	shape->cyl.min = -INFINITY;
-	shape->cyl.max = INFINITY;
+	shape->cyl.min = -MAXFLOAT;
+	shape->cyl.max = MAXFLOAT;
 	shape->cyl.closed = false;
 	shape->intersect_fn = intersect_cylinder;
 	shape->normal_at = normal_at_cylinder;
