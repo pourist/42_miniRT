@@ -363,7 +363,7 @@ Test(group, partitioning_a_group_children)
 	add_child(&g, &s2);
 	add_child(&g, &s3);
 	partition_children(&g, &left, &right);
-	cr_assert(eq(int, g.root == &s3, true));
+	cr_assert(eq(int, g.group.root == &s3, true));
 	cr_assert(eq(int, left == &s1, true));
 	cr_assert(eq(int, right == &s2, true));
 }

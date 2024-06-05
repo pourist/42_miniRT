@@ -25,8 +25,8 @@ Test(groups, adding_a_child_to_group)
 	new_group(&group); 
 	new_sphere(&child);
 	add_child(&group, &child);
-	cr_assert(eq(ptr, group.root, &child));
-	cr_assert(eq(ptr, group.root->next, NULL));
+	cr_assert(eq(ptr, group.group.root, &child));
+	cr_assert(eq(ptr, group.group.root->next, NULL));
 	cr_assert(eq(ptr, child.parent, &group));
 }
 
@@ -59,21 +59,9 @@ Test(groups, intersecting_a_ray_with_a_nonempty_group)
 	new_sphere(&s3);
 	set_transform(&s2, translation(0, 0, -3));
 	set_transform(&s3, translation(5, 0, 0));
-	// printf("group.bounds.min = %f, %f, %f\n", group.bounds.min.x, group.bounds.min.y, group.bounds.min.z);
-	// printf("group.bounds.max = %f, %f, %f\n", group.bounds.max.x, group.bounds.max.y, group.bounds.max.z);
 	add_child(&group, &s1);
-	// printf("group.bounds.min = %f, %f, %f\n", group.bounds.min.x, group.bounds.min.y, group.bounds.min.z);
-	// printf("group.bounds.max = %f, %f, %f\n", group.bounds.max.x, group.bounds.max.y, group.bounds.max.z);
 	add_child(&group, &s2);
-	// printf("group.bounds.min = %f, %f, %f\n", group.bounds.min.x, group.bounds.min.y, group.bounds.min.z);
-	// printf("group.bounds.max = %f, %f, %f\n", group.bounds.max.x, group.bounds.max.y, group.bounds.max.z);
 	add_child(&group, &s3);
-	// printf("group.bounds.min = %f, %f, %f\n", group.bounds.min.x, group.bounds.min.y, group.bounds.min.z);
-	// printf("group.bounds.max = %f, %f, %f\n", group.bounds.max.x, group.bounds.max.y, group.bounds.max.z);
-	// printf("group.subg_bounds.min = %f, %f, %f\n", group.subg_bounds.min.x, group.subg_bounds.min.y, group.subg_bounds.min.z);
-	// printf("group.subg_bounds.max = %f, %f, %f\n", group.subg_bounds.max.x, group.subg_bounds.max.y, group.subg_bounds.max.z);
-	// printf("group.root.subg_bounds.min = %f, %f, %f\n", group.root->subg_bounds.min.x, group.root->subg_bounds.min.y, group.root->subg_bounds.min.z);
-	// printf("group.root.subg_bounds.max = %f, %f, %f\n", group.root->subg_bounds.max.x, group.root->subg_bounds.max.y, group.root->subg_bounds.max.z);
 	ray = new_ray(new_point(0, 0, -5), new_vector(0, 0, 1));
 	intersect(&xs, &group, &ray); 
 	cr_assert(eq(int, intersect_count(xs), 4));

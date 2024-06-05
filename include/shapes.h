@@ -82,6 +82,12 @@ typedef struct s_csg
 	t_shape		*right;
 }	t_csg;
 
+typedef struct s_group
+{
+	int		count;
+	t_shape	*root;
+}	t_group;
+
 typedef struct s_shape {
 	union {
 		t_sphere	sphere;
@@ -91,7 +97,7 @@ typedef struct s_shape {
 		t_cone		cone;
 		t_triangle	tri;
 		t_csg		csg;
-		t_shape		*root;
+		t_group		group;
 	};
 	t_intersect_fn	intersect_fn;
 	t_normal_fn		normal_at;

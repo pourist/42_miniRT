@@ -21,7 +21,7 @@ static void	free_group(t_shape *root)
 	while (root)
 	{
 		if (root->is_group)
-			free_group(root->root);
+			free_group(root->group.root);
 		free_pattern(&root->material.pattern);
 		tmp = root;
 		root = root->next;
@@ -45,8 +45,8 @@ static void	free_csg(t_shape *csg)
 		}
 		if (csg->is_group)
 		{
-			free_group(csg->root);
-			csg->root = NULL;
+			free_group(csg->group.root);
+			csg->group.root = NULL;
 		}
 		free_pattern(&csg->material.pattern);
 		free(csg);
@@ -63,8 +63,8 @@ void	free_world(t_world *world)
 		free_pattern(&world->objs[i].material.pattern);
 		if (world->objs[i].is_group)
 		{
-			free_group(world->objs[i].root);
-			world->objs[i].root = NULL;
+			free_group(world->objs[i].group.root);
+			world->objs[i].group.root = NULL;
 		}
 		if (world->objs[i].is_csg)
 		{
