@@ -9,7 +9,7 @@
 
 typedef struct s_world
 {
-	t_shape		bvh[3];
+	t_shape		bvh;
 	t_hit		*xs;
 	int			objs_count;
 	t_shape		*objs;

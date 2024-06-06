@@ -29,9 +29,10 @@ bool		box_contains_point(t_bounds *box, t_point *p);
 bool		box_contains_box(t_bounds *box, t_bounds *box2);
 void		add_point_to_bounds(t_bounds **box, t_point p);
 // bvh.c
-void		divide_tree(t_shape *root, t_shape *left, t_shape *right);
 void		create_bvh(t_world *world);
 void		split_bounds(t_bounds s_box[2]);
 void		partition_children(t_shape *group, t_shape **left, t_shape **right);
+void		make_subgroup(t_shape *group, t_shape **container);
+void		divide_groups(t_shape *group, int threshold);
 
 #endif

@@ -111,7 +111,6 @@ typedef struct s_shape {
 	bool			is_bounds_precal;
 	t_bounds		bounds;
 	bool			is_group;
-	double			bbx_volume;
 	t_shape			*next;
 	bool			is_csg;
 }	t_shape;

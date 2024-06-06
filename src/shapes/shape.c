@@ -17,13 +17,19 @@ t_shape	*new_shape(t_shape *shape)
 
 void	set_transform(t_shape *shape, t_matrix transform)
 {
+	t_shape	*parent;
+
 	shape->transform = transform;
 	shape->inverse = inverse_matrix(transform);
 	shape->transpose = transpose_matrix(shape->inverse);
 	if (shape->is_bounds_precal)
 		shape->is_bounds_precal = false;
-	if (shape->parent)
-		shape->parent->is_bounds_precal = false;
+	parent = shape->parent;
+	while (parent)
+	{
+		parent->is_bounds_precal = false;
+		parent = parent->parent;
+	}
 }
 
 t_point	world_to_object(t_shape *shape, t_point world_point)

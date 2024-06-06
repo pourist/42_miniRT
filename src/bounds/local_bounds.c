@@ -12,7 +12,6 @@ void	plane_bounds(t_shape *shape)
 	shape->bounds = (t_bounds){(t_point){-MAXFLOAT, 0, -MAXFLOAT, 1},
 		(t_point){MAXFLOAT, 0, MAXFLOAT, 1}};
 	get_bounds(shape, &tmp_bounds);
-	shape->bbx_volume = bounds_volume(&shape->bounds);
 }
 
 void	cube_bounds(t_shape *shape)
@@ -27,7 +26,6 @@ void	cube_bounds(t_shape *shape)
 	shape->bounds = (t_bounds){(t_point){-1, -1, -1, 1},
 		(t_point){1, 1, 1, 1}};
 	get_bounds(shape, &tmp_bounds);
-	shape->bbx_volume = bounds_volume(&shape->bounds);
 }
 
 void	cone_bounds(t_shape *shape)
@@ -44,7 +42,6 @@ void	cone_bounds(t_shape *shape)
 	shape->bounds = (t_bounds){(t_point){-limit, shape->cone.min, -limit, 1},
 		(t_point){limit, shape->cone.max, limit, 1}};
 	get_bounds(shape, &tmp_bounds);
-	shape->bbx_volume = bounds_volume(&shape->bounds);
 }
 
 void	cylinder_bounds(t_shape *shape)
@@ -59,7 +56,6 @@ void	cylinder_bounds(t_shape *shape)
 	shape->bounds = (t_bounds){(t_point){-1, shape->cyl.min, -1, 1},
 		(t_point){1, shape->cyl.max, 1, 1}};
 	get_bounds(shape, &tmp_bounds);
-	shape->bbx_volume = bounds_volume(&shape->bounds);
 }
 
 void	sphere_bounds(t_shape *shape)
@@ -74,5 +70,4 @@ void	sphere_bounds(t_shape *shape)
 	shape->bounds = (t_bounds){(t_point){-1, -1, -1, 1},
 		(t_point){1, 1, 1, 1}};
 	get_bounds(shape, &tmp_bounds);
-	shape->bbx_volume = bounds_volume(&shape->bounds);
 }

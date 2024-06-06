@@ -35,5 +35,4 @@ void	triangle_bounds(t_shape *shape)
 	shape->is_bounds_precal = true;
 	shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
 	get_triangle_bounds(shape);
-	shape->bbx_volume = bounds_volume(&shape->bounds);
 }

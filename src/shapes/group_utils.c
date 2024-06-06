@@ -12,16 +12,19 @@ void	add_child(t_shape *group, t_shape *child)
 		group->bounds_of(group);
 	if (!child->is_bounds_precal)
 		child->bounds_of(child);
-	if (!group->group.root)
-		group->group.root = child;
-	else
-	{
-		current = &group->group.root;
-		while (*current && (*current)->bbx_volume > child->bbx_volume)
-			current = &(*current)->next;
-		child->next = *current;
-		*current = child;
-	}
+	// if (!group->group.root)
+	// 	group->group.root = child;
+	// else
+	// {
+	// 	current = &group->group.root;
+	// 	while (*current && (*current)->bbx_volume > child->bbx_volume)
+	// 		current = &(*current)->next;
+	// 	child->next = *current;
+	// 	*current = child;
+	// }
+	current = &group->group.root;
+	child->next = *current;
+	group->group.root = child;
 	group->group.count++;
 	group->bounds_of(group);
 }

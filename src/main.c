@@ -1,4 +1,5 @@
-#include "obj_loader.h"
+#include "shapes.h"
+#include "groups.h"
 
 int	main(void)
 {
