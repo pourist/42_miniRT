@@ -12,16 +12,6 @@ void	add_child(t_shape *group, t_shape *child)
 		group->bounds_of(group);
 	if (!child->is_bounds_precal)
 		child->bounds_of(child);
-	// if (!group->group.root)
-	// 	group->group.root = child;
-	// else
-	// {
-	// 	current = &group->group.root;
-	// 	while (*current && (*current)->bbx_volume > child->bbx_volume)
-	// 		current = &(*current)->next;
-	// 	child->next = *current;
-	// 	*current = child;
-	// }
 	current = &group->group.root;
 	child->next = *current;
 	group->group.root = child;
@@ -58,7 +48,8 @@ void	intersect_group_shapes(t_shape **root, t_hit **xs, t_ray *r)
 	current = *root;
 	while (current)
 	{
-		if (intersect_bounds(&current->bounds, r))
+		if ((current->is_group || current->is_csg)
+			|| intersect_bounds(&current->bounds, r))
 			intersect(xs, current, r);
 		current = current->next;
 	}

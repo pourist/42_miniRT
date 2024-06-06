@@ -100,7 +100,7 @@ void	create_camera(t_camera *camera)
 	t_point		to;
 	t_vector	up;
 
-	*camera = new_camera(WIDTH, HEIGHT, M_PI / 3);
+	new_camera(camera, WIDTH, HEIGHT, M_PI / 3);
 	from = new_point(0, 2, -5);
 	to = new_point(0, 0, 4);
 	up = new_vector(0, 1, 0);
@@ -111,14 +111,14 @@ int	main(void)
 {
 	t_mini_rt	rt;
 
-	rt.world = new_world();
+	new_world(&rt.world);
 	rt.world.objs = malloc(sizeof(t_shape) * N_OBJS);
 	rt.world.objs_count = N_OBJS;
 	create_scene(&rt.world);
 	create_ligts(&rt.world);
 	create_camera(&rt.camera);
 	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 12");
-	create_bvh(&rt.world);
+	// create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
 	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);

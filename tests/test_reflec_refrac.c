@@ -94,7 +94,7 @@ Test(world, color_at_with_mutually_reflective_surfaces)
 	t_ray		r;
 	t_color		color;
 
-	world = new_world();
+	new_world(&world);
 	world.lights = malloc(sizeof(t_light));
 	world.lights_count = 1;
 	world.lights[0] = new_light(new_point(0, 0, 0), new_color(1, 1, 1));

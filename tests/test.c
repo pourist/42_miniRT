@@ -47,7 +47,7 @@ t_world	default_world(void)
 {
 	t_world	w;
 
-	w = new_world();
+	new_world(&w);
 	w.ambient = new_color(0, 0, 0);
 	w.objs = malloc(sizeof(t_shape) * 2);
 	w.objs_count = 2;
