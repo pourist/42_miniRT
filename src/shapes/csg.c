@@ -64,19 +64,14 @@ static t_vector	normal_at_csg(t_shape *shape, t_point *local_point)
 
 static void	csg_bounds(t_shape *shape)
 {
-	t_bounds	tmp_bounds;
-
 	if (!shape)
 		return ;
 	shape->is_bounds_precal = true;
 	shape->bounds = new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT),
 			new_point(-MAXFLOAT, -MAXFLOAT, -MAXFLOAT));
-	tmp_bounds = shape->bounds;
-	if (shape->csg.left || shape->csg.right)
-	{
+	if (shape->csg.left)
 		get_csg_bounds(shape->csg.left, &shape->bounds);
+	if (shape->csg.right)
 		get_csg_bounds(shape->csg.right, &shape->bounds);
-	}
-	get_bounds(shape, &tmp_bounds);
-	shape->bbx_volume = bounds_volume(&shape->bounds);
+	get_bounds(shape, &shape->bounds);
 }

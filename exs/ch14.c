@@ -200,7 +200,7 @@ void	render_hexagon(void)
 	create_camera2(&rt.camera);
 	create_scene2(&rt.world);
 	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 14 - Hexagon");
-	create_bvh(&rt.world);
+	// create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
 	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);

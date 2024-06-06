@@ -76,11 +76,9 @@ Test(bounds, adding_one_bounding_box_to_another)
 	s2.bounds_of(&s2);
 	s1.bounds.min = new_point(-5, -2, 0);
 	s1.bounds.max = new_point(7, 4, 4);
-	s1.bbx_volume = bounds_volume(&s1.bounds);
 	s1.is_bounds_precal = true;
 	s2.bounds.min = new_point(8, -7, -2);
 	s2.bounds.max = new_point(14, 2, 8);
-	s2.bbx_volume = bounds_volume(&s2.bounds);
 	s2.is_bounds_precal = true;
 	add_child(&g, &s1);
 	add_child(&g, &s2);
@@ -368,10 +366,147 @@ Test(group, partitioning_a_group_children)
 	cr_assert(eq(int, right == &s2, true));
 }
 
-// Test(group, creating_subgroup_from_list_of_children)
-// {
-// 	t_shape	s1;
-// 	t_shape	s2;
-// 	t_shape	*g;
-// 	t_shape	sub[2];
-// }
+Test(group, creating_subgroup_from_list_of_children)
+{
+	t_shape	s1;
+	t_shape	s2;
+	t_shape	g;
+	t_shape	*container;
+
+	new_sphere(&s1);
+	new_sphere(&s2);
+	new_group(&g);
+	container = &s1;
+	s1.next = &s2;
+	make_subgroup(&g, &container);
+	cr_assert(eq(int, g.group.count, 1));
+	cr_assert(eq(int, g.group.root->is_group, true));
+	cr_assert(eq(int, g.group.root->group.count, 2));
+	cr_assert(eq(int, g.group.root->group.root == &s2, true));
+	cr_assert(eq(int, g.group.root->group.root->next == &s1, true));
+}
+
+Test(shapes, subdividing_a_primitive_does_nothing)
+{
+	t_shape	s;
+
+	new_sphere(&s);
+	divide_groups(&s, 1);
+	cr_assert(eq(int, s.is_group, false));
+	cr_assert(eq(ptr, s.next, NULL));
+}
+
+Test(groups, subdividing_a_group_divides_its_children)
+{
+	t_shape	g;
+	t_shape	s1;
+	t_shape	s2;
+	t_shape	s3;
+
+	new_group(&g);
+	new_sphere(&s1);
+	new_sphere(&s2);
+	new_sphere(&s3);
+	set_transform(&s1, translation(-2, -2, 0));
+	set_transform(&s2, translation(-2, 2, 0));
+	set_transform(&s3, scaling(4, 4, 4));
+	add_child(&g, &s1);
+	add_child(&g, &s2);
+	add_child(&g, &s3);
+	divide_groups(&g, 1);
+	cr_assert(eq(int, g.group.count, 2));
+	cr_assert(eq(int, g.group.root->is_group, true));
+	cr_assert(eq(int, g.group.root->group.count, 2));
+	cr_assert(eq(int, g.group.root->group.root->is_group, true));
+	cr_assert(eq(int, g.group.root->group.root->group.count, 1));
+	cr_assert(eq(int, g.group.root->group.root->group.root == &s2, true));
+	cr_assert(eq(int, g.group.root->group.root->next->is_group, true));
+	cr_assert(eq(int, g.group.root->group.root->next->group.count, 1));
+	cr_assert(eq(int, g.group.root->group.root->next->group.root == &s1, true));
+	cr_assert(eq(int, g.group.root->next->is_group, false));
+	cr_assert(eq(ptr, g.group.root->next, &s3));
+}
+
+Test(groups, subdividing_a_group_with_too_few_children)
+{
+	t_shape	g;
+	t_shape sg;
+	t_shape	s1;
+	t_shape	s2;
+	t_shape	s3;
+	t_shape	s4;
+
+	new_group(&g);
+	new_group(&sg);
+	new_sphere(&s1);
+	new_sphere(&s2);
+	new_sphere(&s3);
+	new_sphere(&s4);
+	set_transform(&s1, translation(-2, 0, 0));
+	set_transform(&s2, translation(2, 1, 0));
+	set_transform(&s3, translation(2, -1, 0));
+	add_child(&sg, &s1);
+	add_child(&sg, &s2);
+	add_child(&sg, &s3);
+	add_child(&g, &sg);
+	add_child(&g, &s4);
+	divide_groups(&g, 3);
+	cr_assert(eq(int, g.group.count, 2));
+	cr_assert(eq(int, g.group.root->is_group, false));
+	cr_assert(eq(ptr, g.group.root, &s4));
+	cr_assert(eq(ptr, g.group.root->next, &sg));
+	cr_assert(eq(int, g.group.root->next->group.count, 2));
+	cr_assert(eq(int, g.group.root->next->group.root->is_group, true));
+	cr_assert(eq(int, g.group.root->next->group.root->group.count, 2));
+	cr_assert(eq(ptr, g.group.root->next->group.root->group.root, &s3));
+	cr_assert(eq(ptr, g.group.root->next->group.root->group.root->next, &s2));
+	cr_assert(eq(int, g.group.root->next->group.root->next->is_group, true));
+	cr_assert(eq(ptr, g.group.root->next->group.root->next->group.root, &s1));
+}
+
+Test(csg, subdividing_a_csg_shape_subdivides_its_children)
+{
+	t_shape	csg;
+	t_shape	s1;
+	t_shape	s2;
+	t_shape	s3;
+	t_shape	s4;
+	t_shape	right;
+	t_shape	left;
+
+	new_sphere(&s1);
+	new_sphere(&s2);
+	new_sphere(&s3);
+	new_sphere(&s4);
+	set_transform(&s1, translation(-2, 0, 0));
+	set_transform(&s2, translation(2, 0, 0));
+	set_transform(&s3, translation(0, 0, -2));
+	set_transform(&s4, translation(0, 0, 2));
+	new_group(&left);
+	new_group(&right);
+	add_child(&left, &s1);
+	add_child(&left, &s2);
+	add_child(&right, &s3);
+	add_child(&right, &s4);
+	new_csg(DIFFERENCE, &left, &right, &csg);
+	divide_groups(&csg, 1);
+	cr_assert(eq(int, csg.is_group, false));
+	cr_assert(eq(ptr, csg.csg.left, &left));
+	cr_assert(eq(ptr, csg.csg.right, &right));
+	cr_assert(eq(int, csg.csg.left->is_group, true));
+	cr_assert(eq(int, csg.csg.left->group.count, 2));
+	cr_assert(eq(int, csg.csg.left->group.root->is_group, true));
+	cr_assert(eq(int, csg.csg.left->group.root->group.count, 1));
+	cr_assert(eq(ptr, csg.csg.left->group.root->group.root, &s2));
+	cr_assert(eq(int, csg.csg.left->group.root->next->is_group, true));
+	cr_assert(eq(int, csg.csg.left->group.root->next->group.count, 1));
+	cr_assert(eq(ptr, csg.csg.left->group.root->next->group.root, &s1));
+	cr_assert(eq(int, csg.csg.right->is_group, true));
+	cr_assert(eq(int, csg.csg.right->group.count, 2));
+	cr_assert(eq(int, csg.csg.right->group.root->is_group, true));
+	cr_assert(eq(int, csg.csg.right->group.root->group.count, 1));
+	cr_assert(eq(ptr, csg.csg.right->group.root->group.root, &s4));
+	cr_assert(eq(int, csg.csg.right->group.root->next->is_group, true));
+	cr_assert(eq(int, csg.csg.right->group.root->next->group.count, 1));
+	cr_assert(eq(ptr, csg.csg.right->group.root->next->group.root, &s3));
+}

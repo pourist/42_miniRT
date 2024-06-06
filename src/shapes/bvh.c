@@ -26,76 +26,115 @@ void	split_bounds(t_bounds s_box[2])
 	}
 }
 
-void	insert_shape(t_shape **root, t_shape *shape)
+void	fill_containers(t_shape *group, t_shape **left, t_shape **right,
+			t_bounds split_box[2])
 {
-	t_shape	*current;
+	t_shape	**current;
+	t_shape	*tmp;
 
-	if (!root || !(*root))
-	{
-		if (root)
-			(*root) = shape;
-		return ;
-	}
-	shape->next = NULL;
-	current = *root;
-	while (current->next)
-		current = current->next;
-	current->next = shape;
-}
-
-bool	set_split_box(t_shape *group, t_bounds split_box[2])
-{
-	if (!group) 
-		return (false);
-	if (!group->is_bounds_precal)
-		group->bounds_of(group);
-	split_box[0] = group->bounds;
-	split_box[1] = group->bounds;
-	split_bounds(split_box);
-	return (true);
-}
-
-void	partition_children(t_shape *group, t_shape **left, t_shape **right)
-{
-	t_shape		**current;
-	t_shape		*tmp;
-	t_bounds	split_box[2];
-
-	if (!set_split_box(group, split_box))
-		return ;
 	current = &group->group.root;
 	while (*current)
 	{
 		tmp = *current;
-		if (!tmp->is_bounds_precal)
-			tmp->bounds_of(tmp);
 		if (box_contains_box(&split_box[0], &tmp->bounds))
 		{
 			*current = tmp->next;
-			insert_shape(left, tmp);
+			tmp->next = *left; 
+			*left = tmp;
+			group->group.count--;
 		}
 		else if (box_contains_box(&split_box[1], &tmp->bounds))
 		{
 			*current = tmp->next;
-			insert_shape(right, tmp);
+			tmp->next = NULL;
+			tmp->next = *right; 
+			*right = tmp;
+			group->group.count--;
 		}
 		else
 			current = &tmp->next;
 	}
 }
 
-// void	divide_tree(t_shape *root, t_shape *left, t_shape *right)
-// {
-// 	if (!root)
-// 		return ;
-// 	if (root->left)
-// 		divide_tree(root->left, left, right);
-// 	if (root->right)
-// 		divide_tree(root->right, left, right);
-// 	if (!root->left && !root->right)
-// 		return ;
-// 	partition_children_group(root, left, right);
-// }
+void	partition_children(t_shape *group, t_shape **left, t_shape **right)
+{
+	t_bounds	split_box[2];
+
+	if (!group)
+		return ;
+	if (!group->is_bounds_precal)
+		group->bounds_of(group);
+	split_box[0] = group->bounds;
+	split_box[1] = group->bounds;
+	split_bounds(split_box);
+	fill_containers(group, left, right, split_box);
+	group->bounds_of(group);
+}
+
+void	make_subgroup(t_shape *group, t_shape **container)
+{
+	t_shape	*subgroup;
+	t_shape	*tmp;
+	t_shape	*current;
+
+	if (!group || !container || !(*container))
+		return ;
+	subgroup = (t_shape *)malloc(sizeof(t_shape));
+	if (!subgroup)
+		return ;
+	new_group(subgroup);
+	current = *container;
+	while (current)
+	{
+		tmp = current;
+		current = current->next;
+		tmp->next = NULL;
+		add_child(subgroup, tmp);
+	}
+	add_child(group, subgroup);
+}
+
+bool	check_group(t_shape *group, int threshold)
+{
+	if (!group || (group && (!group->is_group && !group->is_csg)))
+		return (false);
+	if (!group->is_bounds_precal)
+		group->bounds_of(group);
+	if (group->is_csg)
+	{
+		divide_groups(group->csg.left, threshold);
+		divide_groups(group->csg.right, threshold);
+		return (false);
+	}
+	return (true);
+}
+
+void	divide_groups(t_shape *group, int threshold)
+{
+	t_shape	*left;
+	t_shape	*right;
+	t_shape	*current;
+
+	if (!check_group(group, threshold))
+		return ;
+	left = NULL;
+	right = NULL;
+	if (threshold <= group->group.count)
+	{
+		partition_children(group, &left, &right);
+		if (left)
+			make_subgroup(group, &left);
+		if (right)
+			make_subgroup(group, &right);
+	}
+	current = group->group.root;
+	while (current)
+	{
+		divide_groups(current, threshold);
+		current = current->next;
+	}
+	group->bounds_of(group);
+}
 
 // void	create_bvh(t_world *world)
 
@@ -104,9 +143,7 @@ void	partition_children(t_shape *group, t_shape **left, t_shape **right)
 
 // 	if (!world)
 // 		return ;
-// 	new_group(&world->bvh[0]);
-// 	new_group(&world->bvh[1]);
-// 	new_group(&world->bvh[2]);
+// 	new_group(&world->bvh);
 // 	i = -1;
 // 	while (++i < world->objs_count)
 // 		add_child(&world->bvh[0], &world->objs[i]);

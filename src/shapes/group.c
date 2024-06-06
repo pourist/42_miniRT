@@ -36,15 +36,11 @@ static t_vector	normal_at_group(t_shape *shape, t_point *local_point)
 
 static void	group_bounds(t_shape *shape)
 {
-	t_bounds	tmp_bounds;
-
 	if (!shape)
 		return ;
 	shape->is_bounds_precal = true;
 	shape->bounds = new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT),
 			new_point(-MAXFLOAT, -MAXFLOAT, -MAXFLOAT));
 	get_group_bounds(shape->group.root, &shape->bounds);
-	tmp_bounds = shape->bounds;
-	get_bounds(shape, &tmp_bounds);
-	shape->bbx_volume = bounds_volume(&shape->bounds);
+	get_bounds(shape, &shape->bounds);
 }
