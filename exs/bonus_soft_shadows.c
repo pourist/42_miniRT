@@ -5,8 +5,8 @@
 #include "groups.h"
 #include "obj_loader.h"
 
-#define WIDTH	600
-#define HEIGHT	480
+#define WIDTH	800
+#define HEIGHT	600
 #define N_OBJS	1
 
 void	create_scene(t_world *world)
@@ -73,7 +73,7 @@ void	create_camera(t_camera *camera)
 	t_point		to;
 	t_vector	up;
 
-	*camera = new_camera(WIDTH, HEIGHT, M_PI_4);
+	new_camera(camera, WIDTH, HEIGHT, M_PI_4);
 	from = new_point(-3, 1, 2.5);
 	to = new_point(0, 0.5, 0);
 	up = new_vector(0, 1, 0);
@@ -84,12 +84,12 @@ int	main(void)
 {
 	t_mini_rt	rt;
 
-	rt.world = new_world();
+	new_world(&rt.world);
 	create_lights(&rt.world);
 	create_camera(&rt.camera);
 	create_scene(&rt.world);
 	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 16");
-	create_bvh(&rt.world);
+	// create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
 	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);

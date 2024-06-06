@@ -4,7 +4,7 @@ Test(world, creating_world)
 {
 	t_world world;
 
-	world = new_world();
+	new_world(&world);
 	cr_assert(eq(ptr, world.objs, NULL));
 	cr_assert(eq(ptr, world.objs, NULL));
 }

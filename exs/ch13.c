@@ -170,7 +170,7 @@ void	create_camera(t_camera *camera)
 	t_point		to;
 	t_vector	up;
 
-	*camera = new_camera(WIDTH, HEIGHT, M_PI / 3);
+	new_camera(camera, WIDTH, HEIGHT, M_PI / 3);
 	from = new_point(0, 2, -5);
 	to = new_point(0, 0, 4);
 	up = new_vector(0, 1, 0);
@@ -181,7 +181,7 @@ int	main(void)
 {
 	t_mini_rt	rt;
 
-	rt.world = new_world();
+	new_world(&rt.world);
 	rt.world.objs = malloc(sizeof(t_shape) * N_OBJS);
 	rt.world.objs_count = N_OBJS;
 	create_scene(&rt.world);

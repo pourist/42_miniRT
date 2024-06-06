@@ -13,7 +13,8 @@ typedef struct s_world
 	t_hit		*xs;
 	int			objs_count;
 	t_shape		*objs;
-	t_shape		*elements_inside;
+	int			objs_inside_count;
+	t_shape		*objs_inside;
 	int			lights_count;
 	t_light		*lights;
 	t_color		ambient;
@@ -45,7 +46,7 @@ typedef struct s_refrac_params
 	t_color		refracted_color;
 }	t_refrac_params;
 
-t_world	new_world(void);
+t_world	*new_world(t_world *world);
 t_hit	*intersect_world(t_world *world, t_ray *ray);
 t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs);
 t_color	shade_hit(t_world *world, t_comps *comps);

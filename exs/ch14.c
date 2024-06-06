@@ -5,8 +5,8 @@
 #include "groups.h"
 #include <time.h>
 
-#define WIDTH	600
-#define HEIGHT	480
+#define WIDTH	800
+#define HEIGHT	600
 #define N_OBJS	1
 
 double	random_double(double min, double max)
@@ -153,7 +153,7 @@ void	create_camera1(t_camera *camera)
 	t_point		to;
 	t_vector	up;
 
-	*camera = new_camera(WIDTH, HEIGHT, M_PI / 3);
+	new_camera(camera, WIDTH, HEIGHT, M_PI / 3);
 	from = new_point(25, -16, -25);
 	to = new_point(25, 30, 25);
 	up = new_vector(0, 1, 0);
@@ -166,7 +166,7 @@ void	create_camera2(t_camera *camera)
 	t_point		to;
 	t_vector	up;
 
-	*camera = new_camera(WIDTH, HEIGHT, M_PI / 3);
+	new_camera(camera, WIDTH, HEIGHT, M_PI / 3);
 	from = new_point(0, 2, -2);
 	to = new_point(0, 0, 0);
 	up = new_vector(0, 1, 0);
@@ -177,7 +177,7 @@ void	render_lots_of_spheres(void)
 {
 	t_mini_rt	rt;
 
-	rt.world = new_world();
+	new_world(&rt.world);
 	create_scene1(&rt.world);
 	create_lights1(&rt.world);
 	create_camera1(&rt.camera);
@@ -195,7 +195,7 @@ void	render_hexagon(void)
 {
 	t_mini_rt	rt;
 
-	rt.world = new_world();
+	new_world(&rt.world);
 	create_lights1(&rt.world);
 	create_camera2(&rt.camera);
 	create_scene2(&rt.world);

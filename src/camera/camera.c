@@ -1,30 +1,29 @@
 #include "camera.h"
 
-t_camera	new_camera(double hsize, double vsize, double fov)
+t_camera	*new_camera(t_camera *camera, double hsize, double vsize, double fov)
 {
-	t_camera	camera;
 	double		aspect;
 	double		half_view;
 
-	camera.hsize = hsize;
-	camera.vsize = vsize;
-	camera.fov = fov;
-	camera.transform = get_identity_matrix();
-	camera.inverse = camera.transform;
-	camera.transpose = camera.transform;
-	half_view = tan(camera.fov / 2.0);
+	camera->hsize = hsize;
+	camera->vsize = vsize;
+	camera->fov = fov;
+	camera->transform = get_identity_matrix();
+	camera->inverse = camera->transform;
+	// camera->transpose = camera->transform;
+	half_view = tan(camera->fov / 2.0);
 	aspect = hsize / vsize;
 	if (aspect >= 1)
 	{
-		camera.half_width = half_view;
-		camera.half_height = half_view / aspect;
+		camera->half_width = half_view;
+		camera->half_height = half_view / aspect;
 	}
 	else
 	{
-		camera.half_width = half_view * aspect;
-		camera.half_height = half_view;
+		camera->half_width = half_view * aspect;
+		camera->half_height = half_view;
 	}
-	camera.pixel_size = (camera.half_width * 2.0) / hsize;
+	camera->pixel_size = (camera->half_width * 2.0) / hsize;
 	return (camera);
 }
 
@@ -49,5 +48,5 @@ void	set_transform_camera(t_camera *camera, t_matrix transform)
 {
 	camera->transform = transform;
 	camera->inverse = inverse_matrix(transform);
-	camera->transpose = transpose_matrix(camera->inverse);
+	// camera->transpose = transpose_matrix(camera->inverse);
 }
