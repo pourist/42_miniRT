@@ -39,13 +39,11 @@ static t_vector	*normal_at_group(t_shape *shape, t_point *local_point,
 
 static void	group_bounds(t_shape *shape)
 {
-	t_point	tmp[2];
-
 	if (!shape)
 		return ;
 	shape->is_bounds_precal = true;
-	new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT, &tmp[0]), new_point(
-			-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, &tmp[1]), &shape->bounds);
+	shape->bounds = (t_bounds){(t_point){MAXFLOAT, MAXFLOAT, MAXFLOAT, 1},
+		(t_point){-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, 1}};
 	get_group_bounds(shape->group.root, &shape->bounds);
 	get_bounds(shape, &shape->bounds);
 }

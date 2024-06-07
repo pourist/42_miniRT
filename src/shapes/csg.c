@@ -67,13 +67,11 @@ static t_vector	*normal_at_csg(t_shape *shape, t_point *local_point,
 
 static void	csg_bounds(t_shape *shape)
 {
-	t_point	tmp[2];
-
 	if (!shape)
 		return ;
 	shape->is_bounds_precal = true;
-	new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT, &tmp[0]), new_point(
-			-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, &tmp[1]), &shape->bounds);
+	shape->bounds = (t_bounds){(t_point){MAXFLOAT, MAXFLOAT, MAXFLOAT, 0},
+		(t_point){-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, 0}};
 	if (shape->csg.left)
 		get_csg_bounds(shape->csg.left, &shape->bounds);
 	if (shape->csg.right)

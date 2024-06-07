@@ -10,7 +10,7 @@ t_bounds	*new_bounds(t_point *min, t_point *max, t_bounds *new_bounds)
 void	get_bounds(t_shape *s, t_bounds *new_bounds)
 {
 	t_point		box[8];
-	t_tuple		tmp;
+	t_point		tmp;
 	int			i;
 
 	box[0] = s->bounds.min;

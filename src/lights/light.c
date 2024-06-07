@@ -17,7 +17,7 @@ t_light	*new_light(t_point *position, t_color *intensity, t_light *light)
 
 t_light	*new_area_light(t_alight_params *lp, t_light *light)
 {
-	t_vector	tmp;
+	t_point	tmp;
 
 	light->is_area_light = true;
 	light->corner = lp->corner;
@@ -28,8 +28,8 @@ t_light	*new_area_light(t_alight_params *lp, t_light *light)
 	light->samples = lp->usteps * lp->vsteps;
 	light->inverse_samples = 1.0 / light->samples;
 	light->intensity = lp->intensity;
-	add(&lp->corner, add(multiply(&lp->full_uvec, 0.5, &light->position),
-			multiply(&lp->full_vvec, 0.5, &tmp), &tmp), &light->position);
+	add(&lp->corner, add(multiply(&lp->full_uvec, 0.5, &tmp), multiply(
+		&lp->full_vvec, 0.5, &light->position), &light->position), &light->position);
 	light->intensity_ratio = 1.0;
 	new_sequencer(&light->jitter_by);
 	return (light);
