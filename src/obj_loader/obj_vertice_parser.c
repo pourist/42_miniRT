@@ -13,8 +13,8 @@ bool	parse_vertice(t_obj_loader *loader, char **params, int *line_nb)
 		if (!loader->vertices)
 			return (false);
 	}
-	loader->vertices[loader->v_count] = new_point(ft_atof(params[1]),
-			ft_atof(params[2]), ft_atof(params[3]));
+	new_point(ft_atof(params[1]), ft_atof(params[2]), ft_atof(params[3]),
+		&loader->vertices[loader->v_count]);
 	loader->v_count++;
 	return (true);
 }

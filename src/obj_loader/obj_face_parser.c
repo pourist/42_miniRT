@@ -23,7 +23,8 @@ static void	fill_indices(char **params, int *vert_i, int *norm_i, int *p_len)
 	}
 }
 
-static void	create_triangle(t_obj_loader *loader, int *vert_i, int *norm_i, int i)
+static void	create_triangle(t_obj_loader *loader, int *vert_i, int *norm_i,
+					int i)
 {
 	t_point		v[3];
 	t_vector	n[3];
@@ -41,7 +42,8 @@ static void	create_triangle(t_obj_loader *loader, int *vert_i, int *norm_i, int 
 			new_smooth_triangle(v, n, &loader->triangles[loader->t_count]);
 		}
 		else
-			new_triangle(v[0], v[1], v[2], &loader->triangles[loader->t_count]);
+			new_triangle(&v[0], &v[1], &v[2],
+				&loader->triangles[loader->t_count]);
 	}
 }
 
@@ -54,7 +56,7 @@ static bool	fan_triangulation(t_obj_loader *loader, int *vert_i, int *norm_i, in
 	{
 		if (loader->t_count == loader->t_max)
 		{
-			loader->t_max += *p_len - 2;
+			loader->t_max++;
 			loader->triangles = ft_realloc(loader->triangles,
 					loader->t_max * sizeof(t_point));
 			if (!loader->triangles)

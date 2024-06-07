@@ -2,12 +2,13 @@
 #include "groups.h"
 
 static bool		intersect_sphere(t_hit **xs, t_shape *shape, t_ray *r);
-static t_vector	normal_at_sphere(t_shape *sphere, t_point *local_point);
+static t_vector	*normal_at_sphere(t_shape *sphere, t_point *local_point,
+					t_vector *normal);
 
 t_shape	*new_sphere(t_shape *shape)
 {
 	new_shape(shape);
-	shape->sphere.origin = new_point(0, 0, 0);
+	new_point(0, 0, 0, &shape->sphere.origin);
 	shape->sphere.radius = 1.0;
 	shape->material.diffuse = 0.9;
 	shape->material.specular = 0.6;
@@ -31,10 +32,10 @@ static bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray *r)
 	t_vector			sphere_to_ray;
 	double				sqrt_d;
 
-	sphere_to_ray = subtract(r->origin, shape->sphere.origin);
-	p.a = dot(r->direction, r->direction);
-	p.b = 2.0 * dot(r->direction, sphere_to_ray);
-	p.c = dot(sphere_to_ray, sphere_to_ray) - 1.0;
+	subtract(&r->origin, &shape->sphere.origin, &sphere_to_ray);
+	p.a = dot(&r->direction, &r->direction);
+	p.b = 2.0 * dot(&r->direction, &sphere_to_ray);
+	p.c = dot(&sphere_to_ray, &sphere_to_ray) - 1.0;
 	p.discriminant = (p.b * p.b) - (4.0 * p.a * p.c);
 	if (p.discriminant < 0)
 		return (false);
@@ -47,8 +48,9 @@ static bool	intersect_sphere(t_hit **xs, t_shape *shape, t_ray *r)
 	return (true);
 }
 
-static t_vector	normal_at_sphere(t_shape *sphere, t_point *local_point)
+static t_vector	*normal_at_sphere(t_shape *sphere, t_point *local_point,
+					t_vector *normal)
 {
 	(void)sphere;
-	return (subtract(*local_point, sphere->sphere.origin));
+	return (subtract(local_point, &sphere->sphere.origin, normal));
 }

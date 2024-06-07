@@ -6,7 +6,7 @@ t_pattern	new_gradient_pattern(t_pattern a, t_pattern b)
 {
 	t_pattern	pattern;
 
-	pattern = new_pattern();
+	new_pattern(&pattern);
 	pattern.a = malloc(sizeof(t_pattern));
 	if (!pattern.a)
 		return (pattern);
@@ -29,7 +29,7 @@ static t_color	gradient_at(t_pattern *pattern, t_point *shape_point)
 	t_color		distance;
 	double		fraction;
 
-	pattern_point = multiply_matrix_by_tuple(pattern->inverse, *shape_point);
+	multiply_matrix_by_tuple(&pattern->inverse, shape_point, &pattern_point);
 	distance = subtract_color(pattern->b->pattern_at(pattern->b,
 				&pattern_point), pattern->a->pattern_at(pattern->a,
 				&pattern_point));

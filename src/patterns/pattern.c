@@ -1,15 +1,15 @@
 #include "patterns.h"
 #include "shapes.h"
 
-t_pattern	new_pattern(void)
+t_pattern	*new_pattern(t_pattern *pattern)
 {
-	return ((t_pattern){
-		.a = NULL,
-		.b = NULL,
-		.transform = get_identity_matrix(),
-		.inverse = get_identity_matrix(),
-		.transpose = get_identity_matrix(),
-	});
+	if (!pattern)
+		return (NULL);
+	pattern->a = NULL;
+	pattern->b = NULL;
+	get_identity_matrix(&pattern->transform);
+	get_identity_matrix(&pattern->inverse);
+	return (pattern);
 }
 
 t_color	pattern_at_shape(t_pattern *pattern, t_shape *shape,
@@ -17,13 +17,12 @@ t_color	pattern_at_shape(t_pattern *pattern, t_shape *shape,
 {
 	t_point		shape_point;
 
-	shape_point = multiply_matrix_by_tuple(shape->inverse, *world_point);
+	multiply_matrix_by_tuple(&shape->inverse, world_point, &shape_point);
 	return (pattern->pattern_at(pattern, &shape_point));
 }
 
-void	set_pattern_transform(t_pattern *pattern, t_matrix transform)
+void	set_pattern_transform(t_pattern *pattern, t_matrix *transform)
 {
-	pattern->transform = transform;
-	pattern->inverse = inverse_matrix(transform);
-	pattern->transpose = transpose_matrix(pattern->inverse);
+	pattern->transform = *transform;
+	inverse_matrix(transform, &pattern->inverse);
 }

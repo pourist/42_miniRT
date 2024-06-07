@@ -2,7 +2,8 @@
 #include "groups.h"
 
 static bool		intersect_csg(t_hit **xs, t_shape *shape, t_ray *r);
-static t_vector	normal_at_csg(t_shape *shape, t_point *local_point);
+static t_vector	*normal_at_csg(t_shape *shape, t_point *local_point,
+					t_vector *normal);
 static void		csg_bounds(t_shape *shape);
 
 t_shape	*new_csg(t_operation operation, t_shape *left, t_shape *right,
@@ -54,21 +55,25 @@ static bool	intersect_csg(t_hit **xs, t_shape *csg, t_ray *r)
 	return (filter_intersections(all_xs, csg, xs) != NULL);
 }
 
-static t_vector	normal_at_csg(t_shape *shape, t_point *local_point)
+static t_vector	*normal_at_csg(t_shape *shape, t_point *local_point,
+					t_vector *normal)
 {
 	(void)shape;
 	(void)local_point;
 	printf("Exception: Attempted to get a normal from a CSG object.\n");
-	return ((t_vector){0, 0, 0, 0});
+	*normal = (t_vector){0, 0, 0, 0};
+	return (normal);
 }
 
 static void	csg_bounds(t_shape *shape)
 {
+	t_point	tmp[2];
+
 	if (!shape)
 		return ;
 	shape->is_bounds_precal = true;
-	shape->bounds = new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT),
-			new_point(-MAXFLOAT, -MAXFLOAT, -MAXFLOAT));
+	new_bounds(new_point(MAXFLOAT, MAXFLOAT, MAXFLOAT, &tmp[0]), new_point(
+			-MAXFLOAT, -MAXFLOAT, -MAXFLOAT, &tmp[1]), &shape->bounds);
 	if (shape->csg.left)
 		get_csg_bounds(shape->csg.left, &shape->bounds);
 	if (shape->csg.right)

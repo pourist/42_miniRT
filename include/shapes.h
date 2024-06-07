@@ -65,7 +65,7 @@ typedef struct s_triangle
 typedef struct s_hit	t_hit;
 typedef struct s_shape	t_shape;
 typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray *);
-typedef t_tuple			(*t_normal_fn)(t_shape *, t_point *);
+typedef t_vector		*(*t_normal_fn)(t_shape *, t_point *, t_vector *);
 typedef void			(*t_bounds_fn)(t_shape *);
 
 typedef enum e_operation
@@ -145,8 +145,14 @@ typedef struct s_intersect_tri_params
 
 // Shapes
 t_shape		*new_shape(t_shape *shape);
-void		set_transform(t_shape *shape, t_matrix transform);
-t_vector	normal_at(t_shape *shape, t_point *point);
+void		set_transform(t_shape *shape, t_matrix *transform);
+t_vector	*normal_at(t_shape *shape, t_point *world_point,
+				t_vector *world_normal);
+// Groups checks
+t_point		*world_to_object(t_shape *shape, t_point *world_point,
+				t_point *object_point);
+t_vector	*normal_to_world(t_shape *shape, t_vector *object_normal,
+				t_vector *world_normal);
 // Sphere Shape
 t_shape		*new_sphere(t_shape *shape);
 t_shape		*new_glass_sphere(t_shape *shape);
@@ -159,7 +165,8 @@ t_shape		*new_cylinder(t_shape *shape);
 // Cone Shape
 t_shape		*new_cone(t_shape *shape);
 // Triangle Shape
-t_shape		*new_triangle(t_point p1, t_point p2, t_point p3, t_shape *shape);
+t_shape		*new_triangle(t_point *p1, t_point *p2, t_point *p3,
+				t_shape *shape);
 t_shape		*new_smooth_triangle(t_point v[3], t_vector n[3], t_shape *shape);
 // CSG Shape
 t_shape		*new_csg(t_operation operation, t_shape *left, t_shape *right,
@@ -180,8 +187,5 @@ t_hit		*hit(t_hit *xs);
 // pattern.c
 t_color		pattern_at_shape(t_pattern *pattern, t_shape *shape,
 				t_point *world_point);
-// Groups checks
-t_point		world_to_object(t_shape *shape, t_point world_point);
-t_vector	normal_to_world(t_shape *shape, t_vector object_normal);
 
 #endif

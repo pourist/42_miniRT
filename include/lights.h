@@ -39,8 +39,8 @@ typedef struct s_alight_params
 	t_color		intensity;
 }	t_alight_params;
 
-t_light	new_light(t_point position, t_color intensity);
-void	new_area_light(t_alight_params *lp, t_light *light);
+t_light	*new_light(t_point *position, t_color *intensity, t_light *light);
+t_light	*new_area_light(t_alight_params *lp, t_light *light);
 // Material.c 
 t_color	lighting(t_shape *shape, t_light *light, t_point *point,
 			t_eye_normal *view);
