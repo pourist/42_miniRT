@@ -8,6 +8,7 @@ Test(bounding_box, check_all_shapes)
 	t_shape	cyl;
 	t_shape	cone;
 	t_shape	tri;
+	t_point	t[3];
 
 	new_sphere(&s);
 	s.bounds_of(&s);
@@ -53,7 +54,8 @@ Test(bounding_box, check_all_shapes)
 	cr_assert(eq(dbl, cone.bounds.max.x, 5));
 	cr_assert(eq(dbl, cone.bounds.max.y, 3));
 	cr_assert(eq(dbl, cone.bounds.max.z, 5));
-	new_triangle(new_point(-3, 7, 2), new_point(6, 2, -4), new_point(2, -1, -1), &tri);
+	new_triangle(new_point(-3, 7, 2, &t[0]),
+		new_point(6, 2, -4, &t[1]), new_point(2, -1, -1, &t[2]), &tri);
 	tri.bounds_of(&tri);
 	cr_assert(eq(dbl, tri.bounds.min.x, -3));
   cr_assert(eq(dbl, tri.bounds.min.y, -1));
@@ -74,11 +76,11 @@ Test(bounds, adding_one_bounding_box_to_another)
 	new_sphere(&s2);
 	s1.bounds_of(&s1);
 	s2.bounds_of(&s2);
-	s1.bounds.min = new_point(-5, -2, 0);
-	s1.bounds.max = new_point(7, 4, 4);
+	new_point(-5, -2, 0, &s1.bounds.min);
+	new_point(7, 4, 4, &s1.bounds.max);
 	s1.is_bounds_precal = true;
-	s2.bounds.min = new_point(8, -7, -2);
-	s2.bounds.max = new_point(14, 2, 8);
+	new_point(8, -7, -2, &s2.bounds.min);
+	new_point(14, 2, 8, &s2.bounds.max);
 	s2.is_bounds_precal = true;
 	add_child(&g, &s1);
 	add_child(&g, &s2);
@@ -94,25 +96,26 @@ Test(bounds, checking_to_see_if_a_box_contains_a_given_point)
 {
 	t_bounds b;
 	t_point	p;
+	t_point t[2];
 
-	b = new_bounds(new_point(5, -2, 0), new_point(11, 4, 7));
-	p = new_point(5, -2, 0);
+	new_bounds(new_point(5, -2, 0, &t[0]), new_point(11, 4, 7, &t[1]), &b);
+	new_point(5, -2, 0, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), true));
-	p = new_point(11, 4, 7);
+	new_point(11, 4, 7, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), true));
-	p = new_point(8, 1, 3);
+	new_point(8, 1, 3, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), true));
-	p = new_point(3, 0, 3);
+	new_point(3, 0, 3, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), false));
-	p = new_point(8, -4, 3);
+	new_point(8, -4, 3, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), false));
-	p = new_point(8, 1, -1);
+	new_point(8, 1, -1, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), false));
-	p = new_point(13, 1, 3);
+	new_point(13, 1, 3, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), false));
-	p = new_point(8, 5, 3);
+	new_point(8, 5, 3, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), false));
-	p = new_point(8, 1, 8);
+	new_point(8, 1, 8, &p);
 	cr_assert(eq(int, box_contains_point(&b, &p), false));
 }
 
@@ -120,15 +123,16 @@ Test(bounds, checking_to_see_if_a_box_contains_a_given_box)
 {
 	t_bounds b1;
 	t_bounds b2;
+	t_point t[2];
 
-	b1 = new_bounds(new_point(5, -2, 0), new_point(11, 4, 7));
-	b2 = new_bounds(new_point(5, -2, 0), new_point(11, 4, 7));
+	new_bounds(new_point(5, -2, 0, &t[0]), new_point(11, 4, 7, &t[1]), &b1);
+	new_bounds(new_point(5, -2, 0, &t[0]), new_point(11, 4, 7, &t[1]), &b2);
 	cr_assert(eq(int, box_contains_box(&b1, &b2), true));
-	b2 = new_bounds(new_point(6, -1, 1), new_point(10, 3, 6));
+	new_bounds(new_point(6, -1, 1, &t[0]), new_point(10, 3, 6, &t[1]), &b2);
 	cr_assert(eq(int, box_contains_box(&b1, &b2), true));
-	b2 = new_bounds(new_point(4, -3, -1), new_point(10, 3, 6));
+	new_bounds(new_point(4, -3, -1, &t[0]), new_point(10, 3, 6, &t[1]), &b2);
 	cr_assert(eq(int, box_contains_box(&b1, &b2), false));
-	b2 = new_bounds(new_point(6, -1, 1), new_point(12, 5, 8));
+	new_bounds(new_point(6, -1, 1, &t[0]), new_point(12, 5, 8, &t[1]), &b2);
 	cr_assert(eq(int, box_contains_box(&b1, &b2), false));
 }
 
@@ -138,16 +142,17 @@ Test(bounds, a_group_has_a_bounding_box_that_contains_its_children)
 	t_shape	s;
 	t_shape	c;
 	t_matrix m;
+	t_matrix m1;
 
 	new_group(&g);
 	new_sphere(&s);
 	new_cylinder(&c);
 	c.cyl.min = -2;
 	c.cyl.max = 2;
-	m = multiply_matrices(translation(2, 5, -3), scaling(2, 2, 2));
-	set_transform(&s, m);
-	m = multiply_matrices(translation(-4, -1, 4), scaling(0.5, 1, 0.5));
-	set_transform(&c, m);
+	multiply_matrices(translation(2, 5, -3, &m), scaling(2, 2, 2, &m1), &m);
+	set_transform(&s, &m);
+	multiply_matrices(translation(-4, -1, 4, &m), scaling(0.5, 1, 0.5, &m1), &m);
+	set_transform(&c, &m);
 	add_child(&g, &s);
 	add_child(&g, &c);
 	cr_assert(eq(dbl, g.bounds.min.x, -4.5));
@@ -163,10 +168,11 @@ Test(bounds, a_csg_shape_has_a_bounding_box_that_contains_its_children)
 	t_shape	csg;
 	t_shape	s1;
 	t_shape	s2;
+	t_matrix m;
 
 	new_sphere(&s1);
 	new_sphere(&s2);
-	set_transform(&s2, translation(2, 3, 4));
+	set_transform(&s2, translation(2, 3, 4, &m));
 	new_csg(DIFFERENCE, &s1, &s2, &csg);
 	csg.bounds_of(&csg);
 	cr_assert(eq(dbl, csg.bounds.min.x, -1));
@@ -182,43 +188,44 @@ Test(bounds, intersecting_a_ray_with_a_bounding_box_at_the_origin)
 	t_bounds b;
 	t_ray	r;
 	t_vector	d;
+	t_point	t[2];
 
-	b = new_bounds(new_point(-1, -1, -1), new_point(1, 1, 1));
-	d = normalize(new_vector(-1, 0, 0));
-	r = new_ray(new_point(5, 0.5, 0), d);
+	new_bounds(new_point(-1, -1, -1, &t[0]), new_point(1, 1, 1, &t[1]), &b);
+	normalize(new_vector(-1, 0, 0, &d), &d);
+	new_ray(new_point(5, 0.5, 0, &t[0]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	d = normalize(new_vector(1, 0, 0));
-	r = new_ray(new_point(-5, 0.5, 0), d);
+	normalize(new_vector(1, 0, 0, &d), &d);
+	new_ray(new_point(-5, 0.5, 0, &t[1]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	d = normalize(new_vector(0, -1, 0));
-	r = new_ray(new_point(0.5, 5, 0), d);
+	normalize(new_vector(0, -1, 0, &d), &d);
+	new_ray(new_point(0.5, 5, 0, &t[0]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	d = normalize(new_vector(0, 1, 0));
-	r = new_ray(new_point(0.5, -5, 0), d);
+	normalize(new_vector(0, 1, 0, &d), &d);
+	new_ray(new_point(0.5, -5, 0, &t[1]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	d = normalize(new_vector(0, 0, -1));
-	r = new_ray(new_point(0.5, 0, 5), d);
+	normalize(new_vector(0, 0, -1, &d), &d);
+	new_ray(new_point(0.5, 0, 5, &t[0]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	d = normalize(new_vector(0, 0, 1));
-	r = new_ray(new_point(0.5, 0, -5), d);
+	normalize(new_vector(0, 0, 1, &d), &d);
+	new_ray(new_point(0.5, 0, -5, &t[1]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	d = normalize(new_vector(2, 4, 6));
-	r = new_ray(new_point(-2, 0, 0), d);
+	normalize(new_vector(2, 4, 6, &d), &d);
+	new_ray(new_point(-2, 0, 0, &t[0]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	d = normalize(new_vector(6, 2, 4));
-	r = new_ray(new_point(0, -2, 0), d);
+	normalize(new_vector(6, 2, 4, &d), &d);
+	new_ray(new_point(0, -2, 0, &t[1]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	d = normalize(new_vector(4, 6, 2));
-	r = new_ray(new_point(0, 0, -2), d);
+	normalize(new_vector(4, 6, 2, &d), &d);
+	new_ray(new_point(0, 0, -2, &t[0]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	d = normalize(new_vector(0, 0, -1));
-	r = new_ray(new_point(2, 0, 2), d);
+	normalize(new_vector(0, 0, -1, &d), &d);
+	new_ray(new_point(2, 0, 2, &t[1]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	d = normalize(new_vector(0, -1, 0));
-	r = new_ray(new_point(0, 2, 2), d);
+	normalize(new_vector(0, -1, 0, &d), &d);
+	new_ray(new_point(0, 2, 2, &t[0]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	d = normalize(new_vector(-1, 0, 0));
-	r = new_ray(new_point(2, 2, 0), d);
+	normalize(new_vector(-1, 0, 0, &d), &d);
+	new_ray(new_point(2, 2, 0, &t[1]), &d, &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
 }
 
@@ -226,41 +233,43 @@ Test(bounds, intersecting_a_ray_with_a_non_cubic_bounding_box)
 {
 	t_bounds b;
 	t_ray	r;
+	t_point	t[2];
 
-	b = new_bounds(new_point(5, -2, 0), new_point(11, 4, 7));
-	r = new_ray(new_point(15, 1, 2), normalize(new_vector(-1, 0, 0)));
+	new_bounds(new_point(5, -2, 0, &t[0]), new_point(11, 4, 7, &t[1]), &b);
+	new_ray(new_point(15, 1, 2, &t[0]), normalize(new_vector(-1, 0, 0, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	r = new_ray(new_point(-5, -1, 4), normalize(new_vector(1, 0, 0)));
+	new_ray(new_point(-5, -1, 4, &t[0]), normalize(new_vector(1, 0, 0, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	r = new_ray(new_point(7, 6, 5), normalize(new_vector(0, -1, 0)));
+	new_ray(new_point(7, 6, 5, &t[0]), normalize(new_vector(0, -1, 0, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	r = new_ray(new_point(9, -5, 6), normalize(new_vector(0, 1, 0)));
+	new_ray(new_point(9, -5, 6, &t[0]), normalize(new_vector(0, 1, 0, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	r = new_ray(new_point(8, 2, 12), normalize(new_vector(0, 0, -1)));
+	new_ray(new_point(8, 2, 12, &t[0]), normalize(new_vector(0, 0, -1, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	r = new_ray(new_point(6, 0, -5), normalize(new_vector(0, 0, 1)));
+	new_ray(new_point(6, 0, -5, &t[0]), normalize(new_vector(0, 0, 1, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	r = new_ray(new_point(8, 1, 3.5), normalize(new_vector(0, 0, 1)));
+	new_ray(new_point(8, 1, 3.5, &t[0]), normalize(new_vector(0, 0, 1, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), true));
-	r = new_ray(new_point(9, -1, -8), normalize(new_vector(2, 4, 6)));
+	new_ray(new_point(9, -1, -8, &t[0]), normalize(new_vector(2, 4, 6, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	r = new_ray(new_point(8, 3, -4), normalize(new_vector(6, 2, 4)));
+	new_ray(new_point(8, 3, -4, &t[0]), normalize(new_vector(6, 2, 4, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	r = new_ray(new_point(9, -1, -2), normalize(new_vector(4, 6, 2)));
+	new_ray(new_point(9, -1, -2, &t[0]), normalize(new_vector(4, 6, 2, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	r = new_ray(new_point(4, 0, 9), normalize(new_vector(0, 0, -1)));
+	new_ray(new_point(4, 0, 9, &t[0]), normalize(new_vector(0, 0, -1, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	r = new_ray(new_point(8, 6, -1), normalize(new_vector(0, -1, 0)));
+	new_ray(new_point(8, 6, -1, &t[0]), normalize(new_vector(0, -1, 0, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
-	r = new_ray(new_point(12, 5, 4), normalize(new_vector(-1, 0, 0)));
+	new_ray(new_point(12, 5, 4, &t[0]), normalize(new_vector(-1, 0, 0, &t[1]), &t[1]), &r);
 	cr_assert(eq(int, intersect_bounds(&b, &r), false));
 }
 
 Test(bounds, splitting_a_perfect_cube)
 {
 	t_bounds box[2];
+	t_point t[2];
 
-	box[0] = new_bounds(new_point(-1, -4, -5), new_point(9, 6, 5));
+	new_bounds(new_point(-1, -4, -5, &t[0]), new_point(9, 6, 5, &t[1]), &box[0]);
 	box[1] = box[0];
 	split_bounds(box);
 	cr_assert(eq(dbl, box[0].min.x, -1));
@@ -280,8 +289,9 @@ Test(bounds, splitting_a_perfect_cube)
 Test(bounds, splitting_an_xwide_box)
 {
 	t_bounds	box[2];
+	t_point	t[2];
 
-	box[0] = new_bounds(new_point(-1, -2, -3), new_point(9, 5.5, 3));
+	new_bounds(new_point(-1, -2, -3, &t[0]), new_point(9, 5.5, 3, &t[1]), &box[0]);
 	box[1] = box[0];
 	split_bounds(box);
 	cr_assert(eq(dbl, box[0].min.x, -1));
@@ -301,8 +311,9 @@ Test(bounds, splitting_an_xwide_box)
 Test(bounds, splitting_a_ywide_box)
 {
   t_bounds box[2];
+	t_point t[2];
 
-	box[0] = new_bounds(new_point(-1, -2, -3), new_point(5, 8, 3));
+	new_bounds(new_point(-1, -2, -3, &t[0]), new_point(5, 8, 3, &t[1]), &box[0]);
 	box[1] = box[0];
 	split_bounds(box);
 	cr_assert(eq(dbl, box[0].min.x, -1));
@@ -322,8 +333,9 @@ Test(bounds, splitting_a_ywide_box)
 Test(bounds, splitting_a_zwide_box)
 {
   t_bounds box[2];
+	t_point t[2];
 
-	box[0] = new_bounds(new_point(-1, -2, -3), new_point(5, 3, 7));
+	new_bounds(new_point(-1, -2, -3, &t[0]), new_point(5, 3, 7, &t[1]), &box[0]);
 	box[1] = box[0];
 	split_bounds(box);
 	cr_assert(eq(dbl, box[0].min.x, -1));
@@ -348,6 +360,7 @@ Test(group, partitioning_a_group_children)
 	t_shape	s3;
 	t_shape	*left;
 	t_shape	*right;
+	t_matrix m;
 
 	left = NULL;
 	right = NULL;
@@ -355,8 +368,8 @@ Test(group, partitioning_a_group_children)
 	new_sphere(&s1);
 	new_sphere(&s2);
 	new_sphere(&s3);
-	set_transform(&s1, translation(-2, 0, 0));
-	set_transform(&s2, translation(2, 0, 0));
+	set_transform(&s1, translation(-2, 0, 0, &m));
+	set_transform(&s2, translation(2, 0, 0, &m));
 	add_child(&g, &s1);
 	add_child(&g, &s2);
 	add_child(&g, &s3);
@@ -402,14 +415,15 @@ Test(groups, subdividing_a_group_divides_its_children)
 	t_shape	s1;
 	t_shape	s2;
 	t_shape	s3;
+	t_matrix m;
 
 	new_group(&g);
 	new_sphere(&s1);
 	new_sphere(&s2);
 	new_sphere(&s3);
-	set_transform(&s1, translation(-2, -2, 0));
-	set_transform(&s2, translation(-2, 2, 0));
-	set_transform(&s3, scaling(4, 4, 4));
+	set_transform(&s1, translation(-2, -2, 0, &m));
+	set_transform(&s2, translation(-2, 2, 0, &m));
+	set_transform(&s3, scaling(4, 4, 4, &m));
 	add_child(&g, &s1);
 	add_child(&g, &s2);
 	add_child(&g, &s3);
@@ -435,6 +449,7 @@ Test(groups, subdividing_a_group_with_too_few_children)
 	t_shape	s2;
 	t_shape	s3;
 	t_shape	s4;
+	t_matrix m;
 
 	new_group(&g);
 	new_group(&sg);
@@ -442,9 +457,9 @@ Test(groups, subdividing_a_group_with_too_few_children)
 	new_sphere(&s2);
 	new_sphere(&s3);
 	new_sphere(&s4);
-	set_transform(&s1, translation(-2, 0, 0));
-	set_transform(&s2, translation(2, 1, 0));
-	set_transform(&s3, translation(2, -1, 0));
+	set_transform(&s1, translation(-2, 0, 0, &m));
+	set_transform(&s2, translation(2, 1, 0, &m));
+	set_transform(&s3, translation(2, -1, 0, &m));
 	add_child(&sg, &s1);
 	add_child(&sg, &s2);
 	add_child(&sg, &s3);
@@ -473,15 +488,16 @@ Test(csg, subdividing_a_csg_shape_subdivides_its_children)
 	t_shape	s4;
 	t_shape	right;
 	t_shape	left;
+	t_matrix m;
 
 	new_sphere(&s1);
 	new_sphere(&s2);
 	new_sphere(&s3);
 	new_sphere(&s4);
-	set_transform(&s1, translation(-2, 0, 0));
-	set_transform(&s2, translation(2, 0, 0));
-	set_transform(&s3, translation(0, 0, -2));
-	set_transform(&s4, translation(0, 0, 2));
+	set_transform(&s1, translation(-2, 0, 0, &m));
+	set_transform(&s2, translation(2, 0, 0, &m));
+	set_transform(&s3, translation(0, 0, -2, &m));
+	set_transform(&s4, translation(0, 0, 2, &m));
 	new_group(&left);
 	new_group(&right);
 	add_child(&left, &s1);

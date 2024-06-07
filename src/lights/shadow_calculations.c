@@ -1,12 +1,14 @@
 #include "lights.h"
 #include "world.h"
 
-t_point	point_on_light(t_light *light, double u, double v)
+t_point	*point_on_light(t_light *light, double u, double v, t_point *p)
 {
-	return (add(light->corner, add(
-				multiply(light->uvec, u + next_sequence(&light->jitter_by)),
-				multiply(light->vvec, v + next_sequence(&light->jitter_by))
-			)));
+	t_tuple	tmp;
+
+	add(&light->corner, add(multiply(&light->uvec,
+				u + next_sequence(&light->jitter_by), p), multiply(&light->vvec,
+				v + next_sequence(&light->jitter_by), &tmp), &tmp), p);
+	return (p);
 }
 
 bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point)
@@ -17,9 +19,9 @@ bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point)
 	t_hit		*xs;
 	t_hit		*h;
 
-	v = subtract(*light_pos, *point);
-	distance = sqrt(magnitude_squared(v));
-	r = new_ray(*point, normalize(v));
+	subtract(light_pos, point, &v);
+	distance = sqrt(magnitude_squared(&v));
+	new_ray(point, normalize(&v, &v), &r);
 	xs = intersect_world(world, &r);
 	h = hit(xs);
 	if (h && h->obj->cast_shadow == true && h->t < distance)
@@ -47,7 +49,7 @@ double	intensity_at(t_world *world, t_point *point, int index)
 		u = -1;
 		while (++u < world->lights[index].usteps)
 		{
-			light_position = point_on_light(&world->lights[index], u, v);
+			point_on_light(&world->lights[index], u, v, &light_position);
 			if (!is_shadowed(world, &light_position, point))
 				total += 1.0;
 		}

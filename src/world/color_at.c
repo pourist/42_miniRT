@@ -20,24 +20,26 @@ t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs)
 
 	comps.t = intersect->t;
 	comps.obj = intersect->obj;
-	comps.point = position(ray, comps.t);
-	comps.view.eye_v = negate(normalize(ray->direction));
-	comps.view.normal_v = normalize(normal_at(comps.obj, &comps.point));
+	position(ray, comps.t, &comps.point);
+	negate(normalize(&ray->direction, &comps.view.eye_v), &comps.view.eye_v);
+	normalize(normal_at(comps.obj, &comps.point, &comps.view.normal_v),
+		&comps.view.normal_v);
 	comps.n1 = 1;
 	comps.n2 = 1;
-	if (dot(comps.view.normal_v, comps.view.eye_v) < 0)
+	if (dot(&comps.view.normal_v, &comps.view.eye_v) < 0)
 	{
 		comps.inside = true;
-		comps.view.normal_v = negate(comps.view.normal_v);
+		negate(&comps.view.normal_v, &comps.view.normal_v);
 	}
 	else
 		comps.inside = false;
 	if (xs != NULL)
 		find_refractive_indices(&comps, intersect, xs);
-	comps.reflect_v = reflect(ray->direction, comps.view.normal_v);
-	comps.over_point = add(comps.point, multiply(comps.view.normal_v, EPSILON));
-	comps.under_point = subtract(comps.point,
-			multiply(comps.view.normal_v, EPSILON));
+	reflect(&ray->direction, &comps.view.normal_v, &comps.reflect_v);
+	add(&comps.point, multiply(&comps.view.normal_v, EPSILON,
+			&comps.over_point), &comps.over_point);
+	subtract(&comps.point, multiply(&comps.view.normal_v, EPSILON,
+			&comps.under_point), &comps.under_point);
 	return (comps);
 }
 

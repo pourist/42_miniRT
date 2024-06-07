@@ -66,6 +66,6 @@ void	free_world(t_world *world);
 // shadow_calculations.c
 bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point);
 double	intensity_at(t_world *world, t_point *point, int index);
-t_point	point_on_light(t_light *light, double u, double v);
+t_point	*point_on_light(t_light *light, double u, double v, t_point *p);
 
 #endif

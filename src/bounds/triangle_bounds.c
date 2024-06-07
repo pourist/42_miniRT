@@ -33,6 +33,6 @@ void	triangle_bounds(t_shape *shape)
 	if (!shape)
 		return ;
 	shape->is_bounds_precal = true;
-	shape->bounds = new_bounds(shape->tri.p1, shape->tri.p1);
+	new_bounds(&shape->tri.p1, &shape->tri.p1, &shape->bounds);
 	get_triangle_bounds(shape);
 }

@@ -1,27 +1,30 @@
 #include "groups.h"
 
-t_bounds	new_bounds(t_point min, t_point max)
+t_bounds	*new_bounds(t_point *min, t_point *max, t_bounds *new_bounds)
 {
-	return ((t_bounds){min, max});
+	new_bounds->min = *min;
+	new_bounds->max = *max;
+	return (new_bounds);
 }
 
 void	get_bounds(t_shape *s, t_bounds *new_bounds)
 {
 	t_point		box[8];
+	t_tuple		tmp;
 	int			i;
 
 	box[0] = s->bounds.min;
-	box[1] = new_point(s->bounds.min.x, s->bounds.min.y, s->bounds.max.z);
-	box[2] = new_point(s->bounds.min.x, s->bounds.max.y, s->bounds.min.z);
-	box[3] = new_point(s->bounds.min.x, s->bounds.max.y, s->bounds.max.z);
-	box[4] = new_point(s->bounds.max.x, s->bounds.min.y, s->bounds.min.z);
-	box[5] = new_point(s->bounds.max.x, s->bounds.min.y, s->bounds.max.z);
-	box[6] = new_point(s->bounds.max.x, s->bounds.max.y, s->bounds.min.z);
+	new_point(s->bounds.min.x, s->bounds.min.y, s->bounds.max.z, &box[1]);
+	new_point(s->bounds.min.x, s->bounds.max.y, s->bounds.min.z, &box[2]);
+	new_point(s->bounds.min.x, s->bounds.max.y, s->bounds.max.z, &box[3]);
+	new_point(s->bounds.max.x, s->bounds.min.y, s->bounds.min.z, &box[4]);
+	new_point(s->bounds.max.x, s->bounds.min.y, s->bounds.max.z, &box[5]);
+	new_point(s->bounds.max.x, s->bounds.max.y, s->bounds.min.z, &box[6]);
 	box[7] = s->bounds.max;
 	i = -1;
 	while (++i < 8)
 		add_point_to_bounds(&new_bounds,
-			multiply_matrix_by_tuple(s->transform, box[i]));
+			multiply_matrix_by_tuple(&s->transform, &box[i], &tmp));
 	s->bounds = *new_bounds;
 }
 

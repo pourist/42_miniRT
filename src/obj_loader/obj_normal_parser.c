@@ -13,8 +13,8 @@ bool	parse_normal(t_obj_loader *loader, char **params, int *line_nb)
 		if (!loader->normals)
 			return (false);
 	}
-	loader->normals[loader->n_count] = new_point(ft_atof(params[1]),
-			ft_atof(params[2]), ft_atof(params[3]));
+	new_point(ft_atof(params[1]), ft_atof(params[2]), ft_atof(params[3]),
+		&loader->normals[loader->n_count]);
 	loader->n_count++;
 	return (true);
 }

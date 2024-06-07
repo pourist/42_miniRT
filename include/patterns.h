@@ -15,12 +15,11 @@ typedef struct s_pattern
 	bool			has_pattern;
 	t_matrix		transform;
 	t_matrix		inverse;
-	t_matrix		transpose;
 }	t_pattern;
 
-t_pattern	new_pattern(void);
+t_pattern	*new_pattern(t_pattern *pattern);
 t_pattern	new_solid_pattern(t_color color);
-void		set_pattern_transform(t_pattern *pattern, t_matrix transform);
+void		set_pattern_transform(t_pattern *pattern, t_matrix *transform);
 // Patterns
 t_pattern	new_stripe_pattern(t_pattern a, t_pattern b);
 t_pattern	new_gradient_pattern(t_pattern a, t_pattern b);

@@ -12,31 +12,31 @@ void	create_background(t_world *world)
 	t_shape		floor;
 	t_shape		left_wall;
 	t_shape		right_wall;
-	t_matrix	multi;
+	t_matrix	m[2];
 
 	new_sphere(&floor);
-	set_transform(&floor, scaling(10, 0.01, 10));
+	set_transform(&floor, scaling(10, 0.01, 10, &m[0]));
 	floor.material.color = new_color(1, 0.9, 0.9);
 	floor.material.specular = 0;
 	new_sphere(&left_wall);
-	multi = multiply_matrices(
+	multiply_matrices(
+		multiply_matrices(
 			multiply_matrices(
-				multiply_matrices(
-					translation(0, 0, 5), rotation_y(cos(-M_PI / 4),
-						sin(-M_PI / 4))),
-				rotation_x(cos(M_PI / 2), sin(M_PI / 2))),
-			scaling(10, 0.01, 10));
-	set_transform(&left_wall, multi);
+				translation(0, 0, 5, &m[0]), rotation_y(cos(-M_PI / 4),
+					sin(-M_PI / 4), &m[1]), &m[0]),
+			rotation_x(cos(M_PI / 2), sin(M_PI / 2), &m[1]), &m[0]),
+		scaling(10, 0.01, 10, &m[1]), &m[0]);
+	set_transform(&left_wall, &m[0]);
 	left_wall.material = floor.material;
 	new_sphere(&right_wall);
-	multi = multiply_matrices(
+	multiply_matrices(
+		multiply_matrices(
 			multiply_matrices(
-				multiply_matrices(
-					translation(0, 0, 5), rotation_y(cos(M_PI / 4),
-						sin(M_PI / 4))),
-				rotation_x(cos(M_PI / 2), sin(M_PI / 2))),
-			scaling(10, 0.01, 10));
-	set_transform(&right_wall, multi);
+				translation(0, 0, 5, &m[0]), rotation_y(cos(M_PI / 4),
+					sin(M_PI / 4), &m[1]), &m[0]),
+			rotation_x(cos(M_PI / 2), sin(M_PI / 2), &m[1]), &m[0]),
+		scaling(10, 0.01, 10, &m[1]), &m[0]);
+	set_transform(&right_wall, &m[0]);
 	right_wall.material = floor.material;
 	world->objs[0] = floor;
 	world->objs[1] = left_wall;
@@ -48,21 +48,22 @@ void	create_spheres(t_world *world)
 	t_shape		middle;
 	t_shape		right;
 	t_shape		left;
+	t_matrix	m[2];
 
 	new_sphere(&middle);
 	middle.material.color = new_color(0.1, 1, 0.5);
 	middle.material.diffuse = 0.7;
 	middle.material.specular = 0.3;
-	set_transform(&middle, translation(-0.5, 1, 0.5));
+	set_transform(&middle, translation(-0.5, 1, 0.5, &m[0]));
 	new_sphere(&right);
-	set_transform(&right, transformations(2, scaling(0.5, 0.5, 0.5),
-			translation(1.5, 0.5, -0.5)));
+	set_transform(&right, transformations(2, scaling(0.5, 0.5, 0.5, &m[0]),
+			translation(1.5, 0.5, -0.5, &m[1])));
 	right.material.color = new_color(0.5, 1, 0.1);
 	right.material.diffuse = 0.7;
 	right.material.specular = 0.3;
 	new_sphere(&left);
-	set_transform(&left, transformations(2, scaling(0.33, 0.33, 0.33),
-			translation(-1.5, 0.33, -0.75)));
+	set_transform(&left, transformations(2, scaling(0.33, 0.33, 0.33, &m[0]),
+			translation(-1.5, 0.33, -0.75, &m[1])));
 	left.material.color = new_color(1, 0.8, 0.1);
 	left.material.diffuse = 0.7;
 	left.material.specular = 0.3;
@@ -73,9 +74,14 @@ void	create_spheres(t_world *world)
 
 void	create_ligts(t_world *world)
 {
+	t_point		p;
+	t_color		c;
+
 	world->lights = malloc(sizeof(t_light));
 	world->lights_count = 1;
-	world->lights[0] = new_light(new_point(-10, 10, -10), new_color(1, 1, 1));
+	new_point(-10, 10, -10, &p);
+	c = new_color(1, 1, 1);
+	new_light(&p, &c, &world->lights[0]);
 }
 
 void	create_camera(t_camera *camera)
@@ -85,10 +91,11 @@ void	create_camera(t_camera *camera)
 	t_vector	up;
 
 	new_camera(camera, WIDTH, HEIGHT, M_PI / 3);
-	from = new_point(0, 1.5, -5);
-	to = new_point(0, 1, 0);
-	up = new_vector(0, 1, 0);
-	set_transform_camera(camera, view_transform(&from, &to, &up));
+	new_point(0, 1.5, -5, &from);
+	new_point(0, 1, 0, &to);
+	new_vector(0, 1, 0, &up);
+	set_transform_camera(camera, view_transform(&from, &to, &up,
+			&camera->transform));
 }
 
 int	main(void)
