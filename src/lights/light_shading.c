@@ -18,6 +18,7 @@ t_color	area_lighting(t_shape *s, t_light *l, t_point *p, t_eye_normal *v)
 	t_lighting_params	lp;
 	t_color				color;
 	int					i[2];
+	t_point				tmp;
 
 	prepare_color(&color, s, p);
 	hadamard_product(&color, &l->intensity, &lp.effective_color);
@@ -28,8 +29,8 @@ t_color	area_lighting(t_shape *s, t_light *l, t_point *p, t_eye_normal *v)
 		i[0] = -1;
 		while (++i[0] < l->usteps)
 		{
-			normalize(subtract(point_on_light(l, i[0], i[1], &lp.light_v),
-					p, &lp.light_v), &lp.light_v);
+			normalize(subtract(point_on_light(l, i[0], i[1], &tmp),
+					p, &tmp), &lp.light_v);
 			lp.light_dot_normal = dot(&lp.light_v, &v->normal_v);
 			if (lp.light_dot_normal < 0 || l->intensity_ratio <= 0)
 				color = add_color(color, darken(&s->material, &lp));

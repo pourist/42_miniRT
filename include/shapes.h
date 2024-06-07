@@ -149,10 +149,8 @@ void		set_transform(t_shape *shape, t_matrix *transform);
 t_vector	*normal_at(t_shape *shape, t_point *world_point,
 				t_vector *world_normal);
 // Groups checks
-t_point		*world_to_object(t_shape *shape, t_point *world_point,
-				t_point *object_point);
-t_vector	*normal_to_world(t_shape *shape, t_vector *object_normal,
-				t_vector *world_normal);
+t_point		world_to_object(t_shape *shape, t_point world_point);
+t_vector	normal_to_world(t_shape *shape, t_vector *object_normal);
 // Sphere Shape
 t_shape		*new_sphere(t_shape *shape);
 t_shape		*new_glass_sphere(t_shape *shape);
