@@ -2,7 +2,7 @@
 
 static bool	init_mutexes(t_obj_loader *loader);
 
-t_obj_loader	*new_obj_loader(t_obj_loader *loader)
+t_obj_loader	*new_obj_loader(t_obj_loader *loader, t_shape *group)
 {
 	if (!loader)
 		return (NULL);
@@ -22,8 +22,9 @@ t_obj_loader	*new_obj_loader(t_obj_loader *loader)
 	loader->groups = NULL;
 	loader->gp_count = 0;
 	loader->gp_max = 0;
-	new_group(&loader->default_group);
-	loader->current_gp = &loader->default_group;
+	loader->default_group = group;
+	new_group(loader->default_group);
+	loader->current_gp = loader->default_group;
 	if (!init_mutexes(loader))
 		return (NULL);
 	return (loader);

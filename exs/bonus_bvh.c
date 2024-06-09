@@ -5,42 +5,26 @@
 #include "groups.h"
 #include "obj_loader.h"
 
-#define WIDTH	800
-#define HEIGHT	600
-#define N_OBJS	1
-
-void	create_raw_bbox(t_shape *bbox)
-{
-	t_matrix	m[2];
-
-	new_cube(bbox);
-	bbox->cast_shadow = false;
-	multiply_matrices(translation(-3.9863, -0.1217, -1.1820, &m[0]),
-		scaling(3.73335, 2.5845, 1.6283, &m[1]), &m[0]);
-	multiply_matrices(&m[0], translation(1, 0, 0, &m[1]), &m[0]);
-	set_transform(bbox, &m[0]);
-}
+#define WIDTH	1000
+#define HEIGHT	400
 
 void	create_bbox(t_shape *bbox)
 {
 	t_matrix	m[2];
 
 	new_cube(bbox);
-	multiply_matrices(scaling(0.268, 0.268, 0.268, &m[0]),
-		translation(0, 0.1217, 0, &m[1]), &m[0]);
-	set_transform(bbox, &m[0]);
+	bbox->cast_shadow = false;
+	set_transform(bbox, multiply_matrices(translation(0, 0.8, 0, &m[0]), scaling(1, 0.7, 0.4, &m[1]), &m[0]));
 }
 
 void	create_pedestal(t_shape *pedestal)
 {
-	t_matrix	m[2];
-
 	new_cylinder(pedestal);
 	pedestal->cyl.min = -0.15;
 	pedestal->cyl.max = 0;
 	pedestal->cyl.closed = true;
 	pedestal->material.color = new_color(0.2, 0.2, 0.2);
-	pedestal->material.ambien = new_color(0, 0, 0);
+	pedestal->material.ambient = new_color(0, 0, 0);
 	pedestal->material.diffuse = 0.8;
 	pedestal->material.specular = 0;
 	pedestal->material.reflective = 0.2;
@@ -51,17 +35,17 @@ void	create_dragon(t_shape *dragon)
 	t_obj_loader	loader;
 	t_matrix		m[2];
 
-	new_obj_loader(&loader);
+	new_obj_loader(&loader, dragon);
 	parse_obj_file(&loader, "../obj_files/dragon.obj");
-	*dragon = loader.default_group;
-	multiply_matrices(scaling(0.268, 0.268, 0.268, &m[0]),
-		translation(0, 0.1217, 0, &m[1]), &m);
+	divide_groups(dragon, 16);
+	multiply_matrices(translation(0, 0.1217, 0, &m[0]), scaling(0.268, 0.268, 0.268, &m[1]), &m[0]);
 	set_transform(dragon, &m[0]);
 }
 
 void	create_scene(t_world *world)
 {
 	t_shape			*tmp;
+	t_shape			*tmp2;
 	t_matrix		m[2];
 	int				obj_i;
 	int				obj_in_i;
@@ -80,6 +64,154 @@ void	create_scene(t_world *world)
 	add_child(tmp, &world->objs_inside[obj_in_i]);
 	obj_in_i++;
 	new_group(&world->objs_inside[obj_in_i]);
+	tmp2 = &world->objs_inside[obj_in_i];
+	obj_in_i++;
+	create_dragon(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.color = new_color(1, 0, 0.1);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
+	world->objs_inside[obj_in_i].material.diffuse = 0.6;
+	world->objs_inside[obj_in_i].material.specular = 0.3;
+	world->objs_inside[obj_in_i].material.shininess = 15;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	create_bbox(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0, 0, 0);
+	world->objs_inside[obj_in_i].material.diffuse = 0.4;
+	world->objs_inside[obj_in_i].material.specular = 0;
+	world->objs_inside[obj_in_i].material.transparency = 0.6;
+	world->objs_inside[obj_in_i].material.refractive_index = 1;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	add_child(tmp, tmp2);
+	obj_in_i++;
+	new_group(&world->objs[obj_i]);
+	tmp = &world->objs[obj_i];
+	set_transform(tmp, translation(2, 1, -1, &m[0]));
+	obj_i++;
+	create_pedestal(&world->objs_inside[obj_in_i]);
+	add_child(tmp, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	new_group(&world->objs_inside[obj_in_i]);
+	tmp2 = &world->objs_inside[obj_in_i];
+	set_transform(tmp2, multiply_matrices(rotation_y(cos(4), sin(4), &m[1]), scaling(0.75, 0.75, 0.75, &m[0]), &m[0]));
+	obj_in_i++;
+	create_dragon(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.color = new_color(1, 0.5, 0.1);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
+	world->objs_inside[obj_in_i].material.diffuse = 0.6;
+	world->objs_inside[obj_in_i].material.specular = 0.3;
+	world->objs_inside[obj_in_i].material.shininess = 15;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	create_bbox(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0, 0, 0);
+	world->objs_inside[obj_in_i].material.diffuse = 0.2;
+	world->objs_inside[obj_in_i].material.specular = 0;
+	world->objs_inside[obj_in_i].material.transparency = 0.8;
+	world->objs_inside[obj_in_i].material.refractive_index = 1;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	add_child(tmp, tmp2);
+	new_group(&world->objs[obj_i]);
+	tmp = &world->objs[obj_i];
+	set_transform(tmp, translation(-2, 0.75, -1, &m[0]));
+	obj_i++;
+	create_pedestal(&world->objs_inside[obj_in_i]);
+	add_child(tmp, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	new_group(&world->objs_inside[obj_in_i]);
+	tmp2 = &world->objs_inside[obj_in_i];
+	set_transform(tmp2, multiply_matrices(rotation_y(cos(-0.4), sin(-0.4), &m[1]), scaling(0.75, 0.75, 0.75, &m[0]), &m[0]));
+	obj_in_i++;
+	create_dragon(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.color = new_color(0.9, 0.5, 0.1);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
+	world->objs_inside[obj_in_i].material.diffuse = 0.6;
+	world->objs_inside[obj_in_i].material.specular = 0.3;
+	world->objs_inside[obj_in_i].material.shininess = 15;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	create_bbox(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0, 0, 0);
+	world->objs_inside[obj_in_i].material.diffuse = 0.2;
+	world->objs_inside[obj_in_i].material.specular = 0;
+	world->objs_inside[obj_in_i].material.transparency = 0.8;
+	world->objs_inside[obj_in_i].material.refractive_index = 1;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	add_child(tmp, tmp2);
+	new_group(&world->objs[obj_i]);
+	tmp = &world->objs[obj_i];
+	set_transform(tmp, translation(-4, 0, -2, &m[0]));
+	obj_i++;
+	create_pedestal(&world->objs_inside[obj_in_i]);
+	add_child(tmp, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	new_group(&world->objs_inside[obj_in_i]);
+	tmp2 = &world->objs_inside[obj_in_i];
+	set_transform(tmp2, multiply_matrices(rotation_y(cos(-0.2), sin(-0.2), &m[1]), scaling(0.5, 0.5, 0.5, &m[0]), &m[0]));
+	obj_in_i++;
+	create_dragon(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.color = new_color(1, 0.9, 0.1);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
+	world->objs_inside[obj_in_i].material.diffuse = 0.6;
+	world->objs_inside[obj_in_i].material.specular = 0.3;
+	world->objs_inside[obj_in_i].material.shininess = 15;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	create_bbox(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0, 0, 0);
+	world->objs_inside[obj_in_i].material.diffuse = 0.1;
+	world->objs_inside[obj_in_i].material.specular = 0;
+	world->objs_inside[obj_in_i].material.transparency = 0.9;
+	world->objs_inside[obj_in_i].material.refractive_index = 1;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	add_child(tmp, tmp2);
+	new_group(&world->objs[obj_i]);
+	tmp = &world->objs[obj_i];
+	set_transform(tmp, translation(4, 0, -2, &m[0]));
+	obj_i++;
+	create_pedestal(&world->objs_inside[obj_in_i]);
+	add_child(tmp, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	new_group(&world->objs_inside[obj_in_i]);
+	tmp2 = &world->objs_inside[obj_in_i];
+	set_transform(tmp2, multiply_matrices(rotation_y(cos(3.3), sin(3.3), &m[1]), scaling(0.5, 0.5, 0.5, &m[0]), &m[0]));
+	obj_in_i++;
+	create_dragon(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.color = new_color(0.9, 1, 0.1);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
+	world->objs_inside[obj_in_i].material.diffuse = 0.6;
+	world->objs_inside[obj_in_i].material.specular = 0.3;
+	world->objs_inside[obj_in_i].material.shininess = 15;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	create_bbox(&world->objs_inside[obj_in_i]);
+	world->objs_inside[obj_in_i].material.ambient = new_color(0, 0, 0);
+	world->objs_inside[obj_in_i].material.diffuse = 0.1;
+	world->objs_inside[obj_in_i].material.specular = 0;
+	world->objs_inside[obj_in_i].material.transparency = 0.9;
+	world->objs_inside[obj_in_i].material.refractive_index = 1;
+	add_child(tmp2, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	add_child(tmp, tmp2);
+	new_group(&world->objs[obj_i]);
+	tmp = &world->objs[obj_i];
+	set_transform(tmp, translation(0, 0.5, -4, &m[0]));
+	obj_i++;
+	create_pedestal(&world->objs_inside[obj_in_i]);
+	add_child(tmp, &world->objs_inside[obj_in_i]);
+	obj_in_i++;
+	create_dragon(&world->objs_inside[obj_in_i]);
+	tmp2 = &world->objs_inside[obj_in_i];
+	tmp2->material.color = new_color(0.95, 0.95, 0.95);
+	tmp2->material.ambient = new_color(0.1, 0.1, 0.1);
+	tmp2->material.diffuse = 0.6;
+	tmp2->material.specular = 0.3;
+	tmp2->material.shininess = 15;
+	set_transform(tmp2, multiply_matrices(rotation_y(cos(M_PI), sin(M_PI), &m[1]), scaling(0.25, 0.25, 0.25, &m[0]), &m[0]));
+	add_child(tmp, tmp2);
+	obj_i++;
 }
 
 void	create_lights(t_world *world)
@@ -108,14 +240,13 @@ void	create_camera(t_camera *camera)
 	t_point		from;
 	t_point		to;
 	t_vector	up;
-	t_matrix	m;
 
 	new_camera(camera, WIDTH, HEIGHT, 1.2);
 	new_point(0, 2.5, -10, &from);
 	new_point(0, 1, 0, &to);
 	new_vector(0, 1, 0, &up);
 	set_transform_camera(camera, view_transform(&from, &to, &up,
-			&m));
+			&camera->transform));
 }
 
 int	main(void)

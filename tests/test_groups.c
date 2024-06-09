@@ -115,7 +115,8 @@ Test(groups, converting_a_point_from_world_to_object_space)
 	new_sphere(&s1);
 	set_transform(&s1, translation(5, 0, 0, &m));
 	add_child(&g2, &s1);
-	world_to_object(&s1, new_point(-2, 0, -10, &p), &p);
+	new_point(-2, 0, -10, &p);
+	p = world_to_object(&s1, p);
 	cr_assert(epsilon_eq(dbl, p.x, 0, EPSILON));
 	cr_assert(epsilon_eq(dbl, p.y, 0, EPSILON));
 	cr_assert(epsilon_eq(dbl, p.z, -1, EPSILON));
@@ -137,7 +138,7 @@ Test(groups, converting_a_normal_from_object_to_world_space)
 	new_sphere(&s);
 	set_transform(&s, translation(5, 0, 0, &m));
 	add_child(&g2, &s);
-	normal_to_world(&s, new_vector(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3, &n), &n);
+	n = normal_to_world(&s, new_vector(sqrt(3) / 3, sqrt(3) / 3, sqrt(3) / 3, &n));
 	cr_assert(epsilon_eq(dbl, n.x, 0.28571, EPSILON));
 	cr_assert(epsilon_eq(dbl, n.y, 0.42857, EPSILON));
 	cr_assert(epsilon_eq(dbl, n.z, -0.85714, EPSILON));

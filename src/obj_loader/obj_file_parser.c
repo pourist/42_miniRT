@@ -39,6 +39,7 @@ static bool	read_and_set_tokens(t_obj_loader *loader)
 	t_thread_data	*thread_data;
 	char			*file_content;
 
+	file_content = NULL;
 	if (!read_file_to_memory(loader->filename, &file_content))
 		return (free(file_content), false);
 	if (!split_file_in_lines(&file_content, &loader->lines, &loader->tokens,
@@ -86,8 +87,11 @@ static bool	create_object(t_obj_loader *loader)
 
 bool	parse_obj_file(t_obj_loader *loader, char const *filename)
 {
-	if (!loader || !filename)
+	if (!loader || !filename || !loader->default_group)
+	{
+		ft_putendl_fd("minirt: obj_loader: invalid arguments", STDERR_FILENO);
 		return (false);
+	}
 	loader->filename = filename;
 	if (!read_and_set_tokens(loader))
 		return (false);

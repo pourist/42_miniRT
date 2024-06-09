@@ -36,7 +36,7 @@ typedef struct s_obj_loader
 	int				gp_count;
 	int				gp_max;
 	t_shape			*current_gp;
-	t_shape			default_group;
+	t_shape			*default_group;
 	pthread_mutex_t	v_mutex;
 	pthread_mutex_t	n_mutex;
 	pthread_mutex_t	t_mutex;
@@ -61,7 +61,7 @@ typedef struct s_threads_data
 typedef void	*(*t_thread_fn)(void *);
 
 // obj_loader.c
-t_obj_loader	*new_obj_loader(t_obj_loader *loader);
+t_obj_loader	*new_obj_loader(t_obj_loader *loader, t_shape *group);
 // obj_open_read.c
 bool			open_obj_file(char const *filename, int *fd,
 					ssize_t *file_size);
