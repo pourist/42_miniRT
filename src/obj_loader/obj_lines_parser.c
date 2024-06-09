@@ -37,7 +37,7 @@ static bool	parse_group(t_obj_loader *loader, char **params, int *line_nb)
 		return (false);
 	new_group(&loader->groups[loader->gp_count]);
 	loader->current_gp = &loader->groups[loader->gp_count];
-	add_child(&loader->default_group, loader->current_gp);
+	add_child(loader->default_group, loader->current_gp);
 	loader->gp_count++;
 	return (true);
 }
