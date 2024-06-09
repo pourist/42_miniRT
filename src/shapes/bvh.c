@@ -136,23 +136,14 @@ void	divide_groups(t_shape *group, int threshold)
 	group->bounds_of(group);
 }
 
-// void	create_bvh(t_world *world)
+void	create_bvh(t_world *world)
+{
+	int	i;
 
-// {
-// 	int	i;
-
-// 	if (!world)
-// 		return ;
-// 	new_group(&world->bvh);
-// 	i = -1;
-// 	while (++i < world->objs_count)
-// 		add_child(&world->bvh[0], &world->objs[i]);
-// 	// world->bvh[0].bounds_of(&world->bvh[0]);
-// 	// divide_tree(&world->bvh[0], &world->bvh[1], &world->bvh[2]);
-// 	world->bvh[0].is_bounds_precal = false;
-// 	// world->bvh[1].is_bounds_precal = false;
-// 	// world->bvh[2].is_bounds_precal = false;
-// 	world->bvh[0].bounds_of(&world->bvh[0]);
-// 	// world->bvh[1].bounds_of(&world->bvh[1]);
-// 	// world->bvh[2].bounds_of(&world->bvh[2]);
-// }
+	if (!world)
+		return ;
+	i = -1;
+	while (++i < world->objs_count)
+		add_child(&world->bvh, &world->objs[i]);
+	divide_groups(&world->bvh, 16);
+}

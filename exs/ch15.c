@@ -16,7 +16,7 @@ void	create_scene1(t_world *world)
 
 	world->objs = malloc(1 * sizeof(t_shape));
 	world->objs_count = 1;
-	loader = new_obj_loader();
+	new_obj_loader(&loader);
 	parse_obj_file(&loader, "../obj_files/teapot.obj");
 	set_transform(&loader.default_group,
 		rotation_x(cos(-M_PI / 2.0), sin(-M_PI / 2.0), &m));
@@ -62,7 +62,7 @@ void	render_teapot(void)
 	create_camera1(&rt.camera);
 	create_scene1(&rt.world);
 	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 15");
-	// create_bvh(&rt.world);
+	create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
 	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);

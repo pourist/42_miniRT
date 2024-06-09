@@ -1,60 +1,97 @@
 #include "obj_loader.h"
 
-static bool	parse_line(t_obj_loader *loader, char **params, int *line_nb)
+static bool	allocate_loader_arrays(t_obj_loader *loader)
 {
-	int	type_size;
-
-	if (!params[0])
-		return (loader->ignored_lines++, true);
-	type_size = ft_strlen(params[0]) + 1;
-	if (ft_strncmp(params[0], "v", type_size) == 0)
-		return (parse_vertice(loader, params, line_nb));
-	else if (ft_strncmp(params[0], "vn", type_size) == 0)
-		return (parse_normal(loader, params, line_nb));
-	else if (ft_strncmp(params[0], "f", type_size) == 0)
-		return (parse_triangle(loader, params, line_nb));
-	else if (ft_strncmp(params[0], "g", type_size) == 0)
-		return (parse_group(loader, params, line_nb));
-	else
-		return (loader->ignored_lines++, true);
+	loader->normals = (t_vector *)malloc(loader->n_max * sizeof(t_vector));
+	if (!loader->normals)
+		return (perror("minirt: malloc"), false);
+	loader->groups = (t_shape *)malloc(loader->gp_max * sizeof(t_shape));
+	if (!loader->groups)
+		return (perror("minirt: malloc"), free(loader->normals), false);
+	loader->vertices = (t_point *)malloc(loader->v_max * sizeof(t_point));
+	if (!loader->vertices)
+		return (perror("minirt: malloc"), free(loader->normals),
+			free(loader->groups), false);
+	loader->triangles = (t_shape *)malloc(loader->t_max * sizeof(t_shape));
+	if (!loader->triangles)
+		return (perror("minirt: malloc"), free(loader->normals),
+			free(loader->groups), free(loader->vertices), false);
+	return (true);
 }
 
-bool	check_extension(char *filename, char *ext)
+static void	free_threads_data(t_obj_loader *loader, pthread_t *threads,
+			t_thread_data *thread_data)
 {
-	char const	*file_ext;
+	free_matrix(loader->lines);
+	pthread_mutex_destroy(&loader->v_mutex);
+	pthread_mutex_destroy(&loader->n_mutex);
+	pthread_mutex_destroy(&loader->t_mutex);
+	pthread_mutex_destroy(&loader->gp_mutex);
+	pthread_mutex_destroy(&loader->ig_lines_mutex);
+	free(threads);
+	free(thread_data);
+}
 
-	file_ext = ft_strrchr(filename, '.');
-	if (file_ext)
+static bool	read_and_set_tokens(t_obj_loader *loader)
+{
+	t_threads_data	threads_data;
+	pthread_t		*threads;
+	t_thread_data	*thread_data;
+	char			*file_content;
+
+	if (!read_file_to_memory(loader->filename, &file_content))
+		return (free(file_content), false);
+	if (!split_file_in_lines(&file_content, &loader->lines, &loader->tokens,
+			&threads_data.nb_lines))
+		return (free(file_content), free_matrix(loader->lines), false);
+	if (!set_threads_data(loader, &threads, &thread_data, &threads_data))
+		return (free_matrix(loader->lines), free_3d_array(loader->tokens),
+			free(threads), free(thread_data), false);
+	if (!exec_threads_for(split_lines_in_tokens, threads, thread_data,
+			&threads_data.threads_count))
+		return (free_3d_array(loader->tokens), free_matrix(loader->lines),
+			free(threads), free(thread_data), false);
+	if (!exec_threads_for(set_max_values, threads, thread_data,
+			&threads_data.threads_count))
+		return (free_3d_array(loader->tokens), free(threads), free(thread_data),
+			false);
+	if (!allocate_loader_arrays(loader))
+		return (free_3d_array(loader->tokens), free(threads), free(thread_data),
+			false);
+	return (free_threads_data(loader, threads, thread_data), true);
+}
+
+static bool	create_object(t_obj_loader *loader)
+{
+	int	i;
+
+	i = -1;
+	while (loader->tokens[++i])
 	{
-		if (ft_strncmp(file_ext, ext, ft_strlen(ext) + 1) == 0)
-			return (true);
+		if (!parse_line(loader, loader->tokens[i], i + 1))
+		{
+			free_3d_array(loader->tokens);
+			free(loader->vertices);
+			free(loader->normals);
+			free(loader->triangles);
+			free(loader->groups);
+			return (false);
+		}
 	}
-	return (false);
+	free_3d_array(loader->tokens);
+	free(loader->vertices);
+	free(loader->normals);
+	return (true);
 }
 
-bool	parse_obj_file(t_obj_loader *loader, char *filename)
+bool	parse_obj_file(t_obj_loader *loader, char const *filename)
 {
-	int		fd;
-	int		line_nb;
-	char	*line;
-	char	**params;
-
 	if (!loader || !filename)
 		return (false);
-	if (!set_max_values(loader, filename) || !open_obj_file(filename, &fd))
+	loader->filename = filename;
+	if (!read_and_set_tokens(loader))
 		return (false);
-	line_nb = 1;
-	line = get_next_line(fd);
-	while (line)
-	{
-		params = ft_subsplit(line, " \n");
-		if (!parse_line(loader, params, &line_nb))
-			return (free(line), free_array(params), close(fd),
-				free_loader(loader), false);
-		free(line);
-		free_array(params);
-		line = get_next_line(fd);
-		line_nb++;
-	}
-	return (free(line), close(fd), true);
+	if (!create_object(loader))
+		return (false);
+	return (true);
 }

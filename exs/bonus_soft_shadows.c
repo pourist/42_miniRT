@@ -95,8 +95,8 @@ int	main(void)
 	create_lights(&rt.world);
 	create_camera(&rt.camera);
 	create_scene(&rt.world);
-	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 16");
-	// create_bvh(&rt.world);
+	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Bonus Soft Shadows");
+	create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
 	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);
