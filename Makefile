@@ -39,24 +39,21 @@ vpath %.o $(OBJ_DIR)
 
 LIBFT							:= $(LIBFT_DIR)/libft.a
 MLX								:= $(MLX_DIR)/build/libmlx42.a
-HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h \
-										 lights.h materials.h world.h camera.h patterns.h groups.h \
-										 obj_loader.h
-SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c \
-										 color.c canvas.c save.c hooks.c mx.c mx_operations.c \
-										 mx_attributes.c mx_transformations.c mx_rotations.c \
-										 ray.c sphere.c intersections.c shape.c light.c material.c \
-										 world.c view_transform.c camera.c render.c color_at.c \
-										 plane.c pattern.c stripe.c gradient.c ring.c checkers.c \
-										 full_gradient.c radial_gradient.c solid_pattern.c \
-										 blended.c refrac_indices.c reflec_and_refrac.c cube.c \
-										 cylinder.c cone.c discriminants.c group.c group_utils.c \
-										 bounds.c local_bounds.c free.c triangle.c obj_loader.c	\
-										 ft_atof.c	obj_loader_utils.c set_max_values.c \
-										 obj_file_parser.c obj_vertice_parser.c obj_face_parser.c \
-										 obj_group_parser.c obj_normal_parser.c triangle_bounds.c \
-										 csg.c csg_utils.c shadow_calculations.c sequencer.c \
-										 light_shading.c bounding_boxes.c bvh.c
+HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h lights.h \
+										 materials.h world.h camera.h patterns.h groups.h obj_loader.h
+SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
+										 canvas.c save.c hooks.c mx.c mx_operations.c mx_attributes.c \
+										 mx_transformations.c mx_rotations.c ray.c sphere.c intersections.c \
+										 shape.c light.c material.c world.c view_transform.c camera.c \
+										 render.c color_at.c plane.c pattern.c stripe.c gradient.c ring.c \
+										 checkers.c full_gradient.c radial_gradient.c solid_pattern.c \
+										 blended.c refrac_indices.c reflec_and_refrac.c cube.c cylinder.c \
+										 cone.c discriminants.c group.c group_utils.c bounds.c local_bounds.c \
+										 free.c triangle.c obj_loader.c	ft_atof.c	obj_loader_utils.c \
+										 set_max_values.c obj_file_parser.c triangle_bounds.c csg.c csg_utils.c \
+										 shadow_calculations.c sequencer.c light_shading.c bounding_boxes.c \
+										 bvh.c obj_threads.c obj_open_read.c obj_split_file_content.c \
+										 obj_lines_parser.c obj_triangles_utils.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

@@ -1,6 +1,6 @@
 #include "obj_loader.h"
 
-static void	fill_indices(char **params, int *vert_i, int *norm_i, int *p_len)
+void	fill_indices(char **params, int *vert_i, int *norm_i, int *p_len)
 {
 	char	**face_info;
 	int		i;
@@ -23,8 +23,7 @@ static void	fill_indices(char **params, int *vert_i, int *norm_i, int *p_len)
 	}
 }
 
-static void	create_triangle(t_obj_loader *loader, int *vert_i, int *norm_i,
-					int i)
+void	create_triangle(t_obj_loader *loader, int *vert_i, int *norm_i, int i)
 {
 	t_point		v[3];
 	t_vector	n[3];
@@ -47,45 +46,19 @@ static void	create_triangle(t_obj_loader *loader, int *vert_i, int *norm_i,
 	}
 }
 
-static bool	fan_triangulation(t_obj_loader *loader, int *vert_i, int *norm_i, int *p_len)
+bool	fan_triangulation(t_obj_loader *loader, int *vert_i, int *norm_i,
+			int *p_len)
 {
 	int			i;
 
 	i = 0;
 	while (++i < *p_len - 1)
 	{
-		if (loader->t_count == loader->t_max)
-		{
-			loader->t_max++;
-			loader->triangles = ft_realloc(loader->triangles,
-					loader->t_max * sizeof(t_point));
-			if (!loader->triangles)
-				return (false);
-		}
+		if (loader->t_count >= loader->t_max)
+			return (false);
 		create_triangle(loader, vert_i, norm_i, i);
-		add_child(loader->current_g, &loader->triangles[loader->t_count]);
+		add_child(loader->current_gp, &loader->triangles[loader->t_count]);
 		loader->t_count++;
 	}
-	return (true);
-}
-
-bool	parse_triangle(t_obj_loader *loader, char **params, int *line_nb)
-{
-	int		*vert_i;
-	int		*norm_i;
-	int		p_len;
-
-	p_len = ft_matrix_len(params) - 1;
-	if (p_len < 3)
-		return (loader->ignored_lines++, print_ignore_message(*line_nb));
-	vert_i = malloc(p_len * sizeof(int));
-	norm_i = malloc(p_len * sizeof(int));
-	if (!vert_i || !norm_i)
-		return (false);
-	fill_indices(params, vert_i, norm_i, &p_len);
-	if (!fan_triangulation(loader, vert_i, norm_i, &p_len))
-		return (false);
-	free(vert_i);
-	free(norm_i);
 	return (true);
 }
