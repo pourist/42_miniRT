@@ -19,47 +19,43 @@ static bool	allocate_loader_arrays(t_obj_loader *loader)
 	return (true);
 }
 
-static void	free_threads_data(t_obj_loader *loader, pthread_t *threads,
-			t_thread_data *thread_data)
+static void	free_loader(t_obj_loader *loader)
 {
-	free_matrix(loader->lines);
+	if (!loader)
+		return ;
+	if (loader->lines)
+		free_matrix(loader->lines);
 	pthread_mutex_destroy(&loader->v_mutex);
 	pthread_mutex_destroy(&loader->n_mutex);
 	pthread_mutex_destroy(&loader->t_mutex);
 	pthread_mutex_destroy(&loader->gp_mutex);
 	pthread_mutex_destroy(&loader->ig_lines_mutex);
-	free(threads);
-	free(thread_data);
 }
 
 static bool	read_and_set_tokens(t_obj_loader *loader)
 {
-	t_threads_data	threads_data;
+	t_threads_setup	tsetup; 
 	pthread_t		*threads;
-	t_thread_data	*thread_data;
+	t_thread_data	*tdata; 
 	char			*file_content;
 
 	file_content = NULL;
 	if (!read_file_to_memory(loader->filename, &file_content))
-		return (free(file_content), false);
+		return (free(file_content), free_loader(loader), false);
 	if (!split_file_in_lines(&file_content, &loader->lines, &loader->tokens,
-			&threads_data.nb_lines))
-		return (free(file_content), free_matrix(loader->lines), false);
-	if (!set_threads_data(loader, &threads, &thread_data, &threads_data))
-		return (free_matrix(loader->lines), free_3d_array(loader->tokens),
-			free(threads), free(thread_data), false);
-	if (!exec_threads_for(split_lines_in_tokens, threads, thread_data,
-			&threads_data.threads_count))
-		return (free_3d_array(loader->tokens), free_matrix(loader->lines),
-			free(threads), free(thread_data), false);
-	if (!exec_threads_for(set_max_values, threads, thread_data,
-			&threads_data.threads_count))
-		return (free_3d_array(loader->tokens), free(threads), free(thread_data),
-			false);
+			&tsetup.nb_iters))
+		return (free(file_content), free_loader(loader), false);
+	if (!set_threads_data(loader, &threads, &tdata, &tsetup))
+		return (free_loader(loader), free_3d_array(loader->tokens), false);
+	if (!exec_threads_for(split_lines_in_tokens, threads, tdata,
+			&tsetup.nb_threads))
+		return (free_3d_array(loader->tokens), free_loader(loader), false);
+	if (!exec_threads_for(set_max_values, threads, tdata, &tsetup.nb_threads))
+		return (free_loader(loader), free_3d_array(loader->tokens), false);
 	if (!allocate_loader_arrays(loader))
-		return (free_3d_array(loader->tokens), free(threads), free(thread_data),
-			false);
-	return (free_threads_data(loader, threads, thread_data), true);
+		return (free_loader(loader), free_3d_array(loader->tokens), false);
+	free_loader(loader);
+	return (true);
 }
 
 static bool	create_object(t_obj_loader *loader)

@@ -5,8 +5,8 @@
 #include "groups.h"
 #include <time.h>
 
-#define WIDTH	800
-#define HEIGHT	600
+#define WIDTH	1080
+#define HEIGHT	720
 #define N_OBJS	1
 
 double	random_double(double min, double max)
@@ -190,6 +190,7 @@ void	render_lots_of_spheres(void)
 	create_lights1(&rt.world);
 	create_camera1(&rt.camera);
 	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 14 - Lots of Spheres");
+	create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
 	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);
@@ -208,7 +209,7 @@ void	render_hexagon(void)
 	create_camera2(&rt.camera);
 	create_scene2(&rt.world);
 	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Chapter 14 - Hexagon");
-	// create_bvh(&rt.world);
+	create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
 	mlx_close_hook(rt.canvas.mlx, &quit, &rt.canvas);

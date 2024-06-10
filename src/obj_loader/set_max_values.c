@@ -45,11 +45,19 @@ static void	read_line(t_obj_loader *loader, char **params)
 void	*set_max_values(void *data)
 {
 	t_thread_data	*td;
+	t_obj_loader	*loader;
 	int				line_nb;
 
 	td = (t_thread_data *)data;
+	if (!td || !td->data)
+		return (ft_putendl_fd("minirt: set_max_values: Wrong arguments",
+				STDERR_FILENO), NULL);
+	loader = (t_obj_loader *)td->data;
+	if (!loader->tokens || td->start < 0 || td->end < 0 || td->start >= td->end)
+		return (ft_putendl_fd("minirt: set_max_values: Wrong arguments",
+				STDERR_FILENO), NULL);
 	line_nb = td->start - 1;
 	while (++line_nb < td->end)
-		read_line(td->loader, td->loader->tokens[line_nb]);
+		read_line(loader, loader->tokens[line_nb]);
 	return (data);
 }

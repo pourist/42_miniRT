@@ -2,13 +2,9 @@
 # define OBJ_LOADER_H
 
 # include <fcntl.h>
-# include <sys/stat.h>
-# include <pthread.h>
 
 # include "shapes.h"
 # include "groups.h"
-
-# define THREADS_FRACTION 0.5
 
 typedef enum e_obj_type
 {
@@ -44,22 +40,6 @@ typedef struct s_obj_loader
 	pthread_mutex_t	ig_lines_mutex;
 }	t_obj_loader;
 
-typedef struct s_thread_data
-{
-	t_obj_loader	*loader;
-	int				start;
-	int				end;
-}	t_thread_data;
-
-typedef struct s_threads_data
-{
-	int	nb_lines;
-	int	threads_count;
-	int	lines_per_thread;
-}	t_threads_data;
-
-typedef void	*(*t_thread_fn)(void *);
-
 // obj_loader.c
 t_obj_loader	*new_obj_loader(t_obj_loader *loader, t_shape *group);
 // obj_open_read.c
@@ -91,9 +71,4 @@ void			fill_indices(char **params, int *vert_i, int *norm_i,
 					int *p_len);
 // set_max_values.c
 void			*set_max_values(void *data);
-// obj_threads.c
-bool			set_threads_data(t_obj_loader *loader, pthread_t **threads,
-					t_thread_data **t_data, t_threads_data *data);
-bool			exec_threads_for(t_thread_fn thread_fn, pthread_t *threads,
-					t_thread_data *thread_data, int *threads_count);
 #endif
