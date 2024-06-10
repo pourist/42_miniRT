@@ -404,7 +404,7 @@ Test(shapes, subdividing_a_primitive_does_nothing)
 	t_shape	s;
 
 	new_sphere(&s);
-	divide_groups(&s, 1);
+	divide_group(&s, 1);
 	cr_assert(eq(int, s.is_group, false));
 	cr_assert(eq(ptr, s.next, NULL));
 }
@@ -427,7 +427,7 @@ Test(groups, subdividing_a_group_divides_its_children)
 	add_child(&g, &s1);
 	add_child(&g, &s2);
 	add_child(&g, &s3);
-	divide_groups(&g, 1);
+	divide_group(&g, 1);
 	cr_assert(eq(int, g.group.count, 2));
 	cr_assert(eq(int, g.group.root->is_group, true));
 	cr_assert(eq(int, g.group.root->group.count, 2));
@@ -465,7 +465,7 @@ Test(groups, subdividing_a_group_with_too_few_children)
 	add_child(&sg, &s3);
 	add_child(&g, &sg);
 	add_child(&g, &s4);
-	divide_groups(&g, 3);
+	divide_group(&g, 3);
 	cr_assert(eq(int, g.group.count, 2));
 	cr_assert(eq(int, g.group.root->is_group, false));
 	cr_assert(eq(ptr, g.group.root, &s4));
@@ -505,7 +505,7 @@ Test(csg, subdividing_a_csg_shape_subdivides_its_children)
 	add_child(&right, &s3);
 	add_child(&right, &s4);
 	new_csg(DIFFERENCE, &left, &right, &csg);
-	divide_groups(&csg, 1);
+	divide_group(&csg, 1);
 	cr_assert(eq(int, csg.is_group, false));
 	cr_assert(eq(ptr, csg.csg.left, &left));
 	cr_assert(eq(ptr, csg.csg.right, &right));

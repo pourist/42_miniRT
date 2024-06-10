@@ -52,7 +52,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 free.c triangle.c obj_loader.c	ft_atof.c	obj_loader_utils.c \
 										 set_max_values.c obj_file_parser.c triangle_bounds.c csg.c csg_utils.c \
 										 shadow_calculations.c sequencer.c light_shading.c bounding_boxes.c \
-										 bvh.c obj_threads.c obj_open_read.c obj_split_file_content.c \
+										 bvh.c bvh_utils.c threads.c obj_open_read.c obj_split_file_content.c \
 										 obj_lines_parser.c obj_triangles_utils.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 

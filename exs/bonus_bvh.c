@@ -30,14 +30,14 @@ void	create_pedestal(t_shape *pedestal)
 	pedestal->material.reflective = 0.2;
 }
 
-void	create_dragon(t_shape *dragon)
+void	create_dragon(t_shape *dragon, size_t	*obj_count)
 {
 	t_obj_loader	loader;
 	t_matrix		m[2];
 
 	new_obj_loader(&loader, dragon);
 	parse_obj_file(&loader, "../obj_files/dragon.obj");
-	divide_groups(dragon, 16);
+	*obj_count += loader.t_count + loader.gp_count;
 	multiply_matrices(translation(0, 0.1217, 0, &m[0]), scaling(0.268, 0.268, 0.268, &m[1]), &m[0]);
 	set_transform(dragon, &m[0]);
 }
@@ -66,7 +66,7 @@ void	create_scene(t_world *world)
 	new_group(&world->objs_inside[obj_in_i]);
 	tmp2 = &world->objs_inside[obj_in_i];
 	obj_in_i++;
-	create_dragon(&world->objs_inside[obj_in_i]);
+	create_dragon(&world->objs_inside[obj_in_i], &world->objs_ext_count);
 	world->objs_inside[obj_in_i].material.color = new_color(1, 0, 0.1);
 	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
 	world->objs_inside[obj_in_i].material.diffuse = 0.6;
@@ -94,7 +94,7 @@ void	create_scene(t_world *world)
 	tmp2 = &world->objs_inside[obj_in_i];
 	set_transform(tmp2, multiply_matrices(rotation_y(cos(4), sin(4), &m[1]), scaling(0.75, 0.75, 0.75, &m[0]), &m[0]));
 	obj_in_i++;
-	create_dragon(&world->objs_inside[obj_in_i]);
+	create_dragon(&world->objs_inside[obj_in_i], &world->objs_ext_count);
 	world->objs_inside[obj_in_i].material.color = new_color(1, 0.5, 0.1);
 	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
 	world->objs_inside[obj_in_i].material.diffuse = 0.6;
@@ -122,7 +122,7 @@ void	create_scene(t_world *world)
 	tmp2 = &world->objs_inside[obj_in_i];
 	set_transform(tmp2, multiply_matrices(rotation_y(cos(-0.4), sin(-0.4), &m[1]), scaling(0.75, 0.75, 0.75, &m[0]), &m[0]));
 	obj_in_i++;
-	create_dragon(&world->objs_inside[obj_in_i]);
+	create_dragon(&world->objs_inside[obj_in_i], &world->objs_ext_count);
 	world->objs_inside[obj_in_i].material.color = new_color(0.9, 0.5, 0.1);
 	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
 	world->objs_inside[obj_in_i].material.diffuse = 0.6;
@@ -150,7 +150,7 @@ void	create_scene(t_world *world)
 	tmp2 = &world->objs_inside[obj_in_i];
 	set_transform(tmp2, multiply_matrices(rotation_y(cos(-0.2), sin(-0.2), &m[1]), scaling(0.5, 0.5, 0.5, &m[0]), &m[0]));
 	obj_in_i++;
-	create_dragon(&world->objs_inside[obj_in_i]);
+	create_dragon(&world->objs_inside[obj_in_i], &world->objs_ext_count);
 	world->objs_inside[obj_in_i].material.color = new_color(1, 0.9, 0.1);
 	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
 	world->objs_inside[obj_in_i].material.diffuse = 0.6;
@@ -178,7 +178,7 @@ void	create_scene(t_world *world)
 	tmp2 = &world->objs_inside[obj_in_i];
 	set_transform(tmp2, multiply_matrices(rotation_y(cos(3.3), sin(3.3), &m[1]), scaling(0.5, 0.5, 0.5, &m[0]), &m[0]));
 	obj_in_i++;
-	create_dragon(&world->objs_inside[obj_in_i]);
+	create_dragon(&world->objs_inside[obj_in_i], &world->objs_ext_count);
 	world->objs_inside[obj_in_i].material.color = new_color(0.9, 1, 0.1);
 	world->objs_inside[obj_in_i].material.ambient = new_color(0.1, 0.1, 0.1);
 	world->objs_inside[obj_in_i].material.diffuse = 0.6;
@@ -202,7 +202,7 @@ void	create_scene(t_world *world)
 	create_pedestal(&world->objs_inside[obj_in_i]);
 	add_child(tmp, &world->objs_inside[obj_in_i]);
 	obj_in_i++;
-	create_dragon(&world->objs_inside[obj_in_i]);
+	create_dragon(&world->objs_inside[obj_in_i], &world->objs_ext_count);
 	tmp2 = &world->objs_inside[obj_in_i];
 	tmp2->material.color = new_color(0.95, 0.95, 0.95);
 	tmp2->material.ambient = new_color(0.1, 0.1, 0.1);

@@ -5,14 +5,9 @@ t_hit	*intersect_world(t_world *world, t_ray *ray)
 	int		i;
 
 	world->xs = NULL;
-	if (world->bvh.group.root)
-		intersect(&world->xs, &world->bvh, ray);
-	else
-	{
-		i = -1;
-		while (++i < world->objs_count)
-			intersect(&world->xs, &world->objs[i], ray);
-	}
+	i = -1;
+	while (++i < world->objs_count)
+		intersect(&world->xs, &world->objs[i], ray);
 	return (world->xs);
 }
 

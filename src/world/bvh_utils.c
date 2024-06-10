@@ -1,4 +1,4 @@
-#include "groups.h"
+#include "world.h"
 
 void	split_bounds(t_bounds s_box[2])
 {
@@ -26,7 +26,7 @@ void	split_bounds(t_bounds s_box[2])
 	}
 }
 
-void	fill_containers(t_shape *group, t_shape **left, t_shape **right,
+static void	fill_containers(t_shape *group, t_shape **left, t_shape **right,
 			t_bounds split_box[2])
 {
 	t_shape	**current;
@@ -94,7 +94,7 @@ void	make_subgroup(t_shape *group, t_shape **container)
 	add_child(group, subgroup);
 }
 
-bool	check_group(t_shape *group, int threshold)
+bool	check_group(t_shape *group, int *threshold)
 {
 	if (!group || (group && (!group->is_group && !group->is_csg)))
 		return (false);
@@ -102,48 +102,9 @@ bool	check_group(t_shape *group, int threshold)
 		group->bounds_of(group);
 	if (group->is_csg)
 	{
-		divide_groups(group->csg.left, threshold);
-		divide_groups(group->csg.right, threshold);
+		divide_group(group->csg.left, *threshold);
+		divide_group(group->csg.right, *threshold);
 		return (false);
 	}
 	return (true);
-}
-
-void	divide_groups(t_shape *group, int threshold)
-{
-	t_shape	*left;
-	t_shape	*right;
-	t_shape	*current;
-
-	if (!check_group(group, threshold))
-		return ;
-	left = NULL;
-	right = NULL;
-	if (threshold <= group->group.count)
-	{
-		partition_children(group, &left, &right);
-		if (left)
-			make_subgroup(group, &left);
-		if (right)
-			make_subgroup(group, &right);
-	}
-	current = group->group.root;
-	while (current)
-	{
-		divide_groups(current, threshold);
-		current = current->next;
-	}
-	group->bounds_of(group);
-}
-
-void	create_bvh(t_world *world)
-{
-	int	i;
-
-	if (!world)
-		return ;
-	i = -1;
-	while (++i < world->objs_count)
-		add_child(&world->bvh, &world->objs[i]);
-	divide_groups(&world->bvh, 16);
 }
