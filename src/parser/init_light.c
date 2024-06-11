@@ -10,7 +10,8 @@ void	create_light(char **rgb, double ratio, char **pos,t_light *light)
 	g = (ft_atof(rgb[1]) / 255) * ratio;
 	b = (ft_atof(rgb[2]) / 255) * ratio;
 	light->intensity = new_color(r, g, b);
-	light->position = new_point(ft_atof(pos[0]), ft_atof(pos[1]), ft_atof(pos[2]));
+	new_point(
+		ft_atof(pos[0]), ft_atof(pos[1]), ft_atof(pos[2]), &light->position);
 	free_s(rgb);
 	free_s(pos);
 }
@@ -33,6 +34,6 @@ int	init_light(t_line_parse_env *env, t_light *light)
 	rgb = ft_subsplit(env->line[3], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(pos), 1);
-	create_light(rgb, ft_atof(env->line[2]), pos,light);
+	create_light(rgb, ft_atof(env->line[2]), pos, light);
 	return (0);
 }
