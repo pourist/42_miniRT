@@ -38,7 +38,7 @@ vpath %.h $(INC_DIRS)
 vpath %.o $(OBJ_DIR)
 
 LIBFT							:= $(LIBFT_DIR)/libft.a
-
+MLX								:= $(MLX_DIR)/build/libmlx42.a
 HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h lights.h \
 										 materials.h world.h camera.h patterns.h groups.h obj_loader.h \
                      parser.h

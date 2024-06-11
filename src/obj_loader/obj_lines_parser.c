@@ -78,7 +78,7 @@ static bool	parse_vertice(t_obj_loader *loader, char **params, int *line_nb)
 	return (true);
 }
 
-bool	parse_line(t_obj_loader *loader, char **params, int line_nb)
+bool	obj_parse_line(t_obj_loader *loader, char **params, int line_nb)
 {
 	int	type_size;
 

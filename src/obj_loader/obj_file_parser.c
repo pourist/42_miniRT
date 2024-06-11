@@ -65,7 +65,7 @@ static bool	create_object(t_obj_loader *loader)
 	i = -1;
 	while (loader->tokens[++i])
 	{
-		if (!parse_line(loader, loader->tokens[i], i + 1))
+		if (!obj_parse_line(loader, loader->tokens[i], i + 1))
 		{
 			free_3d_array(loader->tokens);
 			free(loader->vertices);
