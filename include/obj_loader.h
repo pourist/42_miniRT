@@ -52,7 +52,8 @@ bool			split_file_in_lines(char **file_content, char ***lines,
 					char ****tokens, int *nb_lines);
 void			*split_lines_in_tokens(void *data);
 // obj_file_parse_lines.c
-bool			parse_line(t_obj_loader *loader, char **params, int line_nb);
+bool			obj_parse_line(t_obj_loader *loader, char **params,
+					int line_nb);
 // obj_file_parser.c
 bool			parse_obj_file(t_obj_loader *loader, char const *filename);
 // obj_loader_utils.c
