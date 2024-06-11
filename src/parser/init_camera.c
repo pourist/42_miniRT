@@ -19,8 +19,8 @@ void	make_camera(t_camera *camera, double fov, char **pov)
 	t_point from;
     // t_point to;
     // t_vector up;
-	*camera = new_camera(WIDTH, HEIGHT, degrees_to_radian(fov));
-	from = new_point(ft_atof(pov[0]), ft_atof(pov[1]), ft_atof(pov[2]));
+	new_camera(camera, WIDTH, HEIGHT, degrees_to_radian(fov));
+	new_point(ft_atof(pov[0]), ft_atof(pov[1]), ft_atof(pov[2]), &from);
 	// up = new_vector(0, 1, 0);
 }
 

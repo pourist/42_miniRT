@@ -55,10 +55,9 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 shadow_calculations.c sequencer.c light_shading.c bounding_boxes.c \
 										 bvh.c bvh_utils.c threads.c obj_open_read.c obj_split_file_content.c \
 										 obj_lines_parser.c obj_triangles_utils.c \
-                     parser.c parser_utils.c element_counter.c free_print.c\
+                     parser.c parser_utils.c element_counter.c free_print.c \
 										 init_ambient.c init_mini_rt.c error.c valid_args.c \
 										 line_parser.c init_camera.c init_light.c
-
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
