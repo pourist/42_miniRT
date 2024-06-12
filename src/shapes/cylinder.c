@@ -15,6 +15,9 @@ t_shape	*new_cylinder(t_shape *shape)
 	shape->intersect_fn = intersect_cylinder;
 	shape->normal_at = normal_at_cylinder;
 	shape->bounds_of = cylinder_bounds;
+	shape->material.pattern.texture_map.uv_mapping_fn = cylindrical_map;
+	shape->material.pattern.texture_map.uv_pattern.width = 16;
+	shape->material.pattern.texture_map.uv_pattern.height = 8;
 	return (shape);
 }
 
