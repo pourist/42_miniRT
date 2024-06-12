@@ -57,8 +57,10 @@ t_pattern	*new_blended_pattern(t_pattern a, t_pattern b, t_pattern *pattern);
 t_checker	uv_checkers(double width, double height, t_pattern *a,
 				t_pattern *b);
 t_pattern	*uv_pattern_at(t_checker *checkers, double *u, double *v);
-double		*spherical_map(t_point *point, double uv[2]);
 void		texture_map(t_pattern *pattern, t_checker *checkers,
 				t_uv_mapping uv_mapping_fn);
+double		*spherical_map(t_point *point, double uv[2]);
+double		*planar_map(t_point *point, double uv[2]);
+double		*cylindrical_map(t_point *point, double uv[2]);
 
 #endif

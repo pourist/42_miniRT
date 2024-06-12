@@ -125,3 +125,85 @@ Test(patterns, using_texture_map_pattern_with_spherical_map)
 	res = pattern.pattern_at(&pattern, &p);
 	cr_assert(eq(int, color_eq(res, BLACK), true));
 }
+
+Test(patterns, using_planar_mapping_on_3D_point)
+{
+	t_point		p;
+	double		uv[2];
+
+	new_point(0.25, 0, 0.5, &p);
+	planar_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.25));
+	cr_assert(eq(dbl, uv[1], 0.5));
+	new_point(0.25, 0, -0.25, &p);
+	planar_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.25));
+	cr_assert(eq(dbl, uv[1], 0.75));
+	new_point(0.25, 0.5, -0.25, &p);
+	planar_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.25));
+	cr_assert(eq(dbl, uv[1], 0.75));
+	new_point(1.25, 0, 0.5, &p);
+	planar_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.25));
+	cr_assert(eq(dbl, uv[1], 0.5));
+	new_point(0.25, 0, -1.75, &p);
+	planar_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.25));
+	cr_assert(eq(dbl, uv[1], 0.25));
+	new_point(1, 0, -1, &p);
+	planar_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.0));
+	cr_assert(eq(dbl, uv[1], 0.0));
+	new_point(0, 0, 0, &p);
+	planar_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.0));
+	cr_assert(eq(dbl, uv[1], 0.0));
+}
+
+Test(patterns, using_cylindrical_mapping_on_3D_point)
+{
+  t_point		p;
+  double		uv[2];
+
+	new_point(0, 0, -1, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.0));
+	cr_assert(eq(dbl, uv[1], 0.0));
+	new_point(0, 0.5, -1, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.0));
+	cr_assert(eq(dbl, uv[1], 0.5));
+	new_point(0, 1, -1, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.0));
+	cr_assert(eq(dbl, uv[1], 0.0));
+	new_point(0.70711, 0.5, -0.70711, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.125));
+	cr_assert(eq(dbl, uv[1], 0.5));
+	new_point(1, 0.5, 0, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.25));
+	cr_assert(eq(dbl, uv[1], 0.5));
+	new_point(0.70711, 0.5, 0.70711, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.375));
+	cr_assert(eq(dbl, uv[1], 0.5));
+	new_point(0, -0.25, 1, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.5));
+	cr_assert(eq(dbl, uv[1], 0.75));
+	new_point(-0.70711, 0.5, 0.70711, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.625));
+	cr_assert(eq(dbl, uv[1], 0.5));
+	new_point(-1, 1.25, 0, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.75));
+	cr_assert(eq(dbl, uv[1], 0.25));
+	new_point(-0.70711, 0.5, -0.70711, &p);
+	cylindrical_map(&p, uv);
+	cr_assert(eq(dbl, uv[0], 0.875));
+	cr_assert(eq(dbl, uv[1], 0.5));
+}

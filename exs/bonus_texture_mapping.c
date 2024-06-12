@@ -10,10 +10,14 @@
 
 void	create_scene(t_world *world)
 {
-	t_shape	s;
+	t_shape		s;
+	t_shape		floor;
+	t_shape		cyl;
+	t_shape		cone;
+	t_matrix	m[2];
 
-	world->objs = malloc(1 * sizeof(t_shape));
-	world->objs_count = 1;
+	world->objs = malloc(4 * sizeof(t_shape));
+	world->objs_count = 4;
 	new_sphere(&s);
 	new_uv_checkers_pattern(new_solid_pattern(new_color(0, 0.5, 0)),
 		new_solid_pattern(new_color(1, 1, 1)), &s.material.pattern);
@@ -21,6 +25,37 @@ void	create_scene(t_world *world)
 	s.material.shininess = 10;
 	s.material.diffuse = 0.6;
 	world->objs[0] = s;
+	new_plane(&floor);
+	new_uv_checkers_pattern(new_solid_pattern(new_color(0, 0.5, 0)),
+		new_solid_pattern(new_color(1, 1, 1)), &floor.material.pattern);
+	s.material.specular = 0;
+	s.material.diffuse = 0.9;
+	set_transform(&floor, translation(0, -2, 0, &floor.transform));
+	world->objs[1] = floor;
+	new_cylinder(&cyl);
+	cyl.cyl.min = 0;
+	cyl.cyl.max = 0.5;
+	cyl.cyl.closed = true;
+	multiply_matrices(translation(-3, -0.5, 0, &m[0]), scaling(1, 3.1415, 1, &m[1]), &m[0]);
+	set_transform(&cyl, &m[0]);
+	new_uv_checkers_pattern(new_solid_pattern(new_color(0, 0.5, 0)),
+		new_solid_pattern(new_color(1, 1, 1)), &cyl.material.pattern);
+	s.material.specular = 0.6;
+	s.material.shininess = 15;
+	s.material.diffuse = 0.8;
+	world->objs[2] = cyl;
+	new_cone(&cone);
+	cone.cone.min = 0;
+	cone.cone.max = 1;
+	cone.cone.closed = true;
+	multiply_matrices(translation(3, 0.5, 0, &m[0]), rotation_x(cos(-M_PI), sin(-M_PI), &m[1]), &m[0]);
+	set_transform(&cone, &m[0]);
+	new_uv_checkers_pattern(new_solid_pattern(new_color(0, 0.5, 0)),
+		new_solid_pattern(new_color(1, 1, 1)), &cone.material.pattern);
+	s.material.specular = 0.6;
+	s.material.shininess = 15;
+	s.material.diffuse = 0.8;
+	world->objs[3] = cone;
 }
 
 void	create_lights(t_world *world)
@@ -42,7 +77,7 @@ void	create_camera(t_camera *camera)
 	t_vector	up;
 
 	new_camera(camera, WIDTH, HEIGHT, M_PI_2);
-	new_point(0, 0, -5, &from);
+	new_point(1, 2, -5, &from);
 	new_point(0, 0, 0, &to);
 	new_vector(0, 1, 0, &up);
 	set_transform_camera(camera, view_transform(&from, &to, &up,
