@@ -18,8 +18,8 @@ WHITE       := \033[0;97m
 
 TESTS							:= tuples colors canvas matrices transformations rays spheres \
 										 lights materials world view_transform camera shapes planes \
-										 patterns reflec_refrac cubes cones groups triangles \
-										 obj_loader csg features bvh
+										 patterns reflec_refrac cubes cones groups triangles obj_loader \
+										 csg features bvh texture_mapping
 RM								:= rm -rf
 	
 ################################################################################
@@ -166,6 +166,10 @@ features: $(OBJECTS) test.c test_features.c
 
 .PHONY: bvh
 bvh: $(OBJECTS) test.c test_bvh.c
+	@$(call run, "$^")
+
+.PHONY: texture_mapping
+texture_mapping: $(OBJECTS) test.c test_texture_mapping.c
 	@$(call run, "$^")
 
 $(OBJECTS):
