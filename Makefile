@@ -25,7 +25,7 @@ RM								:= rm -rf
 
 OBJ_DIR						:= obj
 SRC_DIRS					:= tuples utils canvas matrices rays shapes lights materials \
-										 world camera patterns bounds obj_loader parser
+										 world camera patterns bounds obj_loader texture_mapping parser
 SRC_DIRS					:= $(addprefix src/, $(SRC_DIRS))
 SRC_DIRS					+= src
 LIB_DIR						:= lib
@@ -54,7 +54,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 set_max_values.c obj_file_parser.c triangle_bounds.c csg.c csg_utils.c \
 										 shadow_calculations.c sequencer.c light_shading.c bounding_boxes.c \
 										 bvh.c bvh_utils.c threads.c obj_open_read.c obj_split_file_content.c \
-										 obj_lines_parser.c obj_triangles_utils.c \
+										 obj_lines_parser.c obj_triangles_utils.c uv_checkers.c \
                      parser.c parser_utils.c element_counter.c free_print.c \
 										 init_ambient.c init_mini_rt.c error.c valid_args.c \
 										 line_parser.c init_camera.c init_light.c
@@ -102,11 +102,11 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 
 all: submodules $(NAME)
 
-test: $(NAME)
+test: submodules $(NAME)
 	@make $(T) -C tests -s
 	@make fclean -C tests -s
 
-ex: $(NAME)
+ex: submodules $(NAME)
 	@make $(X) -C exs -s
 	@make fclean -C exs -s
 

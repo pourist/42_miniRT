@@ -30,9 +30,9 @@ void	create_scene(t_world *world)
 	t_matrix	m[2];
 
 	new_cube(&floor);
-	floor.material.pattern = new_checkers_pattern(
-			new_solid_pattern(new_color(0.1, 0.1, 0.1)),
-			new_solid_pattern(new_color(0.9, 0.9, 0.9)));
+	new_checkers_pattern(
+		new_solid_pattern(new_color(0.1, 0.1, 0.1)),
+		new_solid_pattern(new_color(0.9, 0.9, 0.9)), &floor.material.pattern);
 	floor.material.reflective = 0.5;
 	set_pattern_transform(&floor.material.pattern, scaling(0.2, 0.2, 0.2, &m[0]));
 	set_transform(&floor, scaling(10, 0.01, 10, &m[0]));
@@ -85,9 +85,9 @@ void	create_scene(t_world *world)
 	new_cone(&cone);
 	cone.cone.min = 0;
 	cone.cone.max = 1.0;
-	cone.material.pattern = new_checkers_pattern(
-			new_solid_pattern(new_color(0.957, 0.80, 0.604)),
-			new_solid_pattern(new_color(0.925, 0.663, 0.333)));
+	new_checkers_pattern(
+		new_solid_pattern(new_color(0.957, 0.80, 0.604)),
+		new_solid_pattern(new_color(0.925, 0.663, 0.333)), &cone.material.pattern);
 	multiply_matrices(translation(-1.0, 1.0, 0.0, &m[0]), scaling(0.22, 0.58, 0.22, &m[1]), &m[0]);
 	set_transform(&cone, &m[0]);
 	set_pattern_transform(&cone.material.pattern, m);

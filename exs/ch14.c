@@ -134,9 +134,9 @@ void	create_scene2(t_world *world)
 			rotation_y(cos(i * M_PI / 3), sin(i * M_PI / 3), &m));
 		add_child(hexagon, &sides[i]);
 	}
-	hexagon->material.pattern = new_radial_gradient_pattern(
-			new_solid_pattern(new_color(0.5, 0.7, 0.9)),
-			new_solid_pattern(new_color(0.6, 0.3, 0.1)));
+	new_radial_gradient_pattern(
+		new_solid_pattern(new_color(0.5, 0.7, 0.9)),
+		new_solid_pattern(new_color(0.6, 0.3, 0.1)), &hexagon->material.pattern);
 	set_pattern_transform(&hexagon->material.pattern,
 		scaling(0.33, 0.33, 0.33, &m));
 }
