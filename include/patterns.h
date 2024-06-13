@@ -46,7 +46,7 @@ typedef struct s_pattern
 	t_matrix		transform;
 	t_matrix		inverse;
 	t_texture_map	texture_map;
-	mlx_texture_t	*texture;
+	mlx_texture_t	*texture[6];
 }	t_pattern;
 
 typedef enum e_cube_face
@@ -93,7 +93,8 @@ double		*cylindrical_map(t_point *point, double uv[2]);
 t_cube_face	face_from_point(t_point *point);
 
 t_pattern	*new_texture_map(t_pattern *pattern, char const *path);
-double		*cube_map(t_point *point, double uv[2]);
+t_pattern	*new_cubic_texture_map(t_pattern *pattern, char const *paths[6]);
+double		*cube_map(t_point *point, double uv[3]);
 double		*cube_uv_front(t_point *point, double uv[2]);
 double		*cube_uv_back(t_point *point, double uv[2]);
 double		*cube_uv_left(t_point *point, double uv[2]);
