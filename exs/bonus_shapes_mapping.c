@@ -245,7 +245,7 @@ int	main(void)
 	create_lights(&rt.world);
 	create_camera(&rt.camera);
 	create_scene(&rt.world);
-	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Bonus texture mapping");
+	new_canvas(&rt.canvas, WIDTH, HEIGHT, "Bonus shape mapping");
 	create_bvh(&rt.world);
 	render(&rt);
 	mlx_image_to_window(rt.canvas.mlx, rt.canvas.img, 0, 0);
