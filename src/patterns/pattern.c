@@ -10,7 +10,9 @@ t_pattern	*new_pattern(t_pattern *pattern)
 	pattern->has_pattern = false;
 	get_identity_matrix(&pattern->transform);
 	get_identity_matrix(&pattern->inverse);
-	pattern->texture_map.texture = NULL;
+	pattern->texture = NULL;
+	pattern->texture_map.uv_pattern.a = NULL;
+	pattern->texture_map.uv_pattern.b = NULL;
 	return (pattern);
 }
 

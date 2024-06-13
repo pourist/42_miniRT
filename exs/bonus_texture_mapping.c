@@ -10,52 +10,47 @@
 
 void	create_scene(t_world *world)
 {
-	t_shape		s;
-	t_shape		floor;
-	t_shape		cyl;
-	t_shape		cone;
 	t_matrix	m[2];
+	t_shape		light;
+	t_shape		plane;
+	t_shape		cyl;
+	t_shape		sph;
 
 	world->objs = malloc(4 * sizeof(t_shape));
 	world->objs_count = 4;
-	new_sphere(&s);
-	new_uv_checkers_pattern(new_solid_pattern(new_color(0, 0.5, 0)),
-		new_solid_pattern(new_color(1, 1, 1)), &s.material.pattern);
-	s.material.specular = 0.4;
-	s.material.shininess = 10;
-	s.material.diffuse = 0.6;
-	world->objs[0] = s;
-	new_plane(&floor);
-	new_uv_checkers_pattern(new_solid_pattern(new_color(0, 0.5, 0)),
-		new_solid_pattern(new_color(1, 1, 1)), &floor.material.pattern);
-	s.material.specular = 0;
-	s.material.diffuse = 0.9;
-	set_transform(&floor, translation(0, -2, 0, &floor.transform));
-	world->objs[1] = floor;
+	new_sphere(&light);
+	light.material.color = new_color(1.5, 1.5, 1.5);
+	light.material.ambient = new_color(1, 1, 1);
+	light.material.diffuse = 0;
+	light.material.specular = 0;
+	light.cast_shadow = false;
+	set_transform(&light, translation(-100, 100, -100, &m[0]));
+	new_plane(&plane);
+	plane.material.color = new_color(1, 1, 1);
+	plane.material.ambient = new_color(0, 0, 0);
+	plane.material.diffuse = 0.1;
+	plane.material.specular = 0;
+	plane.material.reflective = 0.4;
 	new_cylinder(&cyl);
 	cyl.cyl.min = 0;
-	cyl.cyl.max = 0.5;
+	cyl.cyl.max = 0.1;
 	cyl.cyl.closed = true;
-	multiply_matrices(translation(-3, -0.5, 0, &m[0]), scaling(1, 3.1415, 1, &m[1]), &m[0]);
-	set_transform(&cyl, &m[0]);
-	new_uv_checkers_pattern(new_solid_pattern(new_color(0, 0.5, 0)),
-		new_solid_pattern(new_color(1, 1, 1)), &cyl.material.pattern);
-	s.material.specular = 0.6;
-	s.material.shininess = 15;
-	s.material.diffuse = 0.8;
+	cyl.material.color = new_color(1, 1, 1);
+	cyl.material.ambient = new_color(0, 0, 0);
+	cyl.material.diffuse = 0.2;
+	cyl.material.specular = 0;
+	cyl.material.reflective = 0.1;
+	new_sphere(&sph);
+	new_texture_map(&sph.material.pattern, "../textures/earth.png");
+	sph.material.diffuse = 0.9;
+	sph.material.specular = 0.1;
+	sph.material.shininess = 10;
+	multiply_matrices(translation(0, 1.1, 0, &m[0]), rotation_y(cos(1.9), sin(1.9), &m[1]), &m[0]);
+	set_transform(&sph, &m[0]);
+	world->objs[0] = light;
+	world->objs[1] = plane;
 	world->objs[2] = cyl;
-	new_cone(&cone);
-	cone.cone.min = 0;
-	cone.cone.max = 1;
-	cone.cone.closed = true;
-	multiply_matrices(translation(3, 0.5, 0, &m[0]), rotation_x(cos(-M_PI), sin(-M_PI), &m[1]), &m[0]);
-	set_transform(&cone, &m[0]);
-	new_uv_checkers_pattern(new_solid_pattern(new_color(0, 0.5, 0)),
-		new_solid_pattern(new_color(1, 1, 1)), &cone.material.pattern);
-	s.material.specular = 0.6;
-	s.material.shininess = 15;
-	s.material.diffuse = 0.8;
-	world->objs[3] = cone;
+	world->objs[3] = sph;
 }
 
 void	create_lights(t_world *world)
@@ -65,7 +60,7 @@ void	create_lights(t_world *world)
 
 	world->lights = malloc(1 * sizeof(t_light));
 	world->lights_count = 1;
-	new_point(-10, 10, -10, &p);
+	new_point(-100, 100, -100, &p);
 	c = new_color(1, 1, 1);
 	new_light(&p, &c, &world->lights[0]);
 }
@@ -77,8 +72,8 @@ void	create_camera(t_camera *camera)
 	t_vector	up;
 
 	new_camera(camera, WIDTH, HEIGHT, M_PI_2);
-	new_point(1, 2, -5, &from);
-	new_point(0, 0, 0, &to);
+	new_point(1, 2, -10, &from);
+	new_point(0, 1.1, 0, &to);
 	new_vector(0, 1, 0, &up);
 	set_transform_camera(camera, view_transform(&from, &to, &up,
 			&camera->transform));
