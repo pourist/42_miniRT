@@ -14,34 +14,49 @@ t_point	*point_on_light(t_light *light, double u, double v, t_point *p)
 bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point)
 {
 	t_vector	v;
-	double		distance;
+	double		distance_sq;
 	t_ray		r;
 	t_hit		*xs;
-	t_hit		*h;
 
 	subtract(light_pos, point, &v);
-	distance = sqrt(magnitude_squared(&v));
 	new_ray(point, normalize(&v, &v), &r);
 	xs = intersect_world(world, &r);
-	h = hit(xs);
-	if (h && h->obj->cast_shadow == true && h->t < distance)
+	if (!xs)
+		return (false);
+	xs = hit(xs);
+	if (xs && xs->obj->cast_shadow == false)
+		return (false);
+	distance_sq = magnitude_squared(&v);
+	if (xs && xs->obj->cast_shadow == true && xs->t * xs->t < distance_sq)
 		return (true);
 	return (false);
 }
 
-double	intensity_at(t_world *world, t_point *point, int index)
+static double	spotlight_intensity_ratio(t_light *light, t_point *point)
+{
+	t_vector	v;
+	double		cos_angle_between;
+	double		intensity_factor;
+
+	subtract(point, &light->position, &v);
+	normalize(&v, &v);
+	cos_angle_between = dot(&v, &light->direction);
+	if (cos_angle_between < light->fade_radian)
+		return (0.0);
+	if (cos_angle_between >= light->center_radian)
+		return (1.0);
+	intensity_factor = (cos_angle_between - light->fade_radian)
+		/ light->delta_cos;
+	return (intensity_factor);
+}
+
+static double	area_intensity_at(t_world *world, t_point *point, int index)
 {
 	double	total;
 	double	u;
 	double	v;
 	t_point	light_position;
 
-	if (world->lights[index].is_area_light == false)
-	{
-		if (is_shadowed(world, &world->lights[index].position, point))
-			return (0.0);
-		return (1.0);
-	}
 	total = 0.0;
 	v = -1;
 	while (++v < world->lights[index].vsteps)
@@ -51,8 +66,34 @@ double	intensity_at(t_world *world, t_point *point, int index)
 		{
 			point_on_light(&world->lights[index], u, v, &light_position);
 			if (!is_shadowed(world, &light_position, point))
-				total += 1.0;
+			{
+				if (world->lights[index].is_spotlight)
+					total += spotlight_intensity_ratio(&world->lights[index],
+							point);
+				else
+					total += 1.0;
+			}
 		}
 	}
-	return (total / world->lights[index].samples);
+	return (total * world->lights[index].inverse_samples);
+}
+
+double	intensity_at(t_world *world, t_point *point, int index)
+{
+	if (world->lights[index].is_area_light == false)
+	{
+		if (world->lights[index].is_spotlight)
+		{
+			if (is_shadowed(world, &world->lights[index].position, point))
+				return (0.0);
+			return (spotlight_intensity_ratio(&world->lights[index], point));
+		}
+		else
+		{
+			if (is_shadowed(world, &world->lights[index].position, point))
+				return (0.0);
+			return (1.0);
+		}
+	}
+	return (area_intensity_at(world, point, index));
 }

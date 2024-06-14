@@ -80,7 +80,6 @@ static t_color	lighten(t_material *m, t_lighting_params *lp, t_light *light,
 	else
 		lp->specular = multiply_color(light->intensity, m->specular
 				* pow(lp->reflect_dot_eye, m->shininess));
-	lp->diffuse = multiply_color(lp->diffuse, light->intensity_ratio);
-	lp->specular = multiply_color(lp->specular, light->intensity_ratio);
-	return (add_color(lp->ambient, add_color(lp->diffuse, lp->specular)));
+	return (add_color(lp->ambient, multiply_color(add_color(
+					lp->diffuse, lp->specular), light->intensity_ratio)));
 }
