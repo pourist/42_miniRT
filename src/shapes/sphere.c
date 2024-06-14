@@ -15,6 +15,9 @@ t_shape	*new_sphere(t_shape *shape)
 	shape->intersect_fn = intersect_sphere;
 	shape->normal_at = normal_at_sphere;
 	shape->bounds_of = sphere_bounds;
+	shape->material.pattern.texture_map.uv_mapping_fn = spherical_map;
+	shape->material.pattern.texture_map.uv_pattern.width = 20;
+	shape->material.pattern.texture_map.uv_pattern.height = 10;
 	return (shape);
 }
 

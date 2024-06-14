@@ -22,25 +22,25 @@ void	create_background(t_world *world)
 	b = new_color(0.7, 0.7, 0.7);
 	new_plane(&floor);
 	floor.material.specular = 0;
-	floor.material.pattern = new_checkers_pattern(new_solid_pattern(a),
-			new_solid_pattern(b));
-	*floor.material.pattern.a = new_stripe_pattern(
-			new_solid_pattern(new_color(0.9, 0.3, 0.3)),
-			new_solid_pattern(new_color(0.6, 0.3, 0.3)));
+	new_checkers_pattern(new_solid_pattern(a),
+		new_solid_pattern(b), &floor.material.pattern);
+	new_stripe_pattern(
+		new_solid_pattern(new_color(0.9, 0.3, 0.3)),
+		new_solid_pattern(new_color(0.6, 0.3, 0.3)), floor.material.pattern.a);
 	set_pattern_transform(floor.material.pattern.a, scaling(0.1, 0.1, 0.1, &multi[0]));
-	*floor.material.pattern.b = new_stripe_pattern(
-			new_solid_pattern(a), new_solid_pattern(b));
+	new_stripe_pattern(
+		new_solid_pattern(a), new_solid_pattern(b), floor.material.pattern.b);
 	set_pattern_transform(floor.material.pattern.b, scaling(0.1, 0.1, 0.1, &multi[0]));
 	new_plane(&front_wall);
 	front_wall.material = floor.material;
-	front_wall.material.pattern = new_blended_pattern(
-			new_solid_pattern(a), new_solid_pattern(b));
-	*front_wall.material.pattern.a = new_stripe_pattern(
-			new_solid_pattern(new_color(0, 0.5, 0.1)),
-			new_solid_pattern(new_color(0.8, 0.8, 0.8)));
-	*front_wall.material.pattern.b = new_stripe_pattern(
-			new_solid_pattern(new_color(0, 0.5, 0.1)),
-			new_solid_pattern(new_color(0.8, 0.8, 0.8)));
+	new_blended_pattern(
+		new_solid_pattern(a), new_solid_pattern(b), &front_wall.material.pattern);
+	new_stripe_pattern(
+		new_solid_pattern(new_color(0, 0.5, 0.1)),
+		new_solid_pattern(new_color(0.8, 0.8, 0.8)), front_wall.material.pattern.a);
+	new_stripe_pattern(
+		new_solid_pattern(new_color(0, 0.5, 0.1)),
+		new_solid_pattern(new_color(0.8, 0.8, 0.8)), front_wall.material.pattern.b);
 	set_transform(&front_wall, transformations(2, rotation_x(cos(M_PI / 2),
 				sin(M_PI / 2), &multi[0]), translation(0, 0, 5, &multi[1])));
 	set_pattern_transform(&front_wall.material.pattern, multi);
@@ -48,15 +48,15 @@ void	create_background(t_world *world)
 	set_pattern_transform(front_wall.material.pattern.b, rotation_z(cos(-M_PI / 4), sin(-M_PI / 4), &multi[0]));
 	new_plane(&right_wall);
 	right_wall.material = floor.material;
-	right_wall.material.pattern = new_checkers_pattern(new_solid_pattern(a),
-			new_solid_pattern(b));
+	new_checkers_pattern(new_solid_pattern(a),
+		new_solid_pattern(b), &right_wall.material.pattern);
 	set_transform(&right_wall, transformations(3, rotation_x(cos(M_PI / 2),
 				sin(M_PI / 2), &multi[0]), rotation_y(
 				cos(M_PI / 3), sin(M_PI / 3), &multi[1]),
 			translation(5, 0, 5, &multi[2])));
 	new_plane(&left_wall);
-	left_wall.material.pattern = new_checkers_pattern(new_solid_pattern(a),
-			new_solid_pattern(b));
+	new_checkers_pattern(new_solid_pattern(a),
+		new_solid_pattern(b), &left_wall.material.pattern);
 	set_transform(&left_wall, transformations(3, rotation_x(cos(M_PI / 2),
 				sin(M_PI / 2), &multi[0]), rotation_y(cos(-M_PI / 3),
 				sin(-M_PI / 3), &multi[1]), translation(-5, 0, 5, &multi[2])));
@@ -77,23 +77,23 @@ void	create_spheres(t_world *world)
 	a = new_color(1, 1, 1);
 	new_sphere(&middle);
 	middle.material.color = new_color(0.1, 1, 0.5);
-	middle.material.pattern = new_checkers_pattern(new_solid_pattern(a),
-			new_solid_pattern(middle.material.color));
+	new_uv_checkers_pattern(new_solid_pattern(a),
+		new_solid_pattern(middle.material.color), &middle.material.pattern);
 	translation(-0.5, 1, 0.5, &m[0]);
 	set_transform(&middle, m);
 	scaling(0.4, 0.4, 0.4, &m[0]);
 	set_pattern_transform(&middle.material.pattern, &m[0]);
 	new_sphere(&right);
 	right.material.color = new_color(0.5, 1, 0.1);
-	right.material.pattern = new_ring_pattern(new_solid_pattern(a),
-			new_solid_pattern(right.material.color));
+	new_ring_pattern(new_solid_pattern(a),
+		new_solid_pattern(right.material.color), &right.material.pattern);
 	multiply_matrices(translation(1.5, 0.5, -0.5, &m[0]), scaling(0.5, 0.5, 0.5, &m[1]), &m[0]);
 	set_transform(&right, &m[0]);
 	set_pattern_transform(&right.material.pattern, &m[0]);
 	new_sphere(&left);
 	left.material.color = new_color(1, 0.8, 0.1);
-	left.material.pattern = new_full_gradient_pattern(new_solid_pattern(a),
-			new_solid_pattern(left.material.color));
+	new_full_gradient_pattern(new_solid_pattern(a),
+		new_solid_pattern(left.material.color), &left.material.pattern);
 	multiply_matrices(translation(-1.5, 0.33, -0.75, &m[0]), scaling(0.33, 0.33, 0.33, &m[1]), &m[0]);
 	set_transform(&left, &m[0]);
 	set_pattern_transform(&left.material.pattern, &m[0]);
