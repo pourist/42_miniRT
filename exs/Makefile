@@ -151,6 +151,10 @@ texture_mapping: $(OBJECTS) bonus_texture_mapping.c
 skybox: $(OBJECTS) bonus_skybox.c
 	@$(call run, "$^")
 
+.PHONY: spotlight
+spotlight: $(OBJECTS) bonus_spotlight.c
+	@$(call run, "$^")
+
 $(OBJECTS):
 	@make -C .. -s
 
