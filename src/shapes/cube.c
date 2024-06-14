@@ -12,6 +12,7 @@ t_shape	*new_cube(t_shape *shape)
 	shape->intersect_fn = intersect_cube;
 	shape->normal_at = normal_at_cube;
 	shape->bounds_of = cube_bounds;
+	shape->material.pattern.texture_map.uv_mapping_fn = cube_map;
 	return (shape);
 }
 

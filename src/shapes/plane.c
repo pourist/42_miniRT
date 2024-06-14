@@ -12,6 +12,9 @@ t_shape	*new_plane(t_shape *shape)
 	shape->normal_at = normal_at_plain;
 	shape->intersect_fn = intersect_plane;
 	shape->bounds_of = plane_bounds;
+	shape->material.pattern.texture_map.uv_mapping_fn = planar_map;
+	shape->material.pattern.texture_map.uv_pattern.width = 2;
+	shape->material.pattern.texture_map.uv_pattern.height = 2;
 	return (shape);
 }
 

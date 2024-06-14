@@ -2,21 +2,24 @@
 
 static t_color	radial_gradient_at(t_pattern *pattern, t_point *shape_point);
 
-t_pattern	new_radial_gradient_pattern(t_pattern a, t_pattern b)
+t_pattern	*new_radial_gradient_pattern(t_pattern a, t_pattern b,
+				t_pattern *pattern)
 {
-	t_pattern	pattern;
-
-	new_pattern(&pattern);
-	pattern.a = malloc(sizeof(t_pattern));
-	if (!pattern.a)
+	if (!pattern)
+		return (NULL);
+	pattern->a = malloc(sizeof(t_pattern));
+	if (!pattern->a)
 		return (pattern);
-	pattern.b = malloc(sizeof(t_pattern));
-	if (!pattern.b)
+	pattern->b = malloc(sizeof(t_pattern));
+	if (!pattern->b)
+	{
+		free(pattern->a);
 		return (pattern);
-	*pattern.a = a;
-	*pattern.b = b;
-	pattern.pattern_at = radial_gradient_at;
-	pattern.has_pattern = true;
+	}
+	*pattern->a = a;
+	*pattern->b = b;
+	pattern->pattern_at = radial_gradient_at;
+	pattern->has_pattern = true;
 	return (pattern);
 }
 

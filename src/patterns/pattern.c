@@ -7,8 +7,17 @@ t_pattern	*new_pattern(t_pattern *pattern)
 		return (NULL);
 	pattern->a = NULL;
 	pattern->b = NULL;
+	pattern->has_pattern = false;
 	get_identity_matrix(&pattern->transform);
 	get_identity_matrix(&pattern->inverse);
+	pattern->texture[0] = NULL;
+	pattern->texture[1] = NULL;
+	pattern->texture[2] = NULL;
+	pattern->texture[3] = NULL;
+	pattern->texture[4] = NULL;
+	pattern->texture[5] = NULL;
+	pattern->texture_map.uv_pattern.a = NULL;
+	pattern->texture_map.uv_pattern.b = NULL;
 	return (pattern);
 }
 
