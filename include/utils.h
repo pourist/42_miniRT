@@ -9,7 +9,9 @@
 # include "libft.h"
 # include "tuples.h"
 // # include "shapes.h"
-
+#ifndef MAXFLOAT
+# define MAXFLOAT	3.40282347e+38F
+#endif
 # define EPSILON	1e-5
 # define MAX_SEQUENCER 8
 # define MAX_SEQ_VALUES 8
