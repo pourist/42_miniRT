@@ -4,8 +4,20 @@ char	*find_error_3(int type)
 {
 	if (type == CENT_INVALID)
 		return (CENT_INVALID_M);
-	else if (CENT_RANGE)
+	else if (type == CENT_RANGE)
 		return (CENT_RANGE_M);
+	else if (type == NORMAL)
+		return (NORMAL_M);
+	else if (type == NORMAL_INVALID)
+		return (NORMAL_INVALID_M);
+	else if (type == NORMAL_RANGE)
+		return (NORMAL_RANGE_M);
+	else if (type == POINT)
+		return (POINT_COUNT_M);
+	else if (type == POINT_INVALID)
+		return (POINT_INVALID_M);
+	else if (type == POINT_RANGE)
+		return (POINT_RANGE_M);
 	else
 		return (NULL);
 }

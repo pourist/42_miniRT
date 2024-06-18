@@ -22,13 +22,10 @@ void    make_sphere(char **rgb, double diam, char **center, t_shape *obj)
 	b = (ft_atof(rgb[2]) / 255);
 	new_sphere(obj);
     obj->material.color = new_color(r, g, b);
-    m1 = translation(ft_atof(center[0]), ft_atof(center[1]), ft_atof(center[2]));
-    m2 = scaling(diam * 0.5, diam * 0.5, diam * 0.5);
-    //m2 = scaling(20,20,20);
-    final = multiply_matrices(m1, m2);
-    set_transform(obj, final);
-    //set_transform(obj, scaling(0.5, 0.5, 0.5));
-    (void)diam;
+    translation(ft_atof(center[0]), ft_atof(center[1]), ft_atof(center[2]), &m1);
+    scaling(diam * 0.5, diam * 0.5, diam * 0.5, &m2);
+    multiply_matrices(&m1, &m2, &final);
+    set_transform(obj, &final);
 }
 
 int	init_sphere(t_line_parse_env *env, t_shape *obj)

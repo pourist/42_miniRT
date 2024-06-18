@@ -15,30 +15,29 @@ int	main(int argc, char **argv)
 	// printf("Sphere :           x: %f y: %f z: %f \n", minirt.world.objs[0].sphere.origin.x, minirt.world.objs[0].sphere.origin.y , minirt.world.objs[0].sphere.origin.z);
 	// (void)argc;
 	// (void)argv;
-	new_canvas(&minirt.canvas, WIDTH, HEIGHT, "Chapter 16");
+//	new_canvas(&minirt.canvas, WIDTH, HEIGHT, "Chapter 16");
 	// minirt.world = new_world();
 	// minirt.world.objs = malloc(sizeof(t_shape));
 	// minirt.world.objs_count = 1;
 	// s = &minirt.world.objs[0];
 	// new_sphere(s);
-	t_point from;
-    t_point to;
-    t_vector up;
-	minirt.camera = new_camera(WIDTH, HEIGHT, M_PI_2);
-	from = new_point(0, 10, -10);
-	to = new_point(0, 9, -10);
-	up = new_vector(0, 1, 0);
-	set_transform_camera(&minirt.camera, view_transform(&from, &to, &up));
+	// t_point from;
+    // t_point to;
+    // t_vector up;
+	// minirt.camera = new_camera(WIDTH, HEIGHT, M_PI_2);
+	// from = new_point(0, 10, -10);
+	// to = new_point(0, 9, -10);
+	// up = new_vector(0, 1, 0);
+	//set_transform_camera(&minirt.camera, view_transform(&from, &to, &up));
 	// minirt.world.lights = malloc(1 * sizeof(t_light));
 	// minirt.world.lights_count = 1;
 	// minirt.world.lights[0] = new_light(new_point(-10, 10, -10), new_color(0.9, 0.9, 0.9));
-	render(&minirt);
+/*	render(&minirt);
 	mlx_image_to_window(minirt.canvas.mlx, minirt.canvas.img, 0, 0);
 	mlx_close_hook(minirt.canvas.mlx, &quit, &minirt.canvas);
 	mlx_key_hook(minirt.canvas.mlx, &handle_keyhook, &minirt.canvas);
 	mlx_loop(minirt.canvas.mlx);
 	free_world(&minirt.world);
-	mlx_terminate(minirt.canvas.mlx);
+	mlx_terminate(minirt.canvas.mlx);*/
 	return (0);
-
 }
