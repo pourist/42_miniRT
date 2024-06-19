@@ -5,29 +5,29 @@ t_point	*point_on_light(t_light *light, double u, double v, t_point *p)
 {
 	t_point	tmp;
 
-	add(&light->corner, add(multiply(&light->uvec,
-				u + next_sequence(&light->jitter_by), &tmp), multiply(
-				&light->vvec, v + next_sequence(&light->jitter_by), p), p), p);
+	add(&light->corner, add(multiply(&light->uvec, u + rand_dbl(), &tmp),
+			multiply(&light->vvec, v + rand_dbl(), p), p), p);
 	return (p);
 }
 
 bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point)
 {
 	t_vector	v;
-	double		distance_sq;
+	t_vector	tmp;
+	double		distance;
 	t_ray		r;
 	t_hit		*xs;
 
 	subtract(light_pos, point, &v);
-	new_ray(point, normalize(&v, &v), &r);
+	new_ray(point, normalize(&v, &tmp), &r);
 	xs = intersect_world(world, &r);
 	if (!xs)
 		return (false);
 	xs = hit(xs);
 	if (xs && xs->obj->cast_shadow == false)
 		return (false);
-	distance_sq = magnitude_squared(&v);
-	if (xs && xs->obj->cast_shadow == true && xs->t * xs->t < distance_sq)
+	distance = sqrt(magnitude_squared(&v));
+	if (xs && xs->obj->cast_shadow == true && xs->t < distance)
 		return (true);
 	return (false);
 }

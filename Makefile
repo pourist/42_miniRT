@@ -57,6 +57,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 obj_lines_parser.c obj_triangles_utils.c uv_helpers.c shapes_mapping.c \
 										 cube_mapping.c cube_mapping2.c cube_align_check.c texture_mapping.c \
 										 mtl_file_parser.c mtl_lines_parser.c mtl_lines_parser2.c \
+										 render_utils.c ray_for_pixel.c multisample.c \
                      parser.c parser_utils.c element_counter.c free_print.c \
 										 init_ambient.c init_mini_rt.c error.c valid_args.c \
 										 line_parser.c init_camera.c init_light.c

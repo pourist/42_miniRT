@@ -9,7 +9,8 @@ typedef struct s_pattern		t_pattern;
 typedef struct s_checker		t_checker;
 typedef struct s_texture_map	t_texture_map;
 
-typedef t_color					(*t_pattern_at_fn)(t_pattern *, t_point *);
+typedef t_color					*(*t_pattern_at_fn)(t_pattern *, t_point *,
+													t_color *);
 typedef double					*(*t_uv_mapping)(t_point *, double *);
 
 typedef struct s_align_colors
@@ -60,20 +61,23 @@ typedef enum e_cube_face
 }	t_cube_face;
 
 t_pattern	*new_pattern(t_pattern *pattern);
-t_pattern	new_solid_pattern(t_color color);
+t_pattern	*new_solid_pattern(t_color *color, t_pattern *solid);
 void		set_pattern_transform(t_pattern *pattern, t_matrix *transform);
 // Patterns
-t_pattern	*new_stripe_pattern(t_pattern a, t_pattern b, t_pattern *pattern);
-t_pattern	*new_gradient_pattern(t_pattern a, t_pattern b, t_pattern *pattern);
-t_pattern	*new_ring_pattern(t_pattern a, t_pattern b, t_pattern *pattern);
-t_pattern	*new_checkers_pattern(t_pattern a, t_pattern b, t_pattern *pattern);
-t_pattern	*new_uv_checkers_pattern(t_pattern a, t_pattern b,
+t_pattern	*new_stripe_pattern(t_pattern *a, t_pattern *b, t_pattern *pattern);
+t_pattern	*new_gradient_pattern(t_pattern *a, t_pattern *b,
 				t_pattern *pattern);
-t_pattern	*new_full_gradient_pattern(t_pattern a, t_pattern b,
+t_pattern	*new_ring_pattern(t_pattern *a, t_pattern *b, t_pattern *pattern);
+t_pattern	*new_checkers_pattern(t_pattern *a, t_pattern *b,
 				t_pattern *pattern);
-t_pattern	*new_radial_gradient_pattern(t_pattern a, t_pattern b,
+t_pattern	*new_uv_checkers_pattern(t_pattern *a, t_pattern *b,
 				t_pattern *pattern);
-t_pattern	*new_blended_pattern(t_pattern a, t_pattern b, t_pattern *pattern);
+t_pattern	*new_full_gradient_pattern(t_pattern *a, t_pattern *b,
+				t_pattern *pattern);
+t_pattern	*new_radial_gradient_pattern(t_pattern *a, t_pattern *b,
+				t_pattern *pattern);
+t_pattern	*new_blended_pattern(t_pattern *a, t_pattern *b,
+				t_pattern *pattern);
 t_pattern	*new_uv_align_check_pattern(t_pattern *pattern, t_color color[5]);
 t_pattern	*new_cube_align_check_pattern(t_pattern *pattern,
 				t_pattern faces[6]);
