@@ -48,6 +48,12 @@ typedef struct s_range
 	double	max;
 }	t_range;
 
+typedef struct s_uv
+{
+	double	u;
+	double	v;
+}	t_uv;
+
 typedef struct s_triangle
 {
 	t_point		p1;
@@ -60,6 +66,9 @@ typedef struct s_triangle
 	t_vector	n3;
 	double		u;
 	double		v;
+	t_uv		v1_uv;
+	t_uv		v2_uv;
+	t_uv		v3_uv;
 }	t_triangle;
 
 typedef struct s_hit	t_hit;

@@ -13,6 +13,28 @@ static void	read_face(t_obj_loader *loader, char **params, int *len)
 	pthread_mutex_unlock(&loader->t_mutex);
 }
 
+static void	read_line2(t_obj_loader *loader, char **params, int *len)
+{
+	if (ft_strncmp(params[0], "g", *len) == 0)
+	{
+		pthread_mutex_lock(&loader->gp_mutex);
+		loader->gp_max++;
+		pthread_mutex_unlock(&loader->gp_mutex);
+	}
+	else if (ft_strncmp(params[0], "vt", *len) == 0)
+	{
+		pthread_mutex_lock(&loader->uv_mutex);
+		loader->uvs_max++;
+		pthread_mutex_unlock(&loader->uv_mutex);
+	}
+	else if (ft_strncmp(params[0], "mtllib", *len) == 0)
+	{
+		pthread_mutex_lock(&loader->mtl_mutex);
+		loader->mtl_max++;
+		pthread_mutex_unlock(&loader->mtl_mutex);
+	}
+}
+
 static void	read_line(t_obj_loader *loader, char **params)
 {
 	int	len;
@@ -34,12 +56,8 @@ static void	read_line(t_obj_loader *loader, char **params)
 	}
 	else if (ft_strncmp(params[0], "f", len) == 0)
 		read_face(loader, params, &len);
-	else if (ft_strncmp(params[0], "g", len) == 0)
-	{
-		pthread_mutex_lock(&loader->gp_mutex);
-		loader->gp_max++;
-		pthread_mutex_unlock(&loader->gp_mutex);
-	}
+	else
+		read_line2(loader, params, &len);
 }
 
 void	*set_max_values(void *data)
