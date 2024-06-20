@@ -55,6 +55,9 @@ int	read_lines_init(t_world *world, t_mini_rt *minirt, int fd)
 		if (parse.type == SPHERE && init_sphere(&parse, &(world->objs[obj++])))
 			return (free_s(parse.line));
 		if (parse.type == PLANE && init_plane(&parse, &(world->objs[obj++])))
+			return (free_s(parse.line));
+		if (parse.type == CYLINDER && init_cylinder(&parse, &(world->objs[obj++])))
+			return (free_s(parse.line));
 		free_s(parse.line);
 	}
 	return (0);

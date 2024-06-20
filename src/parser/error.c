@@ -18,6 +18,10 @@ char	*find_error_3(int type)
 		return (POINT_INVALID_M);
 	else if (type == POINT_RANGE)
 		return (POINT_RANGE_M);
+	else if (type == HEIGHT_VALID)
+		return (H_INVALID);
+	else if (type == HEIGHT_RANGE)
+		return (H_RANGE_M);
 	else
 		return (NULL);
 }
@@ -40,9 +44,9 @@ char	*find_error_2(int type)
 		return (POS_INVALID_M);
 	if (type == POS_RANGE)
 		return (POS_RANGE_M);
-	if (type == D_SPHERE)
+	if (type == DIAM)
 		return (D_INVALID);
-	if (type == D_RANGE)
+	if (type == DIAM_RANGE)
 		return (D_RANGE_M);
 	if (type == CENT)
 		return (CENT_M);

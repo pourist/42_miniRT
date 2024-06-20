@@ -26,6 +26,8 @@ void    make_sphere(char **rgb, double diam, char **center, t_shape *obj)
     scaling(diam * 0.5, diam * 0.5, diam * 0.5, &m2);
     multiply_matrices(&m1, &m2, &final);
     set_transform(obj, &final);
+	free_s(rgb);
+	free_s(center);
 }
 
 int	init_sphere(t_line_parse_env *env, t_shape *obj)
@@ -35,7 +37,7 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj)
 
 	if (ft_strarr_len(env->line) != 4)
 		return (file_error(env, ERR_SPHERE));
-	env->error_type = D_SPHERE;
+	env->error_type = DIAM;
 	if (solo(env->line[2], EPSILON, (double)INT_MAX, env))
 		return (1);
 	env->error_type = CENT;
