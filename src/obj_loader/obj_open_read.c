@@ -36,8 +36,7 @@ bool	open_file(char const *filename, int *fd, ssize_t *file_size,
 			perror(filename), false);
 	if (fstat(*fd, &file_stat) < 0)
 	{
-		close(*fd);
-		return (ft_putstr_fd("minirt: ", STDERR_FILENO),
+		return (close(*fd), ft_putstr_fd("minirt: ", STDERR_FILENO),
 			perror(filename), false);
 	}
 	*file_size = file_stat.st_size;

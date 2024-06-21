@@ -34,6 +34,7 @@ typedef struct s_obj_loader
 	char			***tokens;
 	int				ignored_lines;
 	t_mtl_loader	*mtl_loader;
+	t_mtl_loader	*current_mtllib;
 	int				mtl_count;
 	int				mtl_max;
 	t_point			*vertices;
@@ -43,8 +44,8 @@ typedef struct s_obj_loader
 	int				n_count;
 	int				n_max;
 	t_uv			*uvs;
-	int				uvs_count;
-	int				uvs_max;
+	int				uv_count;
+	int				uv_max;
 	t_shape			*triangles;
 	int				t_count;
 	int				t_max;
@@ -84,14 +85,12 @@ bool			print_ignore_message(char const *filename, int *line_nb);
 int				ft_matrix_len(char **matrix);
 bool			is_float(char *str);
 bool			are_floats(char *str1, char *str2, char *str3);
-void			free_matrix(char **matrix);
-void			free_3d_array(char ***array);
-// obj_triangles_utils.c
-bool			fan_triangulation(t_obj_loader *loader, int *vert_i,
-					int *norm_i, int *p_len);
-void			create_triangle(t_obj_loader *loader, int *vert_i, int *norm_i,
-					int i);
-void			fill_indices(char **params, int *vert_i, int *norm_i,
+void			destroy_mutex(t_obj_loader *loader);
+// obj_triangles_parser.c
+bool			parse_triangle(t_obj_loader *loader, char **params,
+					int *line_nb);
+// obj_triangles_fan.c
+bool			fan_triangulation(t_obj_loader *loader, int *indices[3],
 					int *p_len);
 // set_max_values.c
 void			*set_max_values(void *data);
@@ -109,5 +108,11 @@ bool			parse_transparency(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
 bool			parse_bump_texture(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
+//	loader_frees.c
+void			free_matrix(char **matrix);
+void			free_3d_array(char ***array);
+void			free_mtl_loader(t_obj_loader *loader);
+void			free_loader(t_obj_loader *loader);
+void			free_loader_last(t_obj_loader *loader);
 
 #endif

@@ -54,7 +54,8 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 set_max_values.c obj_file_parser.c triangle_bounds.c csg.c csg_utils.c \
 										 shadow_calculations.c sequencer.c light_shading.c bounding_boxes.c \
 										 bvh.c bvh_utils.c threads.c obj_open_read.c obj_split_file_content.c \
-										 obj_lines_parser.c obj_triangles_utils.c uv_helpers.c shapes_mapping.c \
+										 obj_lines_parser.c obj_triangles_parser.c obj_triangles_fan.c \
+										 loader_frees.c uv_helpers.c shapes_mapping.c \
 										 cube_mapping.c cube_mapping2.c cube_align_check.c texture_mapping.c \
 										 mtl_file_parser.c mtl_lines_parser.c mtl_lines_parser2.c \
 										 render_utils.c ray_for_pixel.c multisample.c \
@@ -79,7 +80,7 @@ else
 endif
 
 ifdef DEBUG
-	CFLAGS					 += -g3
+	CFLAGS					 += -fsanitize=address -g3
 else
 	CFLAGS 					 += -O3
 endif

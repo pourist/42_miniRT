@@ -45,16 +45,17 @@ static bool	parse_specular(t_mtl_loader *loader, t_material *mtl,
 	return (true);
 }
 
-static bool	mtl_parse_file2(t_mtl_loader *loader, char const *filename)
+static bool	mtl_parse_line2(t_mtl_loader *loader, char **params,
+		int *line_nb, int *type_size)
 {
-	if ((ft_strncmp(params[0], "d", type_size) == 0)
-		|| (ft_strncmp(params[0], "Tr", type_size) == 0))
+	if ((ft_strncmp(params[0], "d", *type_size) == 0)
+		|| (ft_strncmp(params[0], "Tr", *type_size) == 0))
 		return (parse_transparency(loader, loader->current_mtl,
-				params, &line_nb));
-	else if (ft_strncmp(params[0], "map_bump", type_size) == 0)
+				params, line_nb));
+	else if (ft_strncmp(params[0], "map_bump", *type_size) == 0)
 		return (parse_bump_texture(loader, loader->current_mtl, params,
-				&line_nb));
-	print_ignore_message(loader->filename, &line_nb);
+				line_nb));
+	print_ignore_message(loader->filename, line_nb);
 	loader->ignored_lines++;
 	return (true);
 }
@@ -83,5 +84,6 @@ bool	mtl_parse_line(t_mtl_loader *loader, char **params, int line_nb)
 	else if (ft_strncmp(params[0], "map_Kd", type_size) == 0)
 		return (parse_texture(loader, loader->current_mtl, params, &line_nb));
 	else
-		return (mtl_parse_line2(loader, params, line_nb));
+		return (mtl_parse_line2(loader, params, &line_nb, &type_size));
+	return (true);
 }

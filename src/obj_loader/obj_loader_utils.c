@@ -49,33 +49,20 @@ bool	are_floats(char *str1, char *str2, char *str3)
 	return (true);
 }
 
-void	free_matrix(char **matrix)
+void	destroy_mutex(t_obj_loader *loader)
 {
-	int	i;
-
-	i = 0;
-	while (matrix[i])
+	if (!loader)
+		return ;
+	if (loader->lines)
 	{
-		free(matrix[i]);
-		matrix[i] = NULL;
-		i++;
+		free_matrix(loader->lines);
+		loader->lines = NULL;
 	}
-	free(matrix[i]);
-	matrix[i] = NULL;
-	free(matrix);
-	matrix = NULL;
-}
-
-void	free_3d_array(char ***array)
-{
-	int	i;
-
-	i = -1;
-	while (array[++i])
-	{
-		free_matrix(array[i]);
-		array[i] = NULL;
-	}
-	free(array);
-	array = NULL;
+	pthread_mutex_destroy(&loader->v_mutex);
+	pthread_mutex_destroy(&loader->n_mutex);
+	pthread_mutex_destroy(&loader->t_mutex);
+	pthread_mutex_destroy(&loader->gp_mutex);
+	pthread_mutex_destroy(&loader->ig_lines_mutex);
+	pthread_mutex_destroy(&loader->mtl_mutex);
+	pthread_mutex_destroy(&loader->uv_mutex);
 }

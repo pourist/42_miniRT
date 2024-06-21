@@ -1,30 +1,5 @@
 #include "obj_loader.h"
 
-static bool	parse_triangle(t_obj_loader *loader, char **params, int *line_nb)
-{
-	int		*vert_i;
-	int		*norm_i;
-	int		p_len;
-
-	p_len = ft_matrix_len(params) - 1;
-	if (p_len < 3)
-	{
-		print_ignore_message(loader->filename, line_nb);
-		loader->ignored_lines++;
-		return (true);
-	}
-	vert_i = malloc(p_len * sizeof(int));
-	norm_i = malloc(p_len * sizeof(int));
-	if (!vert_i || !norm_i)
-		return (false);
-	fill_indices(params, vert_i, norm_i, &p_len);
-	if (!fan_triangulation(loader, vert_i, norm_i, &p_len))
-		return (false);
-	free(vert_i);
-	free(norm_i);
-	return (true);
-}
-
 static bool	parse_group(t_obj_loader *loader, char **params, int *line_nb)
 {
 	if (!params[1])
@@ -78,26 +53,48 @@ static bool	parse_vertice(t_obj_loader *loader, char **params, int *line_nb)
 	return (true);
 }
 
+static bool	parse_uv(t_obj_loader *loader, char **params, int *line_nb)
+{
+	if (!params[1] || !params[2] || params[3] || !is_float(params[1])
+		|| !is_float(params[2]))
+	{
+		print_ignore_message(loader->filename, line_nb);
+		loader->ignored_lines++;
+		return (true);
+	}
+	if (loader->uv_count >= loader->uv_max)
+		return (false);
+	loader->uvs[loader->uv_count].u = ft_atof(params[1]);
+	loader->uvs[loader->uv_count].v = ft_atof(params[2]);
+	loader->uv_count++;
+	return (true);
+}
+
 bool	obj_parse_line(t_obj_loader *loader, char **params, int line_nb)
 {
 	int	type_size;
 
-	if (!params[0])
+	if (params[0])
 	{
-		print_ignore_message(loader->filename, &line_nb);
-		loader->ignored_lines++;
-		return (true);
+		type_size = ft_strlen(params[0]) + 1;
+		if (ft_strncmp(params[0], "v", type_size) == 0)
+			return (parse_vertice(loader, params, &line_nb));
+		else if (ft_strncmp(params[0], "vn", type_size) == 0)
+			return (parse_normal(loader, params, &line_nb));
+		else if (ft_strncmp(params[0], "f", type_size) == 0)
+			return (parse_triangle(loader, params, &line_nb));
+		else if (ft_strncmp(params[0], "g", type_size) == 0)
+			return (parse_group(loader, params, &line_nb));
+		else if (ft_strncmp(params[0], "vt", type_size) == 0)
+			return (parse_uv(loader, params, &line_nb));
+		else if (ft_strncmp(params[0], "mtllib", type_size) == 0)
+			return (loader->current_mtllib = &loader
+				->mtl_loader[loader->mtl_count++], true);
+		else if (ft_strncmp(params[0], "usemtl", type_size) == 0)
+			return (loader->current_mtllib->current_mtl = &loader
+				->current_mtllib->materials[loader->current_mtllib->m_count++],
+				true);
 	}
-	type_size = ft_strlen(params[0]) + 1;
-	if (ft_strncmp(params[0], "v", type_size) == 0)
-		return (parse_vertice(loader, params, &line_nb));
-	else if (ft_strncmp(params[0], "vn", type_size) == 0)
-		return (parse_normal(loader, params, &line_nb));
-	else if (ft_strncmp(params[0], "f", type_size) == 0)
-		return (parse_triangle(loader, params, &line_nb));
-	else if (ft_strncmp(params[0], "g", type_size) == 0)
-		return (parse_group(loader, params, &line_nb));
-	print_ignore_message(loader->filename, &line_nb);
-	loader->ignored_lines++;
-	return (true);
+	return (print_ignore_message(loader->filename, &line_nb),
+		loader->ignored_lines++, true);
 }

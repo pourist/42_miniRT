@@ -18,8 +18,7 @@ bool	parse_texture(t_mtl_loader *loader, t_material *mtl,
 {
 	int	i;
 
-	if (!params[1] || params[2] || !mlx_new_texture(params[1],
-			&mtl->pattern.texture[0]))
+	if (!params[1] || params[2])
 	{
 		print_ignore_message(loader->filename, line_nb);
 		loader->ignored_lines++;
@@ -52,8 +51,7 @@ bool	parse_bump_texture(t_mtl_loader *loader, t_material *mtl,
 {
 	int	i;
 
-	if (!params[1] || params[2] || !mlx_new_texture(params[1],
-			&mtl->bump_texture))
+	if (!params[1] || params[2])
 	{
 		print_ignore_message(loader->filename, line_nb);
 		loader->ignored_lines++;

@@ -24,7 +24,7 @@ static void	read_line2(t_obj_loader *loader, char **params, int *len)
 	else if (ft_strncmp(params[0], "vt", *len) == 0)
 	{
 		pthread_mutex_lock(&loader->uv_mutex);
-		loader->uvs_max++;
+		loader->uv_max++;
 		pthread_mutex_unlock(&loader->uv_mutex);
 	}
 	else if (ft_strncmp(params[0], "mtllib", *len) == 0)
