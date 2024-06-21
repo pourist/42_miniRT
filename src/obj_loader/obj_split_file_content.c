@@ -35,7 +35,7 @@ void	*split_lines_in_tokens(void *data)
 	while (++line_nb < td->end)
 	{
 		loader->tokens[line_nb]
-			= ft_subsplit(loader->lines[line_nb], " \n");
+			= ft_subsplit(loader->lines[line_nb], " \r\n\t");
 		if (!loader->tokens[line_nb])
 			return (perror("minirt: split_lines_in_tokens: malloc"), NULL);
 	}

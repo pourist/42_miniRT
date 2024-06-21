@@ -32,9 +32,9 @@ static void	set_uvs(t_obj_loader *loader, int *indices, int *i, t_uv uv[3])
 		uv[0] = loader->uvs[indices[0]];
 		uv[1] = loader->uvs[indices[*i]];
 		uv[2] = loader->uvs[indices[*i + 1]];
-		loader->triangles[loader->t_count].tri.v1_uv = uv[0];
-		loader->triangles[loader->t_count].tri.v2_uv = uv[1];
-		loader->triangles[loader->t_count].tri.v3_uv = uv[2];
+		loader->triangles[loader->t_count].material.pattern.v1_uv = uv[0];
+		loader->triangles[loader->t_count].material.pattern.v2_uv = uv[1];
+		loader->triangles[loader->t_count].material.pattern.v3_uv = uv[2];
 	}
 }
 
@@ -56,12 +56,12 @@ static void	create_triangle(t_obj_loader *loader, int *indices[3], int *i)
 		else
 			new_triangle(&v[0], &v[1], &v[2],
 				&loader->triangles[loader->t_count]);
-		if (indices[1][0] >= 0 && indices[1][*i] >= 0
-			&& indices[1][*i + 1] >= 0)
-			set_uvs(loader, indices[1], i, uv);
 		if (loader->current_mtllib && loader->current_mtllib->current_mtl)
 			loader->triangles[loader->t_count].material = *loader
 				->current_mtllib->current_mtl;
+		if (indices[1][0] >= 0 && indices[1][*i] >= 0
+			&& indices[1][*i + 1] >= 0)
+			set_uvs(loader, indices[1], i, uv);
 	}
 }
 

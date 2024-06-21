@@ -2,6 +2,8 @@
 
 bool	print_ignore_message(char const *filename, int *line_nb)
 {
+	// (void)filename;
+	// (void)line_nb;
 	ft_putstr_fd("minirt: obj files loader: ", STDERR_FILENO);
 	ft_putstr_fd((char *)filename, STDERR_FILENO);
 	ft_putstr_fd(": Line ", STDERR_FILENO);

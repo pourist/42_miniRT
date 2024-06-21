@@ -14,6 +14,20 @@ t_pattern	*new_texture_map(t_pattern *pattern, char const *path)
 		return (NULL);
 	pattern->has_pattern = true;
 	pattern->pattern_at = uv_texture_map_at;
+	pattern->is_tri = false;
+	return (pattern);
+}
+
+t_pattern	*new_triangular_texture_map(t_pattern *pattern, char const *path)
+{
+	if (!pattern)
+		return (NULL);
+	pattern->texture[0] = mlx_load_png(path);
+	if (!pattern->texture[0])
+		return (NULL);
+	pattern->has_pattern = true;
+	pattern->pattern_at = uv_texture_map_at;
+	pattern->is_tri = true;
 	return (pattern);
 }
 
@@ -38,6 +52,7 @@ t_pattern	*new_cubic_texture_map(t_pattern *pattern, char const *paths[6])
 	}
 	pattern->has_pattern = true;
 	pattern->pattern_at = uv_cubic_texture_map_at;
+	pattern->is_tri = false;
 	return (pattern);
 }
 
@@ -47,9 +62,16 @@ static t_color	*uv_texture_map_at(t_pattern *pattern, t_point *shape_point,
 	t_point		pattern_point;
 	double		uv[2];
 
-	multiply_matrix_by_tuple(&pattern->inverse, shape_point, &pattern_point);
-	pattern->texture_map.uv_mapping_fn(&pattern_point, uv);
-	uv_texture_color_at(pattern->texture[0], &uv[0], &uv[1], out);
+	if (!pattern->is_tri)
+	{
+		multiply_matrix_by_tuple(&pattern->inverse, shape_point,
+			&pattern_point);
+		pattern->texture_map.uv_mapping_fn(&pattern_point, uv);
+		pattern->uv.u = uv[0];
+		pattern->uv.v = uv[1];
+	}
+	uv_texture_color_at(pattern->texture[0], &pattern->uv.u, &pattern->uv.v,
+		out);
 	return (out);
 }
 

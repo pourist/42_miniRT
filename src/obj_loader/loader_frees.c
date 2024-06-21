@@ -22,7 +22,7 @@ void	free_3d_array(char ***array)
 	int	i;
 
 	i = -1;
-	while (array[++i])
+	while (array && array[++i])
 	{
 		free_matrix(array[i]);
 		array[i] = NULL;
@@ -40,6 +40,8 @@ void	free_mtl_loader(t_obj_loader *loader)
 		return ;
 	while (++i < loader->mtl_count)
 	{
+		if (loader->mtl_loader[i].filename)
+			free(loader->mtl_loader[i].filename);
 		if (loader->mtl_loader[i].lines)
 			free_matrix(loader->mtl_loader[i].lines);
 		if (loader->mtl_loader[i].tokens)
@@ -58,26 +60,27 @@ void	free_loader(t_obj_loader *loader)
 {
 	if (!loader)
 		return ;
+	if (loader->filename)
+	{
+		free(loader->filename);
+		loader->filename = NULL;
+	}
 	if (loader->lines)
 	{
 		free_matrix(loader->lines);
 		loader->lines = NULL;
 	}
 	if (loader->tokens)
-	{
 		free_3d_array(loader->tokens);
-		loader->tokens = NULL;
-	}
+	loader->tokens = NULL;
 	if (loader->vertices)
-	{
 		free(loader->vertices);
-		loader->vertices = NULL;
-	}
+	loader->vertices = NULL;
 	if (loader->normals)
 		free(loader->normals);
+	loader->normals = NULL;
 	if (loader->uvs)
 		free(loader->uvs);
-	loader->normals = NULL;
 	loader->uvs = NULL;
 	free_mtl_loader(loader);
 }

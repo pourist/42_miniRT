@@ -27,7 +27,7 @@ bool	open_file(char const *filename, int *fd, ssize_t *file_size,
 	else
 	{
 		if (!check_extension(filename, ".mtl"))
-			return (ft_putendl_fd("minirt: Wrong file extension, .obj expected",
+			return (ft_putendl_fd("minirt: Wrong file extension, .mtl expected",
 					STDERR_FILENO), false);
 	}
 	*fd = open(filename, O_RDONLY);
@@ -43,12 +43,13 @@ bool	open_file(char const *filename, int *fd, ssize_t *file_size,
 	return (true);
 }
 
-bool	read_file_to_memory(char const *filename, char **file_content,
+bool	read_file_to_memory(char *filename, char **file_content,
 		bool is_obj)
 {
 	int			fd;
 	ssize_t		file_size;
 
+	printf("filename: %s\n", filename);
 	if (!open_file(filename, &fd, &file_size, is_obj))
 		return (false);
 	*file_content = malloc(file_size + 1);

@@ -1,3 +1,6 @@
+#define OBJ_PATH "../assets/obj_files/"
+#define MTL_PATH "../assets/mtl_files/"
+#define TEXTURE_PATH "../assets/textures/"
 #include "shapes.h"
 #include "canvas.h"
 #include "materials.h"

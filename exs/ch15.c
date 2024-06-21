@@ -17,7 +17,7 @@ void	create_scene1(t_world *world)
 	world->objs = malloc(1 * sizeof(t_shape));
 	world->objs_count = 1;
 	new_obj_loader(&loader, &world->objs[0]);
-	parse_obj_file(&loader, "../obj_files/teapot.obj");
+	parse_obj_file(&loader, "teapot.obj");
 	world->objs_ext_count += loader.t_count + loader.gp_count;
 	set_transform(loader.default_group,
 		rotation_x(cos(-M_PI / 2.0), sin(-M_PI / 2.0), &m));

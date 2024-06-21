@@ -88,12 +88,9 @@ bool	obj_parse_line(t_obj_loader *loader, char **params, int line_nb)
 		else if (ft_strncmp(params[0], "vt", type_size) == 0)
 			return (parse_uv(loader, params, &line_nb));
 		else if (ft_strncmp(params[0], "mtllib", type_size) == 0)
-			return (loader->current_mtllib = &loader
-				->mtl_loader[loader->mtl_count++], true);
+			return (parse_mtllib(loader));
 		else if (ft_strncmp(params[0], "usemtl", type_size) == 0)
-			return (loader->current_mtllib->current_mtl = &loader
-				->current_mtllib->materials[loader->current_mtllib->m_count++],
-				true);
+			return (parse_usemtl(loader));
 	}
 	return (print_ignore_message(loader->filename, &line_nb),
 		loader->ignored_lines++, true);

@@ -6,6 +6,10 @@
 # include "shapes.h"
 # include "groups.h"
 
+# define OBJ_PATH "./assets/obj_files/"
+# define MTL_PATH "./assets/mtl_files/"
+# define TEXTURE_PATH "./assets/textures/"
+
 typedef enum e_obj_type
 {
 	VERTICE,
@@ -15,7 +19,7 @@ typedef enum e_obj_type
 
 typedef struct s_mtl_loader
 {
-	char const		*filename;
+	char			*filename;
 	char			**lines;
 	char			***tokens;
 	int				ignored_lines;
@@ -27,9 +31,21 @@ typedef struct s_mtl_loader
 	pthread_mutex_t	ig_lines_mutex;
 }	t_mtl_loader;
 
+typedef struct s_obj_group
+{
+	char const	*name;
+	t_shape		group;
+}	t_obj_group;
+
+typedef struct s_obj_mtl
+{
+	char const	*name;
+	t_material	material;
+}	t_obj_mtl;
+
 typedef struct s_obj_loader
 {
-	char const		*filename;
+	char			*filename;
 	char			**lines;
 	char			***tokens;
 	int				ignored_lines;
@@ -68,7 +84,7 @@ t_obj_loader	*new_obj_loader(t_obj_loader *loader, t_shape *group);
 // obj_open_read.c
 bool			open_file(char const *filename, int *fd, ssize_t *file_size,
 					bool is_obj);
-bool			read_file_to_memory(char const *filename, char **file_content,
+bool			read_file_to_memory(char *filename, char **file_content,
 					bool is_obj);
 bool			check_extension(char const *filename, char const *ext);
 // obj_split_file_content.c
@@ -99,7 +115,14 @@ bool			load_mtl_files(t_obj_loader *loader, int *nb_iters);
 // mtl_lines_parser.c
 bool			mtl_parse_line(t_mtl_loader *loader, char **params,
 					int line_nb);
-// mtl_lines_parser2.c
+// mtl_parse_elements.c
+bool			parse_newmtl(t_mtl_loader *loader);
+bool			parse_ambient(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+bool			parse_diffuse(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+bool			parse_specular(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
 bool			parse_shininess(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
 bool			parse_texture(t_mtl_loader *loader, t_material *mtl,
@@ -108,6 +131,11 @@ bool			parse_transparency(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
 bool			parse_bump_texture(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
+bool			parse_refractive_i(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+// obj_parse_elements.c
+bool			parse_usemtl(t_obj_loader *loader);
+bool			parse_mtllib(t_obj_loader *loader);
 //	loader_frees.c
 void			free_matrix(char **matrix);
 void			free_3d_array(char ***array);

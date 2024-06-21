@@ -10,8 +10,8 @@ static bool	allocate_loader_arrays2(t_obj_loader *loader)
 	}
 	if (loader->mtl_max > 0)
 	{
-		loader->mtl_loader = (t_mtl_loader *)malloc(loader->mtl_max
-				* sizeof(t_mtl_loader));
+		loader->mtl_loader = (t_mtl_loader *)ft_calloc(loader->mtl_max,
+				sizeof(t_mtl_loader));
 		if (!loader->mtl_loader)
 			return (perror("minirt: malloc"), false);
 	}
@@ -97,7 +97,7 @@ bool	parse_obj_file(t_obj_loader *loader, char const *filename)
 		ft_putendl_fd("minirt: obj_loader: invalid arguments", STDERR_FILENO);
 		return (false);
 	}
-	loader->filename = filename;
+	loader->filename = ft_strjoin(OBJ_PATH, filename);
 	if (!read_and_set_tokens(loader))
 		return (false);
 	if (!create_object(loader))

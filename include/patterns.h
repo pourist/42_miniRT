@@ -13,6 +13,12 @@ typedef t_color					*(*t_pattern_at_fn)(t_pattern *, t_point *,
 													t_color *);
 typedef double					*(*t_uv_mapping)(t_point *, double *);
 
+typedef struct s_uv
+{
+	double	u;
+	double	v;
+}	t_uv;
+
 typedef struct s_align_colors
 {
 	t_color	main;
@@ -48,6 +54,11 @@ typedef struct s_pattern
 	t_matrix		inverse;
 	t_texture_map	texture_map;
 	mlx_texture_t	*texture[6];
+	bool			is_tri;
+	t_uv			uv;
+	t_uv			v1_uv;
+	t_uv			v2_uv;
+	t_uv			v3_uv;
 }	t_pattern;
 
 typedef enum e_cube_face
@@ -98,6 +109,7 @@ t_cube_face	face_from_point(t_point *point);
 
 t_pattern	*new_texture_map(t_pattern *pattern, char const *path);
 t_pattern	*new_cubic_texture_map(t_pattern *pattern, char const *paths[6]);
+t_pattern	*new_triangular_texture_map(t_pattern *pattern, char const *path);
 double		*cube_map(t_point *point, double uv[3]);
 double		*cube_uv_front(t_point *point, double uv[2]);
 double		*cube_uv_back(t_point *point, double uv[2]);
