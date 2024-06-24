@@ -14,8 +14,8 @@ void	create_scene1(t_world *world)
 	t_obj_loader	loader;
 	t_matrix		m;
 
-	world->objs = malloc(4 * sizeof(t_shape));
-	world->objs_count = 4;
+	world->objs = malloc(5 * sizeof(t_shape));
+	world->objs_count = 5;
 	new_obj_loader(&loader, &world->objs[0]);
 	parse_obj_file(&loader, "stylized_house_OBJ.obj");
 	world->objs_ext_count += loader.t_count + loader.gp_count;
@@ -33,6 +33,10 @@ void	create_scene1(t_world *world)
 	parse_obj_file(&loader, "Mandalorian.obj");
 	world->objs_ext_count += loader.t_count + loader.gp_count;
 	set_transform(loader.default_group, translation(6, -8, 6, &m));
+	new_obj_loader(&loader, &world->objs[4]);
+	parse_obj_file(&loader, "clem_hat.obj");
+	world->objs_ext_count += loader.t_count + loader.gp_count;
+	set_transform(loader.default_group, translation(-1, 1, 40, &m));
 }
 
 void	create_lights1(t_world *world)
