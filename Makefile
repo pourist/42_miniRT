@@ -60,9 +60,10 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 texture_mapping.c mtl_file_parser.c mtl_lines_parser.c mtl_parse_elements.c \
 										 mtl_parse_elements2.c mtl_parse_elements3.c render_utils.c \
 										 ray_for_pixel.c multisample.c prepare_material.c\
-                     parser.c parser_utils.c element_counter.c free_print.c \
-										 init_ambient.c init_mini_rt.c error.c valid_args.c \
-										 line_parser.c init_camera.c init_light.c
+										 parser.c parser_utils.c element_counter.c free_print.c \
+										 init_ambient.c init_mini_rt.c error.c valid_args.c init_cylinder.c\
+										 line_parser.c init_camera.c init_light.c init_sphere.c init_plane.c\
+										 init_cone.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################
@@ -107,11 +108,11 @@ COMPILATION_PCT		= $(shell expr 100 \* $(COMPILED_FILES) / $(NUM_TO_COMPILE))
 
 all: submodules $(NAME)
 
-test: submodules $(NAME)
+test: submodules submodules $(NAME)
 	@make $(T) -C tests -s
 	@make fclean -C tests -s
 
-ex: submodules $(NAME)
+ex: submodules submodules $(NAME)
 	@make $(X) -C exs -s
 	@make fclean -C exs -s
 
@@ -136,10 +137,10 @@ $(OBJ_DIR):
 	@printf "\r%100s\r$(MAGENTA)[$(NAME)] $(DEFAULT)($(BLUE)$(OBJ_DIR)/$(DEFAULT)) "
 	@printf "Created successfully!\n"
 
-$(LIBFT): 
+$(LIBFT):
 	@make -C $(LIBFT_DIR) -s
 
-$(MLX): 
+$(MLX):
 	@cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
 	@cmake --build $(MLX_DIR)/build -j4
 

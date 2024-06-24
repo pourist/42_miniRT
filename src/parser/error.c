@@ -1,5 +1,37 @@
 #include "parser.h"
 
+char	*find_error_3(int type)
+{
+	if (type == CENT_INVALID)
+		return (CENT_INVALID_M);
+	else if (type == CENT_RANGE)
+		return (CENT_RANGE_M);
+	else if (type == NORMAL)
+		return (NORMAL_M);
+	else if (type == NORMAL_INVALID)
+		return (NORMAL_INVALID_M);
+	else if (type == NORMAL_RANGE)
+		return (NORMAL_RANGE_M);
+	else if (type == POINT)
+		return (POINT_COUNT_M);
+	else if (type == POINT_INVALID)
+		return (POINT_INVALID_M);
+	else if (type == POINT_RANGE)
+		return (POINT_RANGE_M);
+	else if (type == HEIGHT_VALID)
+		return (H_INVALID);
+	else if (type == HEIGHT_RANGE)
+		return (H_RANGE_M);
+	else if (type == RADIUS)
+		return (R_INVALID);
+	else if (type == RADIUS_RANGE)
+		return (R_RANGE_M);
+	else if (type == OPEN_RANGE || type == OPEN)
+		return (ERR_BOOL);
+	else
+		return (NULL);
+}
+
 char	*find_error_2(int type)
 {
 	if (type == OR)
@@ -18,7 +50,13 @@ char	*find_error_2(int type)
 		return (POS_INVALID_M);
 	if (type == POS_RANGE)
 		return (POS_RANGE_M);
-	return (NULL);
+	if (type == DIAM)
+		return (D_INVALID);
+	if (type == DIAM_RANGE)
+		return (D_RANGE_M);
+	if (type == CENT)
+		return (CENT_M);
+	return (find_error_3(type));
 }
 
 char	*find_error(int type)
