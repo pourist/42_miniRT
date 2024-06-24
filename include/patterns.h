@@ -53,12 +53,14 @@ typedef struct s_pattern
 	t_matrix		transform;
 	t_matrix		inverse;
 	t_texture_map	texture_map;
-	mlx_texture_t	*texture[6];
+	mlx_texture_t	*texture[8];
 	bool			is_tri;
 	t_uv			uv;
 	t_uv			v1_uv;
 	t_uv			v2_uv;
 	t_uv			v3_uv;
+	double			bump_map_scale;
+	double			disp_intensity;
 }	t_pattern;
 
 typedef enum e_cube_face
@@ -100,6 +102,8 @@ t_color		uv_pattern_color_at(t_align_colors *align_colors, double *u,
 				double *v);
 t_color		*uv_texture_color_at(mlx_texture_t *texture, double *u, double *v,
 				t_color *color);
+t_color		*uv_texture_full_color_at(mlx_texture_t *texture, double *u,
+				double *v, t_color *color);
 void		texture_map(t_pattern *pattern, t_checker *checkers,
 				t_uv_mapping uv_mapping_fn);
 double		*spherical_map(t_point *point, double uv[2]);

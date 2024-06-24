@@ -55,7 +55,7 @@ static bool	parse_vertice(t_obj_loader *loader, char **params, int *line_nb)
 
 static bool	parse_uv(t_obj_loader *loader, char **params, int *line_nb)
 {
-	if (!params[1] || !params[2] || params[3] || !is_float(params[1])
+	if (!params[1] || !params[2] || !is_float(params[1])
 		|| !is_float(params[2]))
 	{
 		print_ignore_message(loader->filename, line_nb);

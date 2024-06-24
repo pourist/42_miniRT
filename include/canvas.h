@@ -46,6 +46,8 @@ t_color		*read_pixel(mlx_image_t *img, uint32_t x, uint32_t y,
 				t_color *color);
 t_color		*pixel_at(mlx_texture_t *texture, uint32_t x, uint32_t y,
 				t_color *color);
+t_color		*full_pixel_at(mlx_texture_t *texture, uint32_t x, uint32_t y,
+				t_color *color);
 // hooks
 void		handle_keyhook(mlx_key_data_t keydata, void *param);
 void		quit(void *param);

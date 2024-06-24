@@ -186,5 +186,6 @@ t_hit		*hit(t_hit *xs);
 // pattern.c
 t_color		*pattern_at_shape(t_pattern *pattern, t_shape *shape,
 				t_point *world_point, t_color *color);
+void		set_interpolate_uv(t_pattern *pattern, t_shape *shape);
 
 #endif

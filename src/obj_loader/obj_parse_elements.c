@@ -2,12 +2,16 @@
 
 bool	parse_usemtl(t_obj_loader *loader)
 {
-	if (loader->current_mtllib->m_count < loader->current_mtllib->m_max)
+	if (loader->current_mtllib
+		&& loader->current_mtllib->m_count < loader->current_mtllib->m_max)
 	{
 		loader->current_mtllib->current_mtl = &loader->current_mtllib
 			->materials[loader->current_mtllib->m_count++];
 		return (true);
 	}
+	if (!loader->current_mtllib || (loader->current_mtllib
+			&& loader->current_mtllib->m_max == 0))
+		return (true);
 	return (false);
 }
 

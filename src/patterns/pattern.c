@@ -16,9 +16,13 @@ t_pattern	*new_pattern(t_pattern *pattern)
 	pattern->texture[3] = NULL;
 	pattern->texture[4] = NULL;
 	pattern->texture[5] = NULL;
+	pattern->texture[6] = NULL;
+	pattern->texture[7] = NULL;
 	pattern->texture_map.uv_pattern.a = NULL;
 	pattern->texture_map.uv_pattern.b = NULL;
 	pattern->is_tri = false;
+	pattern->bump_map_scale = 1.0;
+	pattern->disp_intensity = 1.0;
 	return (pattern);
 }
 

@@ -1,22 +1,5 @@
 #include "obj_loader.h"
 
-static void	free_materials(t_mtl_loader *mtl)
-{
-	int	i;
-
-	i = -1;
-	while (++i < mtl->m_count)
-	{
-		if (mtl->materials[i].pattern.texture[0])
-		{
-			mlx_delete_texture(mtl->materials[i].pattern.texture[0]);
-			mtl->materials[i].pattern.texture[0] = NULL;
-		}
-	}
-	free(mtl->materials);
-	mtl->materials = NULL;
-}
-
 static bool	create_materials(t_mtl_loader *loader)
 {
 	int	i;
@@ -25,7 +8,7 @@ static bool	create_materials(t_mtl_loader *loader)
 	while (loader->tokens[++i])
 	{
 		if (!mtl_parse_line(loader, loader->tokens[i], i + 1))
-			return (free_materials(loader), false);
+			return (false);
 	}
 	loader->m_count = 0;
 	loader->current_mtl = &loader->materials[loader->m_count];
@@ -59,7 +42,7 @@ bool	mtl_file_parser(t_mtl_loader *mtl)
 
 	file_content = NULL;
 	if (!read_file_to_memory(mtl->filename, &file_content, false))
-		return (free(file_content), false);
+		return (free(file_content), true);
 	if (!split_file_in_lines(&file_content, &mtl->lines,
 			&mtl->tokens, &nb_lines))
 		return (free(file_content), false);
@@ -87,7 +70,11 @@ bool	load_mtl_files(t_obj_loader *loader, int *nb_iters)
 			else
 				mtl->filename = ft_strjoin(MTL_PATH, loader->tokens[i][1]);
 			if (!mtl_file_parser(mtl))
+			{
+				free_mtl_loader_textures(loader);
+				free_mtl_loader(loader);
 				return (false);
+			}
 		}
 	}
 	loader->mtl_count = 0;

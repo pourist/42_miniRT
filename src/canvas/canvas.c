@@ -45,3 +45,19 @@ t_color	*pixel_at(mlx_texture_t *texture, uint32_t x, uint32_t y,
 	color->b = pixel[2] * inv_255;
 	return (color);
 }
+
+t_color	*full_pixel_at(mlx_texture_t *texture, uint32_t x, uint32_t y,
+			t_color *color)
+{
+	uint8_t			*pixel;
+
+	if ((x >= texture->width || y >= texture->height) || !texture
+		|| !texture->pixels)
+		return (NULL);
+	pixel = texture->pixels + ((y * texture->width + x)
+			* texture->bytes_per_pixel);
+	color->r = pixel[0];
+	color->g = pixel[1];
+	color->b = pixel[2];
+	return (color);
+}

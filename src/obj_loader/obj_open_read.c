@@ -49,7 +49,6 @@ bool	read_file_to_memory(char *filename, char **file_content,
 	int			fd;
 	ssize_t		file_size;
 
-	printf("filename: %s\n", filename);
 	if (!open_file(filename, &fd, &file_size, is_obj))
 		return (false);
 	*file_content = malloc(file_size + 1);

@@ -101,7 +101,6 @@ bool			print_ignore_message(char const *filename, int *line_nb);
 int				ft_matrix_len(char **matrix);
 bool			is_float(char *str);
 bool			are_floats(char *str1, char *str2, char *str3);
-void			destroy_mutex(t_obj_loader *loader);
 // obj_triangles_parser.c
 bool			parse_triangle(t_obj_loader *loader, char **params,
 					int *line_nb);
@@ -125,22 +124,36 @@ bool			parse_specular(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
 bool			parse_shininess(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
-bool			parse_texture(t_mtl_loader *loader, t_material *mtl,
-					char **params, int *line_nb);
 bool			parse_transparency(t_mtl_loader *loader, t_material *mtl,
-					char **params, int *line_nb);
-bool			parse_bump_texture(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
 bool			parse_refractive_i(t_mtl_loader *loader, t_material *mtl,
 					char **params, int *line_nb);
+bool			parse_diffuse_texture(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+bool			parse_specular_texture(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+bool			parse_shininess_texture(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+bool			parse_transparency_texture(t_mtl_loader *loader,
+					t_material *mtl, char **params, int *line_nb);
+bool			parse_bump_texture(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+bool			parse_reflection_texture(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+bool			parse_ambient_texture(t_mtl_loader *loader, t_material *mtl,
+					char **params, int *line_nb);
+bool			parse_displacement_texture(t_mtl_loader *loader,
+					t_material *mtl, char **params, int *line_nb);
 // obj_parse_elements.c
 bool			parse_usemtl(t_obj_loader *loader);
 bool			parse_mtllib(t_obj_loader *loader);
 //	loader_frees.c
 void			free_matrix(char **matrix);
 void			free_3d_array(char ***array);
-void			free_mtl_loader(t_obj_loader *loader);
 void			free_loader(t_obj_loader *loader);
 void			free_loader_last(t_obj_loader *loader);
+void			free_mtl_loader(t_obj_loader *loader);
+void			free_mtl_loader_textures(t_obj_loader *loader);
+void			destroy_mutex(t_obj_loader *loader);
 
 #endif

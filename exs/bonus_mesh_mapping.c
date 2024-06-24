@@ -12,15 +12,27 @@
 void	create_scene1(t_world *world)
 {
 	t_obj_loader	loader;
-	// t_matrix		m;
+	t_matrix		m;
 
-	world->objs = malloc(1 * sizeof(t_shape));
-	world->objs_count = 1;
+	world->objs = malloc(4 * sizeof(t_shape));
+	world->objs_count = 4;
 	new_obj_loader(&loader, &world->objs[0]);
 	parse_obj_file(&loader, "stylized_house_OBJ.obj");
 	world->objs_ext_count += loader.t_count + loader.gp_count;
-	// set_transform(loader.default_group,
-	// 	rotation_x(cos(-M_PI / 2.0), sin(-M_PI / 2.0), &m));
+	set_transform(loader.default_group,
+		rotation_y(cos(M_PI_4), sin(M_PI_4), &m));
+	new_obj_loader(&loader, &world->objs[1]);
+	parse_obj_file(&loader, "rock.obj");
+	world->objs_ext_count += loader.t_count + loader.gp_count;
+	set_transform(loader.default_group, translation(-6, 4, 25, &m));
+	new_obj_loader(&loader, &world->objs[2]);
+	parse_obj_file(&loader, "TrashCan.obj");
+	world->objs_ext_count += loader.t_count + loader.gp_count;
+	set_transform(loader.default_group, translation(2, 8, 38, &m));
+	new_obj_loader(&loader, &world->objs[3]);
+	parse_obj_file(&loader, "Mandalorian.obj");
+	world->objs_ext_count += loader.t_count + loader.gp_count;
+	set_transform(loader.default_group, translation(6, -8, 6, &m));
 }
 
 void	create_lights1(t_world *world)
@@ -30,11 +42,11 @@ void	create_lights1(t_world *world)
 
 	world->lights = malloc(2 * sizeof(t_light));
 	world->lights_count = 2;
-	new_point(-45, -45, -45, &p);
-	new_color(0.3, 0.6, 0.95, &c);
+	new_point(45, 45, 45, &p);
+	new_color(0.4, 0.4, 0.4, &c);
 	new_light(&p, &c, &world->lights[0]);
-	new_point(45, 15, -45, &p);
-	new_color(0.95, 0.6, 0.3, &c);
+	new_point(-45, -45, -45, &p);
+	new_color(0.4, 0.4, 0.4, &c);
 	new_light(&p, &c, &world->lights[1]);
 }
 
@@ -45,9 +57,10 @@ void	create_camera1(t_camera *camera)
 	t_vector	up;
 	t_matrix	m;
 
-	new_camera(camera, WIDTH, HEIGHT, M_PI / 3);
-	new_point(0, 15, -45, &from);
-	new_point(0, 10, 0, &to);
+	new_camera(camera, WIDTH, HEIGHT, M_PI_4);
+	camera->supersampling = false;
+	new_point(0, 10, 45, &from);
+	new_point(0, 0, 0, &to);
 	new_vector(0, 1, 0, &up);
 	set_transform_camera(camera, view_transform(&from, &to, &up,
 			&m));

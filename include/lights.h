@@ -75,5 +75,8 @@ t_color	lighting(t_shape *shape, t_light *light, t_point *point,
 t_color	area_lighting(t_shape *s, t_light *l, t_point *p, t_eye_normal *v);
 t_light	*new_spotlight(t_spotlight_params *sp, t_light *light);
 t_light	*new_area_spotlight(t_aspotlight_params *asp, t_light *light);
+// prepare_material.c
+void	prepare_material(t_lighting_params *lp, t_shape *s,
+			t_point *point, t_eye_normal *view);
 
 #endif

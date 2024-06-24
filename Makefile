@@ -55,11 +55,11 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 shadow_calculations.c sequencer.c light_shading.c bounding_boxes.c \
 										 bvh.c bvh_utils.c threads.c obj_open_read.c obj_split_file_content.c \
 										 obj_lines_parser.c obj_triangles_parser.c obj_triangles_fan.c \
-										 obj_parse_elements.c loader_frees.c uv_helpers.c shapes_mapping.c \
-										 cube_mapping.c \
-										 cube_mapping2.c cube_align_check.c texture_mapping.c \
-										 mtl_file_parser.c mtl_lines_parser.c mtl_parse_elements.c \
-										 mtl_parse_elements2.c render_utils.c ray_for_pixel.c multisample.c \
+										 obj_parse_elements.c loader_free.c loader_free2.c mapping_helpers.c \
+										 uv_at.c shapes_mapping.c cube_mapping.c cube_mapping2.c cube_align_check.c \
+										 texture_mapping.c mtl_file_parser.c mtl_lines_parser.c mtl_parse_elements.c \
+										 mtl_parse_elements2.c mtl_parse_elements3.c render_utils.c \
+										 ray_for_pixel.c multisample.c prepare_material.c\
                      parser.c parser_utils.c element_counter.c free_print.c \
 										 init_ambient.c init_mini_rt.c error.c valid_args.c \
 										 line_parser.c init_camera.c init_light.c
