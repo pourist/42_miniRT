@@ -36,7 +36,7 @@ void	create_dragon(t_shape *dragon, size_t	*obj_count)
 	t_matrix		m[2];
 
 	new_obj_loader(&loader, dragon);
-	parse_obj_file(&loader, "../obj_files/dragon.obj");
+	parse_obj_file(&loader, "dragon.obj");
 	*obj_count += loader.t_count + loader.gp_count;
 	multiply_matrices(translation(0, 0.1217, 0, &m[0]), scaling(0.268, 0.268, 0.268, &m[1]), &m[0]);
 	set_transform(dragon, &m[0]);

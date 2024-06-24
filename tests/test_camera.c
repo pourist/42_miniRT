@@ -35,11 +35,14 @@ Test(camera, ray_through_the_center_of_the_canvas)
 	t_ray		r;
 	t_tuple		p;
 	double	xy[2];
+	double	xy_offset[2];
 
 	xy[0] = 100;
 	xy[1] = 50;
+	xy_offset[0] = (xy_offset[0] + 0.5);
+	xy_offset[1] = (xy_offset[1] + 0.5);
 	new_camera(&c, 201, 101, M_PI / 2);
-	ray_for_pixel(&c, xy, &r);
+	ray_for_pixel(&c, xy_offset, &r);
 	new_point(0, 0, 0, &p);
 	cr_assert(eq(int, tuple_eq(r.origin, p), true));
 	new_vector(0, 0, -1, &p);
@@ -52,11 +55,14 @@ Test(camera, ray_through_a_corner_of_the_canvas)
 	t_ray		r;
 	t_tuple		t;
 	double	xy[2];
+	double	xy_offset[2];
 
 	xy[0] = 0;
 	xy[1] = 0;
+	xy_offset[0] = (xy_offset[0] + 0.5);
+	xy_offset[1] = (xy_offset[1] + 0.5);
 	new_camera(&c, 201, 101, M_PI / 2);
-	ray_for_pixel(&c, xy, &r);
+	ray_for_pixel(&c, xy_offset, &r);
 	new_point(0, 0, 0, &t);
 	cr_assert(eq(int, tuple_eq(r.origin, t), true));
 	new_vector(0.66519, 0.33259, -0.66851, &t);
@@ -71,13 +77,16 @@ Test(camera, ray_when_camera_is_transformed)
 	t_matrix m2;
 	t_tuple	t;
 	double	xy[2];
+	double	xy_offset[2];
 
 	xy[0] = 100;
 	xy[1] = 50;
+	xy_offset[0] = (xy_offset[0] + 0.5);
+	xy_offset[1] = (xy_offset[1] + 0.5);
 	new_camera(&c, 201, 101, M_PI / 2);
 	set_transform_camera(&c,
 		multiply_matrices(rotation_y(cos(M_PI / 4), sin(M_PI / 4), &m1), translation(0, -2, 5, &m2), &m1));
-	ray_for_pixel(&c, xy, &r);
+	ray_for_pixel(&c, xy_offset, &r);
 	new_point(0, 2, -5, &t);
 	cr_assert(eq(int, tuple_eq(r.origin, t), true));
 	new_vector(sqrt(2) / 2, 0, -sqrt(2) / 2, &t);

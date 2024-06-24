@@ -13,7 +13,8 @@ static void	read_face(t_obj_loader *loader, char **params, int *len)
 	pthread_mutex_unlock(&loader->t_mutex);
 }
 
-static void	read_line2(t_obj_loader *loader, char **params, int *len)
+static void	read_line2(t_obj_loader *loader, char **params, int *len,
+		int *line_nb)
 {
 	if (ft_strncmp(params[0], "g", *len) == 0)
 	{
@@ -33,31 +34,40 @@ static void	read_line2(t_obj_loader *loader, char **params, int *len)
 		loader->mtl_max++;
 		pthread_mutex_unlock(&loader->mtl_mutex);
 	}
+	else
+	{
+		print_ignore_message(loader->filename, line_nb);
+		loader->ignored_lines++;
+	}
 }
 
-static void	read_line(t_obj_loader *loader, char **params)
+static void	read_line(t_obj_loader *loader, char **params, int line_nb)
 {
 	int	len;
 
-	if (!params[0])
+	if (params[0])
+	{
+		len = ft_strlen(params[0]) + 1;
+		if (ft_strncmp(params[0], "v", len) == 0)
+		{
+			pthread_mutex_lock(&loader->v_mutex);
+			loader->v_max++;
+			pthread_mutex_unlock(&loader->v_mutex);
+		}
+		else if (ft_strncmp(params[0], "vn", len) == 0)
+		{
+			pthread_mutex_lock(&loader->n_mutex);
+			loader->n_max++;
+			pthread_mutex_unlock(&loader->n_mutex);
+		}
+		else if (ft_strncmp(params[0], "f", len) == 0)
+			read_face(loader, params, &len);
+		else
+			read_line2(loader, params, &len, &line_nb);
 		return ;
-	len = ft_strlen(params[0]) + 1;
-	if (ft_strncmp(params[0], "v", len) == 0)
-	{
-		pthread_mutex_lock(&loader->v_mutex);
-		loader->v_max++;
-		pthread_mutex_unlock(&loader->v_mutex);
 	}
-	else if (ft_strncmp(params[0], "vn", len) == 0)
-	{
-		pthread_mutex_lock(&loader->n_mutex);
-		loader->n_max++;
-		pthread_mutex_unlock(&loader->n_mutex);
-	}
-	else if (ft_strncmp(params[0], "f", len) == 0)
-		read_face(loader, params, &len);
-	else
-		read_line2(loader, params, &len);
+	print_ignore_message(loader->filename, &line_nb);
+	loader->ignored_lines++;
 }
 
 void	*set_max_values(void *data)
@@ -76,6 +86,6 @@ void	*set_max_values(void *data)
 				STDERR_FILENO), NULL);
 	line_nb = td->start - 1;
 	while (++line_nb < td->end)
-		read_line(loader, loader->tokens[line_nb]);
+		read_line(loader, loader->tokens[line_nb], line_nb + 1);
 	return (data);
 }

@@ -6,7 +6,7 @@ Test(obj_files, ignoring_unrecognized_lines)
 	t_shape			group;
 
 	new_obj_loader(&loader, &group);
-	parse_obj_file(&loader, "../obj_files/test/Gibberish.obj");
+	parse_obj_file(&loader, "test/Gibberish.obj");
 	cr_assert(eq(int, loader.ignored_lines, 5));
 }
 

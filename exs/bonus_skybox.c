@@ -17,12 +17,12 @@ void	create_scene(t_world *world)
 	t_shape		sph;
 	t_shape		skybox;
 	char const	*paths[6] = {
-		"../textures/LancellottiChapel/negx.png",
-		"../textures/LancellottiChapel/posz.png",
-		"../textures/LancellottiChapel/posx.png",
-		"../textures/LancellottiChapel/negz.png",
-		"../textures/LancellottiChapel/posy.png",
-		"../textures/LancellottiChapel/negy.png"
+		"../assets/textures/LancellottiChapel/negx.png",
+		"../assets/textures/LancellottiChapel/posz.png",
+		"../assets/textures/LancellottiChapel/posx.png",
+		"../assets/textures/LancellottiChapel/negz.png",
+		"../assets/textures/LancellottiChapel/posy.png",
+		"../assets/textures/LancellottiChapel/negy.png"
 	};
 
 	world->objs = malloc(2 * sizeof(t_shape));

@@ -1,6 +1,6 @@
 #include "canvas.h"
 
-static void	pixel_color(t_mini_rt *rt, double xy_offset[2], t_ray *ray,
+static void	pixel_color(t_mini_rt *rt, double xy_offset[4], t_ray *ray,
 		t_color *color)
 {
 	xy_offset[2] = (xy_offset[0] + 0.5);

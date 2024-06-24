@@ -44,7 +44,7 @@ void	create_scene(t_world *world)
 	cyl.material.specular = 0;
 	cyl.material.reflective = 0.1;
 	new_sphere(&sph);
-	new_texture_map(&sph.material.pattern, "../textures/earth.png");
+	new_texture_map(&sph.material.pattern, "../assets/textures/earth.png");
 	sph.material.diffuse = 0.9;
 	sph.material.specular = 0.1;
 	sph.material.shininess = 10;
