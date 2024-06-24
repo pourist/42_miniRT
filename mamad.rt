@@ -2,13 +2,6 @@ A 0 122,122,122
 C 0,0,-20 0,-0.0,0.707 90 
 L -10,10,-10 1 222,222,222
 sp 0,0,1 5 120,0,85
-pl 0,-1,0 0,0,0.5 5,5,225 Tr asdasd asd
-cy 5.0,2,1 0.0,0.0,1.0 3 10 100,100,100 M asdasdasd
-cubes x,y,z(position) r,g,b a,b,c(transformation) 
-cone 
-
-
-Transformation 
-scaling a,a,a no range
-shearing x,x y,y z,z no range
-material r,g,b diffuse(double) 0-1 (double)specular 0.1 reflective(double) 0-1 transparency(double) 0-1 reflective index(double) 0-1 (vaccum - air - water - glass - diamond)
+pl 0,-1,0 0,0,0.5 5,5,225 
+cy 5.0,2,1 0.0,0.0,1.0 3 10 100,100,100 
+cone 5.0,2,1 0.0,0.0,1.0 3 10 1 200,122,15 

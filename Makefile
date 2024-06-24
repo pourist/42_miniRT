@@ -58,7 +58,8 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 cube_mapping.c cube_mapping2.c cube_align_check.c texture_mapping.c \
                     					 parser.c parser_utils.c element_counter.c free_print.c \
 										 init_ambient.c init_mini_rt.c error.c valid_args.c init_cylinder.c\
-										 line_parser.c init_camera.c init_light.c init_sphere.c init_plane.c
+										 line_parser.c init_camera.c init_light.c init_sphere.c init_plane.c\
+										 init_cone.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 
 ################################################################################

@@ -10,12 +10,16 @@ void	set_type(t_line_parse_env *parse)
 		parse->type = CAMERA;
 	else if (!ft_strncmp(parse->line[0], "L", 2))
 		parse->type = LIGHT;
-	else if (!ft_strncmp(parse->line[0], "sp", 2))
+	else if (!ft_strncmp(parse->line[0], "sp", 3))
 		parse->type = SPHERE;
-	else if (!ft_strncmp(parse->line[0], "cy", 2))
+	else if (!ft_strncmp(parse->line[0], "cy", 3))
 		parse->type = CYLINDER;
-	else if (!ft_strncmp(parse->line[0], "pl", 2))
+	else if (!ft_strncmp(parse->line[0], "pl", 3))
 		parse->type = PLANE;
+	else if (!ft_strncmp(parse->line[0], "cone", 5))
+		parse->type = CONE;
+	else if (!ft_strncmp(parse->line[0], "cube", 5))
+		parse->type = CUBE;
 }
 
 int	parse_line(int fd, t_line_parse_env *parse)
@@ -57,6 +61,8 @@ int	read_lines_init(t_world *world, t_mini_rt *minirt, int fd)
 		if (parse.type == PLANE && init_plane(&parse, &(world->objs[obj++])))
 			return (free_s(parse.line));
 		if (parse.type == CYLINDER && init_cylinder(&parse, &(world->objs[obj++])))
+			return (free_s(parse.line));
+		if (parse.type == CONE && init_cone(&parse, &(world->objs[obj++])))
 			return (free_s(parse.line));
 		free_s(parse.line);
 	}

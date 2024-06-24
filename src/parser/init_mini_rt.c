@@ -4,7 +4,7 @@ int	init_mini_rt(t_world *world, t_mini_rt *minirt,t_e_counts *count)
 {
 	int	objs_count;
 
-	objs_count = count->cylinder + count->sphere + count->plane;
+	objs_count = count->cylinder + count->sphere + count->plane + count->cone + count->cube;
 	world->objs_count = objs_count;
 	world->lights_count = count->light;
 	world->objs = (t_shape *)malloc(sizeof(t_shape) * (objs_count));

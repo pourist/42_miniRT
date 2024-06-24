@@ -20,6 +20,8 @@
 #define ERR_LIGHT "Expected format: L <x,y,z> <brightness_ratio> <R,G,B>"
 #define ERR_PLANE "Expected format: pl <x,y,z> <normal vector> <R,G,B>"
 #define ERR_CYLINDER "Expected format: cy <x,y,z> <axis vector> <diameter> <height> <R,G,B>"
+#define ERR_CONE "Expected format: cone <base x,y,z> <axis x,y,z> <radius> <height> <is open> <R,G,B>"
+#define ERR_CUBE "Expected format: cube <center x,y,z> <width> <height> <depth> <R,G,B>"
 #define	RATIO_INVALID "Invalid ambient lighting ratio"
 #define RATIO_RANGE "Ambient lighting ratio out of range"
 #define RGB_LEN "RGB elements count incorrect."
@@ -55,6 +57,9 @@
 #define POINT_COUNT_M "Point coordinates count incorrect."
 #define POINT_INVALID_M "Invalid point coordinates."
 #define POINT_RANGE_M "Point coordinates values out of range."
+#define	R_INVALID "Invalid Radius"
+#define R_RANGE_M "Radius out of range"
+#define ERR_BOOL "Boolean for 'is open' must be 0 (closed) or 1 (open)"
 
 typedef enum e_error_type
 {
@@ -89,7 +94,10 @@ typedef enum e_error_type
 	POINT_RANGE,
 	HEIGHT_VALID,
 	HEIGHT_RANGE,
-
+	RADIUS,
+	RADIUS_RANGE,
+	OPEN,
+	OPEN_RANGE,
 }	t_error_type;
 
 typedef struct s_e_counts
@@ -102,6 +110,8 @@ typedef struct s_e_counts
 	int	cylinder;
 	int	unknown;
 	int	fd;
+	int	cone;
+	int cube;
 }	t_e_counts;
 
 typedef struct s_line_parse_env
@@ -131,6 +141,8 @@ typedef enum e_element_type
 	SPHERE,
 	CYLINDER,
 	PLANE,
+	CONE,
+	CUBE,
 	EMPTY_LINE,
 }	t_element_type;
 
@@ -172,5 +184,7 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj);
 int init_plane(t_line_parse_env *env, t_shape *obj);
 // cylinder
 int init_cylinder(t_line_parse_env *env, t_shape *obj);
+// cone
+int init_cone(t_line_parse_env *env, t_shape *obj);
 
 #endif

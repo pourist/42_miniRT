@@ -22,6 +22,12 @@ char	*find_error_3(int type)
 		return (H_INVALID);
 	else if (type == HEIGHT_RANGE)
 		return (H_RANGE_M);
+	else if (type == RADIUS)
+		return (R_INVALID);
+	else if (type == RADIUS_RANGE)
+		return (R_RANGE_M);
+	else if (type == OPEN_RANGE || type == OPEN)
+		return (ERR_BOOL);
 	else
 		return (NULL);
 }
