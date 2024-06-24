@@ -16,18 +16,34 @@ t_pattern	*new_pattern(t_pattern *pattern)
 	pattern->texture[3] = NULL;
 	pattern->texture[4] = NULL;
 	pattern->texture[5] = NULL;
+	pattern->texture[6] = NULL;
+	pattern->texture[7] = NULL;
 	pattern->texture_map.uv_pattern.a = NULL;
 	pattern->texture_map.uv_pattern.b = NULL;
+	pattern->is_tri = false;
+	pattern->bump_map_scale = 1.0;
+	pattern->disp_intensity = 1.0;
 	return (pattern);
 }
 
-t_color	pattern_at_shape(t_pattern *pattern, t_shape *shape,
-								t_point *world_point)
+void	set_interpolate_uv(t_pattern *pattern, t_shape *shape)
+{
+	pattern->uv.u = (1.0 - shape->tri.u - shape->tri.v) * pattern->v1_uv.u
+		+ shape->tri.u * pattern->v2_uv.u + shape->tri.v * pattern->v3_uv.u;
+	pattern->uv.v = (1.0 - shape->tri.u - shape->tri.v) * pattern->v1_uv.v
+		+ shape->tri.u * pattern->v2_uv.v + shape->tri.v * pattern->v3_uv.v;
+}
+
+t_color	*pattern_at_shape(t_pattern *pattern, t_shape *shape,
+				t_point *world_point, t_color *color)
 {
 	t_point		shape_point;
 
+	if (shape->is_tri)
+		set_interpolate_uv(pattern, shape);
 	multiply_matrix_by_tuple(&shape->inverse, world_point, &shape_point);
-	return (pattern->pattern_at(pattern, &shape_point));
+	pattern->pattern_at(pattern, &shape_point, color);
+	return (color);
 }
 
 void	set_pattern_transform(t_pattern *pattern, t_matrix *transform)

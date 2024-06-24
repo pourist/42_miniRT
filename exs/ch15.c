@@ -17,7 +17,7 @@ void	create_scene1(t_world *world)
 	world->objs = malloc(1 * sizeof(t_shape));
 	world->objs_count = 1;
 	new_obj_loader(&loader, &world->objs[0]);
-	parse_obj_file(&loader, "../obj_files/teapot.obj");
+	parse_obj_file(&loader, "teapot.obj");
 	world->objs_ext_count += loader.t_count + loader.gp_count;
 	set_transform(loader.default_group,
 		rotation_x(cos(-M_PI / 2.0), sin(-M_PI / 2.0), &m));
@@ -31,10 +31,10 @@ void	create_lights1(t_world *world)
 	world->lights = malloc(2 * sizeof(t_light));
 	world->lights_count = 2;
 	new_point(-45, -45, -45, &p);
-	c = new_color(0.3, 0.6, 0.95);
+	new_color(0.3, 0.6, 0.95, &c);
 	new_light(&p, &c, &world->lights[0]);
 	new_point(45, 15, -45, &p);
-	c = new_color(0.95, 0.6, 0.3);
+	new_color(0.95, 0.6, 0.3, &c);
 	new_light(&p, &c, &world->lights[1]);
 }
 

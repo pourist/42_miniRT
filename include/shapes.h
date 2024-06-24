@@ -113,6 +113,7 @@ typedef struct s_shape {
 	bool			is_group;
 	t_shape			*next;
 	bool			is_csg;
+	bool			is_tri;
 }	t_shape;
 
 typedef struct s_hit {
@@ -183,7 +184,8 @@ void		insert_intersection(t_hit **xs, t_hit *hit);
 int			intersect_count(t_hit	*xs);
 t_hit		*hit(t_hit *xs);
 // pattern.c
-t_color		pattern_at_shape(t_pattern *pattern, t_shape *shape,
-				t_point *world_point);
+t_color		*pattern_at_shape(t_pattern *pattern, t_shape *shape,
+				t_point *world_point, t_color *color);
+void		set_interpolate_uv(t_pattern *pattern, t_shape *shape);
 
 #endif

@@ -1,3 +1,6 @@
+#define OBJ_PATH "../assets/obj_files/"
+#define MTL_PATH "../assets/mtl_files/"
+#define TEXTURE_PATH "../assets/textures/"
 #include "shapes.h"
 #include "canvas.h"
 #include "materials.h"
@@ -14,18 +17,18 @@ void	create_scene(t_world *world)
 	t_shape		sph;
 	t_shape		skybox;
 	char const	*paths[6] = {
-		"../textures/LancellottiChapel/negx.png",
-		"../textures/LancellottiChapel/posz.png",
-		"../textures/LancellottiChapel/posx.png",
-		"../textures/LancellottiChapel/negz.png",
-		"../textures/LancellottiChapel/posy.png",
-		"../textures/LancellottiChapel/negy.png"
+		"../assets/textures/LancellottiChapel/negx.png",
+		"../assets/textures/LancellottiChapel/posz.png",
+		"../assets/textures/LancellottiChapel/posx.png",
+		"../assets/textures/LancellottiChapel/negz.png",
+		"../assets/textures/LancellottiChapel/posy.png",
+		"../assets/textures/LancellottiChapel/negy.png"
 	};
 
 	world->objs = malloc(2 * sizeof(t_shape));
 	world->objs_count = 2;
 	new_sphere(&sph);
-	sph.material.ambient = new_color(0, 0, 0);
+	new_color(0, 0, 0, &sph.material.ambient);
 	sph.material.diffuse = 0.4;
 	sph.material.specular = 0.6;
 	sph.material.shininess = 20;
@@ -35,7 +38,7 @@ void	create_scene(t_world *world)
 	new_cube(&skybox);
 	skybox.material.diffuse = 0;
 	skybox.material.specular = 0;
-	skybox.material.ambient = new_color(1, 1, 1);
+	new_color(1, 1, 1, &skybox.material.ambient);
 	new_cubic_texture_map(&skybox.material.pattern, paths);
 	set_transform(&skybox, scaling(1000, 1000, 1000, &m[0]));
 	world->objs[0] = sph;
@@ -50,7 +53,7 @@ void	create_lights(t_world *world)
 	world->lights = malloc(1 * sizeof(t_light));
 	world->lights_count = 1;
 	new_point(0, 100, 0, &p);
-	c = new_color(1, 1, 1);
+	new_color(1, 1, 1, &c);
 	new_light(&p, &c, &world->lights[0]);
 }
 

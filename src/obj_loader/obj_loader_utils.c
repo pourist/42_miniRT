@@ -48,34 +48,3 @@ bool	are_floats(char *str1, char *str2, char *str3)
 		return (false);
 	return (true);
 }
-
-void	free_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		matrix[i] = NULL;
-		i++;
-	}
-	free(matrix[i]);
-	matrix[i] = NULL;
-	free(matrix);
-	matrix = NULL;
-}
-
-void	free_3d_array(char ***array)
-{
-	int	i;
-
-	i = -1;
-	while (array[++i])
-	{
-		free_matrix(array[i]);
-		array[i] = NULL;
-	}
-	free(array);
-	array = NULL;
-}

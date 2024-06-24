@@ -11,33 +11,48 @@ t_hit	*intersect_world(t_world *world, t_ray *ray)
 	return (world->xs);
 }
 
+void	get_map_displacement(t_shape *shape, t_point *point, t_vector *normal)
+{
+	t_color		disp_color;
+	double		disp_value;
+	t_vector	displacement;
+
+	set_interpolate_uv(&shape->material.pattern, shape);
+	uv_texture_color_at(shape->material.pattern.texture[7],
+		&shape->material.pattern.uv.u, &shape->material.pattern.uv.v,
+		&disp_color);
+	disp_value = disp_color.r * shape->material.pattern.disp_intensity;
+	multiply(normal, disp_value, &displacement);
+	add(point, &displacement, point);
+}
+
 t_comps	prepare_computations(t_hit *intersect, t_ray *ray, t_hit *xs)
 {
-	t_comps	comps;
+	t_comps	c;
 
-	comps.t = intersect->t;
-	comps.obj = intersect->obj;
-	position(ray, comps.t, &comps.point);
-	negate(normalize(&ray->direction, &comps.view.eye_v), &comps.view.eye_v);
-	normalize(normal_at(comps.obj, &comps.point, &comps.view.normal_v),
-		&comps.view.normal_v);
-	comps.n1 = 1;
-	comps.n2 = 1;
-	if (dot(&comps.view.normal_v, &comps.view.eye_v) < 0)
+	c.t = intersect->t;
+	c.obj = intersect->obj;
+	position(ray, c.t, &c.point);
+	negate(normalize(&ray->direction, &c.view.eye_v), &c.view.eye_v);
+	if (c.obj->material.pattern.is_tri && c.obj->material.pattern.texture[7])
+		get_map_displacement(c.obj, &c.point, &c.view.normal_v);
+	normalize(normal_at(c.obj, &c.point, &c.view.normal_v), &c.view.normal_v);
+	c.n1 = 1;
+	c.n2 = 1;
+	if (dot(&c.view.normal_v, &c.view.eye_v) < 0)
 	{
-		comps.inside = true;
-		negate(&comps.view.normal_v, &comps.view.normal_v);
+		c.inside = true;
+		negate(&c.view.normal_v, &c.view.normal_v);
 	}
 	else
-		comps.inside = false;
+		c.inside = false;
 	if (xs != NULL)
-		find_refractive_indices(&comps, intersect, xs);
-	reflect(&ray->direction, &comps.view.normal_v, &comps.reflect_v);
-	add(&comps.point, multiply(&comps.view.normal_v, EPSILON,
-			&comps.over_point), &comps.over_point);
-	subtract(&comps.point, multiply(&comps.view.normal_v, EPSILON,
-			&comps.under_point), &comps.under_point);
-	return (comps);
+		find_refractive_indices(&c, intersect, xs);
+	reflect(&ray->direction, &c.view.normal_v, &c.reflect_v);
+	add(&c.point, multiply(&c.view.normal_v, EPSILON,
+			&c.over_point), &c.over_point);
+	return (subtract(&c.point, multiply(&c.view.normal_v, EPSILON,
+				&c.under_point), &c.under_point), c);
 }
 
 static t_shape	*check_parents(t_shape *shape)
@@ -48,7 +63,7 @@ static t_shape	*check_parents(t_shape *shape)
 
 	current = shape;
 	found = NULL;
-	default_color = new_color(1.0, 1.0, 1.0);
+	new_color(1.0, 1.0, 1.0, &default_color);
 	while (current->parent)
 	{
 		current = current->parent;
@@ -64,38 +79,44 @@ static t_shape	*check_parents(t_shape *shape)
 		return (shape);
 }
 
-t_color	shade_hit(t_world *world, t_comps *comps)
+t_color	*shade_hit(t_world *world, t_comps *comps, t_color *surface)
 {
 	int		i;
-	t_color	surface; 
 	t_shape	*parent;
+	t_color	tmp;
 
 	i = -1;
-	surface = new_color(0, 0, 0);
 	parent = check_parents(comps->obj);
 	while (++i < world->lights_count)
 	{
 		world->lights[i].intensity_ratio = intensity_at(
 				world, &comps->over_point, i);
 		if (world->lights[i].is_area_light == false)
-			surface = add_color(surface, lighting(parent,
-						&world->lights[i], &comps->over_point, &comps->view));
+		{
+			tmp = lighting(parent, &world->lights[i], &comps->over_point,
+					&comps->view);
+			add_color(surface, &tmp, surface);
+		}
 		else
-			surface = add_color(surface, area_lighting(parent,
-						&world->lights[i], &comps->over_point, &comps->view));
+		{
+			tmp = area_lighting(parent, &world->lights[i], &comps->over_point,
+					&comps->view);
+			add_color(surface, &tmp, surface);
+		}
 	}
-	return (reflec_and_refrac(world, comps, &surface));
+	return (reflec_and_refrac(world, comps, surface));
 }
 
-t_color	color_at(t_world *world, t_ray *ray)
+t_color	*color_at(t_world *world, t_ray *ray, t_color *color)
 {
 	t_hit	*intersect;
 	t_comps	comps;
 
+	*color = (t_color){0, 0, 0};
 	intersect_world(world, ray);
 	intersect = hit(world->xs);
 	if (!intersect)
-		return (new_color(0, 0, 0));
+		return (color);
 	comps = prepare_computations(intersect, ray, world->xs);
-	return (shade_hit(world, &comps));
+	return (shade_hit(world, &comps, color));
 }

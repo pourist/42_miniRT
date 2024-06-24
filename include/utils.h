@@ -9,18 +9,19 @@
 # include "libft.h"
 # include "tuples.h"
 // # include "shapes.h"
-#ifndef MAXFLOAT
-# define MAXFLOAT	3.40282347e+38F
-#endif
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
-#ifndef M_PI_2
-# define M_PI_2 (M_PI/2)
-#endif
-#ifndef M_PI_4
-# define M_PI_4 (M_PI/4)
-#endif
+# ifndef MAXFLOAT
+#  define MAXFLOAT	3.40282347e+38F
+# endif
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
+# ifndef M_PI_2
+#  define M_PI_2 (M_PI/2)
+# endif
+# ifndef M_PI_4
+#  define M_PI_4 (M_PI/4)
+# endif
+
 # define EPSILON	1e-5
 # define MAX_SEQUENCER 8
 # define MAX_SEQ_VALUES 8
@@ -61,7 +62,9 @@ double		ft_atof(char *str);
 // sequencer.c
 void		new_sequencer(t_sequencer *gen);
 double		halton_sequence(t_sequencer *gen);
+double		van_der_corput_sequence(t_sequencer *gen);
 double		next_sequence(t_sequencer *gen);
+double		rand_dbl(void);
 // threads.c
 bool		set_threads_data(void *data, pthread_t **threads,
 				t_thread_data **t_data, t_threads_setup *setup);
