@@ -28,6 +28,14 @@ char	*find_error_3(int type)
 		return (R_RANGE_M);
 	else if (type == OPEN_RANGE || type == OPEN)
 		return (ERR_BOOL);
+	else if (type == WIDTH_VALID)
+		return (W_INVALID);
+	else if (type == WIDTH_RANGE)
+		return (W_RANGE_M);
+	else if (type == DEPTH_VALID)
+		return (DEPTH_INVALID);
+	else if (type == DEPTH_RANGE)
+		return (DEPTH_RANGE_M);
 	else
 		return (NULL);
 }
