@@ -186,5 +186,8 @@ int init_plane(t_line_parse_env *env, t_shape *obj);
 int init_cylinder(t_line_parse_env *env, t_shape *obj);
 // cone
 int init_cone(t_line_parse_env *env, t_shape *obj);
+// calculate_rotation.c
+void	calculate_rotation_matrix(t_vector *default_normal,
+			t_vector *user_normal, t_matrix *rotation_matrix);
 
 #endif

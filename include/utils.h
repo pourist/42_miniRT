@@ -8,7 +8,7 @@
 
 # include "libft.h"
 # include "tuples.h"
-// # include "shapes.h"
+
 # ifndef MAXFLOAT
 #  define MAXFLOAT	3.40282347e+38F
 # endif
@@ -16,10 +16,10 @@
 #  define M_PI 3.14159265358979323846
 # endif
 # ifndef M_PI_2
-#  define M_PI_2 (M_PI/2)
+#  define M_PI_2 1.57079632679489661923
 # endif
 # ifndef M_PI_4
-#  define M_PI_4 (M_PI/4)
+#  define M_PI_4 0.785398163397448309616
 # endif
 
 # define EPSILON	1e-5
@@ -27,6 +27,7 @@
 # define MAX_SEQ_VALUES 8
 # define THREADS_MAX	64
 # define THREADS_FRACTION 0.5
+# define INV_255 0.00392156862745098
 
 typedef struct s_sequencer
 {

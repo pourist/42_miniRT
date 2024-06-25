@@ -12,74 +12,83 @@ R,G,B colors: 10, 0, 255  */
 
 typedef struct s_cone_info
 {
-    double radius;
-    double	height;
+	double	diam;
+	double	height;
 	double	r;
 	double	g;
 	double	b;
-    bool    open;
-} t_cone_info ;
+	bool	open;
+}	t_cone_info;
 
-void    make_cone(t_cone_info *cone, char **center, t_shape *obj)
+void	make_cone(t_cone_info *cone, char **center, char **axis, t_shape *obj)
 {
-    t_matrix    m1;
-    t_matrix    m2;
-    t_matrix    final;
+	t_vector		axis_v;
+	t_vector		default_axis;
+	t_matrix		trans_scale_m;
+	t_matrix		rotation_m;
+	t_matrix		transform_m;
 
 	new_cone(obj);
-	obj->cone.min = -(cone->height * 0.5);
-	obj->cone.max = (cone->height * 0.5);
-    obj->material.color = new_color(cone->r, cone->g, cone->b);
-    translation(ft_atof(center[0]), ft_atof(center[1]), ft_atof(center[2]), &m1);
-    scaling(cone->radius * 0.5, 1, cone->radius * 0.5, &m2);
-    multiply_matrices(&m1, &m2, &final);
-    set_transform(obj, &final);
+	obj->cone.min = -1;
+	obj->cone.max = 0;
+	obj->cone.closed = !cone->open;
+	new_color(cone->r, cone->g, cone->b, &obj->material.color);
+	new_vector(0, 1, 0, &default_axis);
+	new_vector(ft_atof(axis[0]), ft_atof(axis[1]), ft_atof(axis[2]), &axis_v);
+	calculate_rotation_matrix(&default_axis, &axis_v, &rotation_m);
+	multiply_matrices(translation(ft_atof(center[0]), ft_atof(center[1])
+			+ (cone->height * 0.5), ft_atof(center[2]), &trans_scale_m),
+		scaling(cone->diam, cone->height, cone->diam, &transform_m), &trans_scale_m);
+	multiply_matrices(&rotation_m, &trans_scale_m, &transform_m);
+	set_transform(obj, &transform_m);
 	free_s(center);
+	free_s(axis);
 }
 
-int cone_info(t_line_parse_env *env, t_cone_info *cone)
+int	cone_info(t_line_parse_env *env, t_cone_info *cone)
 {
-    char    **rgb;
+	char	**rgb;
 
-    cone->radius = ft_atof(env->line[3]);
-    cone->height = ft_atof(env->line[4]);
-    env->error_type = RADIUS;
+	cone->diam = ft_atof(env->line[3]);
+	cone->height = ft_atof(env->line[4]);
+	env->error_type = DIAM;
 	if (solo(env->line[3], EPSILON, (double)INT_MAX, env))
 		return (1);
 	env->error_type = HEIGHT_VALID;
 	if (solo(env->line[4], EPSILON, (double)INT_MAX, env))
 		return (1);
-    env->error_type = OPEN;
-	if (solo(env->line[5], 0, 1, env))
+	env->error_type = OPEN;
+	if (solo(env->line[6], 0, 1, env))
 		return (1);
+	cone->open = ft_atoi(env->line[6]);
 	env->error_type = RGB;
-	rgb = ft_subsplit(env->line[6], ",\n");
+	rgb = ft_subsplit(env->line[5], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (1);
-    cone->r = (ft_atof(rgb[0]) / 255);
+	cone->r = (ft_atof(rgb[0]) / 255);
 	cone->g = (ft_atof(rgb[1]) / 255);
 	cone->b = (ft_atof(rgb[2]) / 255);
-    return (free_s(rgb), 0);
+	return (free_s(rgb), 0);
 }
 
-int init_cone(t_line_parse_env *env, t_shape *obj)
+int	init_cone(t_line_parse_env *env, t_shape *obj)
 {
-    t_cone_info cone;
-    char    **normal;
-    char    **center;
+	t_cone_info	cone;
+	char		**axis;
+	char		**center;
 
-    if (ft_strarr_len(env->line) != 7)
+	if (ft_strarr_len(env->line) != 7)
 		return (file_error(env, ERR_CONE));
-    if (cone_info(env, &cone))
-        return (1);
-    env->error_type = CENT;
+	if (cone_info(env, &cone))
+		return (1);
+	env->error_type = CENT;
 	center = ft_subsplit(env->line[1], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-    env->error_type = NORMAL;
-	normal = ft_subsplit(env->line[2], ",\n");
-	if (triplets(normal, -1, 1, env))
+	env->error_type = NORMAL;
+	axis = ft_subsplit(env->line[2], ",\n");
+	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);
-    make_cone(&cone, center, obj);
-    return (0);
+	make_cone(&cone, center, axis, obj);
+	return (0);
 }
