@@ -98,6 +98,7 @@ typedef enum e_error_type
 	RADIUS_RANGE,
 	OPEN,
 	OPEN_RANGE,
+	
 }	t_error_type;
 
 typedef struct s_e_counts
