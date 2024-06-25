@@ -40,6 +40,10 @@ void	elements_counter(t_e_counts *count, char *line)
 			count->cylinder++;
 		else if (start_with(line, "pl"))
 			count->plane++;
+		else if (start_with(line, "cone"))
+			count->cone++;
+		else if (start_with(line, "cube"))
+			count->cube++;
 		else if (!start_with(line, "\n"))
 			count->unknown++;
 		free(line);
@@ -79,6 +83,8 @@ int	init_counter_fd(t_e_counts *count, char *file)
 	count->cylinder = 0;
 	count->plane = 0;
 	count->unknown = 0;
+	count->cube = 0;
+	count->cone = 0;
 	count->fd = open(file, O_RDONLY);
 	if (count->fd < 0)
 		return (print_error("Error\nUnable to read the .rt file."));

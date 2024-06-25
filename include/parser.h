@@ -16,7 +16,12 @@
 
 #define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
 #define ERR_INC_CAM "Expected format: C <x,y,z> <orientation x,y,z> <FOV>"
+#define ERR_SPHERE "Expected format: sp <x,y,z> <diameter> <R,G,B>"
 #define ERR_LIGHT "Expected format: L <x,y,z> <brightness_ratio> <R,G,B>"
+#define ERR_PLANE "Expected format: pl <x,y,z> <normal vector> <R,G,B>"
+#define ERR_CYLINDER "Expected format: cy <x,y,z> <axis vector> <diameter> <height> <R,G,B>"
+#define ERR_CONE "Expected format: cone <base x,y,z> <axis x,y,z> <radius> <height> <is open> <R,G,B>"
+#define ERR_CUBE "Expected format: cube <center x,y,z> <width> <height> <depth> <R,G,B>"
 #define	RATIO_INVALID "Invalid ambient lighting ratio"
 #define RATIO_RANGE "Ambient lighting ratio out of range"
 #define RGB_LEN "RGB elements count incorrect."
@@ -38,7 +43,23 @@
 #define L_RATIO_RANGE_M "Light brightness ratio out of range"
 #define POS_M "Light point coordinates count incorrect"
 #define POS_INVALID_M "Invalid light point coordinates"
-#define POS_RANGE_M "Light point coordinates' values out of range"
+#define POS_RANGE_M "Light point coordinate values out of range"
+#define	D_INVALID "Invalid diameter"
+#define D_RANGE_M "Diameter out of range"
+#define	H_INVALID "Invalid Height"
+#define H_RANGE_M "Height out of range"
+#define CENT_M "Center coordinates count incorrect"
+#define CENT_INVALID_M "Invalid center coordinates"
+#define CENT_RANGE_M "Center coordinate values out of range"
+#define NORMAL_M "Normal vector count incorrect"
+#define NORMAL_INVALID_M "Invalid Normal vector"
+#define NORMAL_RANGE_M "Normal vector values out of range"
+#define POINT_COUNT_M "Point coordinates count incorrect."
+#define POINT_INVALID_M "Invalid point coordinates."
+#define POINT_RANGE_M "Point coordinates values out of range."
+#define	R_INVALID "Invalid Radius"
+#define R_RANGE_M "Radius out of range"
+#define ERR_BOOL "Boolean for 'is open' must be 0 (closed) or 1 (open)"
 
 typedef enum e_error_type
 {
@@ -60,6 +81,23 @@ typedef enum e_error_type
 	POS,
 	POS_INVALID,
 	POS_RANGE,
+	DIAM,
+	DIAM_RANGE,
+	CENT,
+	CENT_INVALID,
+	CENT_RANGE,
+	NORMAL,
+	NORMAL_INVALID,
+	NORMAL_RANGE,
+	POINT,
+	POINT_INVALID,
+	POINT_RANGE,
+	HEIGHT_VALID,
+	HEIGHT_RANGE,
+	RADIUS,
+	RADIUS_RANGE,
+	OPEN,
+	OPEN_RANGE,
 }	t_error_type;
 
 typedef struct s_e_counts
@@ -72,6 +110,8 @@ typedef struct s_e_counts
 	int	cylinder;
 	int	unknown;
 	int	fd;
+	int	cone;
+	int cube;
 }	t_e_counts;
 
 typedef struct s_line_parse_env
@@ -83,6 +123,16 @@ typedef struct s_line_parse_env
 	int		type;
 }	t_line_parse_env;
 
+typedef struct s_cylinder_info
+{
+	double	diam;
+	double	height;
+	double	r;
+	double	g;
+	double	b;
+
+} t_cylinder_info;
+
 typedef enum e_element_type
 {
 	AMBIENT,
@@ -91,6 +141,8 @@ typedef enum e_element_type
 	SPHERE,
 	CYLINDER,
 	PLANE,
+	CONE,
+	CUBE,
 	EMPTY_LINE,
 }	t_element_type;
 
@@ -126,5 +178,16 @@ int 	read_lines_init(t_world *world, t_mini_rt *minirt, int fd);
 int		init_camera(t_line_parse_env *env, t_camera *camera);
 // light
 int init_light(t_line_parse_env *env, t_light *light);
+// sphere
+int	init_sphere(t_line_parse_env *env, t_shape *obj);
+// plane
+int init_plane(t_line_parse_env *env, t_shape *obj);
+// cylinder
+int init_cylinder(t_line_parse_env *env, t_shape *obj);
+// cone
+int init_cone(t_line_parse_env *env, t_shape *obj);
+// calculate_rotation.c
+void	calculate_rotation_matrix(t_vector *default_normal,
+			t_vector *user_normal, t_matrix *rotation_matrix);
 
 #endif
