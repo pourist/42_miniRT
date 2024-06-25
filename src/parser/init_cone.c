@@ -27,7 +27,7 @@ void    make_cone(t_cone_info *cone, char **center, t_shape *obj)
     t_matrix    final;
 
 	new_cone(obj);
-	obj->cone.min = -(cone->height * 0.5);
+	obj->cone.min = 0;
 	obj->cone.max = (cone->height * 0.5);
     obj->material.color = new_color(cone->r, cone->g, cone->b);
     translation(ft_atof(center[0]), ft_atof(center[1]), ft_atof(center[2]), &m1);

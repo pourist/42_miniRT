@@ -64,6 +64,8 @@ int	read_lines_init(t_world *world, t_mini_rt *minirt, int fd)
 			return (free_s(parse.line));
 		if (parse.type == CONE && init_cone(&parse, &(world->objs[obj++])))
 			return (free_s(parse.line));
+		if (parse.type == CUBE && init_cube(&parse, &(world->objs[obj++])))
+			return (free_s(parse.line));
 		free_s(parse.line);
 	}
 	return (0);

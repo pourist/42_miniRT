@@ -17,11 +17,11 @@ typedef struct s_cube_info
     double  depth;
 }   t_cube_info;
 
-void    make_cube(t_cube_info *cube, char **center, char **rgb, t_shape *obj)
-{
-    new_cube(obj);
+// void    make_cube(t_cube_info *cube, char **center, char **rgb, t_shape *obj)
+// {
+//     new_cube(obj);
     
-}
+// }
 
 int cube_info(t_line_parse_env *env, t_cube_info *cube)
 {
@@ -60,6 +60,7 @@ int init_cube(t_line_parse_env *env, t_shape *obj)
     rgb = ft_subsplit(env->line[5], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(center), 1);
+//    (void)obj;
     (void)obj;
     free_s(rgb);
     free_s(center);

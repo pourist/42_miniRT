@@ -48,6 +48,10 @@
 #define D_RANGE_M "Diameter out of range"
 #define	H_INVALID "Invalid Height"
 #define H_RANGE_M "Height out of range"
+#define	DEPTH_INVALID "Invalid Depth"
+#define DEPTH_RANGE_M "Depth out of range"
+#define	W_INVALID "Invalid Width"
+#define W_RANGE_M "Width out of range"
 #define CENT_M "Center coordinates count incorrect"
 #define CENT_INVALID_M "Invalid center coordinates"
 #define CENT_RANGE_M "Center coordinate values out of range"
@@ -98,7 +102,10 @@ typedef enum e_error_type
 	RADIUS_RANGE,
 	OPEN,
 	OPEN_RANGE,
-	
+	WIDTH_VALID,
+	WIDTH_RANGE,
+	DEPTH_VALID,
+	DEPTH_RANGE,
 }	t_error_type;
 
 typedef struct s_e_counts
@@ -187,5 +194,7 @@ int init_plane(t_line_parse_env *env, t_shape *obj);
 int init_cylinder(t_line_parse_env *env, t_shape *obj);
 // cone
 int init_cone(t_line_parse_env *env, t_shape *obj);
+// cube 
+int init_cube(t_line_parse_env *env, t_shape *obj);
 
 #endif
