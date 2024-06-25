@@ -17,11 +17,25 @@ typedef struct s_cube_info
     double  depth;
 }   t_cube_info;
 
-// void    make_cube(t_cube_info *cube, char **center, char **rgb, t_shape *obj)
-// {
-//     new_cube(obj);
-    
-// }
+void    make_cube(t_cube_info *cube, char **center, char **rgb, t_shape *obj)
+{
+    t_matrix m1;
+    t_matrix m2;
+    t_matrix final;
+    double r, g, b;
+
+
+    r = (ft_atof(rgb[0]) / 255);
+    g = (ft_atof(rgb[1]) / 255);
+    b = (ft_atof(rgb[2]) / 255);
+
+    new_cube(obj);
+    new_color(r, g, b, &obj->material.color);
+    translation(ft_atof(center[0]), ft_atof(center[1]), ft_atof(center[2]), &m1);
+    scaling(cube->width, cube->height, cube->depth, &m2);
+    multiply_matrices(&m1, &m2, &final);
+    set_transform(obj, &final);
+}
 
 int cube_info(t_line_parse_env *env, t_cube_info *cube)
 {
@@ -60,9 +74,8 @@ int init_cube(t_line_parse_env *env, t_shape *obj)
     rgb = ft_subsplit(env->line[5], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(center), 1);
-//    (void)obj;
-    (void)obj;
+    make_cube(&cube, center, rgb, obj);
     free_s(rgb);
     free_s(center);
-    return (1);
+    return (0);
 }
