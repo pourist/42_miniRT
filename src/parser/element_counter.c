@@ -44,6 +44,8 @@ void	elements_counter(t_e_counts *count, char *line)
 			count->cone++;
 		else if (start_with(line, "cube"))
 			count->cube++;
+		else if (start_with(line, "material"))
+			count->mat++;
 		else if (!start_with(line, "\n"))
 			count->unknown++;
 		free(line);

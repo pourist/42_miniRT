@@ -20,6 +20,8 @@ void	set_type(t_line_parse_env *parse)
 		parse->type = CONE;
 	else if (!ft_strncmp(parse->line[0], "cube", 5))
 		parse->type = CUBE;
+	else
+		parse->type = MATERIAL;
 }
 
 int	parse_line(int fd, t_line_parse_env *parse)

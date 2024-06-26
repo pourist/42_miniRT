@@ -21,7 +21,7 @@
 #define ERR_PLANE "Expected format: pl <x,y,z> <normal vector> <R,G,B>"
 #define ERR_CYLINDER "Expected format: cy <x,y,z> <axis vector> <diameter> <height> <R,G,B>"
 #define ERR_CONE "Expected format: cone <base x,y,z> <axis x,y,z> <radius> <height> <is open> <R,G,B>"
-#define ERR_CUBE "Expected format: cube <center x,y,z> <width> <height> <depth> <R,G,B>"
+#define ERR_CUBE "Expected format: cube <center x,y,z> <axis vector> <width> <height> <depth> <R,G,B>"
 #define	RATIO_INVALID "Invalid ambient lighting ratio"
 #define RATIO_RANGE "Ambient lighting ratio out of range"
 #define RGB_LEN "RGB elements count incorrect."
@@ -120,6 +120,8 @@ typedef struct s_e_counts
 	int	fd;
 	int	cone;
 	int cube;
+	int	mat;
+	t_material	**material;
 }	t_e_counts;
 
 typedef struct s_line_parse_env
@@ -151,6 +153,7 @@ typedef enum e_element_type
 	PLANE,
 	CONE,
 	CUBE,
+	MATERIAL,
 	EMPTY_LINE,
 }	t_element_type;
 

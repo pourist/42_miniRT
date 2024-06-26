@@ -14,6 +14,46 @@ int	arg_checker(int argc, char **argv)
 	return (0);
 }
 
+int	init_material(char **line, int line_num, t_material *material)
+{
+	new_material(material);
+
+}
+
+int	read_material(t_e_counts *count, char *file)
+{
+	char	*temp_line;
+	char	**line;
+	int		index;
+	int		line_num;
+
+	line_num = 0;
+	index = 0;
+	count->material = (t_material**)malloc(sizeof(t_material*) * count->mat);
+	while (1)
+	{
+		temp_line = get_next_line(count->fd);
+		if (!temp_line || temp_line[0] == '\0')
+		{
+			free(temp_line);
+			break;
+		}
+		line = ft_split (temp_line, ' ');
+		free(temp_line);
+		if (!ft_strncmp(line[0], "material", 10))
+		{
+			if (init_material(line, line_num, count->material[index]))
+				return(free_s(line), 1);
+			index++;
+		}
+		line_num++;
+		free_s(line);
+	}
+	close(count->fd);
+	count->fd = open(file, O_RDONLY);
+	return(0);
+}
+
 int	parser(int argc, char **argv, t_mini_rt *minirt)
 {
 	t_e_counts	count;
@@ -22,8 +62,9 @@ int	parser(int argc, char **argv, t_mini_rt *minirt)
 		return (1);
 	if (init_counter_fd(&count, argv[1]))
 		return (1);
+	if (read_material(&count, argv[1]))
+		return (1);
 	if (init_minirt(minirt, &count))
 		return (free_mini_rt(minirt), 1);
-	else
-		return (0);
+	return (0);
 }
