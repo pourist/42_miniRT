@@ -23,7 +23,7 @@ typedef struct s_cube_info
 void    make_cube(t_cube_info *cube, char **center, char **axis, t_shape *obj)
 {
     t_vector axis_v;
-    t_vector default_axis; // Assuming default alignment along y-axis
+    t_vector default_axis;
     t_matrix trans_m, scale_m, rot_m, final_m;
 
     new_cube(obj);

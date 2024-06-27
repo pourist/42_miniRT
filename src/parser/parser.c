@@ -16,8 +16,10 @@ int	arg_checker(int argc, char **argv)
 
 int	init_material(char **line, int line_num, t_material *material)
 {
-	new_material(material);
-
+	(void)(material);
+	(void)line;
+	(void)line_num;
+	return(0);
 }
 
 int	read_material(t_e_counts *count, char *file)
@@ -68,3 +70,4 @@ int	parser(int argc, char **argv, t_mini_rt *minirt)
 		return (free_mini_rt(minirt), 1);
 	return (0);
 }
+	
