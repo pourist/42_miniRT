@@ -14,6 +14,7 @@
 # define M_PI 3.14159265358979323846
 #endif
 
+#define	ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
 #define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
 #define ERR_INC_CAM "Expected format: C <x,y,z> <orientation x,y,z> <FOV>"
 #define ERR_SPHERE "Expected format: sp <x,y,z> <diameter> <R,G,B>"
@@ -63,7 +64,20 @@
 #define POINT_RANGE_M "Point coordinates values out of range."
 #define	R_INVALID "Invalid Radius"
 #define R_RANGE_M "Radius out of range"
+#define	DIF_INVALID_M "Invalid Diffuse"
+#define DIF_RANGE_M "Diffuse out of range"
 #define ERR_BOOL "Boolean for 'is open' must be 0 (closed) or 1 (open)"
+#define MATERIAL_N "Material not found"
+#define	SPEC_INVALID_M "Invalid Specular"
+#define SPEC_RANGE_M "Specular out of range"
+#define	SHINE_INVALID_M "Invalid Shininess"
+#define SHINE_RANGE_M "Shininess out of range"
+#define	REF_INVALID_M "Invalid Reflectivity"
+#define REF_RANGE_M "Reflectivity out of range"
+#define	TRANS_INVALID_M "Invalid Transparency"
+#define TRANS_RANGE_M "Transparency out of range"
+#define	RIF_INVALID_M "Invalid Refractive Index"
+#define RIF_RANGE_M "Refractive Index out of range"
 
 typedef enum e_error_type
 {
@@ -106,6 +120,18 @@ typedef enum e_error_type
 	WIDTH_RANGE,
 	DEPTH_VALID,
 	DEPTH_RANGE,
+	DIF_VALID,
+	DIF_RANGE,
+	SPEC_VALID,
+	SPEC_RANGE,
+	SHINE_VALID,
+	SHINE_RANGE,
+	REF_VALID,
+	REF_RANGE,
+	TRANS_VALID,
+	TRANS_RANGE,
+	RIF_VALID,
+	RIF_RANGE,
 }	t_error_type;
 
 typedef struct s_e_counts
@@ -131,6 +157,7 @@ typedef struct s_line_parse_env
 	int		line_number;
 	int		error_type;
 	int		type;
+	t_material	**material;
 }	t_line_parse_env;
 
 typedef struct s_cylinder_info
@@ -173,18 +200,19 @@ int		parser(int argc, char **argv, t_mini_rt *minirt);
 // init_mini_re
 int     init_minirt(t_mini_rt *minirt, t_e_counts *count);
 // init_ambient
-int init_ambient(t_line_parse_env *env, t_world *world);
+int		init_ambient(t_line_parse_env *env, t_world *world);
 void    make_ambient(char **rgb, double ratio, t_world *minirt);
 // element_counter
 int		init_counter_fd(t_e_counts *count, char *file);
 // error
 int		file_error(t_line_parse_env *parse, char *text);
+int		file_error_line(int line, char *text);
 char    *find_error(int type);
 // valid args
 int 	solo(char *number, double min, double max, t_line_parse_env *env);
 int 	triplets(char **triple, double min, double max, t_line_parse_env *env);
 // line parser
-int 	read_lines_init(t_world *world, t_mini_rt *minirt, int fd);
+int	read_lines_init(t_world *world, t_mini_rt *minirt, t_e_counts *count);
 // camera
 int		init_camera(t_line_parse_env *env, t_camera *camera);
 // light
@@ -202,5 +230,14 @@ int init_cube(t_line_parse_env *env, t_shape *obj);
 // calculate_rotation.c
 void	calculate_rotation_matrix(t_vector *default_normal,
 			t_vector *user_normal, t_matrix *rotation_matrix);
-
+// material_parser
+int	read_material(t_e_counts *count, char *file);
+int	mat_color(t_material *material, int *index, t_line_parse_env	*env);
+int	mat_ambient(t_material *material, int *index, t_line_parse_env	*env);
+int	mat_diffuse(t_material *material, int *index, t_line_parse_env	*env);
+int	mat_specular(t_material *material, int *index, t_line_parse_env	*env);
+int	mat_shininess(t_material *material, int *index, t_line_parse_env	*env);
+int	mat_reflectivity(t_material *material, int *index, t_line_parse_env	*env);
+int	mat_trans(t_material *material, int *index, t_line_parse_env	*env);
+int	mat_refractive(t_material *material, int *index, t_line_parse_env	*env);
 #endif

@@ -21,6 +21,7 @@ typedef struct s_material
 	double		reflective;
 	double		transparency;
 	double		refractive_index;
+	char		*name;
 }	t_material;
 
 typedef struct s_lighting_params

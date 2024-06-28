@@ -39,18 +39,19 @@ int	parse_line(int fd, t_line_parse_env *parse)
 	return (0);
 }
 
-int	read_lines_init(t_world *world, t_mini_rt *minirt, int fd)
+int	read_lines_init(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 {
 	t_line_parse_env	parse;
 	int					i;
 	int obj;
 
+	parse.material = count->material;
 	parse.line_number = 0;
 	i = 0;
 	obj = 0;
 	while (1)
 	{
-		if (parse_line(fd, &parse))
+		if (parse_line(count->fd, &parse))
 			break ;
 		if (parse.type == AMBIENT && init_ambient(&parse, world))
 			return (free_s(parse.line));

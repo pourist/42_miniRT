@@ -36,6 +36,30 @@ char	*find_error_3(int type)
 		return (DEPTH_INVALID);
 	else if (type == DEPTH_RANGE)
 		return (DEPTH_RANGE_M);
+	else if (type == DIF_VALID)
+		return (DIF_INVALID_M);
+	else if (type == DIF_RANGE)
+		return (DIF_RANGE_M);
+	else if (type == SPEC_VALID)
+		return (SPEC_INVALID_M);
+	else if (type == SPEC_RANGE)
+		return (SPEC_RANGE_M);
+	else if (type == SHINE_VALID)
+		return (SHINE_INVALID_M);
+	else if (type == SHINE_RANGE)
+		return (SHINE_RANGE_M);
+	else if (type == REF_VALID)
+		return (REF_INVALID_M);
+	else if (type == REF_RANGE)
+		return (REF_RANGE_M);
+	else if (type == TRANS_VALID)
+		return (TRANS_INVALID_M);
+	else if (type == TRANS_RANGE)
+		return (TRANS_RANGE_M);
+	else if (type == RIF_VALID)
+		return (RIF_INVALID_M);
+	else if (type == RIF_RANGE)
+		return (RIF_RANGE_M);
 	else
 		return (NULL);
 }
@@ -97,5 +121,11 @@ char	*find_error(int type)
 int	file_error(t_line_parse_env *parse, char *text)
 {
 	printf("Error\nLine %d: %s\n", parse->line_number, text);
+	return (1);
+}
+
+int	file_error_line(int line, char *text)
+{
+	printf("Error\nLine %d: %s\n", line, text);
 	return (1);
 }

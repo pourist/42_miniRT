@@ -30,12 +30,33 @@ void	make_sphere(char **rgb, double diam, char **center, t_shape *obj)
 	free_s(center);
 }
 
+int	find_material(t_material **material, t_shape *obj, char *name, t_line_parse_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (material[i])
+	{
+		if (!ft_strncmp(material[i]->name, name, ft_strlen(name)))
+		{
+			obj->material = *material[i];
+			return (0);
+		}
+		i++;
+	}
+	return (file_error(env, MATERIAL_N));
+}
+
 int	init_sphere(t_line_parse_env *env, t_shape *obj)
 {
 	char	**center;
 	char	**rgb;
+	int		material;
 
-	if (ft_strarr_len(env->line) != 4)
+	material = 0;
+	if (ft_strarr_len(env->line) == 5)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 4)
 		return (file_error(env, ERR_SPHERE));
 	env->error_type = DIAM;
 	if (solo(env->line[2], EPSILON, (double)INT_MAX, env))
@@ -49,5 +70,7 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj)
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(center), 1);
 	make_sphere(rgb, ft_atof(env->line[2]), center, obj);
+	if (material && find_material(env->material, obj, env->line[4], env))
+		return (1);
 	return (0);
 }
