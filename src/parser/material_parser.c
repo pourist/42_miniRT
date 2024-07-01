@@ -57,7 +57,7 @@ int	read_material(t_e_counts *count, char *file)
 		}
 		parse.line = ft_subsplit (parse.temp, " \t\n");
 		free(parse.temp);
-		if (!ft_strncmp(parse.line[0], "material", 10))
+		if (!ft_strncmp(parse.line[0], "material", 10) && parse.line[0])
 		{
 			if (init_material(&parse, &count->material[index]))
 				return(free_s(parse.line), 1);
