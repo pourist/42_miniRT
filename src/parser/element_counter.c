@@ -87,6 +87,7 @@ int	init_counter_fd(t_e_counts *count, char *file)
 	count->unknown = 0;
 	count->cube = 0;
 	count->cone = 0;
+	count->mat = 0;
 	count->fd = open(file, O_RDONLY);
 	if (count->fd < 0)
 		return (print_error("Error\nUnable to read the .rt file."));
