@@ -34,8 +34,12 @@ int	init_plane(t_line_parse_env *env, t_shape *obj)
 	char	**rgb;
 	char	**normal;
 	char	**point;
+	int		material;
 
-	if (ft_strarr_len(env->line) != 4)
+	material = 0;
+	if (ft_strarr_len(env->line) == 5)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 4)
 		return (file_error(env, ERR_PLANE));
 	env->error_type = RGB;
 	rgb = ft_subsplit(env->line[3], ",\n");
@@ -53,5 +57,7 @@ int	init_plane(t_line_parse_env *env, t_shape *obj)
 		return (free_s(rgb), 1);
 	}
 	make_plane(rgb, normal, point, obj);
+	if (material && find_material(env->material, obj, env->line[4], env))
+		return (1);
 	return (0);
 }

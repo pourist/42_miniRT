@@ -15,6 +15,7 @@ int	main(int argc, char **argv)
 	// printf("Sphere :           x: %f y: %f z: %f \n", minirt.world.objs[0].sphere.origin.x, minirt.world.objs[0].sphere.origin.y , minirt.world.objs[0].sphere.origin.z);
 	// (void)argc;
 	// (void)argv;
+	printf("", minirt.world.objs.)
 	new_canvas(&minirt.canvas, WIDTH, HEIGHT, "Chapter 16");
 	// minirt.world = new_world();
 	// minirt.world.objs = malloc(sizeof(t_shape));

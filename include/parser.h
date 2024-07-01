@@ -184,6 +184,16 @@ typedef enum e_element_type
 	EMPTY_LINE,
 }	t_element_type;
 
+typedef struct s_cube_info
+{
+    double  width;
+    double  height;
+    double  depth;
+    double	r;
+	double	g;
+	double	b;
+}   t_cube_info;
+
 // free_print
 int		print_error(char	*text);
 int     free_print_error(t_world *minirt, char *str);
@@ -231,6 +241,7 @@ int init_cube(t_line_parse_env *env, t_shape *obj);
 void	calculate_rotation_matrix(t_vector *default_normal,
 			t_vector *user_normal, t_matrix *rotation_matrix);
 // material_parser
+int	find_material(t_material **material, t_shape *obj, char *name, t_line_parse_env *env);
 int	read_material(t_e_counts *count, char *file);
 int	mat_color(t_material *material, int *index, t_line_parse_env	*env);
 int	mat_ambient(t_material *material, int *index, t_line_parse_env	*env);

@@ -7,15 +7,16 @@ double	degrees_to_radian(double degrees)
 
 void	make_camera(t_camera *camera, double fov, char **pov, char **or)
 {
-	t_point from;
-	t_vector direction;
-    // t_point to;
-    t_vector up;
+	t_point	from;
+	t_vector	direction;
+	t_vector	up;
+
 	new_vector(ft_atof(or[0]), ft_atof(or[1]), ft_atof(or[2]), &direction);
 	new_camera(camera, WIDTH, HEIGHT, degrees_to_radian(fov));
 	new_point(ft_atof(pov[0]), ft_atof(pov[1]), ft_atof(pov[2]), &from);
 	new_vector(0, 1, 0, &up);
-	set_transform_camera(camera, view_transform_with_direction(&from, &direction, &up, &camera->transform));
+	set_transform_camera(camera, view_transform_with_direction(&from,
+			&direction, &up, &camera->transform));
 }
 
 int	init_camera(t_line_parse_env *env, t_camera *camera)
