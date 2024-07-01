@@ -76,8 +76,12 @@ int	init_cone(t_line_parse_env *env, t_shape *obj)
 	t_cone_info	cone;
 	char		**axis;
 	char		**center;
+	int		material;
 
-	if (ft_strarr_len(env->line) != 7)
+	material = 0;
+	if (ft_strarr_len(env->line) == 8)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 7)
 		return (file_error(env, ERR_CONE));
 	if (cone_info(env, &cone))
 		return (1);
@@ -90,5 +94,7 @@ int	init_cone(t_line_parse_env *env, t_shape *obj)
 	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);
 	make_cone(&cone, center, axis, obj);
+	if (material && find_material(env->material, obj, env->line[7], env))
+		return (1);
 	return (0);
 }

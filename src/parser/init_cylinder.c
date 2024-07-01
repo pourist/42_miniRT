@@ -64,8 +64,12 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	t_cylinder_info	cy;
 	char			**center;
 	char			**axis;
+	int		material;
 
-	if (ft_strarr_len(env->line) != 6)
+	material = 0;
+	if (ft_strarr_len(env->line) == 7)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 6)
 		return (file_error(env, ERR_CYLINDER));
 	if (cy_info(env, &cy))
 	{
@@ -80,5 +84,7 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);
 	make_cylinder(&cy, center, axis, obj);
+	if (material && find_material(env->material, obj, env->line[6], env))
+		return (1);
 	return (0);
 }

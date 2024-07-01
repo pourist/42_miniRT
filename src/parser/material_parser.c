@@ -6,7 +6,7 @@ int	init_material(t_line_parse_env	*env, t_material **material)
 	int	j;
 
 	i = 2;
-	if (ft_strarr_len(env->line) < 2)
+    if (ft_strarr_len(env->line) < 2)
 		return (file_error_line(env->line_number, ERR_MAT));
 	*material = (t_material*)malloc(sizeof(t_material));
 	new_material(*material);
@@ -15,21 +15,21 @@ int	init_material(t_line_parse_env	*env, t_material **material)
 	{
 		j = i;
 		if (!ft_strncmp(env->line[i], "c", 2) && mat_color(*material, &i, env))
-			return (1);
+			return(1);
 		else if (!ft_strncmp(env->line[i], "a", 2) && mat_ambient(*material, &i, env))
-			return (1);
+			return(1);
 		else if (!ft_strncmp(env->line[i], "d", 2) && mat_diffuse(*material, &i, env))
-			return (1);
+			return(1);
 		else if (!ft_strncmp(env->line[i], "s", 2) && mat_specular(*material, &i, env))
-			return (1);
+			return(1);
 		else if (!ft_strncmp(env->line[i], "sh", 3) && mat_shininess(*material, &i, env))
-			return (1);
+			return(1);
 		else if (!ft_strncmp(env->line[i], "refl", 5) && mat_reflectivity(*material, &i, env))
-			return (1);
+			return(1);
 		else if (!ft_strncmp(env->line[i], "trans", 6) && mat_trans(*material, &i, env))
-			return (1);
+			return(1);
 		else if (!ft_strncmp(env->line[i], "re", 3) && mat_refractive(*material, &i, env))
-			return (1);
+			return(1);
 		else if (j == i)
 			return (file_error_line(env->line_number, ERR_MAT));
 		i++;

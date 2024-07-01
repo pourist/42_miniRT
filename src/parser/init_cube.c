@@ -49,8 +49,12 @@ int	init_cube(t_line_parse_env *env, t_shape *obj)
 	t_cube_info	cube;
 	char	**center;
 	char	**norm;
+	int		material;
 
-	if (ft_strarr_len(env->line) != 7)
+	material = 0;
+	if (ft_strarr_len(env->line) == 8)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 7)
 		return (file_error(env, ERR_CUBE));
 	if (cube_info(env, &cube))
 	{
@@ -67,5 +71,7 @@ int	init_cube(t_line_parse_env *env, t_shape *obj)
 	make_cube(&cube, center, norm, obj);
 	free_s(norm);
 	free_s(center);
+	if (material && find_material(env->material, obj, env->line[7], env))
+		return (1);
 	return (0);
 }
