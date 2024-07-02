@@ -3,16 +3,9 @@
 int	main(int argc, char **argv)
 {
 	t_mini_rt	minirt;
-	// t_shape	*s;
 
 	if (parser(argc, argv, &minirt))
 		return (1);
-	// printf("camera 	pos:       h: %f v: %f fov: %f \n",minirt.camera.hsize, minirt.camera.vsize,  minirt.camera.fov);
-    // printf("----- Sphere :     r: %f g: %f b: %f \n", minirt.world.objs[0].material.color.r,minirt.world.objs[0].material.color.g , minirt.world.objs[0].material.color.b);
-	// printf("Ambient:           r: %f g: %f b: %f \n", minirt.world.ambient.r, minirt.world.ambient.g, minirt.world.ambient.b);
-	// printf("Light rgb:         r: %f g: %f b: %f \n", minirt.world.lights[0].intensity.r, minirt.world.lights[0].intensity.g, minirt.world.lights[0].intensity.b);
-	// printf("Light pos:         x: %f y: %f z: %f \n", minirt.world.lights[0].position.x, minirt.world.lights[0].position.y, minirt.world.lights[0].position.z);
-	// printf("Sphere :           x: %f y: %f z: %f \n", minirt.world.objs[0].sphere.origin.x, minirt.world.objs[0].sphere.origin.y , minirt.world.objs[0].sphere.origin.z);
 	new_canvas(&minirt.canvas, WIDTH, HEIGHT, "Chapter 16");
 	render(&minirt);
 	mlx_image_to_window(minirt.canvas.mlx, minirt.canvas.img, 0, 0);

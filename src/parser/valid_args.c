@@ -16,7 +16,7 @@ int	triplets(char **triple, double min, double max, t_line_parse_env *env)
 	env->error_type++;
 	if (!are_in_range(triple, min, max))
 	{
-		free(triple);
+		free_s(triple);
 		return (file_error(env, find_error(env->error_type)));
 	}
 	return (0);
