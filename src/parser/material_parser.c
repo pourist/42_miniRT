@@ -28,7 +28,7 @@ int	init_material(t_line_parse_env	*env, t_material **material)
 			return(1);
 		else if (!ft_strncmp(env->line[i], "trans", 6) && mat_trans(*material, &i, env))
 			return(1);
-		else if (!ft_strncmp(env->line[i], "re", 3) && mat_refractive(*material, &i, env))
+		else if (!ft_strncmp(env->line[i], "ri", 3) && mat_refractive(*material, &i, env))
 			return(1);
 		else if (j == i)
 			return (file_error_line(env->line_number, ERR_MAT));
