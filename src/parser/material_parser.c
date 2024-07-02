@@ -34,7 +34,6 @@ int	init_material(t_line_parse_env	*env, t_material **material)
 			return (file_error_line(env->line_number, ERR_MAT));
 		i++;
 	}
-	(void)(material);
 	return(0);
 }
 
@@ -45,7 +44,7 @@ int	read_material(t_e_counts *count, char *file)
 
 	parse.line_number = 1;
 	index = 0;
-	count->material = (t_material**)malloc(sizeof(t_material*) * count->mat + 1);
+	count->material = (t_material**)ft_calloc(count->mat + 1, sizeof(t_material*));
 	count->material[count->mat] = NULL;
 	while (1)
 	{

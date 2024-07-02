@@ -27,6 +27,7 @@ void	make_plane(char **rgb, char **normal, char **center, t_shape *obj)
 	set_transform(obj, &transform_m);
 	free_s(rgb);
 	free_s(center);
+	free_s(normal);
 }
 
 int	init_plane(t_line_parse_env *env, t_shape *obj)

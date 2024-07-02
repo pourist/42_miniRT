@@ -41,6 +41,7 @@ int	cube_info(t_line_parse_env *env, t_cube_info *cube)
 	cube->r = (ft_atof(rgb[0]) / 255);
 	cube->g = (ft_atof(rgb[1]) / 255);
 	cube->b = (ft_atof(rgb[2]) / 255);
+	free_s(rgb);
 	return (0);
 }
 

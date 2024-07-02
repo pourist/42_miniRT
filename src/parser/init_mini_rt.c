@@ -7,10 +7,10 @@ int	init_mini_rt(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 	objs_count = count->cylinder + count->sphere + count->plane + count->cone + count->cube;
 	world->objs_count = objs_count;
 	world->lights_count = count->light;
-	world->objs = (t_shape *)malloc(sizeof(t_shape) * (objs_count));
+	world->objs = (t_shape *)ft_calloc(objs_count, sizeof(t_shape));
 	if (!world->objs)
 	    return (print_error(MALLOC_FAIL));
-	world->lights = (t_light *)malloc(sizeof(t_light) * (world->lights_count));
+	world->lights = (t_light *)ft_calloc(world->lights_count, sizeof(t_light));
 	if (!(world->lights))
 		return (print_error(MALLOC_FAIL));
 	if (read_lines_init(world, minirt, count))
@@ -26,7 +26,11 @@ void	free_material(t_material	**material)
 	if (!material)
 		return;
 	while(material[i])
+	{
+		if (material[i]->name)
+			free(material[i]->name);
 		free(material[i++]);
+	}
 	free(material);
 }
 
@@ -34,7 +38,7 @@ int	init_minirt(t_mini_rt *minirt, t_e_counts *env)
 {
 	new_world(&minirt->world);
 	if (init_mini_rt(&(minirt->world), minirt, env))
-		return (1);
-	//free_material(env->material);
+		return (free_material(env->material), 1);
+	free_material(env->material);
 	return (0);
 }
