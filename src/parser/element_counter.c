@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:07:57 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/02 17:08:01 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:20:08 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	elements_counter(t_e_counts *count, char *line)
 		counter_helper(count, line);
 		free(line);
 	}
-	close(count->fd);
+	flush_fd(count->fd);
 }
 
 int	elements_count_checker(t_e_counts *count)

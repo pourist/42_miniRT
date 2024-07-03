@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:45:19 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/02 17:45:20 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:19:12 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ int	arg_checker(int argc, char **argv)
 	return (0);
 }
 
+void	flush_fd(int fd)
+{
+	close(fd);
+	get_next_line(fd);
+}
+
 int	parser(int argc, char **argv, t_mini_rt *minirt)
 {
 	t_e_counts	count;
@@ -33,9 +39,9 @@ int	parser(int argc, char **argv, t_mini_rt *minirt)
 	if (arg_checker(argc, argv))
 		return (1);
 	if (init_counter_fd(&count, argv[1]))
-		return (1);
+		return (flush_fd(count.fd), 1);
 	if (read_material(&count, argv[1]))
-		return (free_material(count.material), 1);
+		return (free_material(count.material), flush_fd(count.fd), 1);
 	if (init_minirt(minirt, &count))
 		return (free_mini_rt(minirt), 1);
 	return (0);
