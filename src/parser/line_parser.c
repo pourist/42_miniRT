@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   line_parser.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 16:10:46 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/03 16:11:32 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 void	set_type(t_line_parse_env *parse)
@@ -43,7 +55,7 @@ int	read_lines_init(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 {
 	t_line_parse_env	parse;
 	int					i;
-	int obj;
+	int					obj;
 
 	parse.material = count->material;
 	parse.line_number = 0;

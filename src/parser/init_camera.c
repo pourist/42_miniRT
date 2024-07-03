@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_camera.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 17:39:43 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/02 17:39:45 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 double	degrees_to_radian(double degrees)
@@ -7,7 +19,7 @@ double	degrees_to_radian(double degrees)
 
 void	make_camera(t_camera *camera, double fov, char **pov, char **or)
 {
-	t_point	from;
+	t_point		from;
 	t_vector	direction;
 	t_vector	up;
 

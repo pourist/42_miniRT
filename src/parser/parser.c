@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 17:45:19 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/02 17:45:20 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 int	arg_checker(int argc, char **argv)
@@ -28,4 +40,3 @@ int	parser(int argc, char **argv, t_mini_rt *minirt)
 		return (free_mini_rt(minirt), 1);
 	return (0);
 }
-	

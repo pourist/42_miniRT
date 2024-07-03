@@ -1,17 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_cube.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 17:26:38 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/02 17:44:02 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 void	make_cube(t_cube_info *cube, char **center, char **axis, t_shape *obj)
 {
-	t_vector axis_v;
-	t_vector default_axis;
-	t_matrix trans_m, scale_m, rot_m, final_m;
+	t_vector	axis_v;
+	t_vector	default_axis;
+	t_matrix	trans_m;
+	t_matrix	scale_m;
+	t_matrix	rot_m;
+	t_matrix	final_m;
 
 	new_cube(obj);
 	new_color(cube->r, cube->g, cube->b, &obj->material.color);
 	new_vector(0, 1, 0, &default_axis);
 	new_vector(ft_atof(axis[0]), ft_atof(axis[1]), ft_atof(axis[2]), &axis_v);
 	calculate_rotation_matrix(&default_axis, &axis_v, &rot_m);
-	translation(ft_atof(center[0]), ft_atof(center[1]), ft_atof(center[2]), &trans_m);
+	translation(ft_atof(center[0]), ft_atof(center[1]),
+		ft_atof(center[2]), &trans_m);
 	scaling(cube->width, cube->height, cube->depth, &scale_m);
 	multiply_matrices(&rot_m, &trans_m, &final_m);
 	multiply_matrices(&final_m, &scale_m, &final_m);
@@ -48,9 +64,9 @@ int	cube_info(t_line_parse_env *env, t_cube_info *cube)
 int	init_cube(t_line_parse_env *env, t_shape *obj)
 {
 	t_cube_info	cube;
-	char	**center;
-	char	**norm;
-	int		material;
+	char		**center;
+	char		**norm;
+	int			material;
 
 	material = 0;
 	if (ft_strarr_len(env->line) == 8)

@@ -1,11 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_sphere.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 16:13:52 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/03 16:14:09 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// Sphere:
-// sp 0.0,0.0,20.6 12.6 10,0,255
-// ∗ identifier: sp
-// ∗ x,y,z coordinates of the sphere center: 0.0,0.0,20.6
-// ∗ the sphere diameter: 12.6
-// ∗ R,G,B colors in range [0-255]: 10, 0, 255
+#include "parser.h"
 
 void	make_sphere(char **rgb, double diam, char **center, t_shape *obj)
 {
@@ -28,23 +33,6 @@ void	make_sphere(char **rgb, double diam, char **center, t_shape *obj)
 	set_transform(obj, &final);
 	free_s(rgb);
 	free_s(center);
-}
-
-int	find_material(t_material **material, t_shape *obj, char *name, t_line_parse_env *env)
-{
-	int	i;
-
-	i = 0;
-	while (material[i])
-	{
-		if (!ft_strncmp(material[i]->name, name, ft_strlen(name)))
-		{
-			obj->material = *material[i];
-			return (0);
-		}
-		i++;
-	}
-	return (file_error(env, MATERIAL_N));
 }
 
 int	init_sphere(t_line_parse_env *env, t_shape *obj)

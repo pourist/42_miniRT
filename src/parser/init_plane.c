@@ -1,10 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_plane.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 16:11:45 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/03 16:11:51 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// pl 0.0,0.0,-10.0 0.0,1.0,0.0 0,0,225
-// ∗ identifier: pl
-// ∗ x,y,z coordinates of a point in the plane: 0.0,0.0,-10.0
-// ∗ 3d normalized normal vector. In range [-1,1] for each x,y,z axis: 0.0,1.0,0.0
-// ∗ R,G,B colors in range [0-255]: 0,0,225
+#include "parser.h"
 
 void	make_plane(char **rgb, char **normal, char **center, t_shape *obj)
 {
