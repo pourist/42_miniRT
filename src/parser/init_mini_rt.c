@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:09:00 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/03 16:10:17 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:40:34 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	init_mini_rt(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 	if (!(world->lights))
 		return (print_error(MALLOC_FAIL));
 	if (read_lines_init(world, minirt, count))
-		return (1);
+		return (flush_fd(count->fd), 1);
 	return (0);
 }
 
