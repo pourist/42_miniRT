@@ -2,18 +2,14 @@
 
 bool	new_canvas(t_canvas *canvas, int width, int height, char *title)
 {
-	canvas->mlx = mlx_init(width, height, title, false);
+	canvas->mlx = mlx_init(width, height, title, true);
 	if (!canvas->mlx)
 		return (false);
 	canvas->img = mlx_new_image(canvas->mlx, width, height);
 	if (!canvas->img)
 		return (false);
 	ft_memset(canvas->img->pixels, 255,
-		(*canvas->width * *canvas->height) << 2);
-	canvas->width = &canvas->mlx->width;
-	canvas->height = &canvas->mlx->height;
-	// canvas->width = ((int *)&canvas->mlx->width);
-	// canvas->height = ((int *)&canvas->mlx->height);
+		(canvas->img->width * canvas->img->height) << 2);
 	return (true);
 }
 

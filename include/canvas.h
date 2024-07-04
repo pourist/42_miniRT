@@ -15,8 +15,6 @@
 typedef struct s_canvas {
 	mlx_t				*mlx;
 	mlx_image_t			*img;
-	int					*width;
-	int					*height;
 }	t_canvas;
 
 typedef struct s_mini_rt {
@@ -49,6 +47,7 @@ t_color		*pixel_at(mlx_texture_t *texture, uint32_t x, uint32_t y,
 t_color		*full_pixel_at(mlx_texture_t *texture, uint32_t x, uint32_t y,
 				t_color *color);
 // hooks
-void		handle_keyhook(mlx_key_data_t keydata, void *param);
 void		quit(void *param);
+void		handle_keyhook(mlx_key_data_t keydata, void *param);
+void		handle_cursorhook(double xpos, double ypos, void *param);
 #endif

@@ -23,12 +23,12 @@ bool	render(t_mini_rt	*rt)
 	t_color	color;
 
 	xy_offset[1] = -1;
-	while (++xy_offset[1] < *rt->canvas.height)
+	while (++xy_offset[1] < rt->canvas.img->height)
 	{
 		ft_printf("\rRendering: %d%%",
 			(int)(xy_offset[1] / (rt->camera.vsize - 1) * 100));
 		xy_offset[0] = -1;
-		while (++xy_offset[0] < *rt->canvas.width)
+		while (++xy_offset[0] < rt->canvas.img->width)
 		{
 			pixel_color(rt, xy_offset, &ray, &color);
 			write_pixel(rt->canvas.img, xy_offset[0], xy_offset[1], &color);
