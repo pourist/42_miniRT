@@ -9,8 +9,8 @@ int	main(int argc, char **argv)
 	new_canvas(&minirt.canvas, WIDTH, HEIGHT, "Chapter 16");
 	render(&minirt);
 	mlx_image_to_window(minirt.canvas.mlx, minirt.canvas.img, 0, 0);
-	mlx_close_hook(minirt.canvas.mlx, &quit, &minirt.canvas);
-	mlx_key_hook(minirt.canvas.mlx, &handle_keyhook, &minirt.canvas);
+	mlx_close_hook(minirt.canvas.mlx, &quit, &minirt);
+	mlx_key_hook(minirt.canvas.mlx, &handle_keyhook, &minirt);
 	mlx_loop(minirt.canvas.mlx);
 	free_world(&minirt.world);
 	mlx_terminate(minirt.canvas.mlx);
