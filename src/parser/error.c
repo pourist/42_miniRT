@@ -74,7 +74,7 @@ char	*find_error_3(int type)
 		return (CENT_INVALID_M);
 	else if (type == CENT_RANGE)
 		return (CENT_RANGE_M);
-	else if (type == NORMAL)
+	else if (type == NORMAL_)
 		return (NORMAL_M);
 	else if (type == NORMAL_INVALID)
 		return (NORMAL_INVALID_M);

@@ -52,7 +52,7 @@ int	init_plane(t_line_parse_env *env, t_shape *obj)
 	rgb = ft_subsplit(env->line[3], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (1);
-	env->error_type = NORMAL;
+	env->error_type = NORMAL_;
 	normal = ft_subsplit(env->line[2], ",\n");
 	if (triplets(normal, -1, 1, env))
 		return (free_s(rgb), 1);

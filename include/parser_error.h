@@ -1,6 +1,7 @@
 #ifndef PARSER_ERROR_H
 # define PARSER_ERROR_H
 
+#define	ERR_OBJ "Expected format: file_name <center x,y,z> <axis vector>"
 #define	ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
 #define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
 #define ERR_INC_CAM "Expected format: C <x,y,z> <orientation x,y,z> <FOV>"
@@ -98,7 +99,7 @@ typedef enum e_error_type
 	CENT,
 	CENT_INVALID,
 	CENT_RANGE,
-	NORMAL,
+	NORMAL_,
 	NORMAL_INVALID,
 	NORMAL_RANGE,
 	POINT,

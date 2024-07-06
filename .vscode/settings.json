@@ -4,6 +4,7 @@
         "canvas.h": "c",
         "lights.h": "c",
         "mlx42.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "algorithm": "c"
     }
 }

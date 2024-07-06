@@ -79,7 +79,7 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	center = ft_subsplit(env->line[1], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	env->error_type = NORMAL;
+	env->error_type = NORMAL_;
 	axis = ft_subsplit(env->line[2], ",\n");
 	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);

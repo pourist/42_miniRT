@@ -6,6 +6,7 @@
 #include "lights.h"
 #include "parser_error.h"
 #include "world.h"
+#include "obj_loader.h"
 #include <limits.h>
 
 #define WIDTH 1920
@@ -27,6 +28,7 @@ typedef struct s_e_counts {
   int cone;
   int cube;
   int mat;
+  int ob;
   t_material **material;
 } t_e_counts;
 
@@ -70,6 +72,7 @@ typedef enum e_element_type {
   CUBE,
   MATERIAL,
   EMPTY_LINE,
+  OBJ,
 } t_element_type;
 
 typedef struct s_cube_info {
@@ -125,6 +128,8 @@ int init_cylinder(t_line_parse_env *env, t_shape *obj);
 int init_cone(t_line_parse_env *env, t_shape *obj);
 // cube
 int init_cube(t_line_parse_env *env, t_shape *obj);
+// obj
+int init_obj(t_line_parse_env *env, t_shape *obj);
 // calculate_rotation.c
 void calculate_rotation_matrix(t_vector *default_normal, t_vector *user_normal,
                                t_matrix *rotation_matrix);
