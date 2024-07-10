@@ -43,7 +43,7 @@ HEADERS						:= tuples.h utils.h canvas.h matrices.h rays.h shapes.h lights.h \
 										 materials.h world.h camera.h patterns.h groups.h obj_loader.h \
                     					 parser.h parser_error.h
 SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
-										 canvas.c save.c hooks.c mx.c mx_operations.c mx_attributes.c \
+										 canvas.c save.c hooks.c mouse_hooks.c mx.c mx_operations.c mx_attributes.c \
 										 mx_transformations.c mx_rotations.c ray.c sphere.c intersections.c \
 										 shape.c light.c material.c world.c view_transform.c camera.c \
 										 render.c color_at.c plane.c pattern.c stripe.c gradient.c ring.c \
@@ -59,10 +59,10 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 uv_at.c shapes_mapping.c cube_mapping.c cube_mapping2.c cube_align_check.c \
 										 texture_mapping.c mtl_file_parser.c mtl_lines_parser.c mtl_parse_elements.c \
 										 mtl_parse_elements2.c mtl_parse_elements3.c render_utils.c \
-										 ray_for_pixel.c multisample.c prepare_material.c init_obj.c\
-										 parser.c parser_utils.c element_counter.c free_print.c error_u.c\
-										 init_ambient.c init_mini_rt.c error.c valid_args.c init_cylinder.c\
-										 line_parser.c init_camera.c init_light.c init_sphere.c init_plane.c\
+										 ray_for_pixel.c multisample.c prepare_material.c init_obj.c \
+										 parser.c parser_utils.c element_counter.c free_print.c error_u.c \
+										 init_ambient.c init_mini_rt.c error.c valid_args.c init_cylinder.c \
+										 line_parser.c init_camera.c init_light.c init_sphere.c init_plane.c \
 										 init_cone.c calculate_rotation.c init_cube.c material_parser.c materials.c materials_II.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 

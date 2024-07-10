@@ -51,4 +51,6 @@ void		quit(void *param);
 void		handle_keyhook(mlx_key_data_t keydata, void *param);
 void		handle_mousehook(mouse_key_t button, action_t action,
 				modifier_key_t mods, void *param);
+void		handle_scrollhook(double xdelta, double ydelta, void *param);
+
 #endif
