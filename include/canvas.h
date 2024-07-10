@@ -49,5 +49,6 @@ t_color		*full_pixel_at(mlx_texture_t *texture, uint32_t x, uint32_t y,
 // hooks
 void		quit(void *param);
 void		handle_keyhook(mlx_key_data_t keydata, void *param);
-void		handle_cursorhook(double xpos, double ypos, void *param);
+void		handle_mousehook(mouse_key_t button, action_t action,
+				modifier_key_t mods, void *param);
 #endif
