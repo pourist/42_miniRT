@@ -7,6 +7,7 @@ int	main(int argc, char **argv)
 	if (parser(argc, argv, &minirt))
 		return (1);
 	new_canvas(&minirt.canvas, WIDTH, HEIGHT, "MiniRT");
+	create_bvh(&minirt.world);
 	render(&minirt);
 	printf("Render time: %f's\n", mlx_get_time());
 	mlx_image_to_window(minirt.canvas.mlx, minirt.canvas.img, 0, 0);

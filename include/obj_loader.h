@@ -6,9 +6,9 @@
 # include "shapes.h"
 # include "groups.h"
 
-# define OBJ_PATH "../assets/obj_files/"
-# define MTL_PATH "../assets/mtl_files/"
-# define TEXTURE_PATH "../assets/textures/"
+# define OBJ_PATH "./assets/obj_files/"
+# define MTL_PATH "./assets/mtl_files/"
+# define TEXTURE_PATH "./assets/textures/"
 
 typedef enum e_obj_type
 {
