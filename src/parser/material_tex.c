@@ -14,7 +14,6 @@ int mat_tex(t_material *material, int *index, t_line_parse_env	*env)
         texture_path[length - 1] == '"' &&
             ft_strncmp(&texture_path[length - 5], ".png\"", 5) == 0) 
     {
-        printf("%s\n", texture_path);
         texture_path[length - 1] = '\0';
         texture_path++;
         new_texture_map(&material->pattern, texture_path);
