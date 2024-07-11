@@ -1,5 +1,5 @@
 material m1 c 2,2,2 
-material m2 texture "../assets/textures/earth.png"
+material m2 texture ./assets/textures/earth.png
 material m3
 A 0 122,122,122 
 C 0,0,-20 0,0,0.707 90 
