@@ -13,11 +13,7 @@ int mat_tex(t_material *material, int *index, t_line_parse_env	*env)
     if (length >= 6 && texture_path[0] == '"' && 
         texture_path[length - 1] == '"' &&
             ft_strncmp(&texture_path[length - 5], ".png\"", 5) == 0) 
-    {
-        texture_path[length - 1] = '\0';
-        texture_path++;
         new_texture_map(&material->pattern, texture_path);
-    }
     else
         return (file_error_line(env->line_number, ERR_TEX_FORMAT));
     return (0);
