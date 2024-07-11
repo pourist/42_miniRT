@@ -36,8 +36,8 @@ static void	free_group(t_shape *root)
 
 	while (root)
 	{
-		if (root->is_group)
-			free_group(root->group.root);
+		// if (root->is_group)
+		// 	free_group(root->group.root);
 		free_pattern(&root->material.pattern);
 		tmp = root;
 		root = root->next;

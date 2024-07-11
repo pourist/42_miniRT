@@ -51,7 +51,7 @@ static void	set_camera_position_shift(t_mini_rt *rt, mlx_key_data_t *keydata)
 	multiply_matrices(&trans_m, &rt->camera.transform, &rt->camera.transform);
 }
 
-inline bool	is_move_key(keys_t *key)
+static inline bool	is_move_key(keys_t *key)
 {
 	return (*key == MLX_KEY_RIGHT || *key == MLX_KEY_D || *key == MLX_KEY_LEFT
 		|| *key == MLX_KEY_A || *key == MLX_KEY_UP || *key == MLX_KEY_W

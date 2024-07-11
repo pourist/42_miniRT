@@ -13,10 +13,10 @@ void make_obj(char *name, char **center, char **axis, t_shape *obj)
     new_vector(ft_atof(axis[0]), ft_atof(axis[1]), ft_atof(axis[2]), &axis_v);
     calculate_rotation_matrix(&default_axis, &axis_v, &rot_m);
     translation(ft_atof(center[0]), ft_atof(center[1]), ft_atof(center[2]), &trans_m);
-    multiply_matrices(&rot_m, &trans_m, &final_m);
-    set_transform(obj, &final_m);
     new_obj_loader(&loader, obj);
     parse_obj_file(&loader, name);
+		multiply_matrices(&rot_m, &trans_m, &final_m);
+		set_transform(obj, &final_m);
 }
 
 int init_obj(t_line_parse_env *env, t_shape *obj)
