@@ -1,10 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_plane.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 16:11:45 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/03 16:11:51 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// pl 0.0,0.0,-10.0 0.0,1.0,0.0 0,0,225
-// ∗ identifier: pl
-// ∗ x,y,z coordinates of a point in the plane: 0.0,0.0,-10.0
-// ∗ 3d normalized normal vector. In range [-1,1] for each x,y,z axis: 0.0,1.0,0.0
-// ∗ R,G,B colors in range [0-255]: 0,0,225
+#include "parser.h"
 
 void	make_plane(char **rgb, char **normal, char **center, t_shape *obj)
 {
@@ -27,6 +33,7 @@ void	make_plane(char **rgb, char **normal, char **center, t_shape *obj)
 	set_transform(obj, &transform_m);
 	free_s(rgb);
 	free_s(center);
+	free_s(normal);
 }
 
 int	init_plane(t_line_parse_env *env, t_shape *obj)
@@ -34,14 +41,18 @@ int	init_plane(t_line_parse_env *env, t_shape *obj)
 	char	**rgb;
 	char	**normal;
 	char	**point;
+	int		material;
 
-	if (ft_strarr_len(env->line) != 4)
+	material = 0;
+	if (ft_strarr_len(env->line) == 5)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 4)
 		return (file_error(env, ERR_PLANE));
 	env->error_type = RGB;
 	rgb = ft_subsplit(env->line[3], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (1);
-	env->error_type = NORMAL;
+	env->error_type = NORMAL_;
 	normal = ft_subsplit(env->line[2], ",\n");
 	if (triplets(normal, -1, 1, env))
 		return (free_s(rgb), 1);
@@ -53,5 +64,7 @@ int	init_plane(t_line_parse_env *env, t_shape *obj)
 		return (free_s(rgb), 1);
 	}
 	make_plane(rgb, normal, point, obj);
+	if (material && find_material(env->material, obj, env->line[4], env))
+		return (1);
 	return (0);
 }

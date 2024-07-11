@@ -1,16 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_cylinder.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 14:45:14 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/03 14:46:07 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*
- Cylinder:
-cy 50.0,0.0,20.6 0.0,0.0,1.0 14.2 21.42 10,0,255
-∗ identifier: cy
-∗ x,y,z coordinates of the center of the cylinder: 50.0,0.0,20.6
-∗ 3d normalized vector of axis of cylinder. In range [-1,1] for each x,y,z axis:
-0.0,0.0,1.0
-∗ the cylinder diameter: 14.2
-∗ the cylinder height: 21.42
-∗ R,G,B colors in range [0,255]: 10, 0, 255
-*/
+#include "parser.h"
 
 void	make_cylinder(t_cylinder_info *cy, char **center, char **axis,
 			t_shape *obj)
@@ -64,8 +64,12 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	t_cylinder_info	cy;
 	char			**center;
 	char			**axis;
+	int		material;
 
-	if (ft_strarr_len(env->line) != 6)
+	material = 0;
+	if (ft_strarr_len(env->line) == 7)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 6)
 		return (file_error(env, ERR_CYLINDER));
 	if (cy_info(env, &cy))
 	{
@@ -75,10 +79,12 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	center = ft_subsplit(env->line[1], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	env->error_type = NORMAL;
+	env->error_type = NORMAL_;
 	axis = ft_subsplit(env->line[2], ",\n");
 	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);
 	make_cylinder(&cy, center, axis, obj);
+	if (material && find_material(env->material, obj, env->line[6], env))
+		return (1);
 	return (0);
 }

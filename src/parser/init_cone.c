@@ -1,24 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_cone.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 17:40:20 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/02 17:42:02 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
-
-/*cone 50.0,0.0,20.6 0.0,0.0,1.0 14.2 21.42 true 10,0,255
-
-
-x,y,z coordinates of the base center of the cone: 50.0,0.0,20.6
-3d normalized vector of axis of cone: 0.0,0.0,1.0 
-base radius of the cone: 14.2 
-height of the cone: 21.42 
-is open: true
-R,G,B colors: 10, 0, 255  */
-
-typedef struct s_cone_info
-{
-	double	diam;
-	double	height;
-	double	r;
-	double	g;
-	double	b;
-	bool	open;
-}	t_cone_info;
 
 void	make_cone(t_cone_info *cone, char **center, char **axis, t_shape *obj)
 {
@@ -38,7 +30,8 @@ void	make_cone(t_cone_info *cone, char **center, char **axis, t_shape *obj)
 	calculate_rotation_matrix(&default_axis, &axis_v, &rotation_m);
 	multiply_matrices(translation(ft_atof(center[0]), ft_atof(center[1])
 			+ (cone->height * 0.5), ft_atof(center[2]), &trans_scale_m),
-		scaling(cone->diam, cone->height, cone->diam, &transform_m), &trans_scale_m);
+		scaling(cone->diam, cone->height, cone->diam, 
+			&transform_m), &trans_scale_m);
 	multiply_matrices(&rotation_m, &trans_scale_m, &transform_m);
 	set_transform(obj, &transform_m);
 	free_s(center);
@@ -76,8 +69,12 @@ int	init_cone(t_line_parse_env *env, t_shape *obj)
 	t_cone_info	cone;
 	char		**axis;
 	char		**center;
+	int			material;
 
-	if (ft_strarr_len(env->line) != 7)
+	material = 0;
+	if (ft_strarr_len(env->line) == 8)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 7)
 		return (file_error(env, ERR_CONE));
 	if (cone_info(env, &cone))
 		return (1);
@@ -85,10 +82,12 @@ int	init_cone(t_line_parse_env *env, t_shape *obj)
 	center = ft_subsplit(env->line[1], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	env->error_type = NORMAL;
+	env->error_type = NORMAL_;
 	axis = ft_subsplit(env->line[2], ",\n");
 	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);
 	make_cone(&cone, center, axis, obj);
+	if (material && find_material(env->material, obj, env->line[7], env))
+		return (1);
 	return (0);
 }

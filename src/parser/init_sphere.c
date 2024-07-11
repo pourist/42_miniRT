@@ -1,11 +1,16 @@
-#include "parser.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_sphere.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 16:13:52 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/03 16:14:09 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// Sphere:
-// sp 0.0,0.0,20.6 12.6 10,0,255
-// ∗ identifier: sp
-// ∗ x,y,z coordinates of the sphere center: 0.0,0.0,20.6
-// ∗ the sphere diameter: 12.6
-// ∗ R,G,B colors in range [0-255]: 10, 0, 255
+#include "parser.h"
 
 void	make_sphere(char **rgb, double diam, char **center, t_shape *obj)
 {
@@ -34,8 +39,12 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj)
 {
 	char	**center;
 	char	**rgb;
+	int		material;
 
-	if (ft_strarr_len(env->line) != 4)
+	material = 0;
+	if (ft_strarr_len(env->line) == 5)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 4)
 		return (file_error(env, ERR_SPHERE));
 	env->error_type = DIAM;
 	if (solo(env->line[2], EPSILON, (double)INT_MAX, env))
@@ -49,5 +58,7 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj)
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(center), 1);
 	make_sphere(rgb, ft_atof(env->line[2]), center, obj);
+	if (material && find_material(env->material, obj, env->line[4], env))
+		return (1);
 	return (0);
 }

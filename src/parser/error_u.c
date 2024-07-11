@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_print.c                                       :+:      :+:    :+:   */
+/*   error_u.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/02 17:37:59 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/02 17:38:01 by ppour-ba         ###   ########.fr       */
+/*   Created: 2024/07/02 17:44:18 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/02 17:44:38 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	print_error(char	*text)
+int	file_error(t_line_parse_env *parse, char *text)
 {
-	write(1, text, ft_strlen(text));
-	write(1, "\n", 1);
+	printf("Error\nLine %d: %s\n", parse->line_number, text);
 	return (1);
 }
 
-int	free_s(char **s)
+int	file_error_line(int line, char *text)
 {
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (1);
-	while (s[i])
-	{
-		free(s[i]);
-		i++;
-	}
-	free(s);
+	printf("Error\nLine %d: %s\n", line, text);
 	return (1);
-}
-
-void	free_mini_rt(t_mini_rt *mini_rt)
-{
-	if (&(mini_rt->world))
-		free_world(&(mini_rt->world));
 }

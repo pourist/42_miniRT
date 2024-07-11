@@ -12,6 +12,22 @@ static void	free_pattern(t_pattern *pattern)
 		if (pattern->b)
 			free(pattern->b);
 	}
+	if (pattern->texture[0])
+		mlx_delete_texture(pattern->texture[0]);
+	if (pattern->texture[1])
+		mlx_delete_texture(pattern->texture[1]);
+	if (pattern->texture[2])
+		mlx_delete_texture(pattern->texture[2]);
+	if (pattern->texture[3])
+		mlx_delete_texture(pattern->texture[3]);
+	if (pattern->texture[4])
+		mlx_delete_texture(pattern->texture[4]);
+	if (pattern->texture[5])
+		mlx_delete_texture(pattern->texture[5]);
+	if (pattern->texture[6])
+		mlx_delete_texture(pattern->texture[6]);
+	if (pattern->texture[7])
+		mlx_delete_texture(pattern->texture[7]);
 }
 
 static void	free_group(t_shape *root)
@@ -20,8 +36,8 @@ static void	free_group(t_shape *root)
 
 	while (root)
 	{
-		if (root->is_group)
-			free_group(root->group.root);
+		// if (root->is_group)
+		// 	free_group(root->group.root);
 		free_pattern(&root->material.pattern);
 		tmp = root;
 		root = root->next;

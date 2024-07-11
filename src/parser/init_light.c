@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_light.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 17:44:57 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/02 17:44:58 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
-void	create_light(char **rgb, double ratio, char **pos,t_light *light)
+void	create_light(char **rgb, double ratio, char **pos, t_light *light)
 {
 	double	r;
 	double	g;

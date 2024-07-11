@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   element_counter.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 17:07:57 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/03 17:20:08 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
-int	start_with(char	*line, char *c)
+int	start_with(char *line, char *c)
 {
 	int	len;
 
@@ -18,6 +30,32 @@ int	start_with(char	*line, char *c)
 	return (0);
 }
 
+void	counter_helper(t_e_counts *count, char *line)
+{
+	if (start_with(line, "A"))
+		count->a_light++;
+	else if (start_with(line, "C"))
+		count->camera++;
+	else if (start_with(line, "L"))
+		count->light++;
+	else if (start_with(line, "sp"))
+		count->sphere++;
+	else if (start_with(line, "cy"))
+		count->cylinder++;
+	else if (start_with(line, "pl"))
+		count->plane++;
+	else if (start_with(line, "cone"))
+		count->cone++;
+	else if (start_with(line, "cube"))
+		count->cube++;
+	else if (start_with(line, "material"))
+		count->mat++;
+	else if (start_with(line, ".obj"))
+		count->ob++;
+	else if (!start_with(line, "\n"))
+		count->unknown++;
+}
+
 void	elements_counter(t_e_counts *count, char *line)
 {
 	while (1)
@@ -28,27 +66,10 @@ void	elements_counter(t_e_counts *count, char *line)
 			free(line);
 			break ;
 		}
-		if (start_with(line, "A"))
-			count->a_light++;
-		else if (start_with(line, "C"))
-			count->camera++;
-		else if (start_with(line, "L"))
-			count->light++;
-		else if (start_with(line, "sp"))
-			count->sphere++;
-		else if (start_with(line, "cy"))
-			count->cylinder++;
-		else if (start_with(line, "pl"))
-			count->plane++;
-		else if (start_with(line, "cone"))
-			count->cone++;
-		else if (start_with(line, "cube"))
-			count->cube++;
-		else if (!start_with(line, "\n"))
-			count->unknown++;
+		counter_helper(count, line);
 		free(line);
 	}
-	close(count->fd);
+	flush_fd(count->fd);
 }
 
 int	elements_count_checker(t_e_counts *count)
@@ -58,19 +79,19 @@ int	elements_count_checker(t_e_counts *count)
 	line = NULL;
 	elements_counter(count, line);
 	if (count->unknown != 0)
-		return (print_error("Error\nUnknown element found."));
+		return (print_error(UNKNOWN_ELEMENT));
 	if (count->a_light > 1)
-		return (print_error("Error\nMultiple instances of Ambient Lighting found."));
+		return (print_error(MULTI_AMBIENT));
 	else if (count->a_light == 0)
-		return (print_error("Error\nNo Ambient Lighting found."));
+		return (print_error(AMBIEN_FOUND));
 	if (count->camera > 1)
-		return (print_error("Error\nMultiple instances of Camera found."));
+		return (print_error(MULTI_CAMERA));
 	else if (count->camera == 0)
-		return (print_error("Error\nNo Camera found."));
+		return (print_error(NO_CAMERA));
 	if (count->light > 1)
-		return (print_error("Error\nMultiple instances of Light found."));
+		return (print_error(MULTI_LIGHT));
 	else if (count->light == 0)
-		return (print_error("Error\nNo Light found."));
+		return (print_error(NO_LIGHT));
 	return (0);
 }
 
@@ -85,6 +106,8 @@ int	init_counter_fd(t_e_counts *count, char *file)
 	count->unknown = 0;
 	count->cube = 0;
 	count->cone = 0;
+	count->mat = 0;
+	count->ob = 0;
 	count->fd = open(file, O_RDONLY);
 	if (count->fd < 0)
 		return (print_error("Error\nUnable to read the .rt file."));

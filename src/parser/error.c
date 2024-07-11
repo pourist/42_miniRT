@@ -1,22 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 17:38:39 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/02 17:39:08 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
-char	*find_error_3(int type)
+char	*find_error_5(int type)
 {
-	if (type == CENT_INVALID)
-		return (CENT_INVALID_M);
-	else if (type == CENT_RANGE)
-		return (CENT_RANGE_M);
-	else if (type == NORMAL)
-		return (NORMAL_M);
-	else if (type == NORMAL_INVALID)
-		return (NORMAL_INVALID_M);
-	else if (type == NORMAL_RANGE)
-		return (NORMAL_RANGE_M);
-	else if (type == POINT)
-		return (POINT_COUNT_M);
-	else if (type == POINT_INVALID)
-		return (POINT_INVALID_M);
-	else if (type == POINT_RANGE)
+	if (type == POINT_RANGE)
 		return (POINT_RANGE_M);
 	else if (type == HEIGHT_VALID)
 		return (H_INVALID);
@@ -36,8 +34,58 @@ char	*find_error_3(int type)
 		return (DEPTH_INVALID);
 	else if (type == DEPTH_RANGE)
 		return (DEPTH_RANGE_M);
+	else if (type == DIF_VALID)
+		return (DIF_INVALID_M);
 	else
 		return (NULL);
+}
+
+char	*find_error_4(int type)
+{
+	if (type == DIF_RANGE)
+		return (DIF_RANGE_M);
+	else if (type == SPEC_VALID)
+		return (SPEC_INVALID_M);
+	else if (type == SPEC_RANGE)
+		return (SPEC_RANGE_M);
+	else if (type == SHINE_VALID)
+		return (SHINE_INVALID_M);
+	else if (type == SHINE_RANGE)
+		return (SHINE_RANGE_M);
+	else if (type == REF_VALID)
+		return (REF_INVALID_M);
+	else if (type == REF_RANGE)
+		return (REF_RANGE_M);
+	else if (type == TRANS_VALID)
+		return (TRANS_INVALID_M);
+	else if (type == TRANS_RANGE)
+		return (TRANS_RANGE_M);
+	else if (type == RIF_VALID)
+		return (RIF_INVALID_M);
+	else if (type == RIF_RANGE)
+		return (RIF_RANGE_M);
+	else
+		return (find_error_5(type));
+}
+
+char	*find_error_3(int type)
+{
+	if (type == CENT_INVALID)
+		return (CENT_INVALID_M);
+	else if (type == CENT_RANGE)
+		return (CENT_RANGE_M);
+	else if (type == NORMAL_)
+		return (NORMAL_M);
+	else if (type == NORMAL_INVALID)
+		return (NORMAL_INVALID_M);
+	else if (type == NORMAL_RANGE)
+		return (NORMAL_RANGE_M);
+	else if (type == POINT)
+		return (POINT_COUNT_M);
+	else if (type == POINT_INVALID)
+		return (POINT_INVALID_M);
+	else
+		return (find_error_4(type));
 }
 
 char	*find_error_2(int type)
@@ -91,11 +139,4 @@ char	*find_error(int type)
 		return (POV_RANGE_M);
 	else
 		return (find_error_2(type));
-}
-
-
-int	file_error(t_line_parse_env *parse, char *text)
-{
-	printf("Error\nLine %d: %s\n", parse->line_number, text);
-	return (1);
 }

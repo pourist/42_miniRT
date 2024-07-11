@@ -1,9 +1,9 @@
 #ifndef PATTERNS_H
 # define PATTERNS_H
 
+# include "MLX42/MLX42.h"
 # include "matrices.h"
 # include "utils.h"
-# include "MLX42/MLX42.h"
 
 typedef struct s_pattern		t_pattern;
 typedef struct s_checker		t_checker;
@@ -13,14 +13,12 @@ typedef t_color					*(*t_pattern_at_fn)(t_pattern *, t_point *,
 													t_color *);
 typedef double					*(*t_uv_mapping)(t_point *, double *);
 
-typedef struct s_uv
-{
+typedef struct s_uv {
 	double	u;
 	double	v;
 }	t_uv;
 
-typedef struct s_align_colors
-{
+typedef struct s_align_colors {
 	t_color	main;
 	t_color	ul;
 	t_color	ur;
@@ -28,22 +26,19 @@ typedef struct s_align_colors
 	t_color	br;
 }	t_align_colors;
 
-typedef struct s_checker
-{
-	double			width;
-	double			height;
-	t_pattern		*a;
-	t_pattern		*b;
+typedef struct s_checker {
+	double		width;
+	double		height;
+	t_pattern	*a;
+	t_pattern	*b;
 }	t_checker;
 
-typedef struct s_texture_map
-{
+typedef struct s_texture_map {
 	t_checker		uv_pattern;
 	t_uv_mapping	uv_mapping_fn;
 }	t_texture_map;
 
-typedef struct s_pattern
-{
+typedef struct s_pattern {
 	t_pattern		*a;
 	t_pattern		*b;
 	t_color			color;
@@ -63,8 +58,7 @@ typedef struct s_pattern
 	double			disp_intensity;
 }	t_pattern;
 
-typedef enum e_cube_face
-{
+typedef enum e_cube_face {
 	LEFT,
 	FRONT,
 	RIGHT,
