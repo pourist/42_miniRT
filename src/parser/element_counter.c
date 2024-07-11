@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   element_counter.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:07:57 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/03 17:20:08 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/11 18:45:10 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	counter_helper(t_e_counts *count, char *line)
 		count->mat++;
 	else if (start_with(line, ".obj"))
 		count->ob++;
-	else if (!start_with(line, "\n"))
+	else if (!start_with(line, "\n") && ft_strncmp(line, "#", 1))
 		count->unknown++;
 }
 
