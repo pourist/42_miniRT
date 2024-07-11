@@ -154,4 +154,5 @@ int mat_reflect(t_material *material, int *index, t_line_parse_env *env);
 int mat_trans(t_material *material, int *index, t_line_parse_env *env);
 int mat_refractive(t_material *material, int *index, t_line_parse_env *env);
 void free_material(t_material **material);
+int mat_tex(t_material *material, int *index, t_line_parse_env	*env);
 #endif

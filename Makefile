@@ -59,7 +59,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 uv_at.c shapes_mapping.c cube_mapping.c cube_mapping2.c cube_align_check.c \
 										 texture_mapping.c mtl_file_parser.c mtl_lines_parser.c mtl_parse_elements.c \
 										 mtl_parse_elements2.c mtl_parse_elements3.c render_utils.c \
-										 ray_for_pixel.c multisample.c prepare_material.c init_obj.c\
+										 ray_for_pixel.c multisample.c prepare_material.c init_obj.c material_tex.c\
 										 parser.c parser_utils.c element_counter.c free_print.c error_u.c\
 										 init_ambient.c init_mini_rt.c error.c valid_args.c init_cylinder.c\
 										 line_parser.c init_camera.c init_light.c init_sphere.c init_plane.c\

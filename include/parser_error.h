@@ -76,6 +76,7 @@
 #define NO_CAMERA "Error\nNo Camera found."
 #define MULTI_LIGHT "Error\nMultiple instances of Light found."
 #define NO_LIGHT "Error\nNo Light found."
+#define ERR_TEX_FORMAT "Expected format: \".png\" enclosed in quotes"
 
 typedef enum e_error_type
 {

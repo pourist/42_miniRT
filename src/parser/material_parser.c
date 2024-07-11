@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   material_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:09:21 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/03 16:13:31 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:59:57 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	material_line_parser(char *line, int *i, t_line_parse_env *env,
 	else if (!ft_strncmp(line, "trans", 6) && mat_trans(*material, i, env))
 		return (1);
 	else if (!ft_strncmp(line, "ri", 3) && mat_refractive(*material, i, env))
+		return (1);
+	else if (!ft_strncmp(line, "texture", 8) && mat_tex(*material, i, env))
 		return (1);
 	else if (j == *i)
 		return (file_error_line(env->line_number, ERR_MAT));
