@@ -75,6 +75,14 @@ typedef enum e_element_type {
   OBJ,
 } t_element_type;
 
+typedef struct s_ext_obj
+{
+    char    **center;
+    char    **axis;
+    char    **scale;
+} t_e_obj;
+
+
 typedef struct s_cube_info {
   double width;
   double height;
@@ -129,7 +137,7 @@ int init_cone(t_line_parse_env *env, t_shape *obj);
 // cube
 int init_cube(t_line_parse_env *env, t_shape *obj);
 // obj
-int init_obj(t_line_parse_env *env, t_shape *obj);
+int init_obj(t_line_parse_env *env, t_shape *obj, t_world *world);
 // calculate_rotation.c
 void calculate_rotation_matrix(t_vector *default_normal, t_vector *user_normal,
                                t_matrix *rotation_matrix);

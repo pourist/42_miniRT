@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:38:39 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/02 17:39:08 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:14:18 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ char	*find_error_3(int type)
 		return (POINT_COUNT_M);
 	else if (type == POINT_INVALID)
 		return (POINT_INVALID_M);
+	else if (type == SCALE)
+		return (SCALE_COUNT_M);
+	else if (type == SCALE_INVALID)
+		return (SCALE_INVALID_M);
+	else if (type == SCALE_RANGE)
+		return (SCALE_RANGE_M);
 	else
 		return (find_error_4(type));
 }

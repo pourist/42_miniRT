@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:10:46 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/03 16:11:32 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:03:27 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	read_lines_init(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 			return (free_s(parse.line));
 		if (parse.type == CUBE && init_cube(&parse, &(world->objs[obj++])))
 			return (free_s(parse.line));
-		if (parse.type == OBJ && init_obj(&parse, &(world->objs[obj++])))
+		if (parse.type == OBJ && init_obj(&parse, &(world->objs[obj++]), world))
 			return (free_s(parse.line));
 		free_s(parse.line);
 	}
