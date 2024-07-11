@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:44:57 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/02 17:44:58 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:13:26 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,52 @@ int	init_light(t_line_parse_env *env, t_light *light)
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(pos), 1);
 	create_light(rgb, ft_atof(env->line[2]), pos, light);
+	return (0);
+}
+
+void	create_area_light(char **rgb, char **pos, t_light *light)
+{
+	double	r;
+	double	g;
+	double	b;
+
+	r = (ft_atof(rgb[0]) / 255) * ratio;
+	g = (ft_atof(rgb[1]) / 255) * ratio;
+	b = (ft_atof(rgb[2]) / 255) * ratio;
+	new_color(r, g, b, &light->intensity);
+	new_point(
+		ft_atof(pos[0]), ft_atof(pos[1]), ft_atof(pos[2]), &light->position);
+	free_s(rgb);
+	free_s(pos);
+}
+
+int	init_area_light(t_line_parse_env *env, t_light *light)
+{
+	char			**rgb;
+	char			**pos;
+	t_alight_params	lp;
+
+	if (ft_strarr_len(env->line) != 7)
+		return (file_error(env, ERR_LIGHT));
+	env->error_type = POS;
+	pos = ft_subsplit(env->line[1], ",\n");
+	if (triplets(pos, (double)INT_MIN, (double)INT_MAX, env))
+		return (1);
+	env->error_type = RGB;
+	rgb = ft_subsplit(env->line[6], ",\n");
+	if (triplets(rgb, 0, 255, env))
+		return (free_s(pos), 1);
+	env->error_type = UV_VEC;
+	if (solo(env->line[2], 0, (doubl)INT_MAX, env)
+		&& solo(env->line[3], 0, (doubl)INT_MAX, env))
+		return (1);
+	env->error_type = UV_STEPS;
+	if (solo(env->line[4], 0, INT_MAX, env)
+		&& solo(env->line[5], 0, INT_MAX, env))
+		return (1);
+	new_vector(ft_atof(env->line[2]), 0, 0, &lp.full_uvec);
+	new_vector(0, ft_atof(env->line[3]), 0, &lp.full_vvec);
+	lp.usteps = ft_atoi(env->line[4]);
+	lp.vsteps = ft_atoi(env->line[5]);
 	return (0);
 }

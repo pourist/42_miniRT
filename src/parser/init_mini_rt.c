@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:09:00 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/03 18:40:34 by johnavar         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:27:37 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_mini_rt(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 	objs_count = count->cylinder + count->sphere + count->plane 
 		+ count->cone + count->cube + count->ob;
 	world->objs_count = objs_count;
-	world->lights_count = count->light;
+	world->lights_count = count->light + count->other_light;
 	world->objs = (t_shape *)ft_calloc(objs_count, sizeof(t_shape));
 	if (!world->objs)
 		return (print_error(MALLOC_FAIL));

@@ -127,6 +127,7 @@ typedef enum e_error_type
 	TRANS_RANGE,
 	RIF_VALID,
 	RIF_RANGE,
+	DOF,
 }	t_error_type;
 
 #endif

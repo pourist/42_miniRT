@@ -20,6 +20,7 @@ typedef struct s_e_counts {
   int a_light;
   int camera;
   int light;
+	int	other_light;
   int sphere;
   int plane;
   int cylinder;
@@ -62,18 +63,20 @@ typedef struct s_cone_info {
 } t_cone_info;
 
 typedef enum e_element_type {
-  AMBIENT,
-  CAMERA,
-  LIGHT,
-  SPHERE,
-  CYLINDER,
-  PLANE,
-  CONE,
-  CUBE,
-  MATERIAL,
-  EMPTY_LINE,
-  OBJ,
-} t_element_type;
+	AMBIENT,
+	CAMERA,
+	LIGHT,
+	AREA_LIGHT,
+	SPOT_LIGHT,
+	SPHERE,
+	CYLINDER,
+	PLANE,
+	CONE,
+	CUBE,
+	MATERIAL,
+	EMPTY_LINE,
+	OBJ,
+}	t_element_type;
 
 typedef struct s_cube_info {
   double width;

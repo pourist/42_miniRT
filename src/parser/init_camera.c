@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:39:43 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/02 17:39:45 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:08:56 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,33 @@ void	make_camera(t_camera *camera, double fov, char **pov, char **or)
 			&direction, &up, &camera->transform));
 }
 
+static bool	set_dof(t_camera *camera, t_line_parse_env *env)
+{
+	env->error_type = DOF;
+	if (env->line[5] && solo((env->line[5]), 0, INT_MAX, env))
+		return (false);
+	camera->aperture_size = ft_atof(env->line[5]);
+	if (env->line[6] && solo((env->line[6]), 0, INT_MAX, env))
+		return (false);
+	camera->focal_length = ft_atof(env->line[6]);
+	if (env->line[7] && solo((env->line[7]), 0, INT_MAX, env))
+		return (false);
+	camera->color_variance_limit = ft_atof(env->line[7]);
+	if (env->line[8] && solo((env->line[8]), 0, 1, env))
+		return (false);
+	camera->supersampling = ft_atoi(env->line[8]);
+	if (env->line[9] && solo((env->line[9]), 0, INT_MAX, env))
+		return (false);
+	camera->samples = ft_atoi(env->line[9]);
+	return (true);
+}
+
 int	init_camera(t_line_parse_env *env, t_camera *camera)
 {
 	char	**pov;
 	char	**orientation;
 
-	if (ft_strarr_len(env->line) != 4)
+	if (ft_strarr_len(env->line) < 4 || ft_strncmp(env->line[4], "DOF", 3))
 		return (file_error(env, ERR_INC_CAM));
 	env->error_type = FOV;
 	if (solo((env->line[3]), 0, 180, env))
@@ -50,6 +71,9 @@ int	init_camera(t_line_parse_env *env, t_camera *camera)
 	if (triplets(orientation, -1, 1, env))
 		return (free_s(pov), 1);
 	make_camera(camera, ft_atof(env->line[3]), pov, orientation);
+	if (ft_strncmp(env->line[4], "DOF", 4) == 0 && env->line[5])
+		if (!set_dof(camera, env))
+			return (free_s(pov), free_s(orientation), 1);
 	free_s(pov);
 	free_s(orientation);
 	return (0);
