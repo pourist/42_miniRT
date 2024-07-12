@@ -73,6 +73,9 @@
 #define NO_CAMERA "Error\nNo Camera found."
 #define MULTI_LIGHT "Error\nMultiple instances of Light found."
 #define NO_LIGHT "Error\nNo Light found."
+#define DOF_M "Error\n Wrong arguments for Comera with Depth of Field."
+#define UV_LIGHT_VEC_M "Error\n Wrong arguments for Light with UV vector."
+#define UV_LIGHT_STEPS_M "Error\n Wrong arguments for Light with UV steps."
 
 typedef enum e_error_type
 {
@@ -128,6 +131,8 @@ typedef enum e_error_type
 	RIF_VALID,
 	RIF_RANGE,
 	DOF,
+	UV_VEC,
+	UV_STEPS,
 }	t_error_type;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:39:43 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 17:08:56 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/12 09:42:00 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	init_camera(t_line_parse_env *env, t_camera *camera)
 	if (triplets(orientation, -1, 1, env))
 		return (free_s(pov), 1);
 	make_camera(camera, ft_atof(env->line[3]), pov, orientation);
-	if (ft_strncmp(env->line[4], "DOF", 4) == 0 && env->line[5])
+	if (env->line[4] && ft_strncmp(env->line[4], "DOF", 4) == 0 && env->line[5])
 		if (!set_dof(camera, env))
 			return (free_s(pov), free_s(orientation), 1);
 	free_s(pov);

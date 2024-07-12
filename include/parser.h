@@ -121,6 +121,8 @@ int read_lines_init(t_world *world, t_mini_rt *minirt, t_e_counts *count);
 int init_camera(t_line_parse_env *env, t_camera *camera);
 // light
 int init_light(t_line_parse_env *env, t_light *light);
+int	init_area_light(t_line_parse_env *env, t_light *light);
+int	init_spot_light(t_line_parse_env *env, t_light *light);
 // sphere
 int init_sphere(t_line_parse_env *env, t_shape *obj);
 // plane

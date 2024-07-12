@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:44:57 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 20:13:26 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/12 09:31:17 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,30 @@ int	init_light(t_line_parse_env *env, t_light *light)
 	return (0);
 }
 
-void	create_area_light(char **rgb, char **pos, t_light *light)
+static void	create_area_light(t_light *light, char **rgb, char **pos,
+		t_alight_params *lp)
 {
-	double	r;
-	double	g;
-	double	b;
+	new_point(ft_atof(pos[0]), ft_atof(pos[1]), ft_atof(pos[2]), &lp->corner);
+	new_color(ft_atof(rgb[0]) / 255, ft_atof(rgb[1]) / 255,
+		ft_atof(rgb[2]) / 255, &lp->intensity);
+	new_area_light(lp, light);
+}
 
-	r = (ft_atof(rgb[0]) / 255) * ratio;
-	g = (ft_atof(rgb[1]) / 255) * ratio;
-	b = (ft_atof(rgb[2]) / 255) * ratio;
-	new_color(r, g, b, &light->intensity);
-	new_point(
-		ft_atof(pos[0]), ft_atof(pos[1]), ft_atof(pos[2]), &light->position);
-	free_s(rgb);
-	free_s(pos);
+static bool	set_alight_params(t_alight_params *lp, t_line_parse_env *env)
+{
+	env->error_type = UV_VEC;
+	if (solo(env->line[2], (double)INT_MIN, (double)INT_MAX, env)
+		&& solo(env->line[3], (double)INT_MIN, (double)INT_MAX, env))
+		return (false);
+	env->error_type = UV_STEPS;
+	if (solo(env->line[4], 0, INT_MAX, env)
+		&& solo(env->line[5], 0, INT_MAX, env))
+		return (false);
+	new_vector(ft_atof(env->line[2]), 0, 0, &lp->full_uvec);
+	new_vector(0, ft_atof(env->line[3]), 0, &lp->full_vvec);
+	lp->usteps = ft_atoi(env->line[4]);
+	lp->vsteps = ft_atoi(env->line[5]);
+	return (true);
 }
 
 int	init_area_light(t_line_parse_env *env, t_light *light)
@@ -82,17 +92,22 @@ int	init_area_light(t_line_parse_env *env, t_light *light)
 	rgb = ft_subsplit(env->line[6], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(pos), 1);
-	env->error_type = UV_VEC;
-	if (solo(env->line[2], 0, (doubl)INT_MAX, env)
-		&& solo(env->line[3], 0, (doubl)INT_MAX, env))
-		return (1);
-	env->error_type = UV_STEPS;
-	if (solo(env->line[4], 0, INT_MAX, env)
-		&& solo(env->line[5], 0, INT_MAX, env))
-		return (1);
-	new_vector(ft_atof(env->line[2]), 0, 0, &lp.full_uvec);
-	new_vector(0, ft_atof(env->line[3]), 0, &lp.full_vvec);
-	lp.usteps = ft_atoi(env->line[4]);
-	lp.vsteps = ft_atoi(env->line[5]);
+	if (!set_alight_params(&lp, env))
+		return (free_s(pos), free_s(rgb), 1);
+	create_area_light(light, rgb, pos, &lp);
+	free_s(rgb);
+	free_s(pos);
+	return (0);
+}
+
+int	init_spot_light(t_line_parse_env *env, t_light *light)
+{
+	// char			**rgb;
+	// char			**pos;
+	// char			**to;
+	// t_spotlight_params	sp;
+
+	(void)env;
+	(void)light;
 	return (0);
 }
