@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:10:46 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/12 15:28:33 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/12 16:27:24 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static bool	read_lines_init2(t_line_parse_env *parse, t_world *world,
 		return (false);
 	if (parse->type == CUBE && init_cube(parse, &(world->objs[(*obj)++])))
 		return (false);
-	if (parse->type == OBJ && init_obj(parse, &(world->objs[(*obj)++])))
+	if (parse->type == OBJ && init_obj(parse, &(world->objs[(*obj)++]), world))
 		return (false);
 	if (parse->type == AREA_LIGHT
 		&& init_area_light(parse, &(world->lights[(*i)++])))
