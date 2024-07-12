@@ -1,12 +1,15 @@
 #ifndef PARSER_ERROR_H
 # define PARSER_ERROR_H
 
-#define	ERR_OBJ "Expected format: file_name <center x,y,z> <axis vector>"
+#define	ERR_OBJ "Expected format: .obj file_name <center x,y,z> <axis vector> <scale>"
 #define	ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
 #define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
 #define ERR_INC_CAM "Expected format: C <x,y,z> <orientation x,y,z> <FOV>"
 #define ERR_SPHERE "Expected format: sp <x,y,z> <diameter> <R,G,B> [material]"
 #define ERR_LIGHT "Expected format: L <x,y,z> <brightness_ratio> <R,G,B>"
+#define ERR_AREA_LIGHT "Expected format: L <x,y,z> <u_size> <v_size> <u_steps> <v_steps> <R,G,B>"
+#define ERR_SPOTLIGHT "Expected format: L <x,y,z> (to)<x,y,z> <center radian> <fade radian> <R,G,B>"
+#define ERR_AREA_SPOTLIGHT "Expected format: L <x,y,z> (to)<x,y,z> <u_size> <v_size> <u_steps> <v_steps> <center radian> <fade radian> <R,G,B>"
 #define ERR_PLANE "Expected format: pl <x,y,z> <normal vector> <R,G,B> [material]"
 #define ERR_CYLINDER "Expected format: cy <x,y,z> <axis vector> <diameter> <height> <R,G,B> [material]"
 #define ERR_CONE "Expected format: cone <base x,y,z> <axis x,y,z> <radius> <height> <is open> <R,G,B> [material]"
@@ -50,6 +53,9 @@
 #define POINT_COUNT_M "Point coordinates count incorrect."
 #define POINT_INVALID_M "Invalid point coordinates."
 #define POINT_RANGE_M "Point coordinates values out of range."
+#define SCALE_COUNT_M "Scale count incorrect."
+#define SCALE_INVALID_M "Invalid Scale."
+#define SCALE_RANGE_M "Point coordinates values out of range."
 #define	R_INVALID "Invalid Radius"
 #define R_RANGE_M "Radius out of range"
 #define	DIF_INVALID_M "Invalid Diffuse"
@@ -73,6 +79,12 @@
 #define NO_CAMERA "Error\nNo Camera found."
 #define MULTI_LIGHT "Error\nMultiple instances of Light found."
 #define NO_LIGHT "Error\nNo Light found."
+#define DOF_M "Error\n Wrong arguments for Comera with Depth of Field."
+#define UV_LIGHT_VEC_M "Error\n Wrong arguments for Light with UV vector."
+#define UV_LIGHT_STEPS_M "Error\n Wrong arguments for Light with UV steps."
+#define SPOTLIGHT_CRADIAN_M "Error\n Wrong arguments for Spotlight: Center Radian."
+#define SPOTLIGHT_FRADIAN_M "Error\n Wrong arguments for Spotlight: Fade Radian."
+#define ERR_TEX_FORMAT "Expected format: \".png\" enclosed in quotes"
 
 typedef enum e_error_type
 {
@@ -127,6 +139,14 @@ typedef enum e_error_type
 	TRANS_RANGE,
 	RIF_VALID,
 	RIF_RANGE,
+	DOF,
+	UV_VEC,
+	UV_STEPS,
+	SPOTLIGHT_CRADIAN,
+	SPOTLIGHT_FRADIAN,
+	SCALE,
+	SCALE_INVALID,
+	SCALE_RANGE,
 }	t_error_type;
 
 #endif
