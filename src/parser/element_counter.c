@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:07:57 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 17:50:43 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/12 15:29:27 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	counter_helper(t_e_counts *count, char *line)
 		count->camera++;
 	else if (start_with(line, "L"))
 		count->light++;
-	else if (start_with(line, "aL") || start_with(line, "sL"))
+	else if (start_with(line, "aL") || start_with(line, "sL")
+		|| start_with(line, "asL"))
 		count->other_light++;
 	else if (start_with(line, "sp"))
 		count->sphere++;

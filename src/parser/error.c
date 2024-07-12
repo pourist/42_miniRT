@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:38:39 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/12 09:09:08 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/12 11:45:37 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ char	*find_error_3(int type)
 		return (UV_LIGHT_VEC_M);
 	else if (type == UV_STEPS)
 		return (UV_LIGHT_STEPS_M);
+	else if (type == SPOTLIGHT_CRADIAN)
+		return (SPOTLIGHT_CRADIAN_M);
+	else if (type == SPOTLIGHT_FRADIAN)
+		return (SPOTLIGHT_FRADIAN_M);
 	else
 		return (find_error_4(type));
 }

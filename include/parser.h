@@ -67,7 +67,8 @@ typedef enum e_element_type {
 	CAMERA,
 	LIGHT,
 	AREA_LIGHT,
-	SPOT_LIGHT,
+	SPOTLIGHT,
+	AREA_SPOTLIGHT,
 	SPHERE,
 	CYLINDER,
 	PLANE,
@@ -122,7 +123,8 @@ int init_camera(t_line_parse_env *env, t_camera *camera);
 // light
 int init_light(t_line_parse_env *env, t_light *light);
 int	init_area_light(t_line_parse_env *env, t_light *light);
-int	init_spot_light(t_line_parse_env *env, t_light *light);
+int	init_spotlight(t_line_parse_env *env, t_light *light);
+int	init_area_spotlight(t_line_parse_env *env, t_light *light);
 // sphere
 int init_sphere(t_line_parse_env *env, t_shape *obj);
 // plane

@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:10:46 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 18:06:13 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/12 15:28:33 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ void	set_type(t_line_parse_env *parse)
 		parse->type = CAMERA;
 	else if (!ft_strncmp(parse->line[0], "L", 2) && parse->line[0])
 		parse->type = LIGHT;
-	else if (!ft_strncmp(parse->line[0], "aL", 2) && parse->line[0])
+	else if (!ft_strncmp(parse->line[0], "asL", 4) && parse->line[0])
+		parse->type = AREA_SPOTLIGHT;
+	else if (!ft_strncmp(parse->line[0], "aL", 3) && parse->line[0])
 		parse->type = AREA_LIGHT;
-	else if (!ft_strncmp(parse->line[0], "sL", 2) && parse->line[0])
-		parse->type = SPOT_LIGHT;
+	else if (!ft_strncmp(parse->line[0], "sL", 3) && parse->line[0])
+		parse->type = SPOTLIGHT;
 	else if (!ft_strncmp(parse->line[0], "sp", 3) && parse->line[0])
 		parse->type = SPHERE;
 	else if (!ft_strncmp(parse->line[0], "cy", 3) && parse->line[0])
@@ -63,21 +65,31 @@ int	parse_line(int fd, t_line_parse_env *parse)
 	return (0);
 }
 
-static bool	read_lines_init2(t_line_parse_env *parse, t_world *world, int *obj)
+static bool	read_lines_init2(t_line_parse_env *parse, t_world *world,
+		int *obj, int *i)
 {
-	if (parse->type == SPHERE && init_sphere(parse, &(world->objs[*obj++])))
-		return (free_s(parse->line));
-	if (parse->type == PLANE && init_plane(parse, &(world->objs[*obj++])))
-		return (free_s(parse->line));
+	if (parse->type == SPHERE && init_sphere(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == PLANE && init_plane(parse, &(world->objs[(*obj)++])))
+		return (false);
 	if (parse->type == CYLINDER
-		&& init_cylinder(parse, &(world->objs[*obj++])))
-		return (free_s(parse->line), false);
-	if (parse->type == CONE && init_cone(parse, &(world->objs[*obj++])))
-		return (free_s(parse->line), false);
-	if (parse->type == CUBE && init_cube(parse, &(world->objs[*obj++])))
-		return (free_s(parse->line), false);
-	if (parse->type == OBJ && init_obj(parse, &(world->objs[*obj++])))
-		return (free_s(parse->line), false);
+		&& init_cylinder(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == CONE && init_cone(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == CUBE && init_cube(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == OBJ && init_obj(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == AREA_LIGHT
+		&& init_area_light(parse, &(world->lights[(*i)++])))
+		return (false);
+	if (parse->type == SPOTLIGHT
+		&& init_spotlight(parse, &(world->lights[(*i)++])))
+		return (false);
+	if (parse->type == AREA_SPOTLIGHT
+		&& init_area_spotlight(parse, &(world->lights[(*i)++])))
+		return (false);
 	return (true);
 }
 
@@ -101,14 +113,8 @@ int	read_lines_init(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 			return (free_s(parse.line));
 		if (parse.type == LIGHT && init_light(&parse, &(world->lights[i++])))
 			return (free_s(parse.line));
-		if (parse.type == AREA_LIGHT
-			&& init_area_light(&parse, &(world->lights[i++])))
+		if (!read_lines_init2(&parse, world, &obj, &i))
 			return (free_s(parse.line));
-		if (parse.type == SPOT_LIGHT
-			&& init_spot_light(&parse, &(world->lights[i++])))
-			return (free_s(parse.line));
-		if (!read_lines_init2(&parse, world, &obj))
-			return (1);
 		free_s(parse.line);
 	}
 	return (0);
