@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   line_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:10:46 by ppour-ba          #+#    #+#             */
 /*   Updated: 2024/07/12 15:28:33 by sebasnadu        ###   ########.fr       */
