@@ -1,6 +1,8 @@
 #ifndef PARSER_ERROR_H
 # define PARSER_ERROR_H
 
+#define ERR_CUBE_TEX "Expected format: Cube_texture requires six .png files."
+#define ERR_PAT "Expected format: <name> <type> <transformation(s)>"
 #define	ERR_OBJ "Expected format: .obj file_name <center x,y,z> <axis vector> <scale>"
 #define	ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
 #define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
@@ -76,7 +78,7 @@
 #define NO_CAMERA "Error\nNo Camera found."
 #define MULTI_LIGHT "Error\nMultiple instances of Light found."
 #define NO_LIGHT "Error\nNo Light found."
-#define ERR_TEX_FORMAT "Expected format: \".png\" enclosed in quotes"
+#define ERR_TEX_FORMAT "Expected format: \".png\""
 
 typedef enum e_error_type
 {

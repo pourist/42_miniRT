@@ -31,22 +31,6 @@ int	init_mini_rt(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 	return (0);
 }
 
-void	free_material(t_material	**material)
-{
-	int	i;
-
-	i = 0;
-	if (!material)
-		return ;
-	while (material[i])
-	{
-		if (material[i]->name)
-			free(material[i]->name);
-		free(material[i++]);
-	}
-	free(material);
-}
-
 int	init_minirt(t_mini_rt *minirt, t_e_counts *env)
 {
 	new_world(&minirt->world);
