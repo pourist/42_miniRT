@@ -18,11 +18,13 @@ int	find_material(t_material **material, t_shape *obj, char *name,
 	int	i;
 
 	i = 0;
-	while (env->pat & env->pat[i])
+	while (material[i])
 	{
-		if (!ft_strncmp(env->pat[i]->name, , ft_strlen(name)))
+		if (!ft_strncmp(material[i]->name, name, ft_strlen(name)))
 		{
-
+			material[i]->pattern.texture_map.uv_mapping_fn
+				= obj->material.pattern.texture_map.uv_mapping_fn;
+			obj->material = *material[i];
 			return (0);
 		}
 		i++;

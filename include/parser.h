@@ -163,4 +163,6 @@ int mat_cub_t(t_material *material, int *index, t_line_parse_env	*env);
 // pattern
 int	read_pattern(t_e_counts *count, char *file);
 void    free_pat_mat(t_e_counts *c);
+int mat_pattern(t_material *material, int *index, t_line_parse_env	*env);
+
 #endif
