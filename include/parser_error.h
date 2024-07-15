@@ -15,7 +15,7 @@
 #define ERR_CUBE "Expected format: cube <center x,y,z> <axis vector> <width> <height> <depth> <R,G,B> [material]"
 #define	RATIO_INVALID "Invalid ambient lighting ratio"
 #define RATIO_RANGE "Ambient lighting ratio out of range"
-#define RGB_LEN "RGB elements count incorrect."
+#define RGB_LEN "Invalid RGB numbers."
 #define RGB_INVALID "Invalid RGB numbers."
 #define RGB_RANGE "RGB values out of range"
 #define MALLOC_FAIL "Error\nMemory allocation failed"

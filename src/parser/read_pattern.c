@@ -1,46 +1,5 @@
 #include "parser.h"
 
-
-int pat_text(t_pattern *pattern, int *index, t_line_parse_env *env)
-{
-    char *texture_path;
-    int length;
-
-    (*index)++;
-    if (!env->line[*index] || env->line[*index][0] == '\n')
-        return (file_error_line(env->line_number, ERR_TEX_FORMAT));
-    texture_path = env->line[*index];
-    length = ft_strlen(texture_path);
-    if (length >= 4 && ft_strncmp(texture_path + length - 4, ".png", 5) == 0)
-        new_texture_map(pattern, texture_path);
-    else{
-        return (file_error_line(env->line_number, ERR_TEX_FORMAT));}
-    return (0);
-}
-
-int cub_text(t_pattern *pattern, int *index, t_line_parse_env *env)
-{
-    int length;
-    char const	*paths[6];
-    int j;
-
-    j = 0;
-    (*index)++;
-    while (j < 6)
-    {
-        if (!env->line[*index] || env->line[*index][0] == '\n')
-            return (file_error_line(env->line_number, ERR_CUBE_TEX));
-        length = ft_strlen(env->line[*index]);
-        if (!(length >= 4 && !ft_strncmp(env->line[*index] + length - 4, ".png", 5)))
-            return (file_error_line(env->line_number, ERR_CUBE_TEX));
-        paths[j] = env->line[*index];
-        (*index)++;
-        j++;
-    }
-    new_cubic_texture_map(pattern, paths);
-    return (0);
-}
-
 int pat_type(char *line, int *i, t_line_parse_env *env, 
 		t_pattern **pattern)
 {
@@ -50,6 +9,20 @@ int pat_type(char *line, int *i, t_line_parse_env *env,
     if (!ft_strncmp(line, "texture", 8) && pat_text(*pattern, i, env))
 		return (1);
     else if (!ft_strncmp(line, "cubed_texture", 14) && cub_text(*pattern, i, env))
+		return (1);
+    else if (!ft_strncmp(line, "blended", 14) && p_blended(*pattern, i, env))
+		return (1);
+    else if (!ft_strncmp(line, "checkers", 14) && p_checkers(*pattern, i, env))
+		return (1);
+    else if (!ft_strncmp(line, "full_gradient", 14) && p_f_grad(*pattern, i, env))
+		return (1);
+    else if (!ft_strncmp(line, "gradient", 14) && p_grad(*pattern, i, env))
+		return (1);
+    else if (!ft_strncmp(line, "radial", 14) && p_radial(*pattern, i, env))
+		return (1);
+    else if (!ft_strncmp(line, "ring", 14) && p_ring(*pattern, i, env))
+		return (1);
+    else if (!ft_strncmp(line, "strip", 14) && p_strip(*pattern, i, env))
 		return (1);
 	else if (j == *i)
 		return (file_error_line(env->line_number, "pattern error"));
@@ -70,6 +43,7 @@ int	init_pattern(t_line_parse_env	*env, t_pattern **pattern)
 	{
         return (1);
 	}
+	printf("%d\n", i);
 	return (0);
 }
 

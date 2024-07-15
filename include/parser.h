@@ -164,5 +164,14 @@ int mat_cub_t(t_material *material, int *index, t_line_parse_env	*env);
 int	read_pattern(t_e_counts *count, char *file);
 void    free_pat_mat(t_e_counts *c);
 int mat_pattern(t_material *material, int *index, t_line_parse_env	*env);
-
+int pat_text(t_pattern *pattern, int *index, t_line_parse_env *env);
+int cub_text(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_blended(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_checkers(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_f_grad(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_grad(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_radial(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_ring(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_strip(t_pattern *pattern, int *index, t_line_parse_env *env);
+int patter_type_parser(int *index, t_line_parse_env *env, char **rgb1, char **rgb2);
 #endif

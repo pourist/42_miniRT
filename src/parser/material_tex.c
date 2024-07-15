@@ -19,11 +19,3 @@ int mat_pattern(t_material *material, int *index, t_line_parse_env	*env)
 	}
 	return (file_error(env, "Pattern not found."));
 }
-
-int mat_cub_t(t_material *material, int *index, t_line_parse_env	*env)
-{
-	(void)material;
-	(void)env;
-	(void)index;
-	return (0);
-}
