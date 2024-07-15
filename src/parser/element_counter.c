@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:07:57 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 18:45:10 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:29:27 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	counter_helper(t_e_counts *count, char *line)
 		count->camera++;
 	else if (start_with(line, "L"))
 		count->light++;
+	else if (start_with(line, "aL") || start_with(line, "sL")
+		|| start_with(line, "asL"))
+		count->other_light++;
 	else if (start_with(line, "sp"))
 		count->sphere++;
 	else if (start_with(line, "cy"))
@@ -92,7 +95,7 @@ int	elements_count_checker(t_e_counts *count)
 		return (print_error(NO_CAMERA));
 	if (count->light > 1)
 		return (print_error(MULTI_LIGHT));
-	else if (count->light == 0)
+	else if (count->light == 0 && count->other_light == 0)
 		return (print_error(NO_LIGHT));
 	return (0);
 }
@@ -100,6 +103,7 @@ int	elements_count_checker(t_e_counts *count)
 int	init_counter_fd(t_e_counts *count, char *file)
 {
 	count->a_light = 0;
+	count->other_light = 0;
 	count->camera = 0;
 	count->light = 0;
 	count->sphere = 0;

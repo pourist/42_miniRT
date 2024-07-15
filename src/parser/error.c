@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:38:39 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 20:09:02 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:45:37 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,14 @@ char	*find_error_3(int type)
 		return (POINT_COUNT_M);
 	else if (type == POINT_INVALID)
 		return (POINT_INVALID_M);
+	else if (type == UV_VEC)
+		return (UV_LIGHT_VEC_M);
+	else if (type == UV_STEPS)
+		return (UV_LIGHT_STEPS_M);
+	else if (type == SPOTLIGHT_CRADIAN)
+		return (SPOTLIGHT_CRADIAN_M);
+	else if (type == SPOTLIGHT_FRADIAN)
+		return (SPOTLIGHT_FRADIAN_M);
 	else if (type == SCALE)
 		return (SCALE_COUNT_M);
 	else if (type == SCALE_INVALID)
@@ -143,6 +151,8 @@ char	*find_error(int type)
 		return (POV_INVALID_M);
 	else if (type == POV_RANGE)
 		return (POV_RANGE_M);
+	else if (type == DOF)
+		return (DOF_M);
 	else
 		return (find_error_2(type));
 }

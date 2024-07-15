@@ -6,11 +6,21 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:10:46 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 18:03:27 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:27:24 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+static void	set_type2(t_line_parse_env *parse)
+{
+	if (!ft_strncmp(parse->line[0], "cube", 5) && parse->line[0])
+		parse->type = CUBE;
+	else if (!ft_strncmp(parse->line[0], ".obj", 5) && parse->line[0])
+		parse->type = OBJ;
+	else
+		parse->type = MATERIAL;
+}
 
 void	set_type(t_line_parse_env *parse)
 {
@@ -22,6 +32,12 @@ void	set_type(t_line_parse_env *parse)
 		parse->type = CAMERA;
 	else if (!ft_strncmp(parse->line[0], "L", 2) && parse->line[0])
 		parse->type = LIGHT;
+	else if (!ft_strncmp(parse->line[0], "asL", 4) && parse->line[0])
+		parse->type = AREA_SPOTLIGHT;
+	else if (!ft_strncmp(parse->line[0], "aL", 3) && parse->line[0])
+		parse->type = AREA_LIGHT;
+	else if (!ft_strncmp(parse->line[0], "sL", 3) && parse->line[0])
+		parse->type = SPOTLIGHT;
 	else if (!ft_strncmp(parse->line[0], "sp", 3) && parse->line[0])
 		parse->type = SPHERE;
 	else if (!ft_strncmp(parse->line[0], "cy", 3) && parse->line[0])
@@ -30,12 +46,8 @@ void	set_type(t_line_parse_env *parse)
 		parse->type = PLANE;
 	else if (!ft_strncmp(parse->line[0], "cone", 5) && parse->line[0])
 		parse->type = CONE;
-	else if (!ft_strncmp(parse->line[0], "cube", 5) && parse->line[0])
-		parse->type = CUBE;
-	else if (!ft_strncmp(parse->line[0], ".obj", 5) && parse->line[0])
-		parse->type = OBJ;
 	else
-		parse->type = MATERIAL;
+		set_type2(parse);
 }
 
 int	parse_line(int fd, t_line_parse_env *parse)
@@ -51,6 +63,34 @@ int	parse_line(int fd, t_line_parse_env *parse)
 	free(parse->temp);
 	set_type(parse);
 	return (0);
+}
+
+static bool	read_lines_init2(t_line_parse_env *parse, t_world *world,
+		int *obj, int *i)
+{
+	if (parse->type == SPHERE && init_sphere(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == PLANE && init_plane(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == CYLINDER
+		&& init_cylinder(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == CONE && init_cone(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == CUBE && init_cube(parse, &(world->objs[(*obj)++])))
+		return (false);
+	if (parse->type == OBJ && init_obj(parse, &(world->objs[(*obj)++]), world))
+		return (false);
+	if (parse->type == AREA_LIGHT
+		&& init_area_light(parse, &(world->lights[(*i)++])))
+		return (false);
+	if (parse->type == SPOTLIGHT
+		&& init_spotlight(parse, &(world->lights[(*i)++])))
+		return (false);
+	if (parse->type == AREA_SPOTLIGHT
+		&& init_area_spotlight(parse, &(world->lights[(*i)++])))
+		return (false);
+	return (true);
 }
 
 int	read_lines_init(t_world *world, t_mini_rt *minirt, t_e_counts *count)
@@ -73,17 +113,7 @@ int	read_lines_init(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 			return (free_s(parse.line));
 		if (parse.type == LIGHT && init_light(&parse, &(world->lights[i++])))
 			return (free_s(parse.line));
-		if (parse.type == SPHERE && init_sphere(&parse, &(world->objs[obj++])))
-			return (free_s(parse.line));
-		if (parse.type == PLANE && init_plane(&parse, &(world->objs[obj++])))
-			return (free_s(parse.line));
-		if (parse.type == CYLINDER && init_cylinder(&parse, &(world->objs[obj++])))
-			return (free_s(parse.line));
-		if (parse.type == CONE && init_cone(&parse, &(world->objs[obj++])))
-			return (free_s(parse.line));
-		if (parse.type == CUBE && init_cube(&parse, &(world->objs[obj++])))
-			return (free_s(parse.line));
-		if (parse.type == OBJ && init_obj(&parse, &(world->objs[obj++]), world))
+		if (!read_lines_init2(&parse, world, &obj, &i))
 			return (free_s(parse.line));
 		free_s(parse.line);
 	}
