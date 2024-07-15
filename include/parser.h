@@ -125,6 +125,7 @@ int init_counter_fd(t_e_counts *count, char *file);
 int file_error(t_line_parse_env *parse, char *text);
 int file_error_line(int line, char *text);
 char *find_error(int type);
+char	*find_error_6(int type);
 // valid args
 int solo(char *number, double min, double max, t_line_parse_env *env);
 int triplets(char **triple, double min, double max, t_line_parse_env *env);
@@ -172,7 +173,7 @@ int	read_pattern(t_e_counts *count, char *file);
 void    free_pat_mat(t_e_counts *c);
 int mat_pattern(t_material *material, int *index, t_line_parse_env	*env);
 int pat_text(t_pattern *pattern, int *index, t_line_parse_env *env);
-int cub_text(t_pattern *pattern, int *index, t_line_parse_env *env);
+int cub_text(t_pattern *ptransform_tsattern, int *index, t_line_parse_env *env);
 int p_blended(t_pattern *pattern, int *index, t_line_parse_env *env);
 int p_checkers(t_pattern *pattern, int *index, t_line_parse_env *env);
 int p_f_grad(t_pattern *pattern, int *index, t_line_parse_env *env);

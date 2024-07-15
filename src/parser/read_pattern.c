@@ -26,7 +26,7 @@ int pat_type(char *line, int *i, t_line_parse_env *env,
 		return (1);
 	else if (j == *i)
 		return (file_error_line(env->line_number, "pattern error"));
-	return (0);
+	return ((*i)++, 0);
 }
 
 int	init_pattern(t_line_parse_env	*env, t_pattern **pattern)
@@ -43,7 +43,10 @@ int	init_pattern(t_line_parse_env	*env, t_pattern **pattern)
 	{
         return (1);
 	}
-	printf("%d\n", i);
+	if (!env->line[2])
+		return (file_error_line(env->line_number, "pattern error"));
+	if (transform_type(env->line[2], &i, env, pattern))
+		return (1);
 	return (0);
 }
 

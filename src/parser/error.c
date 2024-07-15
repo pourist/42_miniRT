@@ -37,7 +37,7 @@ char	*find_error_5(int type)
 	else if (type == DIF_VALID)
 		return (DIF_INVALID_M);
 	else
-		return (NULL);
+		return (find_error_6(type));
 }
 
 char	*find_error_4(int type)

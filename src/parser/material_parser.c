@@ -56,8 +56,7 @@ int	material_line_parser(char *line, int *i, t_line_parse_env *env,
 		return (1);
 	else if (!ft_strncmp(line, "p", 8) && mat_pattern(*material, i, env))
 		return (1);
-	// else if (!ft_strncmp(line, "cubic_texture", 14) && mat_cub_t(*material, i, env))
-	// 	return (1);
+
 	else if (j == *i)
 		return (file_error_line(env->line_number, ERR_MAT));
 	return (0);

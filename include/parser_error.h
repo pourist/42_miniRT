@@ -87,6 +87,11 @@
 #define SPOTLIGHT_CRADIAN_M "Error\n Wrong arguments for Spotlight: Center Radian."
 #define SPOTLIGHT_FRADIAN_M "Error\n Wrong arguments for Spotlight: Fade Radian."
 #define ERR_TEX_FORMAT "Expected format: \".png\""
+#define TRIPPLE "Triple values count incorrect"
+#define TRIPPLE_I "Invalid Triple values"
+#define TRIPPLE_R "Triple values out of range"
+#define DOUBLE_I "Invalid Double values"
+#define DOUBLE_R "Double values out of range"
 
 typedef enum e_error_type
 {
@@ -149,6 +154,11 @@ typedef enum e_error_type
 	SCALE,
 	SCALE_INVALID,
 	SCALE_RANGE,
+	E_TRIPPLE,
+	E_TRIPPLE_I,
+	E_TRIPPLE_R,
+	E_DOUBLE_I,
+	E_DOUBLE_R,
 }	t_error_type;
 
 #endif
