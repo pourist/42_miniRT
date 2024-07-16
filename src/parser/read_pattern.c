@@ -1,28 +1,28 @@
 #include "parser.h"
 
-int pat_type(char *line, int *i, t_line_parse_env *env, 
+int	pat_type(char *line, int *i, t_line_parse_env *env, 
 		t_pattern **pattern)
 {
 	int	j;
 
 	j = *i;
-    if (!ft_strncmp(line, "texture", 8) && pat_text(*pattern, i, env))
+	if (!ft_strncmp(line, "texture", 8) && pat_text(*pattern, i, env))
 		return (1);
-    else if (!ft_strncmp(line, "cubed_texture", 14) && cub_text(*pattern, i, env))
+	else if (!ft_strncmp(line, "cubed_texture", 14) && cub_text(*pattern, i, env))
 		return (1);
-    else if (!ft_strncmp(line, "blended", 14) && p_blended(*pattern, i, env))
+	else if (!ft_strncmp(line, "blended", 14) && p_blended(*pattern, i, env))
 		return (1);
-    else if (!ft_strncmp(line, "checkers", 14) && p_checkers(*pattern, i, env))
+	else if (!ft_strncmp(line, "checkers", 14) && p_checkers(*pattern, i, env))
 		return (1);
-    else if (!ft_strncmp(line, "full_gradient", 14) && p_f_grad(*pattern, i, env))
+	else if (!ft_strncmp(line, "full_gradient", 14) && p_f_grad(*pattern, i, env))
 		return (1);
-    else if (!ft_strncmp(line, "gradient", 14) && p_grad(*pattern, i, env))
+	else if (!ft_strncmp(line, "gradient", 14) && p_grad(*pattern, i, env))
 		return (1);
-    else if (!ft_strncmp(line, "radial", 14) && p_radial(*pattern, i, env))
+	else if (!ft_strncmp(line, "radial", 14) && p_radial(*pattern, i, env))
 		return (1);
-    else if (!ft_strncmp(line, "ring", 14) && p_ring(*pattern, i, env))
+	else if (!ft_strncmp(line, "ring", 14) && p_ring(*pattern, i, env))
 		return (1);
-    else if (!ft_strncmp(line, "strip", 14) && p_strip(*pattern, i, env))
+	else if (!ft_strncmp(line, "strip", 14) && p_strip(*pattern, i, env))
 		return (1);
 	else if (j == *i)
 		return (file_error_line(env->line_number, "pattern error"));
@@ -31,18 +31,16 @@ int pat_type(char *line, int *i, t_line_parse_env *env,
 
 int	init_pattern(t_line_parse_env	*env, t_pattern **pattern)
 {
-    int i;
+	int i;
 
-    i = 2;
+	i = 2;
 	if (ft_strarr_len(env->line) < 2)
 		return (file_error_line(env->line_number, ERR_PAT), 1);
 	*pattern = (t_pattern *)malloc(sizeof(t_pattern));
 	new_pattern(*pattern);
 	(*pattern)->name = ft_strdup(env->line[1]);
-    if (env->line[2] && pat_type(env->line[2], &i, env, pattern))
-	{
-        return (1);
-	}
+	if (env->line[2] && pat_type(env->line[2], &i, env, pattern))
+		return (1);
 	while (env->line[i])
 	{
 		if (transform_type(env->line[i], &i, env, pattern))
