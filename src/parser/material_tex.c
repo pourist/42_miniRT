@@ -1,15 +1,21 @@
 #include "parser.h"
 
-int mat_tex(t_material *material, int *index, t_line_parse_env	*env)
+int mat_pattern(t_material *material, int *index, t_line_parse_env	*env)
 {
-    char *texture_path;
-   // int length;
+	int i;
 
+	i = 0;
 	(*index)++;
 	if (!env->line[*index] || env->line[*index][0] == '\n')
-		return (file_error_line(env->line_number, ERR_MAT));
-    texture_path = env->line[*index];
-    // length = ft_strlen(texture_path);
-    new_texture_map(&material->pattern, texture_path);
-    return (0);
+		return (file_error_line(env->line_number, "Pattern not found."));
+	while (env->pat[i])
+	{
+		if (!ft_strncmp(env->pat[i]->name, env->line[*index], ft_strlen(env->line[*index])))
+		{
+			material->pattern = *env->pat[i];
+			return (0);
+		}
+		i++;
+	}
+	return (file_error(env, "Pattern not found."));
 }

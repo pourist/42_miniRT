@@ -1,6 +1,8 @@
 #ifndef PARSER_ERROR_H
 # define PARSER_ERROR_H
 
+#define ERR_CUBE_TEX "Expected format: Cube_texture requires six .png files."
+#define ERR_PAT "Expected format: <name> <type> <transformation(s)>"
 #define	ERR_OBJ "Expected format: .obj file_name <center x,y,z> <axis vector> <scale>"
 #define	ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
 #define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
@@ -16,7 +18,7 @@
 #define ERR_CUBE "Expected format: cube <center x,y,z> <axis vector> <width> <height> <depth> <R,G,B> [material]"
 #define	RATIO_INVALID "Invalid ambient lighting ratio"
 #define RATIO_RANGE "Ambient lighting ratio out of range"
-#define RGB_LEN "RGB elements count incorrect."
+#define RGB_LEN "Invalid RGB numbers."
 #define RGB_INVALID "Invalid RGB numbers."
 #define RGB_RANGE "RGB values out of range"
 #define MALLOC_FAIL "Error\nMemory allocation failed"
@@ -84,7 +86,12 @@
 #define UV_LIGHT_STEPS_M "Error\n Wrong arguments for Light with UV steps."
 #define SPOTLIGHT_CRADIAN_M "Error\n Wrong arguments for Spotlight: Center Radian."
 #define SPOTLIGHT_FRADIAN_M "Error\n Wrong arguments for Spotlight: Fade Radian."
-#define ERR_TEX_FORMAT "Expected format: \".png\" enclosed in quotes"
+#define ERR_TEX_FORMAT "Expected format: \".png\""
+#define TRIPPLE "Triple values count incorrect"
+#define TRIPPLE_I "Invalid Triple values"
+#define TRIPPLE_R "Triple values out of range"
+#define DOUBLE_I "Invalid Double values"
+#define DOUBLE_R "Double values out of range"
 
 typedef enum e_error_type
 {
@@ -147,6 +154,11 @@ typedef enum e_error_type
 	SCALE,
 	SCALE_INVALID,
 	SCALE_RANGE,
+	E_TRIPPLE,
+	E_TRIPPLE_I,
+	E_TRIPPLE_R,
+	E_DOUBLE_I,
+	E_DOUBLE_R,
 }	t_error_type;
 
 #endif

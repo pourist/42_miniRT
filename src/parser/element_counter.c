@@ -55,6 +55,8 @@ void	counter_helper(t_e_counts *count, char *line)
 		count->mat++;
 	else if (start_with(line, ".obj"))
 		count->ob++;
+	else if (start_with(line, "pattern"))
+		count->pattern++;
 	else if (!start_with(line, "\n") && ft_strncmp(line, "#", 1))
 		count->unknown++;
 }
@@ -112,6 +114,7 @@ int	init_counter_fd(t_e_counts *count, char *file)
 	count->cone = 0;
 	count->mat = 0;
 	count->ob = 0;
+	count->pattern = 0;
 	count->fd = open(file, O_RDONLY);
 	if (count->fd < 0)
 		return (print_error("Error\nUnable to read the .rt file."));

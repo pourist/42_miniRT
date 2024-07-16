@@ -5,6 +5,7 @@
         "lights.h": "c",
         "mlx42.h": "c",
         "libft.h": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "typeinfo": "c"
     }
 }

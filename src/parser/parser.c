@@ -36,12 +36,16 @@ int	parser(int argc, char **argv, t_mini_rt *minirt)
 {
 	t_e_counts	count;
 
+	count.pat = NULL;
+	count.material = NULL;
 	if (arg_checker(argc, argv))
 		return (1);
 	if (init_counter_fd(&count, argv[1]))
 		return (flush_fd(count.fd), 1);
+	if (read_pattern(&count, argv[1]))
+		return (free_pat_mat(&count), flush_fd(count.fd), 1);
 	if (read_material(&count, argv[1]))
-		return (free_material(count.material), flush_fd(count.fd), 1);
+		return (free_pat_mat(&count), flush_fd(count.fd), 1);
 	if (init_minirt(minirt, &count))
 		return (free_mini_rt(minirt), 1);
 	return (0);

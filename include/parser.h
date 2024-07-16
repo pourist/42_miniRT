@@ -30,7 +30,9 @@ typedef struct s_e_counts {
   int cube;
   int mat;
   int ob;
+  int pattern;
   t_material **material;
+  t_pattern **pat;
 } t_e_counts;
 
 typedef struct s_line_parse_env {
@@ -42,6 +44,7 @@ typedef struct s_line_parse_env {
   int l;
   int o;
   t_material **material;
+  t_pattern **pat;
 } t_line_parse_env;
 
 typedef struct s_cylinder_info {
@@ -101,6 +104,7 @@ int print_error(char *text);
 int free_print_error(t_world *minirt, char *str);
 int free_s(char **s);
 void free_mini_rt(t_mini_rt *mini_rt);
+void	reset_file(t_e_counts *count, char *file);
 // parser_utils
 int is_valid_number(char *str);
 int is_in_range(double numb, double min, double max);
@@ -121,6 +125,7 @@ int init_counter_fd(t_e_counts *count, char *file);
 int file_error(t_line_parse_env *parse, char *text);
 int file_error_line(int line, char *text);
 char *find_error(int type);
+char	*find_error_6(int type);
 // valid args
 int solo(char *number, double min, double max, t_line_parse_env *env);
 int triplets(char **triple, double min, double max, t_line_parse_env *env);
@@ -162,4 +167,20 @@ int mat_trans(t_material *material, int *index, t_line_parse_env *env);
 int mat_refractive(t_material *material, int *index, t_line_parse_env *env);
 void free_material(t_material **material);
 int mat_tex(t_material *material, int *index, t_line_parse_env	*env);
+int mat_cub_t(t_material *material, int *index, t_line_parse_env	*env);
+// pattern
+int	read_pattern(t_e_counts *count, char *file);
+void    free_pat_mat(t_e_counts *c);
+int mat_pattern(t_material *material, int *index, t_line_parse_env	*env);
+int pat_text(t_pattern *pattern, int *index, t_line_parse_env *env);
+int cub_text(t_pattern *ptransform_tsattern, int *index, t_line_parse_env *env);
+int p_blended(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_checkers(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_f_grad(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_grad(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_radial(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_ring(t_pattern *pattern, int *index, t_line_parse_env *env);
+int p_strip(t_pattern *pattern, int *index, t_line_parse_env *env);
+int patter_type_parser(int *index, t_line_parse_env *env, char **rgb1, char **rgb2);
+int transform_type(char *line, int *i, t_line_parse_env *env, t_pattern **pattern);
 #endif
