@@ -43,10 +43,11 @@ int	init_pattern(t_line_parse_env	*env, t_pattern **pattern)
 	{
         return (1);
 	}
-	if (!env->line[2])
-		return (file_error_line(env->line_number, "pattern error"));
-	if (transform_type(env->line[2], &i, env, pattern))
-		return (1);
+	while (env->line[i])
+	{
+		if (transform_type(env->line[i], &i, env, pattern))
+			return (1);
+	}
 	return (0);
 }
 

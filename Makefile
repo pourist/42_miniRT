@@ -64,7 +64,7 @@ SOURCE						:= main.c tuple.c basic_math.c vector_math.c utils.c color.c \
 										 init_ambient.c init_mini_rt.c error.c valid_args.c init_cylinder.c \
 										 line_parser.c init_camera.c init_light.c init_sphere.c init_plane.c \
 										 init_cone.c calculate_rotation.c init_cube.c material_parser.c materials.c \
-										 materials_II.c \
+										 materials_II.c pattern_transform.c\
 										 init_light_area.c init_light_spot.c init_light_area_spot.c free_pat_mat.c read_pattern.c pattern_tex.c pattern_tex2.c
 OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 

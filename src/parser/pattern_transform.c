@@ -32,16 +32,38 @@ int transform_ts(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 int transform_trx(t_pattern *pattern, int *index, t_line_parse_env *env)
 {
-    char    **tripple;
-
     (*index)++;
     if (!env->line[*index] || env->line[*index][0] == '\n')
         return (file_error_line(env->line_number, ERR_PAT));
     env->error_type = E_DOUBLE_I;
-	if (triplets(tripple, (double)INT_MIN, (double)INT_MAX, env))
-		return (1);
+    if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
+		  return (1);
     (void)pattern;
-    return(free_s(tripple), 0);
+    return(0);
+}
+
+int transform_try(t_pattern *pattern, int *index, t_line_parse_env *env)
+{
+    (*index)++;
+    if (!env->line[*index] || env->line[*index][0] == '\n')
+        return (file_error_line(env->line_number, ERR_PAT));
+    env->error_type = E_DOUBLE_I;
+    if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
+		  return (1);
+    (void)pattern;
+    return(0);
+}
+
+int transform_trz(t_pattern *pattern, int *index, t_line_parse_env *env)
+{
+    (*index)++;
+    if (!env->line[*index] || env->line[*index][0] == '\n')
+        return (file_error_line(env->line_number, ERR_PAT));
+    env->error_type = E_DOUBLE_I;
+    if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
+		  return (1);
+    (void)pattern;
+    return(0);
 }
 
 int transform_type(char *line, int *i, t_line_parse_env *env, 
@@ -49,7 +71,7 @@ int transform_type(char *line, int *i, t_line_parse_env *env,
 {
 	int	j;
 
-	j = *i;
+	  j = *i;
     if (!ft_strncmp(line, "Tt", 3) && transform_tt(*pattern, i, env))
 		return (1);
     else if (!ft_strncmp(line, "Ts", 3) && transform_ts(*pattern, i, env))
