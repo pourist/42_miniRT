@@ -2,87 +2,79 @@
 
 int	transform_tt(t_pattern *pattern, int *index, t_line_parse_env *env)
 {
-	char	**tripple;
+	char		**triple;
+	t_matrix	translate_m;
 
 	(*index)++;
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, ERR_PAT));
 	env->error_type = E_TRIPPLE;
-	tripple = ft_subsplit(env->line[*index], ",\n");
-	if (triplets(tripple, (double)INT_MIN, (double)INT_MAX, env))
+	triple = ft_subsplit(env->line[*index], ",\n");
+	if (triplets(triple, (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	(void)pattern;
-	return (free_s(tripple), 0);
+	set_pattern_transform(pattern, translation(ft_atof(triple[0]),
+			ft_atof(triple[1]), ft_atof(triple[2]), &translate_m));
+	return (free_s(triple), 0);
 }
 
 int	transform_ts(t_pattern *pattern, int *index, t_line_parse_env *env)
 {
-	char	**tripple;
+	char		**triple;
+	t_matrix	scaling_t;
 
 	(*index)++;
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, ERR_PAT));
 	env->error_type = E_TRIPPLE;
-	tripple = ft_subsplit(env->line[*index], ",\n");
-	if (triplets(tripple, (double)INT_MIN, (double)INT_MAX, env))
+	triple = ft_subsplit(env->line[*index], ",\n");
+	if (triplets(triple, (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	(void)pattern;
-	return(free_s(tripple), 0);
+	set_pattern_transform(pattern, scaling(ft_atof(triple[0]),
+			ft_atof(triple[1]), ft_atof(triple[2]), &scaling_t));
+	return (free_s(triple), 0);
 }
 
 int	transform_trx(t_pattern *pattern, int *index, t_line_parse_env *env)
 {
+	t_matrix	rotation_t;
+
 	(*index)++;
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, ERR_PAT));
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	(void)pattern;
-	return(0);
+	set_pattern_transform(pattern, rotation_x(cos(ft_atof(env->line[*index])),
+			sin(ft_atof(env->line[*index])), &rotation_t));
+	return (0);
 }
 
 int	transform_try(t_pattern *pattern, int *index, t_line_parse_env *env)
 {
+	t_matrix	rotation_t;
+
 	(*index)++;
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, ERR_PAT));
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	(void)pattern;
-	return(0);
+	set_pattern_transform(pattern, rotation_x(cos(ft_atof(env->line[*index])),
+			sin(ft_atof(env->line[*index])), &rotation_t));
+	return (0);
 }
 
 int	transform_trz(t_pattern *pattern, int *index, t_line_parse_env *env)
 {
+	t_matrix	rotation_t;
+
 	(*index)++;
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, ERR_PAT));
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	(void)pattern;
-	return(0);
+	set_pattern_transform(pattern, rotation_x(cos(ft_atof(env->line[*index])),
+			sin(ft_atof(env->line[*index])), &rotation_t));
+	return (0);
 }
-
-int	transform_type(char *line, int *i, t_line_parse_env *env, 
-		t_pattern **pattern)
-{
-	int	j;
-
-	j = *i;
-	if (!ft_strncmp(line, "Tt", 3) && transform_tt(*pattern, i, env))
-		return (1);
-	else if (!ft_strncmp(line, "Ts", 3) && transform_ts(*pattern, i, env))
-	    return (1);
-	else if (!ft_strncmp(line, "Trx", 4) && transform_trx(*pattern, i, env))
-		return (1);
-	else if (!ft_strncmp(line, "Try", 4) && transform_try(*pattern, i, env))
-		return (1);
-	else if (!ft_strncmp(line, "Trz", 4) && transform_trz(*pattern, i, env))
-		return (1);
-	else if (j == *i)
-		return (file_error_line(env->line_number, "pattern error"));
-	return ((*i)++, 0);
-}	

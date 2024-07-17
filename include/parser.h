@@ -182,5 +182,10 @@ int p_radial(t_pattern *pattern, int *index, t_line_parse_env *env);
 int p_ring(t_pattern *pattern, int *index, t_line_parse_env *env);
 int p_strip(t_pattern *pattern, int *index, t_line_parse_env *env);
 int patter_type_parser(int *index, t_line_parse_env *env, char **rgb1, char **rgb2);
-int transform_type(char *line, int *i, t_line_parse_env *env, t_pattern **pattern);
+// pattern transform
+int	transform_tt(t_pattern *pattern, int *index, t_line_parse_env *env);
+int	transform_ts(t_pattern *pattern, int *index, t_line_parse_env *env);
+int	transform_trx(t_pattern *pattern, int *index, t_line_parse_env *env);
+int	transform_try(t_pattern *pattern, int *index, t_line_parse_env *env);
+int	transform_trz(t_pattern *pattern, int *index, t_line_parse_env *env);
 #endif
