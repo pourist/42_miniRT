@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_pat_mat.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 11:29:24 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/17 11:29:25 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 void	free_material(t_material	**material)
@@ -32,10 +44,10 @@ void	free_pattern(t_pattern	**pattern)
 	free(pattern);
 }
 
-void    free_pat_mat(t_e_counts *c)
+void	free_pat_mat(t_e_counts *c)
 {
-    if (c->material)
-        free_material(c->material);
-    if (c->pat)
-        free_pattern(c->pat);
+	if (c->material)
+		free_material(c->material);
+	if (c->pat)
+		free_pattern(c->pat);
 }

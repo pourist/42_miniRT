@@ -16,7 +16,7 @@ void	make_plane(char **rgb, char **normal, char **center, t_shape *obj)
 {
 	t_vector	vec_default;
 	t_vector	vec_user;
-	t_matrix	rotation_m; 
+	t_matrix	rotation_m;
 	t_matrix	translation_m;
 	t_matrix	transform_m;
 

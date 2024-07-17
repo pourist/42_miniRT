@@ -15,7 +15,7 @@
 static bool	set_area_spotlight_params(t_aspotlight_params *asp, char **pos,
 		char **to, t_line_parse_env *env)
 {
-	t_point	to_point; 
+	t_point	to_point;
 
 	env->error_type = POS;
 	pos = ft_subsplit(env->line[1], ",\n");

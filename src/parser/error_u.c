@@ -39,4 +39,3 @@ char	*find_error_6(int type)
 	else
 		return (NULL);
 }
-

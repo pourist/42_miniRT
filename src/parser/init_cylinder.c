@@ -64,7 +64,7 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	t_cylinder_info	cy;
 	char			**center;
 	char			**axis;
-	int		material;
+	int				material;
 
 	material = 0;
 	if (ft_strarr_len(env->line) == 7)
