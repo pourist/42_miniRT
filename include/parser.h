@@ -31,7 +31,7 @@ typedef struct s_e_counts
 	int			cube;
 	int			mat;
 	int			ob;
-	int			ipattern;
+	int			pattern;
 	t_material	**material;
 	t_pattern	**pat;
 }	t_e_counts;
@@ -184,8 +184,8 @@ int		p_grad(t_pattern *pattern, int *index, t_line_parse_env *env);
 int		p_radial(t_pattern *pattern, int *index, t_line_parse_env *env);
 int		p_ring(t_pattern *pattern, int *index, t_line_parse_env *env);
 int		p_strip(t_pattern *pattern, int *index, t_line_parse_env *env);
-int		patter_type_parser(int *index, t_line_parse_env *env,
-			char **rgb1, char **rgb2);
+int		pattern_type_parser(int *index, t_line_parse_env *env,
+			char ***rgb1, char ***rgb2);
 // pattern transform
 int		transform_tt(t_pattern *pattern, int *index,
 			t_line_parse_env *env);

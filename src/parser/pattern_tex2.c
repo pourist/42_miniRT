@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:29:59 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 11:30:00 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:22:02 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	p_f_grad(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-	if (patter_type_parser(index, env, rgb1, rgb2))
+	if (pattern_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
 	new_color(ft_atof(rgb1[0]), ft_atof(rgb1[1]), ft_atof(rgb1[2]), &colors[0]);
 	new_color(ft_atof(rgb2[0]), ft_atof(rgb2[1]), ft_atof(rgb2[2]), &colors[1]);
@@ -39,7 +39,7 @@ int	p_grad(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-	if (patter_type_parser(index, env, rgb1, rgb2))
+	if (pattern_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
 	new_color(ft_atof(rgb1[0]), ft_atof(rgb1[1]), ft_atof(rgb1[2]), &colors[0]);
 	new_color(ft_atof(rgb2[0]), ft_atof(rgb2[1]), ft_atof(rgb2[2]), &colors[1]);
@@ -57,7 +57,7 @@ int	p_radial(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-	if (patter_type_parser(index, env, rgb1, rgb2))
+	if (pattern_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
 	new_color(ft_atof(rgb1[0]), ft_atof(rgb1[1]), ft_atof(rgb1[2]), &colors[0]);
 	new_color(ft_atof(rgb2[0]), ft_atof(rgb2[1]), ft_atof(rgb2[2]), &colors[1]);
@@ -75,7 +75,7 @@ int	p_ring(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-	if (patter_type_parser(index, env, rgb1, rgb2))
+	if (pattern_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
 	new_color(ft_atof(rgb1[0]), ft_atof(rgb1[1]), ft_atof(rgb1[2]), &colors[0]);
 	new_color(ft_atof(rgb2[0]), ft_atof(rgb2[1]), ft_atof(rgb2[2]), &colors[1]);
@@ -93,7 +93,7 @@ int	p_strip(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-	if (patter_type_parser(index, env, rgb1, rgb2))
+	if (pattern_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
 	new_color(ft_atof(rgb1[0]), ft_atof(rgb1[1]), ft_atof(rgb1[2]), &colors[0]);
 	new_color(ft_atof(rgb2[0]), ft_atof(rgb2[1]), ft_atof(rgb2[2]), &colors[1]);
