@@ -69,7 +69,7 @@ static int	init_pattern(t_line_parse_env	*env, t_pattern **pattern)
 	i = 2;
 	if (ft_strarr_len(env->line) < 2)
 		return (file_error_line(env->line_number, ERR_PAT), 1);
-	*pattern = (t_pattern *)malloc(sizeof(t_pattern));
+	*pattern = (t_pattern *)ft_calloc(1, sizeof(t_pattern));
 	new_pattern(*pattern);
 	(*pattern)->name = ft_strdup(env->line[1]);
 	if (env->line[2] && pat_type(env->line[2], &i, env, pattern))
@@ -107,7 +107,7 @@ int	read_pattern(t_e_counts *count, char *file)
 		}
 		parse.line = ft_subsplit (parse.temp, " \t\n");
 		free(parse.temp);
-		if (parse.line && parse.line[0] &&!ft_strncmp(parse.line[0], "pattern", 8))
+		if (parse.line[0] && !ft_strncmp(parse.line[0], "pattern", 8))
 		{
 			if (init_pattern(&parse, &count->pat[index]))
 				return (free_s(parse.line), 1);
