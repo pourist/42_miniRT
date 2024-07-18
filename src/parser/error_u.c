@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_u.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:44:18 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/02 17:44:38 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:28:20 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ char	*find_error_6(int type)
 		return (DOUBLE_I);
 	else if (type == E_DOUBLE_R)
 		return (DOUBLE_R);
+	else if (type == SCALE)
+		return (SCALE_COUNT_M);
+	else if (type == SCALE_INVALID)
+		return (SCALE_INVALID_M);
+	else if (type == SCALE_RANGE)
+		return (SCALE_RANGE_M);
 	else
 		return (NULL);
 }

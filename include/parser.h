@@ -156,6 +156,8 @@ int		init_obj(t_line_parse_env *env, t_shape *obj, t_world *world);
 void	calculate_rotation_matrix(t_vector *default_normal,
 			t_vector *user_normal, t_matrix *rotation_matrix);
 // material_parser
+int		has_material(t_line_parse_env *env, int args);
+
 int		find_material(t_material **material, t_shape *obj, char *name,
 			t_line_parse_env *env);
 int		read_material(t_e_counts *count, char *file);

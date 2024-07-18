@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:38:39 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/12 11:45:37 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/17 16:28:09 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,6 @@ char	*find_error_3(int type)
 		return (SPOTLIGHT_CRADIAN_M);
 	else if (type == SPOTLIGHT_FRADIAN)
 		return (SPOTLIGHT_FRADIAN_M);
-	else if (type == SCALE)
-		return (SCALE_COUNT_M);
-	else if (type == SCALE_INVALID)
-		return (SCALE_INVALID_M);
-	else if (type == SCALE_RANGE)
-		return (SCALE_RANGE_M);
 	else
 		return (find_error_4(type));
 }

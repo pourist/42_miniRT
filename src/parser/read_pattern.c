@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:30:06 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 14:06:12 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:11:37 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	read_pattern(t_e_counts *count, char *file)
 		}
 		parse.line = ft_subsplit (parse.temp, " \t\n");
 		free(parse.temp);
-		if (!ft_strncmp(parse.line[0], "pattern", 8) && parse.line[0])
+		if (parse.line && parse.line[0] &&!ft_strncmp(parse.line[0], "pattern", 8))
 		{
 			if (init_pattern(&parse, &count->pat[index]))
 				return (free_s(parse.line), 1);
