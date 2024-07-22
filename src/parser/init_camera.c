@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:39:43 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/12 09:42:00 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/22 09:19:34 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,15 @@ void	make_camera(t_camera *camera, double fov, char **pov, char **or)
 	t_vector	direction;
 	t_vector	up;
 
-	new_vector(ft_atof(or[0]), ft_atof(or[1]), ft_atof(or[2]), &direction);
 	new_camera(camera, WIDTH, HEIGHT, degrees_to_radian(fov));
 	new_point(ft_atof(pov[0]), ft_atof(pov[1]), ft_atof(pov[2]), &from);
-	new_vector(0, 1, 0, &up);
+	new_vector(ft_atof(or[0]), ft_atof(or[1]), ft_atof(or[2]), &direction);
+	if (direction.y == -1)
+		new_vector(0, 0, 1, &up);
+	else if (direction.y == 1)
+		new_vector(0, 0, -1, &up);
+	else
+		new_vector(0, 1, 0, &up);
 	set_transform_camera(camera, view_transform_with_direction(&from,
 			&direction, &up, &camera->transform));
 }

@@ -62,7 +62,7 @@ static void	render_projectile_motion(t_canvas *canvas)
 	while (p.position.y >= 0.0)
 	{
 		p = tick(e, p);
-		write_dot(canvas->img, p.position.x, *canvas->height - p.position.y, c);
+		write_dot(canvas->img, p.position.x, canvas->img->height - p.position.y, c);
 		printf("x: %f, y: %f, z: %f\n",
 			p.position.x, p.position.y, p.position.z);
 	}

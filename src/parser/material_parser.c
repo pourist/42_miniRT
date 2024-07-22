@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:09:21 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 23:15:19 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/17 10:17:04 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	material_line_parser(char *line, int *i, t_line_parse_env *env,
 		return (1);
 	else if (!ft_strncmp(line, "p", 8) && mat_pattern(*material, i, env))
 		return (1);
-
 	else if (j == *i)
 		return (file_error_line(env->line_number, ERR_MAT));
 	return (0);
