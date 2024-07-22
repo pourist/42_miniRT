@@ -56,6 +56,7 @@ typedef struct s_pattern {
 	t_uv			v3_uv;
 	double			bump_map_scale;
 	double			disp_intensity;
+	char			*name;
 }	t_pattern;
 
 typedef enum e_cube_face {

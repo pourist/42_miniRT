@@ -30,7 +30,7 @@ void	make_cone(t_cone_info *cone, char **center, char **axis, t_shape *obj)
 	calculate_rotation_matrix(&default_axis, &axis_v, &rotation_m);
 	multiply_matrices(translation(ft_atof(center[0]), ft_atof(center[1])
 			+ (cone->height * 0.5), ft_atof(center[2]), &trans_scale_m),
-		scaling(cone->diam, cone->height, cone->diam, 
+		scaling(cone->diam, cone->height, cone->diam,
 			&transform_m), &trans_scale_m);
 	multiply_matrices(&rotation_m, &trans_scale_m, &transform_m);
 	set_transform(obj, &transform_m);

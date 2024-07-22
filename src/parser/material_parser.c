@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:09:21 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 23:15:19 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/17 10:17:04 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	material_line_parser(char *line, int *i, t_line_parse_env *env,
 		return (1);
 	else if (!ft_strncmp(line, "ri", 3) && mat_refractive(*material, i, env))
 		return (1);
-	else if (!ft_strncmp(line, "texture", 8) && mat_tex(*material, i, env))
+	else if (!ft_strncmp(line, "p", 8) && mat_pattern(*material, i, env))
 		return (1);
 	else if (j == *i)
 		return (file_error_line(env->line_number, ERR_MAT));
@@ -80,16 +80,21 @@ int	init_material(t_line_parse_env	*env, t_material **material)
 	return (0);
 }
 
+void	parse_init_mat(t_line_parse_env	*parse, int *index, t_e_counts *count)
+{
+	parse->pat = count->pat;
+	parse->line_number = 1;
+	*index = 0;
+	count->material = (t_material **)ft_calloc(count->mat + 1, 
+		sizeof(t_material*));
+}
+
 int	read_material(t_e_counts *count, char *file)
 {
 	t_line_parse_env	parse;
 	int		index;
 
-	parse.line_number = 1;
-	index = 0;
-	count->material = (t_material **)ft_calloc(count->mat + 1, 
-		sizeof(t_material*));
-	count->material[count->mat] = NULL;
+	parse_init_mat(&parse, &index, count);
 	while (1)
 	{
 		parse.temp = get_next_line(count->fd);
@@ -100,7 +105,7 @@ int	read_material(t_e_counts *count, char *file)
 		}
 		parse.line = ft_subsplit (parse.temp, " \t\n");
 		free(parse.temp);
-		if (!ft_strncmp(parse.line[0], "material", 10) && parse.line[0])
+		if (!ft_strncmp(parse.line[0], "material", 9) && parse.line[0])
 		{
 			if (init_material(&parse, &count->material[index]))
 				return (free_s(parse.line), 1);
@@ -109,7 +114,5 @@ int	read_material(t_e_counts *count, char *file)
 		parse.line_number++;
 		free_s(parse.line);
 	}
-	close(count->fd);
-	count->fd = open(file, O_RDONLY);
-	return (0);
+	return (reset_file(count, file), 0);
 }

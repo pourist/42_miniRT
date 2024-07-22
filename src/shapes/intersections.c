@@ -1,4 +1,16 @@
 #include "shapes.h"
+#include "world.h"
+
+t_hit	*intersect_world(t_world *world, t_ray *ray)
+{
+	int		i;
+
+	world->xs = NULL;
+	i = -1;
+	while (++i < world->objs_count)
+		intersect(&world->xs, &world->objs[i], ray);
+	return (world->xs);
+}
 
 void	intersect(t_hit **xs, t_shape *s, t_ray *r)
 {

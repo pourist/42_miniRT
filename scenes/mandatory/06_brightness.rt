@@ -1,0 +1,52 @@
+# -----------------------------------------------
+# *Ambient light: ration(0,1) | color[r,g,b]
+# -----------------------------------------------
+
+A 0.1 255,255,255
+
+# -----------------------------------------------
+# *Camera: position[x,y,z] | 3d orientation vector(-1,1)[x,y,z] | field of view(0,180) |
+# DOF(depth of field definition) | aperture(0,1) | focus distance | color variance limit | antialiasing(boolean:0,1) | samples(1,1024)
+# -----------------------------------------------
+
+C 0,0,50 0,0,-1 90
+
+# -----------------------------------------------
+# *Light: position[x,y,z] | brightness ration(0,1) | color[r,g,b]
+# *Area Ligth: corner position[x,y,z] | u size(1, 10) | v size(1, 10) | u steps(1, 64) | v steps(1, 64) | color[r,g,b]
+# *Spot Light: position[x,y,z] | to position(direction)[x,y,z] | center radian(0,180) | fade radian(0,180) | color[r,g,b]
+# *Area Spot Light: corner position[x,y,z] | to position(direction)[x,y,z] | u size(1, 10) | v size(1, 10) |
+# u steps(1, 64) | v steps(1, 64) | center radian(0,180) | fade radian(0,180) | color[r,g,b]
+# -----------------------------------------------
+
+L 15,15,0 1 255,255,255
+
+# -----------------------------------------------
+# *Patterns: name | texture [path] | cubed_texture [path * 6] | blended [c1(r,g,b), c2(r,g,b)] | radial [c1, c2] |
+# strip [c1, c2] | gradient [c1, c2] | full_gradient [c1, c2] | ring [c1, c2] | checkers [c1, c2]
+# -----------------------------------------------
+
+# -----------------------------------------------
+# *Materials: name | color[r,g,b] | ambient[r,g,b] | diffuse | specular | shininess | reflection | refraction index | transparency | pattern ref.
+# -----------------------------------------------
+
+# -----------------------------------------------
+# *Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
+# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
+# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
+# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
+# -----------------------------------------------
+
+sp 0,0,0 5 250,220,50
+sp 15,0,3 7 20,120,250
+sp 0,-6,25 3 50,220,50
+sp 8,-3,15 4 250,250,250
+cy -12,10,0 0,1,0 3 10 20,250,250
+cy -12,8,0 1,0,1 2 30 225,225,225
+pl 0,-8,0 0,1,0 50,50,200
+pl -10,0,0 1,1,0 50,50,200
+
+# -----------------------------------------------
+# *.obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
+# -----------------------------------------------

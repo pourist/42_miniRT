@@ -40,3 +40,9 @@ void	free_mini_rt(t_mini_rt *mini_rt)
 	if (&(mini_rt->world))
 		free_world(&(mini_rt->world));
 }
+
+void	reset_file(t_e_counts *count, char *file)
+{
+	close(count->fd);
+	count->fd = open(file, O_RDONLY);
+}
