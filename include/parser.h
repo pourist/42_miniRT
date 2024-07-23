@@ -9,8 +9,10 @@
 #include "obj_loader.h"
 #include <limits.h>
 
-#define WIDTH 1920
-#define HEIGHT 1080
+// #define WIDTH 1920
+// #define HEIGHT 1080
+#define WIDTH 800
+#define HEIGHT 600
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -181,7 +183,8 @@ int p_grad(t_pattern *pattern, int *index, t_line_parse_env *env);
 int p_radial(t_pattern *pattern, int *index, t_line_parse_env *env);
 int p_ring(t_pattern *pattern, int *index, t_line_parse_env *env);
 int p_strip(t_pattern *pattern, int *index, t_line_parse_env *env);
-int patter_type_parser(int *index, t_line_parse_env *env, char **rgb1, char **rgb2);
+int	patter_type_parser(int *index, t_line_parse_env *env,
+		char ***rgb1, char ***rgb2);
 // pattern transform
 int	transform_tt(t_pattern *pattern, int *index, t_line_parse_env *env);
 int	transform_ts(t_pattern *pattern, int *index, t_line_parse_env *env);

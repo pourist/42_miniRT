@@ -12,8 +12,10 @@ int	transform_tt(t_pattern *pattern, int *index, t_line_parse_env *env)
 	triple = ft_subsplit(env->line[*index], ",\n");
 	if (triplets(triple, (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	set_pattern_transform(pattern, translation(ft_atof(triple[0]),
-			ft_atof(triple[1]), ft_atof(triple[2]), &translate_m));
+	multiply_matrices(&pattern->transform, translation(ft_atof(triple[0]),
+			ft_atof(triple[1]), ft_atof(triple[2]), &translate_m),
+		&translate_m);
+	set_pattern_transform(pattern, &translate_m);
 	return (free_s(triple), 0);
 }
 
@@ -29,8 +31,9 @@ int	transform_ts(t_pattern *pattern, int *index, t_line_parse_env *env)
 	triple = ft_subsplit(env->line[*index], ",\n");
 	if (triplets(triple, (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	set_pattern_transform(pattern, scaling(ft_atof(triple[0]),
-			ft_atof(triple[1]), ft_atof(triple[2]), &scaling_t));
+	multiply_matrices(&pattern->transform, scaling(ft_atof(triple[0]),
+			ft_atof(triple[1]), ft_atof(triple[2]), &scaling_t), &scaling_t);
+	set_pattern_transform(pattern, &scaling_t);
 	return (free_s(triple), 0);
 }
 
@@ -44,8 +47,9 @@ int	transform_trx(t_pattern *pattern, int *index, t_line_parse_env *env)
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	set_pattern_transform(pattern, rotation_x(cos(ft_atof(env->line[*index])),
-			sin(ft_atof(env->line[*index])), &rotation_t));
+	multiply_matrices(&pattern->transform, rotation_x(cos(ft_atof(env->line[*index])),
+			sin(ft_atof(env->line[*index])), &rotation_t), &rotation_t);
+	set_pattern_transform(pattern, &rotation_t);
 	return (0);
 }
 
@@ -59,8 +63,9 @@ int	transform_try(t_pattern *pattern, int *index, t_line_parse_env *env)
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	set_pattern_transform(pattern, rotation_x(cos(ft_atof(env->line[*index])),
-			sin(ft_atof(env->line[*index])), &rotation_t));
+	multiply_matrices(&pattern->transform, rotation_y(cos(ft_atof(env->line[*index])),
+			sin(ft_atof(env->line[*index])), &rotation_t), &rotation_t);
+	set_pattern_transform(pattern, &rotation_t);
 	return (0);
 }
 
@@ -74,7 +79,8 @@ int	transform_trz(t_pattern *pattern, int *index, t_line_parse_env *env)
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	set_pattern_transform(pattern, rotation_x(cos(ft_atof(env->line[*index])),
-			sin(ft_atof(env->line[*index])), &rotation_t));
+	multiply_matrices(&pattern->transform, rotation_z(cos(ft_atof(env->line[*index])),
+			sin(ft_atof(env->line[*index])), &rotation_t), &rotation_t);
+	set_pattern_transform(pattern, &rotation_t);
 	return (0);
 }

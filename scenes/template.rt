@@ -18,6 +18,7 @@
 # -----------------------------------------------
 # *Patterns: name | texture [path] | cubed_texture [path * 6] | blended [c1(r,g,b), c2(r,g,b)] | radial [c1, c2] |
 # strip [c1, c2] | gradient [c1, c2] | full_gradient [c1, c2] | ring [c1, c2] | checkers [c1, c2]
+# Pattern_transformations: Tt [x,y,z] | Ts [x,y,z] | Trx [radian] | Try [radian] | Trz [radian]
 # -----------------------------------------------
 
 # -----------------------------------------------
@@ -29,7 +30,7 @@
 # *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
 # *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
 # *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cube: position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | material ref
 # -----------------------------------------------
 
 # -----------------------------------------------
