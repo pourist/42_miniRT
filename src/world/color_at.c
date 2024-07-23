@@ -101,11 +101,11 @@ t_color	*color_at(t_world *world, t_ray *ray, t_color *color)
 	t_hit	*intersect;
 	t_comps	comps;
 
-	*color = world->ambient;
+	*color = (t_color){0, 0, 0};
 	intersect_world(world, ray);
 	intersect = hit(world->xs);
 	if (!intersect)
-		return (color);
+		return (&world->ambient);
 	comps = prepare_computations(intersect, ray, world->xs);
 	return (shade_hit(world, &comps, color));
 }

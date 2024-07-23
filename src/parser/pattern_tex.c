@@ -42,22 +42,22 @@ int	cub_text(t_pattern *pattern, int *index, t_line_parse_env *env)
 }
 
 int	patter_type_parser(int *index, t_line_parse_env *env,
-		char **rgb1, char **rgb2)
+		char ***rgb1, char ***rgb2)
 {
 	(*index)++;
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, RGB_INVALID));
 	env->error_type = RGB;
-	rgb1 = ft_subsplit(env->line[*index], ",\n");
-	if (triplets(rgb1, 0, 255, env))
+	*rgb1 = ft_subsplit(env->line[*index], ",\n");
+	if (triplets(*rgb1, 0, 255, env))
 		return (1);
 	(*index)++;
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, RGB_INVALID));
 	env->error_type = RGB;
-	rgb2 = ft_subsplit(env->line[*index], ",\n");
-	if (triplets(rgb2, 0, 255, env))
-		return (free_s(rgb1), 1);
+	*rgb2 = ft_subsplit(env->line[*index], ",\n");
+	if (triplets(*rgb2, 0, 255, env))
+		return (free_s(*rgb1), 1);
 	return (0);
 }
 
@@ -70,10 +70,12 @@ int	p_blended(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-	if (patter_type_parser(index, env, rgb1, rgb2))
+	if (patter_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
-	new_color(ft_atof(rgb1[0]), ft_atof(rgb1[1]), ft_atof(rgb1[2]), &colors[0]);
-	new_color(ft_atof(rgb2[0]), ft_atof(rgb2[1]), ft_atof(rgb2[2]), &colors[1]);
+	new_color(ft_atof(rgb1[0]) / 255, ft_atof(rgb1[1]) / 255,
+		ft_atof(rgb1[2]) / 255, &colors[0]);
+	new_color(ft_atof(rgb2[0]) / 255, ft_atof(rgb2[1]) / 255,
+		ft_atof(rgb2[2]) / 255, &colors[1]);
 	new_blended_pattern(new_solid_pattern(&colors[0], &tmp[0]),
 		new_solid_pattern(&colors[1], &tmp[1]), pattern);
 	return (free_s(rgb1), free_s(rgb2), 0);
@@ -88,10 +90,13 @@ int	p_checkers(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-	if (patter_type_parser(index, env, rgb1, rgb2))
+	if (patter_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
-	new_color(ft_atof(rgb1[0]), ft_atof(rgb1[1]), ft_atof(rgb1[2]), &colors[0]);
-	new_color(ft_atof(rgb2[0]), ft_atof(rgb2[1]), ft_atof(rgb2[2]), &colors[1]);
+	new_color(ft_atof(rgb1[0]) / 255, ft_atof(rgb1[1]) / 255,
+		ft_atof(rgb1[2]) / 255, &colors[0]);
+	new_color(ft_atof(rgb2[0]) / 255, ft_atof(rgb2[1]) / 255,
+		ft_atof(rgb2[2]) / 255, &colors[1]);
+	new_pattern(pattern);
 	new_checkers_pattern(new_solid_pattern(&colors[0], &tmp[0]),
 		new_solid_pattern(&colors[1], &tmp[1]), pattern);
 	return (free_s(rgb1), free_s(rgb2), 0);

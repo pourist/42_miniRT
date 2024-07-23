@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:53:26 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/03 14:53:27 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:39:13 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	mat_shininess(t_material *material, int *index, t_line_parse_env	*env)
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, ERR_MAT));
 	env->error_type = SHINE_VALID;
-	if (solo(env->line[*index], 0, 128, env))
+	if (solo(env->line[*index], 0, INT_MAX, env))
 		return (1);
 	material->shininess = ft_atof(env->line[*index]);
 	return (0);
@@ -66,7 +66,7 @@ int	mat_refractive(t_material *material, int *index, t_line_parse_env	*env)
 	if (!env->line[*index] || env->line[*index][0] == '\n')
 		return (file_error_line(env->line_number, ERR_MAT));
 	env->error_type = RIF_VALID;
-	if (solo(env->line[*index], 1, 2.5, env))
+	if (solo(env->line[*index], 0, INT_MAX, env))
 		return (1);
 	material->refractive_index = ft_atof(env->line[*index]);
 	return (0);

@@ -21,8 +21,9 @@
 # example: asL -10,10,-10 0,0,0 2 2 10 10 0.02 0.6 255,255,255
 # -----------------------------------------------
 # Patterns: name | texture [path] | cubed_texture [path * 6] | blended [c1(r,g,b), c2(r,g,b)] | radial [c1, c2] |
-# strip [c1, c2] | gradient [c1, c2] | full_gradient [c1, c2] | ring [c1, c2] | checkers [c1, c2]
-# example: pattern pattern1 texture ./texture/path/texture.png
+# strip [c1, c2] | gradient [c1, c2] | full_gradient [c1, c2] | ring [c1, c2] | checkers [c1, c2] |
+# Pattern_transformations: Tt [x,y,z] | Ts [x,y,z] | Trx [radian] | Try [radian] | Trz [radian]
+# example: pattern pattern1 texture ./texture/path/texture.png Ts 5,10,5
 # -----------------------------------------------
 # Materials: name | color[r,g,b] | ambient[r,g,b] | diffuse | specular | shininess | reflection | refraction index | transparency | pattern ref.
 # example: material m1 c 255,255,255 a 10,10,10 d 0.5 s 0.5 sh 10 refl 0.8 ri 1 trans 0.3 p pattern1
@@ -35,8 +36,8 @@
 # example: cy 0,0,-10 0,1,0 5 2 255,255,255 1 mat2
 # Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
 # example: cone 0,0,-10 0,1,0 5 2 255,255,255 0
-# Cube: position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
-# example: cube 0,0,-10 0,1,0 2,2,2 255,255,255 mat3
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | material ref
+# example: cube 0,0,-10 0,1,0 2 2 2 255,255,255 mat3
 # -----------------------------------------------
 # .obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
 # example: ./models/model.obj 0,0,-10 0,1,0 2,2,2 255,255,255 mat3
