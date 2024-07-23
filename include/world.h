@@ -21,6 +21,7 @@ typedef struct s_world
 	t_light		*lights;
 	t_color		ambient;
 	int			remaining_recursion;
+	t_pattern	**pattern;
 }	t_world;
 
 typedef struct s_comps

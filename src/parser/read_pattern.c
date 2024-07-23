@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_pattern.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 11:30:06 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/17 17:11:37 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
-static int	transform_type(char *line, int *i, t_line_parse_env *env, 
+static int	transform_type(char *line, int *i, t_line_parse_env *env,
 		t_pattern **pattern)
 {
 	int	j;
@@ -21,7 +33,7 @@ static int	transform_type(char *line, int *i, t_line_parse_env *env,
 	return ((*i)++, 0);
 }
 
-static int	pat_type(char *line, int *i, t_line_parse_env *env, 
+static int	pat_type(char *line, int *i, t_line_parse_env *env,
 		t_pattern **p)
 {
 	int	j;
@@ -57,7 +69,7 @@ static int	init_pattern(t_line_parse_env	*env, t_pattern **pattern)
 	i = 2;
 	if (ft_strarr_len(env->line) < 2)
 		return (file_error_line(env->line_number, ERR_PAT), 1);
-	*pattern = (t_pattern *)malloc(sizeof(t_pattern));
+	*pattern = (t_pattern *)ft_calloc(1, sizeof(t_pattern));
 	new_pattern(*pattern);
 	(*pattern)->name = ft_strdup(env->line[1]);
 	if (env->line[2] && pat_type(env->line[2], &i, env, pattern))
@@ -75,7 +87,7 @@ static void	parse_init_pat(t_line_parse_env	*parse, int *index,
 {
 	parse->line_number = 1;
 	*index = 0;
-	count->pat = (t_pattern **)ft_calloc(count->pattern + 1, 
+	count->pat = (t_pattern **)ft_calloc(count->pattern + 1,
 			sizeof(t_pattern*));
 }
 
@@ -95,7 +107,7 @@ int	read_pattern(t_e_counts *count, char *file)
 		}
 		parse.line = ft_subsplit (parse.temp, " \t\n");
 		free(parse.temp);
-		if (!ft_strncmp(parse.line[0], "pattern", 8) && parse.line[0])
+		if (parse.line[0] && !ft_strncmp(parse.line[0], "pattern", 8))
 		{
 			if (init_pattern(&parse, &count->pat[index]))
 				return (free_s(parse.line), 1);

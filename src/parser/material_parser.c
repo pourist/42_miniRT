@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-int	find_material(t_material **material, t_shape *obj, char *name, 
+int	find_material(t_material **material, t_shape *obj, char *name,
 		t_line_parse_env *env)
 {
 	int	i;
@@ -36,7 +36,7 @@ int	find_material(t_material **material, t_shape *obj, char *name,
 	return (file_error(env, MATERIAL_N));
 }
 
-int	material_line_parser(char *line, int *i, t_line_parse_env *env, 
+int	material_line_parser(char *line, int *i, t_line_parse_env *env,
 		t_material **material)
 {
 	int	j;
@@ -89,14 +89,14 @@ void	parse_init_mat(t_line_parse_env	*parse, int *index, t_e_counts *count)
 	parse->pat = count->pat;
 	parse->line_number = 1;
 	*index = 0;
-	count->material = (t_material **)ft_calloc(count->mat + 1, 
-		sizeof(t_material*));
+	count->material = (t_material **)ft_calloc(count->mat + 1,
+			sizeof(t_material*));
 }
 
 int	read_material(t_e_counts *count, char *file)
 {
 	t_line_parse_env	parse;
-	int		index;
+	int					index;
 
 	parse_init_mat(&parse, &index, count);
 	while (1)

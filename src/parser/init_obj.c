@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_obj.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 11:29:39 by ppour-ba          #+#    #+#             */
+/*   Updated: 2024/07/17 11:29:40 by ppour-ba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
 void	make_obj(char *name, t_e_obj *o, t_shape *obj, t_world *world)
 {
-	t_vector axis_v;
-	t_vector default_axis;
-	t_matrix m[4];
-	t_obj_loader loader;
-  
+	t_vector		axis_v;
+	t_vector		default_axis;
+	t_matrix		m[4];
+	t_obj_loader	loader;
+
 	new_vector(0, 1, 0, &default_axis);
-	new_vector(ft_atof(o->axis[0]), ft_atof(o->axis[1]), 
-			ft_atof(o->axis[2]), &axis_v);
-	scaling(ft_atof(o->scale[0]), ft_atof(o->scale[1]), 
-			ft_atof(o->scale[2]), &m[2]);
+	new_vector(ft_atof(o->axis[0]), ft_atof(o->axis[1]),
+		ft_atof(o->axis[2]), &axis_v);
+	scaling(ft_atof(o->scale[0]), ft_atof(o->scale[1]),
+		ft_atof(o->scale[2]), &m[2]);
 	calculate_rotation_matrix(&default_axis, &axis_v, &m[1]);
-	translation(ft_atof(o->center[0]), ft_atof(o->center[1]), 
-			ft_atof(o->center[2]), &m[0]);
+	translation(ft_atof(o->center[0]), ft_atof(o->center[1]),
+		ft_atof(o->center[2]), &m[0]);
 	multiply_matrices(&m[0], multiply_matrices(&m[2], &m[1], &m[3]), &m[3]);
 	set_transform(obj, &m[3]);
 	new_obj_loader(&loader, obj);
@@ -44,5 +56,5 @@ int	init_obj(t_line_parse_env *env, t_shape *obj, t_world *world)
 	free_s(e_obj.center);
 	free_s(e_obj.axis);
 	free_s(e_obj.scale);
-	return(0);
+	return (0);
 }

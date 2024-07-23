@@ -23,7 +23,7 @@ int	mat_color(t_material *material, int *index, t_line_parse_env	*env)
 	rgb = ft_subsplit(env->line[*index], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (1);
-	new_color(ft_atof(rgb[0]) / 255, ft_atof(rgb[1]) / 255, ft_atof(rgb[2]) 
+	new_color(ft_atof(rgb[0]) / 255, ft_atof(rgb[1]) / 255, ft_atof(rgb[2])
 		/ 255, &material->color);
 	free_s(rgb);
 	return (0);
@@ -40,7 +40,7 @@ int	mat_ambient(t_material *material, int *index, t_line_parse_env	*env)
 	rgb = ft_subsplit(env->line[*index], ",\n");
 	if (triplets(rgb, 0, 255, env))
 		return (1);
-	new_color(ft_atof(rgb[0]) / 255, ft_atof(rgb[1]) / 255, ft_atof(rgb[2]) 
+	new_color(ft_atof(rgb[0]) / 255, ft_atof(rgb[1]) / 255, ft_atof(rgb[2])
 		/ 255, &material->ambient);
 	free_s(rgb);
 	return (0);
