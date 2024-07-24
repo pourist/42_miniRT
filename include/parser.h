@@ -174,7 +174,6 @@ void	free_material(t_material **material);
 int		mat_tex(t_material *material, int *index, t_line_parse_env	*env);
 int		mat_cub_t(t_material *material, int *index, t_line_parse_env	*env);
 // pattern
-
 int		read_pattern(t_e_counts *count, char *file);
 void	free_pat_mat(t_e_counts *c);
 int		mat_pattern(t_material *material, int *index, t_line_parse_env	*env);
@@ -190,6 +189,7 @@ int		p_ring(t_pattern *pattern, int *index, t_line_parse_env *env);
 int		p_strip(t_pattern *pattern, int *index, t_line_parse_env *env);
 int		pattern_type_parser(int *index, t_line_parse_env *env,
 			char ***rgb1, char ***rgb2);
+void	free_pattern(t_pattern	**pattern);
 // pattern transform
 int		transform_tt(t_pattern *pattern, int *index,
 			t_line_parse_env *env);

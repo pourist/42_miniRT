@@ -36,6 +36,7 @@ int	init_minirt(t_mini_rt *minirt, t_e_counts *env)
 	new_world(&minirt->world);
 	if (init_mini_rt(&(minirt->world), minirt, env))
 		return (free_pat_mat(env), 1);
-	free_pat_mat(env);
+	free_material(env->material);
+	minirt->world.pattern = env->pat;
 	return (0);
 }

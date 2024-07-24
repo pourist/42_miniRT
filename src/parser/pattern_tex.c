@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:29:55 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 14:25:47 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:14:47 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	p_blended(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-
 	if (pattern_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
 	new_color(ft_atof(rgb1[0]) / 255, ft_atof(rgb1[1]) / 255,
@@ -102,7 +101,6 @@ int	p_checkers(t_pattern *pattern, int *index, t_line_parse_env *env)
 
 	rgb1 = NULL;
 	rgb2 = NULL;
-
 	if (pattern_type_parser(index, env, &rgb1, &rgb2))
 		return (1);
 	new_color(ft_atof(rgb1[0]) / 255, ft_atof(rgb1[1]) / 255,
