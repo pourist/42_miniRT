@@ -13,7 +13,7 @@
 #define ERR_SPOTLIGHT "Expected format: L <x,y,z> (to)<x,y,z> <center radian> <fade radian> <R,G,B>"
 #define ERR_AREA_SPOTLIGHT "Expected format: L <x,y,z> (to)<x,y,z> <u_size> <v_size> <u_steps> <v_steps> <center radian> <fade radian> <R,G,B>"
 #define ERR_PLANE "Expected format: pl <x,y,z> <normal vector> <R,G,B> [material]"
-#define ERR_CYLINDER "Expected format: cy <x,y,z> <axis vector> <diameter> <height> <R,G,B> [material]"
+#define ERR_CYLINDER "Expected format: cy <x,y,z> <axis vector> <diameter> <height> <R,G,B> <is open> [material]"
 #define ERR_CONE "Expected format: cone <base x,y,z> <axis x,y,z> <radius> <height> <is open> <R,G,B> [material]"
 #define ERR_CUBE "Expected format: cube <center x,y,z> <axis vector> <width> <height> <depth> <R,G,B> [material]"
 #define	RATIO_INVALID "Invalid ambient lighting ratio"

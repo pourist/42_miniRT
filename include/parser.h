@@ -55,7 +55,7 @@ typedef struct s_cylinder_info {
   double r;
   double g;
   double b;
-
+  bool open;
 } t_cylinder_info;
 
 typedef struct s_cone_info {

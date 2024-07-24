@@ -24,9 +24,9 @@ int	cub_text(t_pattern *pattern, int *index, t_line_parse_env *env)
 	int			j;
 
 	j = 0;
-	(*index)++;
 	while (j < 6)
 	{
+		(*index)++;
 		if (!env->line[*index] || env->line[*index][0] == '\n')
 			return (file_error_line(env->line_number, ERR_CUBE_TEX));
 		length = ft_strlen(env->line[*index]);
@@ -34,7 +34,6 @@ int	cub_text(t_pattern *pattern, int *index, t_line_parse_env *env)
 					+ length - 4, ".png", 5)))
 			return (file_error_line(env->line_number, ERR_CUBE_TEX));
 		paths[j] = env->line[*index];
-		(*index)++;
 		j++;
 	}
 	new_cubic_texture_map(pattern, paths);
