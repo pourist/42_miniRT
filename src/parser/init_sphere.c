@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_sphere.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:13:52 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/03 16:14:09 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:31:50 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,13 @@ void	make_sphere(char **rgb, double diam, char **center, t_shape *obj)
 	t_matrix	m1;
 	t_matrix	m2;
 	t_matrix	final;
-	double		r;
-	double		g;
-	double		b;
+	double		rgb_d[3];
 
-	r = (ft_atof(rgb[0]) / 255);
-	g = (ft_atof(rgb[1]) / 255);
-	b = (ft_atof(rgb[2]) / 255);
+	rgb_d[0] = (ft_atof(rgb[0]) / 255);
+	rgb_d[1] = (ft_atof(rgb[1]) / 255);
+	rgb_d[2] = (ft_atof(rgb[2]) / 255);
 	new_sphere(obj);
-	new_color(r, g, b, &obj->material.color);
+	new_color(rgb_d[0], rgb_d[1], rgb_d[2], &obj->material.color);
 	translation(ft_atof(center[0]), ft_atof(center[1]),
 		ft_atof(center[2]), &m1);
 	scaling(diam * 0.5, diam * 0.5, diam * 0.5, &m2);
@@ -41,10 +39,8 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj)
 	char	**rgb;
 	int		material;
 
-	material = 0;
-	if (ft_strarr_len(env->line) == 5)
-		material = 1;
-	else if (ft_strarr_len(env->line) != 4)
+	material = has_material(env, 5);
+	if (!material && ft_strarr_len(env->line) != 4)
 		return (file_error(env, ERR_SPHERE));
 	env->error_type = DIAM;
 	if (solo(env->line[2], EPSILON, (double)INT_MAX, env))

@@ -6,6 +6,8 @@
         "mlx42.h": "c",
         "libft.h": "c",
         "algorithm": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "random": "c",
+        "stdbool.h": "c"
     }
 }

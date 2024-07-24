@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cube.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:26:38 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/23 14:42:05 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/17 16:37:20 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,19 @@ void	make_cube(t_cube_info *cube, char **center, char **axis, t_shape *obj)
 {
 	t_vector	axis_v;
 	t_vector	default_axis;
-	t_matrix	trans_m;
-	t_matrix	scale_m;
-	t_matrix	rot_m;
-	t_matrix	final_m;
+	t_matrix	m[4];
 
 	new_cube(obj);
 	new_color(cube->r, cube->g, cube->b, &obj->material.color);
 	new_vector(0, 1, 0, &default_axis);
 	new_vector(ft_atof(axis[0]), ft_atof(axis[1]), ft_atof(axis[2]), &axis_v);
-	calculate_rotation_matrix(&default_axis, &axis_v, &rot_m);
+	calculate_rotation_matrix(&default_axis, &axis_v, &m[2]);
 	translation(ft_atof(center[0]), ft_atof(center[1]),
-		ft_atof(center[2]), &trans_m);
-	scaling(cube->width, cube->height, cube->depth, &scale_m);
-	multiply_matrices(&rot_m, &trans_m, &final_m);
-	multiply_matrices(&final_m, &scale_m, &final_m);
-	set_transform(obj, &final_m);
+		ft_atof(center[2]), &m[0]);
+	scaling(cube->width, cube->height, cube->depth, &m[1]);
+	multiply_matrices(&m[2], &m[0], &m[3]);
+	multiply_matrices(&m[3], &m[1], &m[3]);
+	set_transform(obj, &m[3]);
 }
 
 int	cube_info(t_line_parse_env *env, t_cube_info *cube)
@@ -74,9 +71,7 @@ int	init_cube(t_line_parse_env *env, t_shape *obj)
 	else if (ft_strarr_len(env->line) != 7)
 		return (file_error(env, ERR_CUBE));
 	if (cube_info(env, &cube))
-	{
 		return (1);
-	}
 	env->error_type = CENT;
 	center = ft_subsplit(env->line[1], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
@@ -86,9 +81,7 @@ int	init_cube(t_line_parse_env *env, t_shape *obj)
 	if (triplets(norm, -1, 1, env))
 		return (free_s(center), 1);
 	make_cube(&cube, center, norm, obj);
-	free_s(norm);
-	free_s(center);
 	if (material && find_material(env->material, obj, env->line[7], env))
-		return (1);
-	return (0);
+		return (free_s(norm), free_s(center), 1);
+	return (free_s(norm), free_s(center), 0);
 }

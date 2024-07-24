@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cylinder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:45:14 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/21 23:27:02 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/17 16:29:24 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	t_cylinder_info	cy;
 	char			**center;
 	char			**axis;
-	int		material;
+	int				material;
 
 	material = 0;
 	if (ft_strarr_len(env->line) == 7)
@@ -72,9 +72,7 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	else if (ft_strarr_len(env->line) != 6)
 		return (file_error(env, ERR_CYLINDER));
 	if (cy_info(env, &cy))
-	{
 		return (1);
-	}
 	env->error_type = CENT;
 	center = ft_subsplit(env->line[1], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
