@@ -15,7 +15,7 @@
 static bool	set_spotlight_params(t_spotlight_params *sp, char **pos, char **to,
 		t_line_parse_env *env)
 {
-	t_point	to_point; 
+	t_point	to_point;
 
 	env->error_type = POS;
 	pos = ft_subsplit(env->line[1], ",\n");

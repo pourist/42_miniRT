@@ -16,7 +16,7 @@ int	init_mini_rt(t_world *world, t_mini_rt *minirt, t_e_counts *count)
 {
 	int	objs_count;
 
-	objs_count = count->cylinder + count->sphere + count->plane 
+	objs_count = count->cylinder + count->sphere + count->plane
 		+ count->cone + count->cube + count->ob;
 	world->objs_count = objs_count;
 	world->lights_count = count->light + count->other_light;
@@ -35,7 +35,7 @@ int	init_minirt(t_mini_rt *minirt, t_e_counts *env)
 {
 	new_world(&minirt->world);
 	if (init_mini_rt(&(minirt->world), minirt, env))
-		return (free_material(env->material), 1);
-	free_material(env->material);
+		return (free_pat_mat(env), 1);
+	free_pat_mat(env);
 	return (0);
 }
