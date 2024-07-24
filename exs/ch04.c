@@ -42,12 +42,12 @@ static void	render_clock(t_canvas *canvas)
 	t_matrix	tmp;
 
 	new_color(0.5, 1, 0.5, &color);
-	translation(*canvas->width * 0.5, 0, *canvas->height * 0.5,
+	translation(canvas->img->width * 0.5, 0, canvas->img->height * 0.5,
 		&transformations[0]);
-	if (*canvas->width < *canvas->height)
-		radius = *canvas->width * 3 / 8;
+	if (canvas->img->width < canvas->img->height)
+		radius = canvas->img->width * 3 / 8;
 	else
-		radius = *canvas->height * 3 / 8;
+		radius = canvas->img->height * 3 / 8;
 	new_point(0, 0, radius, &points[0]);
 	i = -1;
 	while (++i < 12)
@@ -70,10 +70,10 @@ static void	render_background(t_canvas *canvas)
 	new_color(0.3, 0.3, 1, &c_tmp);
 	color = get_rgb(&c_tmp);
 	y = -1;
-	while (++y < *canvas->height)
+	while (++y < (int)canvas->img->height)
 	{
 		x = -1;
-		while (++x < *canvas->width)
+		while (++x < (int)canvas->img->width)
 			write_pixel_32(canvas->img, x, y, color);
 	}
 }

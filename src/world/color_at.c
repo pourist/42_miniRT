@@ -1,16 +1,5 @@
 #include "world.h"
 
-t_hit	*intersect_world(t_world *world, t_ray *ray)
-{
-	int		i;
-
-	world->xs = NULL;
-	i = -1;
-	while (++i < world->objs_count)
-		intersect(&world->xs, &world->objs[i], ray);
-	return (world->xs);
-}
-
 void	get_map_displacement(t_shape *shape, t_point *point, t_vector *normal)
 {
 	t_color		disp_color;
@@ -116,7 +105,7 @@ t_color	*color_at(t_world *world, t_ray *ray, t_color *color)
 	intersect_world(world, ray);
 	intersect = hit(world->xs);
 	if (!intersect)
-		return (color);
+		return (&world->ambient);
 	comps = prepare_computations(intersect, ray, world->xs);
 	return (shade_hit(world, &comps, color));
 }

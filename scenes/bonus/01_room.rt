@@ -1,0 +1,76 @@
+# -----------------------------------------------
+# *Ambient light: ration(0,1) | color[r,g,b]
+# -----------------------------------------------
+
+A 0.1 255,255,255
+
+# -----------------------------------------------
+# *Camera: position[x,y,z] | 3d orientation vector(-1,1)[x,y,z] | field of view(0,180) |
+# DOF(depth of field definition) | aperture(0,1) | focus distance | color variance limit | antialiasing(boolean:0,1) | samples(1,1024)
+# -----------------------------------------------
+
+C 0,3,-6 0,-0.1,0.7 90
+
+# -----------------------------------------------
+# *Light: position[x,y,z] | brightness ration(0,1) | color[r,g,b]
+# *Area Ligth: corner position[x,y,z] | u size(1, 10) | v size(1, 10) | u steps(1, 64) | v steps(1, 64) | color[r,g,b]
+# *Spot Light: position[x,y,z] | to position(direction)[x,y,z] | center radian(0,180) | fade radian(0,180) | color[r,g,b]
+# *Area Spot Light: corner position[x,y,z] | to position(direction)[x,y,z] | u size(1, 10) | v size(1, 10) |
+# u steps(1, 64) | v steps(1, 64) | center radian(0,180) | fade radian(0,180) | color[r,g,b]
+# -----------------------------------------------
+
+L -5,5,-5 1 250,250,250
+
+# -----------------------------------------------
+# *Patterns: name | texture [path] | cubed_texture [path * 6] | blended [c1(r,g,b), c2(r,g,b)] | radial [c1, c2] |
+# strip [c1, c2] | gradient [c1, c2] | full_gradient [c1, c2] | ring [c1, c2] | checkers [c1, c2]
+# Pattern_transformations: Tt [x,y,z] | Ts [x,y,z] | Trx [radian] | Try [radian] | Trz [radian]
+# -----------------------------------------------
+
+pattern p_floor checkers 10,10,10 250,250,250 Ts 0.1,0.1,0.1
+pattern p_side gradient 15,15,15 200,50,50 Try 1.5 Ts 0.1,0.1,0.1
+pattern p_cone checkers 250,150,50 245,25,125 Ts 0.3,0.3,0.3
+
+# -----------------------------------------------
+# *Materials: name | color[r,g,b] | ambient[r,g,b] | diffuse | specular | shininess | reflection | refraction index | transparency | pattern ref.
+# -----------------------------------------------
+
+material floor d 1 s 0.5 sh 1000 refl 0 p p_floor
+material backwall c 25,100,50 d 1 s 0.3 sh 1000 refl 0
+material sidewall d 0.7 s 0.3 sh 1000 refl 0 p p_side
+material mirror c 10,10,10 refl 1
+material cube0 c 10,10,10 d 0.9 s 0.1 sh 1800 ri 2 trans 0.9
+material cube1 c 150,200,255 d 0.1 s 1 sh 1800 ri 4 trans 0.8
+material cone c 250,250,250 p p_cone
+
+# -----------------------------------------------
+# *Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
+# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
+# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
+# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | material ref
+# -----------------------------------------------
+
+# ROOM
+cube 0,-1,0 0,1,0 10 0.01 10 240,240,250 floor
+cube 0,6,0 0,1,0 10 0.01 10 250,250,250
+cube 0,0,10 0,1,0 10 10 0.01 200,50,100 backwall
+cube 10,0,0 0,1,0 0.01 10 10 200,50,100 sidewall
+cube -10,0,0 0,1,0 0.01 10 10 200,50,100 sidewall
+# TABLE
+cube 0,1,0 0,1,0 2.5 0.01 1.5 200,100,50
+cube -2,0,-1 0,1,0 0.1 1 0.1 200,100,50
+cube -2,0,1 0,1,0 0.1 1 0.1 200,100,50
+cube 2,0,-1 0,1,0 0.1 1 0.1 200,100,50
+cube 2,0,1 0,1,0 0.1 1 0.1 200,100,50
+# MIRROR
+cube 0,2.5,9.9 0,1,0 2.7 3 0.01 10,10,10 mirror
+# CUBE
+cube 1,1.7,0 0,1,0 1 0.7 0.5 250,250,250 cube0
+cube 1,1.5,0 0,1,0 0.99 0.3 0.49 250,250,250 cube1
+# ICECREAM
+cone -1,2,-1 0,1,0 0.35 1 250,250,250 1 cone
+
+# -----------------------------------------------
+# *.obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
+# -----------------------------------------------

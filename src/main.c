@@ -9,7 +9,6 @@ int	main(int argc, char **argv)
 	new_canvas(&minirt.canvas, WIDTH, HEIGHT, "MiniRT");
 	create_bvh(&minirt.world);
 	render(&minirt);
-	printf("Render time: %f's\n", mlx_get_time());
 	mlx_image_to_window(minirt.canvas.mlx, minirt.canvas.img, 0, 0);
 	mlx_close_hook(minirt.canvas.mlx, &quit, &minirt);
 	mlx_key_hook(minirt.canvas.mlx, &handle_keyhook, &minirt);

@@ -5,7 +5,6 @@
 # include "materials.h"
 # include "patterns.h"
 # include "utils.h"
-// # include "lights.h"
 
 # define MAX_NODES	512
 

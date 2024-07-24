@@ -9,8 +9,10 @@
 # include "obj_loader.h"
 # include <limits.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+// #define WIDTH 1920
+// #define HEIGHT 1080
+#define WIDTH 800
+#define HEIGHT 600
 
 # ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -173,6 +175,7 @@ void	free_material(t_material **material);
 int		mat_tex(t_material *material, int *index, t_line_parse_env	*env);
 int		mat_cub_t(t_material *material, int *index, t_line_parse_env	*env);
 // pattern
+
 int		read_pattern(t_e_counts *count, char *file);
 void	free_pat_mat(t_e_counts *c);
 int		mat_pattern(t_material *material, int *index, t_line_parse_env	*env);

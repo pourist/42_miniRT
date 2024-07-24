@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:09:21 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/11 23:15:19 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/23 16:40:19 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	find_material(t_material **material, t_shape *obj, char *name,
 		{
 			material[i]->pattern.texture_map.uv_mapping_fn
 				= obj->material.pattern.texture_map.uv_mapping_fn;
+			material[i]->pattern.texture_map.uv_pattern.width
+				= obj->material.pattern.texture_map.uv_pattern.width;
+			material[i]->pattern.texture_map.uv_pattern.height
+				= obj->material.pattern.texture_map.uv_pattern.height;
 			obj->material = *material[i];
 			return (0);
 		}

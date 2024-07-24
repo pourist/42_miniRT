@@ -22,8 +22,8 @@ void	make_cylinder(t_cylinder_info *cy, char **center, char **axis,
 	t_matrix		transform_m;
 
 	new_cylinder(obj);
-	obj->cyl.min = 0;
-	obj->cyl.max = 1;
+	obj->cyl.min = -0.5;
+	obj->cyl.max = 0.5;
 	new_color(cy->r, cy->g, cy->b, &obj->material.color);
 	new_vector(0, 1, 0, &default_axis);
 	new_vector(ft_atof(axis[0]), ft_atof(axis[1]), ft_atof(axis[2]), &axis_v);

@@ -1,0 +1,44 @@
+# -----------------------------------------------
+# Names definitions:
+# A:ambient light | C:camera | L:Light | sp:sphere | pl:plane | cy:cylinder
+# cone:cone | cube:cube aL:area light | sL:spot light | asL:area spot light
+# material:Materials | pattern:Patterns | .obj:3D models
+# -----------------------------------------------
+# Ambient light: ration(0,1) | color[r,g,b]
+# example: A 0.1 255,255,255
+# -----------------------------------------------
+# Camera: position[x,y,z] | 3d orientation vector(-1,1)[x,y,z] | field of view(0,180) |
+# DOF(depth of field definition) | aperture(0,1) | focus distance | color variance limit | antialiasing(boolean:0,1) | samples(1,1024)
+# example: C 0,0,-10 0,0,0.707 90 DOF 0.25 10.0 0.01 1 32
+# -----------------------------------------------
+# Light: position[x,y,z] | brightness ration(0,1) | color[r,g,b]
+# example: L 10,10,-10 0.9 255,255,255
+# Area Ligth: corner position[x,y,z] | u size(1, 10) | v size(1, 10) | u steps(1, 64) | v steps(1, 64) | color[r,g,b]
+# example: aL -10,10,-10 2 2 10 10 255,255,255
+# Spot Light: position[x,y,z] | to position(direction)[x,y,z] | center radian(0,180) | fade radian(0,180) | color[r,g,b]
+# example: sL 10,10,-10 0,0,0 0.02 0.6 255,255,255
+# Area Spot Light: corner position[x,y,z] | to position(direction)[x,y,z] | u size(1, 10) | v size(1, 10) | u steps(1, 64) | v steps(1, 64) | center radian(0,180) | fade radian(0,180) | color[r,g,b]
+# example: asL -10,10,-10 0,0,0 2 2 10 10 0.02 0.6 255,255,255
+# -----------------------------------------------
+# Patterns: name | texture [path] | cubed_texture [path * 6] | blended [c1(r,g,b), c2(r,g,b)] | radial [c1, c2] |
+# strip [c1, c2] | gradient [c1, c2] | full_gradient [c1, c2] | ring [c1, c2] | checkers [c1, c2] |
+# Pattern_transformations: Tt [x,y,z] | Ts [x,y,z] | Trx [radian] | Try [radian] | Trz [radian]
+# example: pattern pattern1 texture ./texture/path/texture.png Ts 5,10,5
+# -----------------------------------------------
+# Materials: name | color[r,g,b] | ambient[r,g,b] | diffuse | specular | shininess | reflection | refraction index | transparency | pattern ref.
+# example: material m1 c 255,255,255 a 10,10,10 d 0.5 s 0.5 sh 10 refl 0.8 ri 1 trans 0.3 p pattern1
+# -----------------------------------------------
+# Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
+# example: sp 0,0,-10 5 255,255,255 mat1
+# Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
+# example: pl 0,-10,0 0,1,0 255,255,255
+# cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
+# example: cy 0,0,-10 0,1,0 5 2 255,255,255 1 mat2
+# Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
+# example: cone 0,0,-10 0,1,0 5 2 255,255,255 0
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | material ref
+# example: cube 0,0,-10 0,1,0 2 2 2 255,255,255 mat3
+# -----------------------------------------------
+# .obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
+# example: ./models/model.obj 0,0,-10 0,1,0 2,2,2 255,255,255 mat3
+# -----------------------------------------------
