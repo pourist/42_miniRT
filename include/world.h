@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   world.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:04:43 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/25 19:05:07 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef WORLD_H
 # define WORLD_H
 
@@ -66,7 +78,8 @@ void	free_world(t_world *world);
 
 // lights
 // shadow_calculations.c
-bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point, double *ratio);
+bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point,
+			double *ratio);
 double	intensity_at(t_world *world, t_point *point, int index);
 t_point	*point_on_light(t_light *light, double u, double v, t_point *p);
 // bvh.c

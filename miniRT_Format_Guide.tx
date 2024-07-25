@@ -1,9 +1,0 @@
-# A <ambient_ratio> <R,G,B>
-# C <x,y,z> <orientation x,y,z> <FOV>
-# L <x,y,z> <brightness_ratio> <R,G,B>
-# sp <x,y,z> <diameter> <R,G,B>
-# pl <x,y,z> <normal vector> <R,G,B>
-# cy <x,y,z> <axis vector> <diameter> <height> <R,G,B>
-# cone <base x,y,z> <axis x,y,z> <radius> <height> <is open> <R,G,B>
-# cube <center x,y,z> <axis vector> <width> <height> <depth> <R,G,B>
-# material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
