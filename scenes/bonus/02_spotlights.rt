@@ -48,11 +48,11 @@ material column_y c 255,255,50 d 0.8 s 1 sh 1000 refl 0 ri 3 trans 0.9
 material purple c 220,0,220 d 0.7 s 0.1 sh 1000
 
 # -----------------------------------------------
-# *Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
-# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
-# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | material ref
+# *Sphere: position[x,y,z] | diameter | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | shadow(boolean:0,1) | material ref
 # -----------------------------------------------
 
 # ROOM
@@ -139,36 +139,36 @@ cy 6,7.98,-6 0,1,0 0.6 0.2 255,255,255 0
 
 # SPHERES
 
-sp 0,1.56,0 1 255,255,255 sphere
-sp 0,1.56,-2 1 255,255,255 sphere
-sp 0,1.56,-4 1 255,255,255 sphere
-sp 0,1.56,-6 1 255,255,255 sphere
-sp 0,1.56,2 1 255,255,255 sphere
-sp 3,0.25,2 2.5 255,255,255 metal
-sp -3,0.25,-4 2.5 255,255,255 metal
-sp -2.5,0,2 2 255,255,255 metal
-sp 3.5,0,-4 2 255,255,255 metal
-sp -4,-0.5,-6 1 255,255,255 purple
-sp -2,-0.5,-8 1 255,255,255 metal
+sp 0,1.56,0 1 255,255,255 1 sphere
+sp 0,1.56,-2 1 255,255,255 1 sphere
+sp 0,1.56,-4 1 255,255,255 1 sphere
+sp 0,1.56,-6 1 255,255,255 1 sphere
+sp 0,1.56,2 1 255,255,255 1 sphere
+sp 3,0.25,2 2.5 255,255,255 1 metal
+sp -3,0.25,-4 2.5 255,255,255 1 metal
+sp -2.5,0,2 2 255,255,255 1 metal
+sp 3.5,0,-4 2 255,255,255 1 metal
+sp -4,-0.5,-6 1 255,255,255 1 purple
+sp -2,-0.5,-8 1 255,255,255 1 metal
 sp 1,-0.5,-7.5 1 255,255,255
-sp 2,-0.5,-2 1 255,255,255 purple
-sp 4.5,-0.5,-7 1.5 255,255,255 purple
+sp 2,-0.5,-2 1 255,255,255 1 purple
+sp 4.5,-0.5,-7 1.5 255,255,255 1 purple
 
 # COLUMNS GLASS
 
-cube -1.5,0,-6 0,1,0 0.4 1 0.3 255,255,255 column_r
-cube -3.5,0,-2 0,1,0 0.4 2 0.3 255,255,255 column_y
-cube 4,0,-6 0,1,0 0.4 1 0.3 255,255,255 column_b
-cube 3,0,0 0,1,0 0.4 2 0.3 255,255,255 column_g
+cube -1.5,0,-6 0,1,0 0.4 1 0.3 255,255,255 1 column_r
+cube -3.5,0,-2 0,1,0 0.4 2 0.3 255,255,255 1 column_y
+cube 4,0,-6 0,1,0 0.4 1 0.3 255,255,255 1 column_b
+cube 3,0,0 0,1,0 0.4 2 0.3 255,255,255 1 column_g
 
 # LAMP
 
 cone 2.1,7.9,0 -0.8,1,0 0.5 1.5 255,255,255 1
 cone -2.1,7.9,-4 0.8,1,0 0.5 1.5 255,255,255 1
 cone -2.1,7.9,4 0.8,1,0 0.5 1.5 255,255,255 1
-sp -2.8,6.9,0 0.8 255,255,255 bump_r
-sp 2.8,6.9,-4 0.8 255,255,255 bump_g
-sp 2.8,6.9,4 0.8 255,255,255 bump_b
+sp -2.8,6.9,0 0.8 255,255,255 1 bump_r
+sp 2.8,6.9,-4 0.8 255,255,255 1 bump_g
+sp 2.8,6.9,4 0.8 255,255,255 1 bump_b
 
 # -----------------------------------------------
 # *.obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref

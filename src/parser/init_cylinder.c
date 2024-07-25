@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:45:14 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/24 19:14:19 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/25 12:04:52 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	make_cylinder(t_cylinder_info *cy, char **center, char **axis,
 	obj->cyl.min = -0.5;
 	obj->cyl.max = 0.5;
 	obj->cyl.closed = !cy->open;
+	obj->cast_shadow = cy->cast_shadow;
 	new_color(cy->r, cy->g, cy->b, &obj->material.color);
 	new_vector(0, 1, 0, &default_axis);
 	new_vector(ft_atof(axis[0]), ft_atof(axis[1]), ft_atof(axis[2]), &axis_v);
@@ -61,6 +62,8 @@ int	cy_info(t_line_parse_env *env, t_cylinder_info *cy)
 	if (solo(env->line[6], 0, 1, env))
 		return (1);
 	cy->open = ft_atoi(env->line[6]);
+	if (env->line[7])
+		cy->cast_shadow = ft_atoi(env->line[7]);
 	return (free_s(rgb), 0);
 }
 
@@ -72,9 +75,9 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	int				material;
 
 	material = 0;
-	if (ft_strarr_len(env->line) == 8)
+	if (ft_strarr_len(env->line) == 9)
 		material = 1;
-	else if (ft_strarr_len(env->line) < 6 && ft_strarr_len(env->line) > 8)
+	else if (ft_strarr_len(env->line) < 7 || ft_strarr_len(env->line) > 9)
 		return (file_error(env, ERR_CYLINDER));
 	if (cy_info(env, &cy))
 		return (1);
@@ -87,7 +90,7 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);
 	make_cylinder(&cy, center, axis, obj);
-	if (material && find_material(env->material, obj, env->line[7], env))
+	if (material && find_material(env->material, obj, env->line[8], env))
 		return (1);
 	return (0);
 }

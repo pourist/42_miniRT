@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:26:38 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 16:37:20 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:59:33 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	make_cube(t_cube_info *cube, char **center, char **axis, t_shape *obj)
 	multiply_matrices(&m[2], &m[0], &m[3]);
 	multiply_matrices(&m[3], &m[1], &m[3]);
 	set_transform(obj, &m[3]);
+	obj->cast_shadow = cube->cast_shadow;
 }
 
 int	cube_info(t_line_parse_env *env, t_cube_info *cube)
@@ -54,6 +55,8 @@ int	cube_info(t_line_parse_env *env, t_cube_info *cube)
 	cube->r = (ft_atof(rgb[0]) / 255);
 	cube->g = (ft_atof(rgb[1]) / 255);
 	cube->b = (ft_atof(rgb[2]) / 255);
+	if (env->line[7])
+		cube->cast_shadow = ft_atoi(env->line[7]);
 	free_s(rgb);
 	return (0);
 }
@@ -66,9 +69,9 @@ int	init_cube(t_line_parse_env *env, t_shape *obj)
 	int			material;
 
 	material = 0;
-	if (ft_strarr_len(env->line) == 8)
+	if (ft_strarr_len(env->line) == 9)
 		material = 1;
-	else if (ft_strarr_len(env->line) != 7)
+	else if (ft_strarr_len(env->line) < 7 || ft_strarr_len(env->line) > 9)
 		return (file_error(env, ERR_CUBE));
 	if (cube_info(env, &cube))
 		return (1);
@@ -81,7 +84,7 @@ int	init_cube(t_line_parse_env *env, t_shape *obj)
 	if (triplets(norm, -1, 1, env))
 		return (free_s(center), 1);
 	make_cube(&cube, center, norm, obj);
-	if (material && find_material(env->material, obj, env->line[7], env))
+	if (material && find_material(env->material, obj, env->line[8], env))
 		return (free_s(norm), free_s(center), 1);
 	return (free_s(norm), free_s(center), 0);
 }

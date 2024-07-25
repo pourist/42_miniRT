@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:11:45 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 13:59:01 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:07:26 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,24 @@ int	has_material(t_line_parse_env *env, int args)
 	return (0);
 }
 
+static bool	set_vars(char ***point, char ***normal, char ***rgb,
+		t_line_parse_env *env)
+{
+	env->error_type = RGB;
+	*rgb = ft_subsplit(env->line[3], ",\n");
+	if (triplets(*rgb, 0, 255, env))
+		return (false);
+	env->error_type = NORMAL_;
+	*normal = ft_subsplit(env->line[2], ",\n");
+	if (triplets(*normal, -1, 1, env))
+		return (free_s(*rgb), false);
+	*point = ft_subsplit(env->line[1], ",\n");
+	env->error_type = POINT;
+	if (triplets(*point, (double)INT_MIN, (double)INT_MAX, env))
+		return (free_s(*normal), free_s(*rgb), false);
+	return (true);
+}
+
 int	init_plane(t_line_parse_env *env, t_shape *obj)
 {
 	char	**rgb;
@@ -50,23 +68,15 @@ int	init_plane(t_line_parse_env *env, t_shape *obj)
 	char	**point;
 	int		material;
 
-	material = has_material(env, 5);
-	if (!material && ft_strarr_len(env->line) != 4)
+	material = has_material(env, 6);
+	if (ft_strarr_len(env->line) < 4 || ft_strarr_len(env->line) > 6)
 		return (file_error(env, ERR_PLANE));
-	env->error_type = RGB;
-	rgb = ft_subsplit(env->line[3], ",\n");
-	if (triplets(rgb, 0, 255, env))
+	if (!set_vars(&point, &normal, &rgb, env))
 		return (1);
-	env->error_type = NORMAL_;
-	normal = ft_subsplit(env->line[2], ",\n");
-	if (triplets(normal, -1, 1, env))
-		return (free_s(rgb), 1);
-	point = ft_subsplit(env->line[1], ",\n");
-	env->error_type = POINT;
-	if (triplets(point, (double)INT_MIN, (double)INT_MAX, env))
-		return (free_s(normal), free_s(rgb), 1);
 	make_plane(rgb, normal, point, obj);
-	if (material && find_material(env->material, obj, env->line[4], env))
+	if (env->line[4])
+		obj->cast_shadow = ft_atoi(env->line[4]);
+	if (material && find_material(env->material, obj, env->line[5], env))
 		return (1);
 	return (0);
 }

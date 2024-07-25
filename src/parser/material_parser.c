@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:09:21 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/24 18:02:12 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/24 22:35:06 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,6 @@ int	find_material(t_material **material, t_shape *obj, char *name,
 			material[i]->pattern.texture_map.uv_pattern.height
 				= obj->material.pattern.texture_map.uv_pattern.height;
 			obj->material = *material[i];
-			printf("obj->material.pattern.texture[0] = %p\n",
-				obj->material.pattern.texture[0]);
-			printf("obj->material.pattern.texture[1] = %p\n", 
-				obj->material.pattern.texture[1]);
-			printf("obj->material.pattern.texture[2] = %p\n",
-				obj->material.pattern.texture[2]);
-			printf("obj->material.pattern.texture[3] = %p\n",
-				obj->material.pattern.texture[3]);
-			printf("obj->material.pattern.texture[4] = %p\n",
-				obj->material.pattern.texture[4]);
-			printf("obj->material.pattern.texture[5] = %p\n",
-				obj->material.pattern.texture[5]);
-			printf("obj->material.pattern.texture[6] = %p\n",
-				obj->material.pattern.texture[6]);
 			return (0);
 		}
 		i++;

@@ -52,22 +52,24 @@ typedef struct s_line_parse_env
 }	t_line_parse_env;
 
 typedef struct s_cylinder_info {
-  double diam;
-  double height;
-  double r;
-  double g;
-  double b;
-  bool open;
-} t_cylinder_info;
+	double	diam;
+	double	height;
+	double	r;
+	double	g;
+	double	b;
+	bool	open;
+	bool	cast_shadow;
+}	t_cylinder_info;
 
 typedef struct s_cone_info {
-  double diam;
-  double height;
-  double r;
-  double g;
-  double b;
-  bool open;
-} t_cone_info;
+	double	diam;
+	double	height;
+	double	r;
+	double	g;
+	double	b;
+	bool	open;
+	bool	cast_shadow;
+}	t_cone_info;
 
 typedef enum e_element_type {
 	AMBIENT,
@@ -100,6 +102,7 @@ typedef struct s_cube_info {
 	double	r;
 	double	g;
 	double	b;
+	bool	cast_shadow;
 }	t_cube_info;
 
 // free_print

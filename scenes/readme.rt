@@ -28,16 +28,16 @@
 # Materials: name | color[r,g,b] | ambient[r,g,b] | diffuse | specular | shininess | reflection | refraction index | transparency | pattern ref.
 # example: material m1 c 255,255,255 a 10,10,10 d 0.5 s 0.5 sh 10 refl 0.8 ri 1 trans 0.3 p pattern1
 # -----------------------------------------------
-# Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
-# example: sp 0,0,-10 5 255,255,255 mat1
-# Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
-# example: pl 0,-10,0 0,1,0 255,255,255
-# cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# example: cy 0,0,-10 0,1,0 5 2 255,255,255 1 mat2
-# Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# example: cone 0,0,-10 0,1,0 5 2 255,255,255 0
-# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | material ref
-# example: cube 0,0,-10 0,1,0 2 2 2 255,255,255 mat3
+# Sphere: position[x,y,z] | diameter | color[r,g,b] | shadow(boolean:0,1) | material ref
+# example: sp 0,0,-10 5 255,255,255 1 mat1
+# Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | shadow(boolean:0,1) | material ref
+# example: pl 0,-10,0 0,1,0 255,255,255 1
+# cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# example: cy 0,0,-10 0,1,0 5 2 255,255,255 1 1 mat2
+# Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# example: cone 0,0,-10 0,1,0 5 2 255,255,255 0 1
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | shadow(boolean:0,1) | material ref
+# example: cube 0,0,-10 0,1,0 2 2 2 255,255,255 0 mat3
 # -----------------------------------------------
 # .obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
 # example: ./models/model.obj 0,0,-10 0,1,0 2,2,2 255,255,255 mat3

@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:29:39 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 11:29:40 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:42:18 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,24 @@ void	make_obj(char *name, t_e_obj *o, t_shape *obj, t_world *world)
 	translation(ft_atof(o->center[0]), ft_atof(o->center[1]),
 		ft_atof(o->center[2]), &m[0]);
 	multiply_matrices(&m[0], multiply_matrices(&m[2], &m[1], &m[3]), &m[3]);
-	set_transform(obj, &m[3]);
 	new_obj_loader(&loader, obj);
 	parse_obj_file(&loader, name);
 	world->objs_ext_count += loader.t_count + loader.gp_count;
+	set_transform(obj, &m[3]);
+	free_s(o->center);
+	free_s(o->axis);
+	free_s(o->scale);
 }
 
 int	init_obj(t_line_parse_env *env, t_shape *obj, t_world *world)
 {
 	t_e_obj	e_obj;
+	bool	material;
 
-	if (ft_strarr_len(env->line) != 5)
+	material = false;
+	if (ft_strarr_len(env->line) == 6)
+		material = 1;
+	else if (ft_strarr_len(env->line) != 5)
 		return (file_error(env, ERR_OBJ));
 	env->error_type = CENT;
 	e_obj.center = ft_subsplit(env->line[2], ",\n");
@@ -46,15 +53,14 @@ int	init_obj(t_line_parse_env *env, t_shape *obj, t_world *world)
 		return (1);
 	env->error_type = NORMAL_;
 	e_obj.axis = ft_subsplit(env->line[3], ",\n");
-	if (triplets(e_obj.axis, -1, 1, env))
+	if (triplets(e_obj.axis, (double)INT_MIN, (double)INT_MAX, env))
 		return (free_s(e_obj.center), 1);
 	env->error_type = SCALE;
 	e_obj.scale = ft_subsplit(env->line[4], ",\n");
-	if (triplets(e_obj.axis, 0, (double)INT_MAX, env))
+	if (triplets(e_obj.scale, -1, (double)INT_MAX, env))
 		return (free_s(e_obj.axis), free_s(e_obj.center), 1);
 	make_obj(env->line[1], &e_obj, obj, world);
-	free_s(e_obj.center);
-	free_s(e_obj.axis);
-	free_s(e_obj.scale);
+	if (material && find_material(env->material, obj, env->line[5], env))
+		return (1);
 	return (0);
 }

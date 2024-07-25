@@ -2,14 +2,15 @@
 # *Ambient light: ration(0,1) | color[r,g,b]
 # -----------------------------------------------
 
-A 0.1 255,255,255
+A 1 255,255,255
 
 # -----------------------------------------------
 # *Camera: position[x,y,z] | 3d orientation vector(-1,1)[x,y,z] | field of view(0,180) |
 # DOF(depth of field definition) | aperture(0,1) | focus distance | color variance limit | antialiasing(boolean:0,1) | samples(1,1024)
 # -----------------------------------------------
 
-C 0,0,50 0,0,-1 90
+C 4,-1,-1 -0.6,0.2,1 90
+# C 4,2,-10 -0.2,-0.1,0.6 100 DOF 0.25 10 0.01 0 32
 
 # -----------------------------------------------
 # *Light: position[x,y,z] | brightness ration(0,1) | color[r,g,b]
@@ -19,21 +20,24 @@ C 0,0,50 0,0,-1 90
 # u steps(1, 64) | v steps(1, 64) | center radian(0,180) | fade radian(0,180) | color[r,g,b]
 # -----------------------------------------------
 
-L 15,15,15 1 255,255,255
+L 0,10,0 1 255,255,255
 
 # -----------------------------------------------
 # *Patterns: name | texture [path] | cubed_texture [path * 6] | blended [c1(r,g,b), c2(r,g,b)] | radial [c1, c2] |
 # strip [c1, c2] | gradient [c1, c2] | full_gradient [c1, c2] | ring [c1, c2] | checkers [c1, c2]
+# Pattern_transformations: Tt [x,y,z] | Ts [x,y,z] | Trx [radian] | Try [radian] | Trz [radian]
 # -----------------------------------------------
 
+pattern map_p texture ./assets/textures/sky_alkatraz.png
+pattern venus_p texture ./assets/textures/venusmap.png
+
 # -----------------------------------------------
-# *Materials: name | color[r,g,b] | ambient[r,g,b] | diffuse | specular | shininess | reflection | refraction index | transparency | pattern ref.
+# *Materials: name | color[r,g,b] | ambient[r,g,b] | diffuse | specular | shininess | reflection | refraction index | transparency | pattern ref. | shadow(boolean:0,1)
 # -----------------------------------------------
 
-material amb c 250,220,50 a 10,50,100
-material shine c 20,120,250 sh 10
-material diff c 20,120,250 d 0.1
-material spec c 20,120,250 s 0.1
+material map c 0,0,0 d 0.9 s 0.1 sh 10 p map_p
+material metal c 10,10,10 d 0.7 s 1 sh 10 refl 0.8
+material venus c 0,0,0 d 0.9 s 0.1 sh 10 p venus_p
 
 # -----------------------------------------------
 # *Sphere: position[x,y,z] | diameter | color[r,g,b] | shadow(boolean:0,1) | material ref
@@ -43,14 +47,11 @@ material spec c 20,120,250 s 0.1
 # *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | shadow(boolean:0,1) | material ref
 # -----------------------------------------------
 
-sp 0,0,0 5 250,220,50 1 amb
-sp 15,0,3 7 20,120,250 1 shine
-sp 15,-6,15 3 50,220,50 1 diff
-sp 8,-3,15 4 250,250,250 1 spec
-cy -12,10,0 0,1,0 3 10 20,250,250
-cy -12,8,0 1,0,1 2 30 225,225,225
-pl 0,-8,0 0,1,0 50,50,200
-pl -10,0,0 1,1,0 50,50,200
+sp 0,0,10 100 255,255,255 0 map
+cube 0,0,5 0,1,0 1 1 1 255,255,255 0 metal
+cube 0,0,10 0,1,0 1 1 1 255,255,255 0 metal
+cube 0,0,15 0,1,0 1 1 1 255,255,255 0 metal
+sp -6,1,-5 4 255,255,255 0 venus
 
 # -----------------------------------------------
 # *.obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref

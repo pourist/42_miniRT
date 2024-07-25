@@ -47,19 +47,19 @@ material sphere c 250,250,250 d 1 s 1 sh 1000 p p_sphere
 material sphere1 c 200,200,200 d 0.4 s 0.6 sh 20 refl 0.6
 
 # -----------------------------------------------
-# *Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
-# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
-# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | material ref
+# *Sphere: position[x,y,z] | diameter | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | shadow(boolean:0,1) | material ref
 # -----------------------------------------------
 
 # ROOM
-cube 0,-1,0 0,1,0 10 0.01 10 240,240,250 floor
+cube 0,-1,0 0,1,0 10 0.01 10 240,240,250 1 floor
 cube 0,8,0 0,1,0 10 0.01 10 250,250,250
-cube 0,0,10 0,1,0 10 10 0.01 200,50,100 backwall
-cube 10,0,0 0,1,0 0.01 10 10 200,50,100 sidewall
-cube -10,0,0 0,1,0 0.01 10 10 200,50,100 sidewall
+cube 0,0,10 0,1,0 10 10 0.01 200,50,100 1 backwall
+cube 10,0,0 0,1,0 0.01 10 10 200,50,100 1 sidewall
+cube -10,0,0 0,1,0 0.01 10 10 200,50,100 1 sidewall
 # TABLE
 cube 0,1,0 0,1,0 2.5 0.01 1.5 200,100,50
 cube -2,0,-1 0,1,0 0.1 1 0.1 200,100,50
@@ -67,14 +67,14 @@ cube -2,0,1 0,1,0 0.1 1 0.1 200,100,50
 cube 2,0,-1 0,1,0 0.1 1 0.1 200,100,50
 cube 2,0,1 0,1,0 0.1 1 0.1 200,100,50
 # MIRROR
-cube 0,3,9.9 0,1,0 3 4 0.01 10,10,10 mirror
+cube 0,3,9.9 0,1,0 3 4 0.01 10,10,10 1 mirror
 # CUBE
-cube 1,1.7,0 0,1,0 1 0.7 0.5 250,250,250 cube0
-cube 1,1.5,0 0,1,0 0.99 0.3 0.49 250,250,250 cube1
+cube 1,1.7,0 0,1,0 1 0.7 0.5 250,250,250 1 cube0
+cube 1,1.5,0 0,1,0 0.99 0.3 0.49 250,250,250 1 cube1
 # OBJECTS
 cone -1,2,-1 0,1,0 0.35 1 250,250,250 1 cone
-sp -4,2,4 3 250,250,250 sphere
-sp 4,2,4 4 250,250,250 sphere1
+sp -4,2,4 3 250,250,250 1 sphere
+sp 4,2,4 4 250,250,250 1 sphere1
 
 # -----------------------------------------------
 # *.obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref

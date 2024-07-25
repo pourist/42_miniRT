@@ -9,7 +9,7 @@ A 0.1 255,255,255
 # DOF(depth of field definition) | aperture(0,1) | focus distance | color variance limit | antialiasing(boolean:0,1) | samples(1,1024)
 # -----------------------------------------------
 
-C 0,0,-1 0,0,1 100
+C 0,0,0 0,0,1 90
 # C 4,2,-10 -0.2,-0.1,0.6 100 DOF 0.25 10 0.01 0 32
 
 # -----------------------------------------------
@@ -20,7 +20,7 @@ C 0,0,-1 0,0,1 100
 # u steps(1, 64) | v steps(1, 64) | center radian(0,180) | fade radian(0,180) | color[r,g,b]
 # -----------------------------------------------
 
-L 0,100,0 1 255,255,255
+L 0,10,0 1 255,255,255
 
 # -----------------------------------------------
 # *Patterns: name | texture [path] | cubed_texture [path * 6] | blended [c1(r,g,b), c2(r,g,b)] | radial [c1, c2] |
@@ -29,24 +29,30 @@ L 0,100,0 1 255,255,255
 # -----------------------------------------------
 
 pattern skybox_p cubed_texture ./assets/textures/LancellottiChapel/negx.png ./assets/textures/LancellottiChapel/posz.png ./assets/textures/LancellottiChapel/posx.png ./assets/textures/LancellottiChapel/negz.png ./assets/textures/LancellottiChapel/posy.png ./assets/textures/LancellottiChapel/negy.png
+pattern earth_p texture ./assets/textures/earth.png Try 1.9
+pattern moon_p texture ./assets/textures/moon.png
 
 # -----------------------------------------------
 # *Materials: name | color[r,g,b] | ambient[r,g,b] | diffuse | specular | shininess | reflection | refraction index | transparency | pattern ref. | shadow(boolean:0,1)
 # -----------------------------------------------
 
-material skybox c 255,255,255 d 0 s 0 p skybox_p
-material metal c 0,0,0 d 0.4 s 0.6 sh 20 refl 0.6
+material skybox c 0,0,0 a 255,255,255 d 0 s 0 p skybox_p
+material metal c 0,0,0 a 0,0,0 d 0.5 s 0.7 sh 20 refl 0.7
+material earth c 0,0,0 d 0.9 s 0.1 sh 10 p earth_p
+material moon c 0,0,0 d 0.9 s 0.1 sh 10 p moon_p
 
 # -----------------------------------------------
-# *Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
-# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
-# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | material ref
+# *Sphere: position[x,y,z] | diameter | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | shadow(boolean:0,1) | material ref
 # -----------------------------------------------
 
-cube 0,0,0 0,1,0 1000 1000 1000 0,0,0 skybox
-sp 0,0,5 0.5 0,0,0 metal
+cube 0,0,0 0,1,0 100 100 100 0,0,0 0 skybox
+sp 0,0,10 6 255,255,255 1 metal
+sp 6,0,10 3 255,255,255 1 earth
+sp -6,0,10 3 255,255,255 1 moon
 
 # -----------------------------------------------
 # *.obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
