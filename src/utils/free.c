@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:16:49 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 14:13:22 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 15:06:30 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,8 @@ void	free_world(t_world *world)
 	{
 		i = -1;
 		while (++i < g_bvh_counter)
-		{
 			free(world->bvh_groups[i]);
-		}
+		free(world->bvh_groups[i]);
 		free(world->bvh_groups);
 	}
 	free(world->lights);
