@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:37:59 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/02 17:38:01 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/26 08:40:09 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	free_s(char **s)
 
 void	free_mini_rt(t_mini_rt *mini_rt)
 {
-	if (&(mini_rt->world))
+	if (mini_rt)
 		free_world(&(mini_rt->world));
 }
 
