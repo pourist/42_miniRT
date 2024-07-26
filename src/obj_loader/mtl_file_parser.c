@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:09:31 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 11:19:46 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 17:09:41 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ static bool	split_in_tokens(t_mtl_loader *mtl, int *nb_lines)
 		mtl->tokens[i] = ft_subsplit(mtl->lines[i], " \r\n\t");
 		if (!mtl->tokens[i])
 			return (perror("minirt: split_in_tokens: malloc"),
-				free_matrix(mtl->lines), false);
+				free_matrix(&mtl->lines), false);
 		if (ft_strncmp(mtl->tokens[i][0], "newmtl", 7) == 0)
 			mtl->m_max++;
 	}
 	mtl->materials = (t_material *)ft_calloc(mtl->m_max + 1,
 			sizeof(t_material));
-	free_matrix(mtl->lines);
+	free_matrix(&mtl->lines);
 	mtl->lines = NULL;
 	return (true);
 }
