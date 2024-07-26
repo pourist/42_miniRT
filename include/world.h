@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:04:43 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 11:18:09 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 14:01:41 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # define MAX_RECURSION	4
 # define BVH_THRESHOLD 8
 
+static int	g_bvh_counter = 0;
+static int	g_bvh_index = 0;
+
 typedef struct s_world
 {
 	t_hit		*xs;
@@ -34,6 +37,7 @@ typedef struct s_world
 	t_color		ambient;
 	int			remaining_recursion;
 	t_pattern	**pattern;
+	t_shape		**bvh_groups;
 }	t_world;
 
 typedef struct s_comps

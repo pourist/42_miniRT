@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:16:49 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 12:25:13 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 14:13:22 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,15 @@ void	free_world(t_world *world)
 			free(world->objs[i].obj_loader);
 			world->objs[i].obj_loader = NULL;
 		}
-		/* if (world->objs[i].is_group) */
-		/* 	free_group(&world->objs[i]); */
+	}
+	if (world->bvh_groups)
+	{
+		i = -1;
+		while (++i < g_bvh_counter)
+		{
+			free(world->bvh_groups[i]);
+		}
+		free(world->bvh_groups);
 	}
 	free(world->lights);
 	free(world->objs);

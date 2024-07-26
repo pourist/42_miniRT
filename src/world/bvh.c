@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:17:45 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 19:17:46 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 14:09:03 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,41 @@ static void	*divide_groups(void *data)
 	return (data);
 }
 
+static void	search_bvh_groups(t_world *world, t_shape *group)
+{
+	t_shape	*root;
+
+	root = NULL;
+	if (!world || !world->objs || !world->objs_count || !group)
+		return ;
+	if (group->is_bvh_group)
+		if (g_bvh_index < g_bvh_counter)
+			world->bvh_groups[g_bvh_index++] = group;
+	while (root)
+	{
+		if (root->is_group)
+			search_bvh_groups(world, root);
+		root = root->next;
+	}
+}
+
+static void	set_bvh_groups(t_world *world)
+{
+	int	i;
+
+	if (!world || !world->objs || !world->objs_count || !g_bvh_counter)
+		return ;
+	world->bvh_groups = (t_shape **)malloc(sizeof(t_shape *) * g_bvh_counter);
+	if (!world->bvh_groups)
+		return ;
+	i = -1;
+	while (++i < world->objs_count)
+	{
+		if (world->objs[i].is_group)
+			search_bvh_groups(world, &world->objs[i]);
+	}
+}
+
 void	create_bvh(t_world *world)
 {
 	t_threads_setup	tsetup;
@@ -81,4 +116,6 @@ void	create_bvh(t_world *world)
 		return ;
 	if (!exec_threads_for(divide_groups, threads, tdata, &tsetup.nb_threads))
 		return ;
+	if (g_bvh_counter)
+		set_bvh_groups(world);
 }
