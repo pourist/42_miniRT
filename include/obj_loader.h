@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:01:57 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 10:57:06 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 17:07:57 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,8 @@ bool			parse_displacement_texture(t_mtl_loader *loader,
 bool			parse_usemtl(t_obj_loader *loader);
 bool			parse_mtllib(t_obj_loader *loader);
 //	loader_frees.c
-void			free_matrix(char **matrix);
-void			free_3d_array(char ***array);
+void			free_matrix(char ***matrix);
+void			free_3d_array(char ****array);
 void			free_loader(t_obj_loader *loader);
 void			free_loader_last(t_obj_loader *loader);
 void			free_mtl_loader(t_obj_loader *loader, bool free_all);

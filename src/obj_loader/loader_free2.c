@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:09:26 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 12:41:56 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 17:18:45 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ void	destroy_mutex(t_obj_loader *loader)
 	if (!loader)
 		return ;
 	if (loader->lines)
-	{
-		free_matrix(loader->lines);
-		loader->lines = NULL;
-	}
+		free_matrix(&loader->lines);
 	pthread_mutex_destroy(&loader->v_mutex);
 	pthread_mutex_destroy(&loader->n_mutex);
 	pthread_mutex_destroy(&loader->t_mutex);
