@@ -15,7 +15,8 @@
 static t_color	*gradient_at(t_pattern *pattern, t_point *shape_point,
 					t_color *out);
 
-t_pattern	*new_gradient_pattern(t_pattern *a, t_pattern *b, t_pattern *pattern)
+t_pattern	*new_gradient_pattern(t_pattern *a, t_pattern *b,
+	t_pattern *pattern)
 {
 	if (!pattern)
 		return (NULL);

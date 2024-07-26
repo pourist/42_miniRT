@@ -28,7 +28,6 @@ void	free_material(t_material	**material)
 	free(material);
 }
 
-
 static void	free_pattern_2(t_pattern *pattern)
 {
 	if (pattern->has_pattern)
