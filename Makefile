@@ -72,7 +72,7 @@ OBJECTS						:= $(addprefix $(OBJ_DIR)/, $(SOURCE:.c=.o))
 ##                                   FLAGS                                    ##
 ################################################################################
 
-CFLAGS						:= -Wall -Wextra -Werror -Wno-unused-result -Wno-type-limits -g3
+CFLAGS						:= -Wall -Wextra -Werror
 INCLUDE						:= $(addprefix -I, $(INC_DIRS))
 LDFLAGS						:= -L$(LIBFT_DIR) -L$(MLX_DIR)/build
 LDLIBS						:= -lft -lmlx42 -lglfw
