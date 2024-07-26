@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:09:00 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/12 10:35:10 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/25 20:41:07 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	init_minirt(t_mini_rt *minirt, t_e_counts *env)
 	new_world(&minirt->world);
 	if (init_mini_rt(&(minirt->world), minirt, env))
 		return (free_pat_mat(env), 1);
-	free_pat_mat(env);
+	free_material(env->material);
+	minirt->world.pattern = env->pat;
 	return (0);
 }

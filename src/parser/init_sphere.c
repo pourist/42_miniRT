@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:13:52 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 16:31:50 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:04:44 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj)
 	char	**rgb;
 	int		material;
 
-	material = has_material(env, 5);
-	if (!material && ft_strarr_len(env->line) != 4)
+	material = has_material(env, 6);
+	if (ft_strarr_len(env->line) < 4 || ft_strarr_len(env->line) > 6)
 		return (file_error(env, ERR_SPHERE));
 	env->error_type = DIAM;
 	if (solo(env->line[2], EPSILON, (double)INT_MAX, env))
@@ -54,7 +54,9 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj)
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(center), 1);
 	make_sphere(rgb, ft_atof(env->line[2]), center, obj);
-	if (material && find_material(env->material, obj, env->line[4], env))
+	if (env->line[4])
+		obj->cast_shadow = ft_atoi(env->line[4]);
+	if (material && find_material(env->material, obj, env->line[5], env))
 		return (1);
 	return (0);
 }

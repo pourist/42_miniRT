@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_lines_parser.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:10:10 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/25 19:10:12 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "obj_loader.h"
 
 static bool	parse_group(t_obj_loader *loader, char **params, int *line_nb)

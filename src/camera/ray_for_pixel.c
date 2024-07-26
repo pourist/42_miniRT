@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_for_pixel.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:06:38 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/25 19:06:39 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "camera.h"
 
 static void	generate_random_aperture_point(t_camera *camera, t_point *point)

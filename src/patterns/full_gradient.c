@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   full_gradient.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:11:52 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/25 19:11:54 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "patterns.h"
 
 static t_color	*full_gradient_at(t_pattern *pattern, t_point *shape_point,

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   loader_free2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:09:26 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/26 12:41:56 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "obj_loader.h"
 
 void	destroy_mutex(t_obj_loader *loader)
@@ -34,6 +46,11 @@ void	free_loader_last(t_obj_loader *loader)
 	}
 	loader->default_group->group.count = 0;
 	loader->default_group->group.root = NULL;
+	if (loader->mtl_loader)
+	{
+		free_mtl_loader_textures(loader);
+		free_mtl_loader(loader, true);
+	}
 }
 
 void	free_mtl_loader_textures(t_obj_loader *loader)

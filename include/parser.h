@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:02:03 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/25 19:02:11 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -11,11 +23,11 @@
 
 // #define WIDTH 1920
 // #define HEIGHT 1080
-#define WIDTH 800
-#define HEIGHT 600
+# define WIDTH 800
+# define HEIGHT 600
 
 # ifndef M_PI
-# define M_PI 3.14159265358979323846
+#  define M_PI 3.14159265358979323846
 # endif
 
 typedef struct s_e_counts
@@ -51,23 +63,24 @@ typedef struct s_line_parse_env
 	t_pattern	**pat;
 }	t_line_parse_env;
 
-typedef struct s_cylinder_info
-{
-	double	diam;
-	double	height;
-	double	r;
-	double	g;
-	double	b;
-}	t_cylinder_info;
-
-typedef struct s_cone_info
-{
+typedef struct s_cylinder_info {
 	double	diam;
 	double	height;
 	double	r;
 	double	g;
 	double	b;
 	bool	open;
+	bool	cast_shadow;
+}	t_cylinder_info;
+
+typedef struct s_cone_info {
+	double	diam;
+	double	height;
+	double	r;
+	double	g;
+	double	b;
+	bool	open;
+	bool	cast_shadow;
 }	t_cone_info;
 
 typedef enum e_element_type {
@@ -101,6 +114,7 @@ typedef struct s_cube_info {
 	double	r;
 	double	g;
 	double	b;
+	bool	cast_shadow;
 }	t_cube_info;
 
 // free_print
@@ -175,7 +189,6 @@ void	free_material(t_material **material);
 int		mat_tex(t_material *material, int *index, t_line_parse_env	*env);
 int		mat_cub_t(t_material *material, int *index, t_line_parse_env	*env);
 // pattern
-
 int		read_pattern(t_e_counts *count, char *file);
 void	free_pat_mat(t_e_counts *c);
 int		mat_pattern(t_material *material, int *index, t_line_parse_env	*env);
@@ -191,6 +204,7 @@ int		p_ring(t_pattern *pattern, int *index, t_line_parse_env *env);
 int		p_strip(t_pattern *pattern, int *index, t_line_parse_env *env);
 int		pattern_type_parser(int *index, t_line_parse_env *env,
 			char ***rgb1, char ***rgb2);
+void	free_pattern(t_pattern	**pattern);
 // pattern transform
 int		transform_tt(t_pattern *pattern, int *index,
 			t_line_parse_env *env);

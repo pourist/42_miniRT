@@ -1,97 +1,115 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:16:49 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/26 15:20:34 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils.h"
 #include "world.h"
+#include "parser.h"
 
-static void	free_csg(t_shape *csg);
+/* static void	free_csg(t_shape *csg); */
 
-static void	free_pattern(t_pattern *pattern)
-{
-	if (pattern->has_pattern)
-	{
-		if (pattern->a)
-			free(pattern->a);
-		if (pattern->b)
-			free(pattern->b);
-	}
-	if (pattern->texture[0])
-		mlx_delete_texture(pattern->texture[0]);
-	if (pattern->texture[1])
-		mlx_delete_texture(pattern->texture[1]);
-	if (pattern->texture[2])
-		mlx_delete_texture(pattern->texture[2]);
-	if (pattern->texture[3])
-		mlx_delete_texture(pattern->texture[3]);
-	if (pattern->texture[4])
-		mlx_delete_texture(pattern->texture[4]);
-	if (pattern->texture[5])
-		mlx_delete_texture(pattern->texture[5]);
-	if (pattern->texture[6])
-		mlx_delete_texture(pattern->texture[6]);
-	if (pattern->texture[7])
-		mlx_delete_texture(pattern->texture[7]);
-}
+/* static void	free_group(t_shape *group) */
+/* { */
+/* 	t_shape	*root; */
 
-static void	free_group(t_shape *root)
-{
-	t_shape	*tmp;
+/* 	if (!group) */
+/* 		return ; */
+/* 	root = group->group.root; */
+/* 	while (root) */
+/* 	{ */
+/* 		if (root->is_group) */
+/* 			free_group(root); */
+/* 		root = root->next; */
+/* 	} */
+/* 	if (group && group->is_group && group->is_bvh_group) */
+/* 	{ */
+/* 		free(group); */
+/* 		group = NULL; */
+/* 	} */
+/* 	if (group && group->is_group && group->is_obj_file) */
+/* 	{ */
+/* 		free_loader_last(group->obj_loader); */
+/* 		free(group->obj_loader); */
+/* 		group->obj_loader = NULL; */
+/* 	} */
+/* } */
 
-	while (root)
-	{
-		// if (root->is_group)
-		// 	free_group(root->group.root);
-		free_pattern(&root->material.pattern);
-		tmp = root;
-		root = root->next;
-		free(tmp);
-	}
-	root = NULL;
-}
+/* static void	free_csg(t_shape *csg) */
+/* { */
+/* 	if (csg) */
+/* 	{ */
+/* 		if (csg->is_csg) */
+/* 		{ */
+/* 			if (csg->csg.left) */
+/* 				free_csg(csg->csg.left); */
+/* 			if (csg->csg.right) */
+/* 				free_csg(csg->csg.right); */
+/* 		} */
+/* 		if (csg->is_group) */
+/* 			free_group(csg->group); */
+/* 		free(csg); */
+/* 	} */
+/* } */
 
-static void	free_csg(t_shape *csg)
-{
-	if (csg)
-	{
-		if (csg->is_csg)
-		{
-			if (csg->csg.left)
-				free_csg(csg->csg.left);
-			csg->csg.left = NULL;
-			if (csg->csg.right)
-				free_csg(csg->csg.right);
-			csg->csg.right = NULL;
-		}
-		if (csg->is_group)
-		{
-			free_group(csg->group.root);
-			csg->group.root = NULL;
-		}
-		free_pattern(&csg->material.pattern);
-		free(csg);
-	}
-}
+/* void	free_loader_last(t_obj_loader *loader) */
 
 void	free_world(t_world *world)
 {
 	int		i;
 
 	i = -1;
+	if (world->pattern)
+		free_pattern(world->pattern);
 	while (++i < world->objs_count)
 	{
-		free_pattern(&world->objs[i].material.pattern);
-		if (world->objs[i].is_group)
+		if (world->objs[i].is_group && world->objs[i].is_obj_file)
 		{
-			free_group(world->objs[i].group.root);
-			world->objs[i].group.root = NULL;
+			free_loader_last(world->objs[i].obj_loader);
+			free(world->objs[i].obj_loader);
+			world->objs[i].obj_loader = NULL;
 		}
-		if (world->objs[i].is_csg)
-		{
-			if (world->objs[i].csg.left)
-				free_csg(world->objs[i].csg.left);
-			world->objs[i].csg.left = NULL;
-			if (world->objs[i].csg.right)
-				free_csg(world->objs[i].csg.right);
-			world->objs[i].csg.right = NULL;
-		}
+	}
+	if (world->bvh_groups)
+	{
+		i = -1;
+		while (++i < g_bvh_counter)
+			free(world->bvh_groups[i]);
+		free(world->bvh_groups[i]);
+		free(world->bvh_groups);
 	}
 	free(world->lights);
 	free(world->objs);
 }
+
+/* void	free_world(t_world *world) */
+/* { */
+/* 	int		i; */
+
+/* 	i = -1; */
+/* 	if (world->pattern) */
+/* 		free_pattern(world->pattern); */
+/* 	while (++i < world->objs_count) */
+/* 	{ */
+/* 		if (world->objs[i].is_group) */
+/* 			free_group(&world->objs[i]); */
+/* 		else if (world->objs[i].is_csg) */
+/* 		{ */
+/* 			if (world->objs[i].csg.left) */
+/* 				free_csg(world->objs[i].csg.left); */
+/* 			world->objs[i].csg.left = NULL; */
+/* 			if (world->objs[i].csg.right) */
+/* 				free_csg(world->objs[i].csg.right); */
+/* 			world->objs[i].csg.right = NULL; */
+/* 		} */
+/* 	} */
+/* 	free(world->lights); */
+/* 	free(world->objs); */
+/* } */

@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:40:20 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/23 16:17:51 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/25 12:07:49 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	make_cone(t_cone_info *cone, char **center, char **axis, t_shape *obj)
 	obj->cone.min = -1;
 	obj->cone.max = 0;
 	obj->cone.closed = !cone->open;
+	obj->cast_shadow = cone->cast_shadow;
 	new_color(cone->r, cone->g, cone->b, &obj->material.color);
 	new_vector(0, 1, 0, &default_axis);
 	new_vector(ft_atof(axis[0]), ft_atof(axis[1]), ft_atof(axis[2]), &axis_v);
@@ -61,6 +62,8 @@ int	cone_info(t_line_parse_env *env, t_cone_info *cone)
 	cone->r = (ft_atof(rgb[0]) / 255);
 	cone->g = (ft_atof(rgb[1]) / 255);
 	cone->b = (ft_atof(rgb[2]) / 255);
+	if (env->line[7])
+		cone->cast_shadow = ft_atoi(env->line[7]);
 	return (free_s(rgb), 0);
 }
 
@@ -72,9 +75,9 @@ int	init_cone(t_line_parse_env *env, t_shape *obj)
 	int			material;
 
 	material = 0;
-	if (ft_strarr_len(env->line) == 8)
+	if (ft_strarr_len(env->line) == 9)
 		material = 1;
-	else if (ft_strarr_len(env->line) != 7)
+	else if (ft_strarr_len(env->line) < 7 && ft_strarr_len(env->line) > 9)
 		return (file_error(env, ERR_CONE));
 	if (cone_info(env, &cone))
 		return (1);
@@ -87,7 +90,7 @@ int	init_cone(t_line_parse_env *env, t_shape *obj)
 	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);
 	make_cone(&cone, center, axis, obj);
-	if (material && find_material(env->material, obj, env->line[7], env))
+	if (material && find_material(env->material, obj, env->line[8], env))
 		return (1);
 	return (0);
 }

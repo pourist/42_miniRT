@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bvh_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:17:53 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/26 13:41:46 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "world.h"
 
 void	split_bounds(t_bounds s_box[2])
@@ -83,6 +95,8 @@ void	make_subgroup(t_shape *group, t_shape **container)
 	if (!subgroup)
 		return ;
 	new_group(subgroup);
+	subgroup->is_bvh_group = true;
+	g_bvh_counter++;
 	current = *container;
 	while (current)
 	{

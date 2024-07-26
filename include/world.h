@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   world.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:04:43 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/26 14:19:25 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef WORLD_H
 # define WORLD_H
 
@@ -8,6 +20,9 @@
 
 # define MAX_RECURSION	4
 # define BVH_THRESHOLD 8
+
+extern int	g_bvh_counter;
+extern int	g_bvh_index;
 
 typedef struct s_world
 {
@@ -21,6 +36,8 @@ typedef struct s_world
 	t_light		*lights;
 	t_color		ambient;
 	int			remaining_recursion;
+	t_pattern	**pattern;
+	t_shape		**bvh_groups;
 }	t_world;
 
 typedef struct s_comps
@@ -65,7 +82,8 @@ void	free_world(t_world *world);
 
 // lights
 // shadow_calculations.c
-bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point);
+bool	is_shadowed(t_world *world, t_point *light_pos, t_point *point,
+			double *ratio);
 double	intensity_at(t_world *world, t_point *point, int index);
 t_point	*point_on_light(t_light *light, double u, double v, t_point *p);
 // bvh.c

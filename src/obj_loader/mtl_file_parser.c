@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mtl_file_parser.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:09:31 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/26 11:19:46 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "obj_loader.h"
 
 static bool	create_materials(t_mtl_loader *loader)
@@ -29,7 +41,8 @@ static bool	split_in_tokens(t_mtl_loader *mtl, int *nb_lines)
 		if (ft_strncmp(mtl->tokens[i][0], "newmtl", 7) == 0)
 			mtl->m_max++;
 	}
-	mtl->materials = (t_material *)ft_calloc(mtl->m_max, sizeof(t_material));
+	mtl->materials = (t_material *)ft_calloc(mtl->m_max + 1,
+			sizeof(t_material));
 	free_matrix(mtl->lines);
 	mtl->lines = NULL;
 	return (true);
@@ -72,7 +85,7 @@ bool	load_mtl_files(t_obj_loader *loader, int *nb_iters)
 			if (!mtl_file_parser(mtl))
 			{
 				free_mtl_loader_textures(loader);
-				free_mtl_loader(loader);
+				free_mtl_loader(loader, true);
 				return (false);
 			}
 		}

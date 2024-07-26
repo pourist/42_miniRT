@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mx_attributes.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:08:39 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/25 19:08:49 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "matrices.h"
 
 double	get_determinant(t_matrix *m)
@@ -18,7 +30,8 @@ double	get_determinant(t_matrix *m)
 	return (det);
 }
 
-t_matrix	*get_submatrix(t_matrix *m, int *del_row, int *del_col, t_matrix *out)
+t_matrix	*get_submatrix(t_matrix *m, int *del_row, int *del_col,
+		t_matrix *out)
 {
 	double	sub_matrix[MAX][MAX];
 	int		row;

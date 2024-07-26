@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_loader.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:01:57 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/26 10:57:06 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef OBJ_LOADER_H
 # define OBJ_LOADER_H
 
@@ -152,7 +164,7 @@ void			free_matrix(char **matrix);
 void			free_3d_array(char ***array);
 void			free_loader(t_obj_loader *loader);
 void			free_loader_last(t_obj_loader *loader);
-void			free_mtl_loader(t_obj_loader *loader);
+void			free_mtl_loader(t_obj_loader *loader, bool free_all);
 void			free_mtl_loader_textures(t_obj_loader *loader);
 void			destroy_mutex(t_obj_loader *loader);
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   intersections.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:13:46 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/25 19:15:01 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shapes.h"
 #include "world.h"
 
@@ -53,19 +65,6 @@ void	insert_intersection(t_hit **xs, t_hit *hit)
 		hit->next = *current;
 		*current = hit;
 	}
-}
-
-int	intersect_count(t_hit	*xs)
-{
-	int	count;
-
-	count = 0;
-	while (xs)
-	{
-		count++;
-		xs = xs->next;
-	}
-	return (count);
 }
 
 t_hit	*hit(t_hit *xs)

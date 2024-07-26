@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_file_parser.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/25 19:10:04 by sebasnadu         #+#    #+#             */
+/*   Updated: 2024/07/26 11:13:10 by sebasnadu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "obj_loader.h"
 
 static bool	allocate_loader_arrays2(t_obj_loader *loader)
@@ -10,7 +22,7 @@ static bool	allocate_loader_arrays2(t_obj_loader *loader)
 	}
 	if (loader->mtl_max > 0)
 	{
-		loader->mtl_loader = (t_mtl_loader *)ft_calloc(loader->mtl_max,
+		loader->mtl_loader = (t_mtl_loader *)ft_calloc(loader->mtl_max + 1,
 				sizeof(t_mtl_loader));
 		if (!loader->mtl_loader)
 			return (perror("minirt: malloc"), false);
