@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:30:03 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 11:30:04 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:57:59 by ppour-ba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	transform_trx(t_pattern *pattern, int *index, t_line_parse_env *env)
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	multiply_matrices(&pattern->transform, rotation_x(cos(ft_atof(env->line[*index])),
+	multiply_matrices(&pattern->transform,
+		rotation_x(cos(ft_atof(env->line[*index])),
 			sin(ft_atof(env->line[*index])), &rotation_t), &rotation_t);
 	set_pattern_transform(pattern, &rotation_t);
 	return (0);
@@ -75,7 +76,8 @@ int	transform_try(t_pattern *pattern, int *index, t_line_parse_env *env)
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	multiply_matrices(&pattern->transform, rotation_y(cos(ft_atof(env->line[*index])),
+	multiply_matrices(&pattern->transform,
+		rotation_y(cos(ft_atof(env->line[*index])),
 			sin(ft_atof(env->line[*index])), &rotation_t), &rotation_t);
 	set_pattern_transform(pattern, &rotation_t);
 	return (0);
@@ -91,7 +93,8 @@ int	transform_trz(t_pattern *pattern, int *index, t_line_parse_env *env)
 	env->error_type = E_DOUBLE_I;
 	if (solo(env->line[*index], (double)INT_MIN, (double)INT_MAX, env))
 		return (1);
-	multiply_matrices(&pattern->transform, rotation_z(cos(ft_atof(env->line[*index])),
+	multiply_matrices(&pattern->transform,
+		rotation_z(cos(ft_atof(env->line[*index])),
 			sin(ft_atof(env->line[*index])), &rotation_t), &rotation_t);
 	set_pattern_transform(pattern, &rotation_t);
 	return (0);

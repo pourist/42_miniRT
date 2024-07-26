@@ -34,10 +34,6 @@ void	counter_helper(t_e_counts *count, char *line)
 {
 	if (start_with(line, "A"))
 		count->a_light++;
-	else if (start_with(line, "C"))
-		count->camera++;
-	else if (start_with(line, "L"))
-		count->light++;
 	else if (start_with(line, "aL") || start_with(line, "sL")
 		|| start_with(line, "asL"))
 		count->other_light++;
@@ -71,7 +67,12 @@ void	elements_counter(t_e_counts *count, char *line)
 			free(line);
 			break ;
 		}
-		counter_helper(count, line);
+		if (start_with(line, "C"))
+			count->camera++;
+		else if (start_with(line, "L"))
+			count->light++;
+		else
+			counter_helper(count, line);
 		free(line);
 	}
 	flush_fd(count->fd);
