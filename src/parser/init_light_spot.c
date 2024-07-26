@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 15:58:56 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/12 15:59:21 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 09:33:53 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ static bool	set_spotlight_params(t_spotlight_params *sp, char **pos, char **to,
 	new_point(ft_atof(pos[0]), ft_atof(pos[1]), ft_atof(pos[2]), &sp->position);
 	new_point(ft_atof(to[0]), ft_atof(to[1]), ft_atof(to[2]), &to_point);
 	subtract(&to_point, &sp->position, &sp->direction);
+	free_s(pos);
+	free_s(to);
+	pos = NULL;
+	to = NULL;
 	return (true);
 }
 
@@ -47,6 +51,8 @@ static bool	set_spotlight_params2(t_spotlight_params *sp, char **rgb,
 	if (solo(env->line[4], 0, (double)INT_MAX, env))
 		return (false);
 	sp->fade_radian = ft_atof(env->line[4]);
+	free_s(rgb);
+	rgb = NULL;
 	return (true);
 }
 
@@ -67,8 +73,5 @@ int	init_spotlight(t_line_parse_env *env, t_light *light)
 	if (!set_spotlight_params2(&sp, rgb, env))
 		return (free_s(pos), free_s(to), free_s(rgb), 1);
 	new_spotlight(&sp, light);
-	free_s(pos);
-	free_s(to);
-	free_s(rgb);
 	return (0);
 }
