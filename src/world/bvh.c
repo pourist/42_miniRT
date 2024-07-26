@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:17:45 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 15:04:58 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 15:10:14 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	create_bvh(t_world *world)
 	i = -1;
 	while (++i < world->objs_count)
 		divide_group(&world->objs[i], BVH_THRESHOLD);
-	printf("BVH groups: %d\n", g_bvh_counter);
 	if (g_bvh_counter)
 		set_bvh_groups(world);
 }
