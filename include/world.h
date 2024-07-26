@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:04:43 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 14:01:41 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 14:19:25 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define MAX_RECURSION	4
 # define BVH_THRESHOLD 8
 
-static int	g_bvh_counter = 0;
-static int	g_bvh_index = 0;
+extern int	g_bvh_counter;
+extern int	g_bvh_index;
 
 typedef struct s_world
 {
