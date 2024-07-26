@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:09:20 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 19:09:21 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 12:41:30 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	free_3d_array(char ***array)
 		free_matrix(array[i]);
 		array[i] = NULL;
 	}
-	free(array);
 	array = NULL;
 }
 
-void	free_mtl_loader(t_obj_loader *loader)
+void	free_mtl_loader(t_obj_loader *loader, bool free_all)
 {
 	int	i;
 
@@ -58,10 +57,14 @@ void	free_mtl_loader(t_obj_loader *loader)
 			free_matrix(loader->mtl_loader[i].lines);
 		if (loader->mtl_loader[i].tokens)
 			free_3d_array(loader->mtl_loader[i].tokens);
-		if (loader->mtl_loader[i].materials)
+		if (free_all && loader->mtl_loader[i].materials)
+		{
 			free(loader->mtl_loader[i].materials);
+			loader->mtl_loader[i].materials = NULL;
+		}
+		loader->mtl_loader[i].filename = NULL;
 	}
-	if (loader->mtl_loader)
+	if (free_all && loader->mtl_loader)
 	{
 		free(loader->mtl_loader);
 		loader->mtl_loader = NULL;
@@ -86,7 +89,7 @@ static void	free_loader2(t_obj_loader *loader)
 		loader->uvs = NULL;
 	}
 	if (loader->mtl_loader)
-		free_mtl_loader(loader);
+		free_mtl_loader(loader, false);
 }
 
 void	free_loader(t_obj_loader *loader)

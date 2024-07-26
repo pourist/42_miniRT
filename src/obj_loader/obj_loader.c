@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:10:18 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 19:10:21 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 10:26:11 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_mtl(t_obj_loader *loader)
 	loader->uvs = NULL;
 	loader->uv_count = 0;
 	loader->uv_max = 0; 
+	loader->default_group->is_obj_file = true;
 }
 
 t_obj_loader	*new_obj_loader(t_obj_loader *loader, t_shape *group)

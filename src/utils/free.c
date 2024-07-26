@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:16:49 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 20:44:05 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 12:25:13 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,70 +16,94 @@
 
 /* static void	free_csg(t_shape *csg); */
 
-/* static void	free_group(t_shape *group)
-{
-	t_shape	*root;
+/* static void	free_group(t_shape *group) */
+/* { */
+/* 	t_shape	*root; */
 
-	if (!group)
-		return ;
-	root = group->group.root;
-	free(group);
-	group = NULL;
-	while (root)
-	{
-		if (root->is_group)
-			free_group(root);
-		root = root->next;
-	}
-	root = NULL;
-}
+/* 	if (!group) */
+/* 		return ; */
+/* 	root = group->group.root; */
+/* 	while (root) */
+/* 	{ */
+/* 		if (root->is_group) */
+/* 			free_group(root); */
+/* 		root = root->next; */
+/* 	} */
+/* 	if (group && group->is_group && group->is_bvh_group) */
+/* 	{ */
+/* 		free(group); */
+/* 		group = NULL; */
+/* 	} */
+/* 	if (group && group->is_group && group->is_obj_file) */
+/* 	{ */
+/* 		free_loader_last(group->obj_loader); */
+/* 		free(group->obj_loader); */
+/* 		group->obj_loader = NULL; */
+/* 	} */
+/* } */
 
-static void	free_csg(t_shape *csg)
-{
-	if (csg)
-	{
-		if (csg->is_csg)
-		{
-			if (csg->csg.left)
-				free_csg(csg->csg.left);
-			csg->csg.left = NULL;
-			if (csg->csg.right)
-				free_csg(csg->csg.right);
-			csg->csg.right = NULL;
-		}
-		if (csg->is_group)
-		{
-			free_group(csg->group.root);
-			csg->group.root = NULL;
-		}
-		free(csg);
-	}
-} */
+/* static void	free_csg(t_shape *csg) */
+/* { */
+/* 	if (csg) */
+/* 	{ */
+/* 		if (csg->is_csg) */
+/* 		{ */
+/* 			if (csg->csg.left) */
+/* 				free_csg(csg->csg.left); */
+/* 			if (csg->csg.right) */
+/* 				free_csg(csg->csg.right); */
+/* 		} */
+/* 		if (csg->is_group) */
+/* 			free_group(csg->group); */
+/* 		free(csg); */
+/* 	} */
+/* } */
+
+/* void	free_loader_last(t_obj_loader *loader) */
 
 void	free_world(t_world *world)
 {
-	/* int		i; */
+	int		i;
 
-	/* i = -1; */
+	i = -1;
 	if (world->pattern)
 		free_pattern(world->pattern);
-	/* while (++i < world->objs_count) */
-	/* { */
-	/* 	if (world->objs[i].is_group) */
-	/* 	{ */
-	/* 		free_group(&world->objs[i]); */
-	/* 		world->objs[i].group.root = NULL; */
-	/* 	} */
-	/* 	else if (world->objs[i].is_csg) */
-	/* 	{ */
-	/* 		if (world->objs[i].csg.left) */
-	/* 			free_csg(world->objs[i].csg.left); */
-	/* 		world->objs[i].csg.left = NULL; */
-	/* 		if (world->objs[i].csg.right) */
-	/* 			free_csg(world->objs[i].csg.right); */
-	/* 		world->objs[i].csg.right = NULL; */
-	/* 	} */
-	/* } */
+	while (++i < world->objs_count)
+	{
+		if (world->objs[i].is_group && world->objs[i].is_obj_file)
+		{
+			free_loader_last(world->objs[i].obj_loader);
+			free(world->objs[i].obj_loader);
+			world->objs[i].obj_loader = NULL;
+		}
+		/* if (world->objs[i].is_group) */
+		/* 	free_group(&world->objs[i]); */
+	}
 	free(world->lights);
 	free(world->objs);
 }
+
+/* void	free_world(t_world *world) */
+/* { */
+/* 	int		i; */
+
+/* 	i = -1; */
+/* 	if (world->pattern) */
+/* 		free_pattern(world->pattern); */
+/* 	while (++i < world->objs_count) */
+/* 	{ */
+/* 		if (world->objs[i].is_group) */
+/* 			free_group(&world->objs[i]); */
+/* 		else if (world->objs[i].is_csg) */
+/* 		{ */
+/* 			if (world->objs[i].csg.left) */
+/* 				free_csg(world->objs[i].csg.left); */
+/* 			world->objs[i].csg.left = NULL; */
+/* 			if (world->objs[i].csg.right) */
+/* 				free_csg(world->objs[i].csg.right); */
+/* 			world->objs[i].csg.right = NULL; */
+/* 		} */
+/* 	} */
+/* 	free(world->lights); */
+/* 	free(world->objs); */
+/* } */

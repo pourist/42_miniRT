@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:15:17 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 19:15:18 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 11:25:35 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_shape	*new_shape(t_shape *shape)
 	shape->is_group = false;
 	shape->next = NULL;
 	shape->is_csg = false;
+	shape->is_obj_file = false;
+	shape->is_bvh_group = false;
 	return (shape);
 }
 

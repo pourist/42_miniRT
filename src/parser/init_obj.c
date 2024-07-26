@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:29:39 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/25 15:42:18 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 11:20:46 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	make_obj(char *name, t_e_obj *o, t_shape *obj, t_world *world)
 	t_vector		axis_v;
 	t_vector		default_axis;
 	t_matrix		m[4];
-	t_obj_loader	loader;
 
 	new_vector(0, 1, 0, &default_axis);
 	new_vector(ft_atof(o->axis[0]), ft_atof(o->axis[1]),
@@ -28,9 +27,11 @@ void	make_obj(char *name, t_e_obj *o, t_shape *obj, t_world *world)
 	translation(ft_atof(o->center[0]), ft_atof(o->center[1]),
 		ft_atof(o->center[2]), &m[0]);
 	multiply_matrices(&m[0], multiply_matrices(&m[2], &m[1], &m[3]), &m[3]);
-	new_obj_loader(&loader, obj);
-	parse_obj_file(&loader, name);
-	world->objs_ext_count += loader.t_count + loader.gp_count;
+	obj->obj_loader = (t_obj_loader *)malloc(sizeof(t_obj_loader));
+	new_obj_loader(obj->obj_loader, obj);
+	parse_obj_file(obj->obj_loader, name);
+	world->objs_ext_count
+		+= obj->obj_loader->t_count + obj->obj_loader->gp_count;
 	set_transform(obj, &m[3]);
 	free_s(o->center);
 	free_s(o->axis);

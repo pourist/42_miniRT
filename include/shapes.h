@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:04:27 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 19:04:28 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 11:25:06 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include "utils.h"
 
 # define MAX_NODES	512
+
+typedef struct s_obj_loader	t_obj_loader;
 
 typedef struct s_sphere {
 	t_point	origin;
@@ -125,6 +127,9 @@ typedef struct s_shape {
 	t_shape			*next;
 	bool			is_csg;
 	bool			is_tri;
+	bool			is_obj_file;
+	t_obj_loader	*obj_loader;
+	bool			is_bvh_group;
 }	t_shape;
 
 typedef struct s_hit {

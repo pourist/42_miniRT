@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:17:53 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 19:17:54 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 11:32:00 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	make_subgroup(t_shape *group, t_shape **container)
 	if (!subgroup)
 		return ;
 	new_group(subgroup);
+	subgroup->is_bvh_group = true;
 	current = *container;
 	while (current)
 	{
