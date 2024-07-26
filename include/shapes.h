@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:04:27 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 11:25:06 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 19:08:03 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ typedef struct s_triangle
 	double		v;
 }	t_triangle;
 
-typedef struct s_hit	t_hit;
-typedef struct s_shape	t_shape;
-typedef bool			(*t_intersect_fn)(t_hit **, t_shape *, t_ray *);
-typedef t_vector		*(*t_normal_fn)(t_shape *, t_point *, t_vector *);
-typedef void			(*t_bounds_fn)(t_shape *);
+typedef struct s_hit		t_hit;
+typedef struct s_shape		t_shape;
+typedef bool				(*t_intersect_fn)(t_hit **, t_shape *, t_ray *);
+typedef t_vector			*(*t_normal_fn)(t_shape *, t_point *, t_vector *);
+typedef void				(*t_bounds_fn)(t_shape *);
 
 typedef enum e_operation
 {
