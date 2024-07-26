@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:45:14 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/25 12:04:52 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 19:46:01 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	cy_info(t_line_parse_env *env, t_cylinder_info *cy)
 	if (solo(env->line[6], 0, 1, env))
 		return (1);
 	cy->open = ft_atoi(env->line[6]);
+	cy->cast_shadow = 1;
 	if (env->line[7])
 		cy->cast_shadow = ft_atoi(env->line[7]);
 	return (free_s(rgb), 0);

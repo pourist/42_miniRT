@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:40:20 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/25 12:07:49 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 19:43:48 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	cone_info(t_line_parse_env *env, t_cone_info *cone)
 	cone->r = (ft_atof(rgb[0]) / 255);
 	cone->g = (ft_atof(rgb[1]) / 255);
 	cone->b = (ft_atof(rgb[2]) / 255);
+	cone->cast_shadow = 1;
 	if (env->line[7])
 		cone->cast_shadow = ft_atoi(env->line[7]);
 	return (free_s(rgb), 0);

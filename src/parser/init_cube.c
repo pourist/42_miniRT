@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:26:38 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/25 11:59:33 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 19:44:48 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	cube_info(t_line_parse_env *env, t_cube_info *cube)
 	cube->r = (ft_atof(rgb[0]) / 255);
 	cube->g = (ft_atof(rgb[1]) / 255);
 	cube->b = (ft_atof(rgb[2]) / 255);
+	cube->cast_shadow = 1;
 	if (env->line[7])
 		cube->cast_shadow = ft_atoi(env->line[7]);
-	free_s(rgb);
-	return (0);
+	return (free_s(rgb), 0);
 }
 
 int	init_cube(t_line_parse_env *env, t_shape *obj)

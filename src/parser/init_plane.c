@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:11:45 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/25 12:07:26 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 19:46:29 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	init_plane(t_line_parse_env *env, t_shape *obj)
 	if (!set_vars(&point, &normal, &rgb, env))
 		return (1);
 	make_plane(rgb, normal, point, obj);
+	obj->cast_shadow = 1;
 	if (env->line[4])
 		obj->cast_shadow = ft_atoi(env->line[4]);
 	if (material && find_material(env->material, obj, env->line[5], env))

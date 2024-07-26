@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:13:52 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/25 11:04:44 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 19:47:04 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	init_sphere(t_line_parse_env *env, t_shape *obj)
 	if (triplets(rgb, 0, 255, env))
 		return (free_s(center), 1);
 	make_sphere(rgb, ft_atof(env->line[2]), center, obj);
+	obj->cast_shadow = 1;
 	if (env->line[4])
 		obj->cast_shadow = ft_atoi(env->line[4]);
 	if (material && find_material(env->material, obj, env->line[5], env))
