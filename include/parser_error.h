@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:02:33 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 19:03:51 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 16:11:05 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # define ERR_CUBE_TEX "Expected format: Cube_texture requires six .png files."
 # define ERR_PAT "Expected format: <name> <type> <transformation(s)>"
-# define	ERR_OBJ "Expected format: .obj file_name <center x,y,z> <axis vector> <scale>"
+# define ERR_OBJ "Expected format: .obj file_name <center x,y,z> \
+	<axis vector> <scale>"
 # define	ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
 # define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
 # define ERR_INC_CAM "Expected format: C <x,y,z> <orientation x,y,z> <FOV>"

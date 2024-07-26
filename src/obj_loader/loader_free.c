@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:09:20 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 12:41:30 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 16:18:11 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	free_3d_array(char ***array)
 		free_matrix(array[i]);
 		array[i] = NULL;
 	}
+	free(array[i]);
+	array[i] = NULL;
 	array = NULL;
 }
 
