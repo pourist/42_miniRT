@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:16:49 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 15:20:34 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 17:48:56 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	free_world(t_world *world)
 	if (world->bvh_groups)
 	{
 		i = -1;
-		while (++i < g_bvh_counter)
+		while (world->bvh_groups[++i])
 			free(world->bvh_groups[i]);
 		free(world->bvh_groups[i]);
 		free(world->bvh_groups);

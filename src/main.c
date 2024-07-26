@@ -6,14 +6,11 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:18:30 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 14:19:07 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 17:49:31 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-int	g_bvh_counter = 0;
-int	g_bvh_index = 0;
 
 int	main(int argc, char **argv)
 {
