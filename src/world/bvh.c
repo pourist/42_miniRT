@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:17:45 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 15:10:14 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 15:19:35 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	search_bvh_groups(t_world *world, t_shape *group)
 	if (group->is_bvh_group)
 		if (g_bvh_index < g_bvh_counter)
 			world->bvh_groups[g_bvh_index++] = group;
+	root = group->group.root;
 	while (root)
 	{
 		if (root->is_group)
