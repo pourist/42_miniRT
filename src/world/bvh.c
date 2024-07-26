@@ -6,19 +6,19 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:17:45 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 15:19:35 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 17:59:00 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
 
-void	divide_group(t_shape *group, int threshold)
+void	divide_group(t_shape *group, int threshold, int *bvh_groups_count)
 {
 	t_shape	*left;
 	t_shape	*right;
 	t_shape	*current;
 
-	if (!check_group(group, &threshold))
+	if (!check_group(group, &threshold, bvh_groups_count))
 		return ;
 	left = NULL;
 	right = NULL;
@@ -26,14 +26,14 @@ void	divide_group(t_shape *group, int threshold)
 	{
 		partition_children(group, &left, &right);
 		if (left)
-			make_subgroup(group, &left);
+			make_subgroup(group, &left, bvh_groups_count);
 		if (right)
-			make_subgroup(group, &right);
+			make_subgroup(group, &right, bvh_groups_count);
 	}
 	current = group->group.root;
 	while (current)
 	{
-		divide_group(current, threshold);
+		divide_group(current, threshold, bvh_groups_count);
 		current = current->next;
 	}
 	group->bounds_of(group);
@@ -59,7 +59,8 @@ void	divide_group(t_shape *group, int threshold)
 /* 	return (data); */
 /* } */
 
-static void	search_bvh_groups(t_world *world, t_shape *group)
+static void	search_bvh_groups(t_world *world, t_shape *group,
+		int *bvh_groups_index, int *bvh_groups_count)
 {
 	t_shape	*root;
 
@@ -67,46 +68,51 @@ static void	search_bvh_groups(t_world *world, t_shape *group)
 	if (!world || !world->objs || !world->objs_count || !group)
 		return ;
 	if (group->is_bvh_group)
-		if (g_bvh_index < g_bvh_counter)
-			world->bvh_groups[g_bvh_index++] = group;
+		if (*bvh_groups_index < *bvh_groups_count)
+			world->bvh_groups[(*bvh_groups_index)++] = group;
 	root = group->group.root;
 	while (root)
 	{
 		if (root->is_group)
-			search_bvh_groups(world, root);
+			search_bvh_groups(world, root, bvh_groups_index, bvh_groups_count);
 		root = root->next;
 	}
 }
 
-static void	set_bvh_groups(t_world *world)
+static void	set_bvh_groups(t_world *world, int *bvh_groups_count)
 {
 	int	i;
+	int	bvh_groups_index;
 
-	if (!world || !world->objs || !world->objs_count || !g_bvh_counter)
+	if (!world || !world->objs || !world->objs_count || !*bvh_groups_count)
 		return ;
 	world->bvh_groups
-		= (t_shape **)ft_calloc(sizeof(t_shape *), g_bvh_counter + 1);
+		= (t_shape **)ft_calloc(sizeof(t_shape *), *bvh_groups_count + 1);
 	if (!world->bvh_groups)
 		return ;
+	bvh_groups_index = 0;
 	i = -1;
 	while (++i < world->objs_count)
 	{
 		if (world->objs[i].is_group)
-			search_bvh_groups(world, &world->objs[i]);
+			search_bvh_groups(world, &world->objs[i], &bvh_groups_index,
+				bvh_groups_count);
 	}
 }
 
 void	create_bvh(t_world *world)
 {
 	int				i;
+	int				bvh_groups_count;
 
+	bvh_groups_count = 0;
 	if (!world || !world->objs || !world->objs_count)
 		return ;
 	i = -1;
 	while (++i < world->objs_count)
-		divide_group(&world->objs[i], BVH_THRESHOLD);
-	if (g_bvh_counter)
-		set_bvh_groups(world);
+		divide_group(&world->objs[i], BVH_THRESHOLD, &bvh_groups_count);
+	if (bvh_groups_count)
+		set_bvh_groups(world, &bvh_groups_count);
 }
 
 /* TODO: incorporate threads with correct free at ends */

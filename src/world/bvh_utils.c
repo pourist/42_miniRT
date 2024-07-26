@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:17:53 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 13:41:46 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 17:45:58 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	partition_children(t_shape *group, t_shape **left, t_shape **right)
 	group->bounds_of(group);
 }
 
-void	make_subgroup(t_shape *group, t_shape **container)
+void	make_subgroup(t_shape *group, t_shape **container,
+		int *bvh_groups_count)
 {
 	t_shape	*subgroup;
 	t_shape	*tmp;
@@ -96,7 +97,7 @@ void	make_subgroup(t_shape *group, t_shape **container)
 		return ;
 	new_group(subgroup);
 	subgroup->is_bvh_group = true;
-	g_bvh_counter++;
+	(*bvh_groups_count)++;
 	current = *container;
 	while (current)
 	{
@@ -108,7 +109,7 @@ void	make_subgroup(t_shape *group, t_shape **container)
 	add_child(group, subgroup);
 }
 
-bool	check_group(t_shape *group, int *threshold)
+bool	check_group(t_shape *group, int *threshold, int *bvh_groups_count)
 {
 	if (!group || (group && (!group->is_group && !group->is_csg)))
 		return (false);
@@ -116,8 +117,8 @@ bool	check_group(t_shape *group, int *threshold)
 		group->bounds_of(group);
 	if (group->is_csg)
 	{
-		divide_group(group->csg.left, *threshold);
-		divide_group(group->csg.right, *threshold);
+		divide_group(group->csg.left, *threshold, bvh_groups_count);
+		divide_group(group->csg.right, *threshold, bvh_groups_count);
 		return (false);
 	}
 	return (true);

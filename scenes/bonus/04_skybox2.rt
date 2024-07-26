@@ -36,7 +36,7 @@ pattern venus_p texture ./assets/textures/venusmap.png
 # -----------------------------------------------
 
 material map c 0,0,0 d 0.9 s 0.1 sh 10 p map_p
-material metal c 10,10,10 d 0.7 s 1 sh 10 refl 0.8
+material metal c 10,10,10 d 0.7 s 1 sh 10 trans 0 refl 0.8
 material venus c 0,0,0 d 0.9 s 0.1 sh 10 p venus_p
 
 # -----------------------------------------------

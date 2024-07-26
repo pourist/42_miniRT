@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:04:43 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 14:19:25 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/26 17:49:50 by johnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 
 # define MAX_RECURSION	4
 # define BVH_THRESHOLD 8
-
-extern int	g_bvh_counter;
-extern int	g_bvh_index;
 
 typedef struct s_world
 {
@@ -88,9 +85,10 @@ double	intensity_at(t_world *world, t_point *point, int index);
 t_point	*point_on_light(t_light *light, double u, double v, t_point *p);
 // bvh.c
 void	create_bvh(t_world *world);
-void	divide_group(t_shape *group, int threshold);
-bool	check_group(t_shape *group, int *threshold);
-void	make_subgroup(t_shape *group, t_shape **container);
+void	divide_group(t_shape *group, int threshold, int *bvh_groups_count);
+bool	check_group(t_shape *group, int *threshold, int *bvh_groups_count);
+void	make_subgroup(t_shape *group, t_shape **container,
+			int *bvh_groups_count);
 void	partition_children(t_shape *group, t_shape **left, t_shape **right);
 void	split_bounds(t_bounds s_box[2]);
 
