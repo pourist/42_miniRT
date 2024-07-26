@@ -4,7 +4,7 @@
 # define ERR_CUBE_TEX "Expected format: Cube_texture requires six .png files."
 # define ERR_PAT "Expected format: <name> <type> <transformation(s)>"
 # define ERR_OBJ "Expected format: .obj file_name <center x,y,z> <axis vector> <scale>"
-# define ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
+	# define ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] [d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] [trans <value>] [ri <value>]"
 # define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
 # define ERR_INC_CAM "Expected format: C <x,y,z> <orientation x,y,z> <FOV>"
 # define ERR_SPHERE "Expected format: sp <x,y,z> <diameter> <R,G,B> [material]"

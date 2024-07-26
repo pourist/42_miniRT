@@ -11,8 +11,8 @@
 
 // #define WIDTH 1920
 // #define HEIGHT 1080
-#define WIDTH 800
-#define HEIGHT 600
+# define WIDTH 800
+# define HEIGHT 600
 
 # ifndef M_PI
 # define M_PI 3.14159265358979323846
