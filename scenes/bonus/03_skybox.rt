@@ -9,7 +9,7 @@ A 0.1 255,255,255
 # DOF(depth of field definition) | aperture(0,1) | focus distance | color variance limit | antialiasing(boolean:0,1) | samples(1,1024)
 # -----------------------------------------------
 
-C 0,0,0 0,0,1 90
+C 0,0,-3 0,0,1 90
 # C 4,2,-10 -0.2,-0.1,0.6 100 DOF 0.25 10 0.01 0 32
 
 # -----------------------------------------------

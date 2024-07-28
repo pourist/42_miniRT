@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:02:03 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/25 19:02:11 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/28 15:09:41 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,48 @@ typedef struct s_line_parse_env
 typedef struct s_cylinder_info {
 	double	diam;
 	double	height;
-	double	r;
-	double	g;
-	double	b;
+	t_color	color;
 	bool	open;
 	bool	cast_shadow;
+	double	trx;
+	double	try;
+	double	trz;
+	bool	material;
 }	t_cylinder_info;
 
 typedef struct s_cone_info {
 	double	diam;
 	double	height;
-	double	r;
-	double	g;
-	double	b;
+	t_color	color;
 	bool	open;
 	bool	cast_shadow;
+	double	trx;
+	double	try;
+	double	trz;
+	bool	material;
 }	t_cone_info;
+
+typedef struct s_sphere_info {
+	double	diam;
+	t_point	center;
+	t_color	color;
+	bool	cast_shadow;
+	double	trx;
+	double	try;
+	double	trz;
+	bool	material;
+}	t_sphere_info;
+
+typedef struct s_plane_info {
+	t_point		center;
+	t_vector	normal;
+	t_color		color;
+	bool		cast_shadow;
+	double		trx;
+	double		try;
+	double		trz;
+	bool		material;
+}	t_plane_info;
 
 typedef enum e_element_type {
 	AMBIENT,
@@ -102,19 +128,26 @@ typedef enum e_element_type {
 
 typedef struct s_ext_obj
 {
-	char	**center;
-	char	**axis;
-	char	**scale;
+	t_point		center;
+	t_vector	axis;
+	t_point		scale;
+	bool		cast_shadow;
+	double		trx;
+	double		try;
+	double		trz;
+	bool		material;
 }	t_e_obj;
 
 typedef struct s_cube_info {
 	double	width;
 	double	height;
 	double	depth;
-	double	r;
-	double	g;
-	double	b;
+	t_color	color;
 	bool	cast_shadow;
+	double	trx;
+	double	try;
+	double	trz;
+	bool	material;
 }	t_cube_info;
 
 // free_print
@@ -172,7 +205,6 @@ int		init_obj(t_line_parse_env *env, t_shape *obj, t_world *world);
 void	calculate_rotation_matrix(t_vector *default_normal,
 			t_vector *user_normal, t_matrix *rotation_matrix);
 // material_parser
-int		has_material(t_line_parse_env *env, int args);
 
 int		find_material(t_material **material, t_shape *obj, char *name,
 			t_line_parse_env *env);

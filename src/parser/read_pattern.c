@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:30:06 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 17:11:37 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/28 23:48:08 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static int	pat_type(char *line, int *i, t_line_parse_env *env,
 		return (1);
 	else if (!ft_strncmp(line, "blended", 14) && p_blended(*p, i, env))
 		return (1);
-	else if (!ft_strncmp(line, "checkers", 14) && p_checkers(*p, i, env))
+	else if ((!ft_strncmp(line, "checkers", 14) || !ft_strncmp(line,
+				"checkers_cube", 14)) && p_checkers(*p, i, env))
 		return (1);
 	else if (!ft_strncmp(line, "full_gradient", 14) && p_f_grad(*p, i, env))
 		return (1);

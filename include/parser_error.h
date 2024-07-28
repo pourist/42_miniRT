@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:02:33 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/26 16:32:09 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/29 00:36:36 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,33 @@
 
 # define ERR_CUBE_TEX "Expected format: Cube_texture requires six .png files."
 # define ERR_PAT "Expected format: <name> <type> <transformation(s)>"
-# define ERR_OBJ "Expected format: .obj file_name <center x,y,z> \
-	<axis vector> <scale>"
-# define ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>] \
-	[d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>] \
+# define ERR_OBJ "Expected format: .obj file_name <center x,y,z>\
+	<axis vector> <scale> <R,G,B> <cast shadows:bool> <Rotations: Try Trx Try>"
+# define ERR_MAT "Expected format: material <name> [c <R,G,B>] [a <R,G,B>]\
+	[d <value>] [s <value>] [sh <value>] [p <pattern>] [refl <value>]\
 	[trans <value>] [ri <value>]"
 # define ERR_INC_AMB "Expected format: A <ambient_ratio> <R,G,B>"
 # define ERR_INC_CAM "Expected format: C <x,y,z> <orientation x,y,z> <FOV>"
-# define ERR_SPHERE "Expected format: sp <x,y,z> <diameter> <R,G,B> [material]"
+# define ERR_SPHERE "Expected format: sp <x,y,z> <diameter> <R,G,B>\
+	<cast shadows:bool> <Rotations: Try Trx Try> [material]"
 # define ERR_LIGHT "Expected format: L <x,y,z> <brightness_ratio> <R,G,B>"
-# define ERR_AREA_LIGHT "Expected format: L <x,y,z> <u_size> <v_size> \
+# define ERR_AREA_LIGHT "Expected format: L <x,y,z> <u_size> <v_size>\
 	<u_steps> <v_steps> <R,G,B>"
-# define ERR_SPOTLIGHT "Expected format: L <x,y,z> (to)<x,y,z> \
+# define ERR_SPOTLIGHT "Expected format: L <x,y,z> (to)<x,y,z>\
 	<center radian> <fade radian> <R,G,B>"
-# define ERR_AREA_SPOTLIGHT "Expected format: L <x,y,z> (to)<x,y,z> \
+# define ERR_AREA_SPOTLIGHT "Expected format: L <x,y,z> (to)<x,y,z>\
 	<u_size> <v_size> <u_steps> <v_steps> <center radian> <fade radian> <R,G,B>"
-# define ERR_PLANE "Expected format: pl <x,y,z> <normal vector> \
-	<R,G,B> [material]"
-# define ERR_CYLINDER "Expected format: cy <x,y,z> <axis vector> \
-	<diameter> <height> <R,G,B> <is open> [material]"
-# define ERR_CONE "Expected format: cone <base x,y,z> <axis x,y,z> \
-	<radius> <height> <is open> <R,G,B> [material]"
-# define ERR_CUBE "Expected format: cube <center x,y,z> <axis vector> \
-	<width> <height> <depth> <R,G,B> [material]"
+# define ERR_PLANE "Expected format: pl <x,y,z> <normal vector>\
+	<R,G,B> <cast shadows:bool> <Rotations: Try Trx Try> [material]"
+# define ERR_CYLINDER "Expected format: cy <x,y,z> <axis vector>\
+	<diameter> <height> <R,G,B> <is open> <cast shadows:bool>\
+	<Rotations: Try Trx Try> [material]"
+# define ERR_CONE "Expected format: cone <base x,y,z> <axis x,y,z>\
+	<radius> <height> <is open> <R,G,B> <is open> <cast shadows:bool>\
+	<Rotations: Try Trx Try> [material]"
+# define ERR_CUBE "Expected format: cube <center x,y,z> <axis vector>\
+	<width> <height> <depth> <R,G,B> <cast shadows:bool>\
+	<Rotations: Try Trx Try> [material]"
 # define RATIO_INVALID "Invalid ambient lighting ratio"
 # define RATIO_RANGE "Ambient lighting ratio out of range"
 # define RGB_LEN "Invalid RGB numbers."
@@ -116,6 +120,7 @@
 # define TRIPPLE_R "Triple values out of range"
 # define DOUBLE_I "Invalid Double values"
 # define DOUBLE_R "Double values out of range"
+# define CAST_SHADOWS "Cast Shadows value must be 0 (false) or 1 (true)"
 
 typedef enum e_error_type
 {
@@ -183,6 +188,7 @@ typedef enum e_error_type
 	E_TRIPPLE_R,
 	E_DOUBLE_I,
 	E_DOUBLE_R,
+	SHADOWS,
 }	t_error_type;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:38:39 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/17 16:28:09 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/28 02:19:16 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,26 +100,28 @@ char	*find_error_2(int type)
 {
 	if (type == OR)
 		return (OR_M);
-	if (type == OR_INVALID)
+	else if (type == OR_INVALID)
 		return (OR_INVALID_M);
-	if (type == OR_RANGE)
+	else if (type == OR_RANGE)
 		return (OR_RANGE_M);
-	if (type == L_RATIO)
+	else if (type == L_RATIO)
 		return (L_RATIO_M);
-	if (type == L_RATIO_RANGE)
+	else if (type == L_RATIO_RANGE)
 		return (L_RATIO_RANGE_M);
-	if (type == POS)
+	else if (type == POS)
 		return (POS_M);
-	if (type == POS_INVALID)
+	else if (type == POS_INVALID)
 		return (POS_INVALID_M);
-	if (type == POS_RANGE)
+	else if (type == POS_RANGE)
 		return (POS_RANGE_M);
-	if (type == DIAM)
+	else if (type == DIAM)
 		return (D_INVALID);
-	if (type == DIAM_RANGE)
+	else if (type == DIAM_RANGE)
 		return (D_RANGE_M);
-	if (type == CENT)
+	else if (type == CENT)
 		return (CENT_M);
+	else if (type == SHADOWS)
+		return (CAST_SHADOWS);
 	return (find_error_3(type));
 }
 

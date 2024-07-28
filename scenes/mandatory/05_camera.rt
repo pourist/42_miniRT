@@ -10,8 +10,8 @@ A 0.1 255,255,255
 # -----------------------------------------------
 
 C 0,0,-20 0,0,1 45
-#C 20,0,0 -1,0,0 45
-#C -20,0,0 1,0,0 45
+# C 20,0,0 -1,0,0 45
+# C -20,0,0 1,0,0 45
 #C 0,20,0 0,-1,0 45
 #C 0,-20,0 0,1,0 45
 #C 20,10,-20 -0.2,-0.06,0.2 45
@@ -37,20 +37,20 @@ L -20,20,-20 1 255,255,255
 # -----------------------------------------------
 
 # -----------------------------------------------
-# *Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
-# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
-# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cube: position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
+# *Sphere: position[x,y,z] | diameter | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | shadow(boolean:0,1) | material ref
 # -----------------------------------------------
 
-sp 2,3,4 1 255,255,55
-sp 0,0,-4 0.5 255,255,255
-cy -1,-4,-3 0.25,0.5,1 0.5 1 55,255,255 1
-cy -2.5,0,0 1,0,0 0.1 6 255,0,0 1
-cy 0,2.5,0 0,1,0 0.1 6 0,255,0 1
-cy 0,0,-2.5 0,0,1 0.1 6 0,0,255 1
-pl 0,-20,0 0,1,0 255,55,255
+sp 2,3,4 1 255,255,55 1
+sp 0,0,-4 0.5 255,255,255 1
+cy -1,-4,-3 0.25,0.5,1 0.5 1 55,255,255 1 1
+cy -2.5,0,0 1,0,0 0.1 6 255,0,0 1 1
+cy 0,2.5,0 0,1,0 0.1 6 0,255,0 1 1
+cy 0,0,-2.5 0,0,1 0.1 6 0,0,255 1 1
+pl 0,-20,0 0,1,0 255,55,255 1
 
 # -----------------------------------------------
 # *.obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref

@@ -31,20 +31,20 @@ L -10,10,-10 1 255,255,255
 # -----------------------------------------------
 
 # -----------------------------------------------
-# *Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
-# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
-# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cube: position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
+# *Sphere: position[x,y,z] | diameter | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | shadow(boolean:0,1) | material ref
 # -----------------------------------------------
 
-sp 0,0,0 2 255,255,255
-sp 0,2,0 2 200,220,55
-sp 2,0,0 2 55,200,220
-sp 2,2,0 2 55,200,220
-sp -2,0,0 2 220,55,200
-sp -2,2,0 2 220,55,200
-pl 0,-1,0 0,1,0 155,155,155
+sp 0,0,0 2 255,255,255 1
+sp 0,2,0 2 200,220,55 1
+sp 2,0,0 2 55,200,220 1
+sp 2,2,0 2 55,200,220 1
+sp -2,0,0 2 220,55,200 1
+sp -2,2,0 2 220,55,200 1
+pl 0,-1,0 0,1,0 155,155,155 1
 
 # -----------------------------------------------
 # *.obj: path | position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref

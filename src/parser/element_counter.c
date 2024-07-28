@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:07:57 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/12 15:29:27 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/27 22:35:11 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,10 @@ int	elements_count_checker(t_e_counts *count)
 		return (print_error(UNKNOWN_ELEMENT));
 	if (count->a_light > 1)
 		return (print_error(MULTI_AMBIENT));
-	else if (count->a_light == 0)
-		return (print_error(AMBIEN_FOUND));
 	if (count->camera > 1)
 		return (print_error(MULTI_CAMERA));
-	else if (count->camera == 0)
-		return (print_error(NO_CAMERA));
 	if (count->light > 1)
 		return (print_error(MULTI_LIGHT));
-	else if (count->light == 0 && count->other_light == 0)
-		return (print_error(NO_LIGHT));
 	return (0);
 }
 

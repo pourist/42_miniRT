@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:29:55 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/26 14:56:23 by ppour-ba         ###   ########.fr       */
+/*   Updated: 2024/07/28 23:46:30 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,11 @@ int	p_checkers(t_pattern *pattern, int *index, t_line_parse_env *env)
 	new_color(ft_atof(rgb2[0]) / 255, ft_atof(rgb2[1]) / 255,
 		ft_atof(rgb2[2]) / 255, &colors[1]);
 	new_pattern(pattern);
-	new_checkers_pattern(new_solid_pattern(&colors[0], &tmp[0]),
-		new_solid_pattern(&colors[1], &tmp[1]), pattern);
+	if (ft_strncmp(env->line[2], "checkers", 9) == 0)
+		new_uv_checkers_pattern(new_solid_pattern(&colors[0], &tmp[0]),
+			new_solid_pattern(&colors[1], &tmp[1]), pattern);
+	else
+		new_checkers_pattern(new_solid_pattern(&colors[0], &tmp[0]),
+			new_solid_pattern(&colors[1], &tmp[1]), pattern);
 	return (free_s(rgb1), free_s(rgb2), 0);
 }
