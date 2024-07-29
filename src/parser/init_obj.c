@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:29:39 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/28 21:11:44 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/29 08:27:20 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,19 @@ static bool	obj_info_2(t_line_parse_env *env, t_e_obj *obj)
 	env->error_type = CENT;
 	center = ft_subsplit(env->line[2], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
-		return (free_s(center), false);
+		return (false);
 	new_point(ft_atof(center[0]), ft_atof(center[1]),
 		ft_atof(center[2]), &obj->center);
 	env->error_type = NORMAL_;
 	axis = ft_subsplit(env->line[3], ",\n");
 	if (triplets(axis, (double)INT_MIN, (double)INT_MAX, env))
-		return (free_s(center), free_s(axis), false);
+		return (free_s(center), false);
 	new_vector(ft_atof(axis[0]), ft_atof(axis[1]),
 		ft_atof(axis[2]), &obj->axis);
 	env->error_type = SCALE;
 	scale = ft_subsplit(env->line[4], ",\n");
 	if (triplets(scale, -1, (double)INT_MAX, env))
-		return (free_s(axis), free_s(center), free_s(scale), false);
+		return (free_s(axis), free_s(center), false);
 	new_point(ft_atof(scale[0]), ft_atof(scale[1]),
 		ft_atof(scale[2]), &obj->scale);
 	return (free_s(axis), free_s(center), free_s(scale), true);

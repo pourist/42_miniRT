@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:11:45 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/28 21:20:12 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/29 08:28:46 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,19 @@ static bool	pl_info_2(t_line_parse_env *env, t_plane_info *pl)
 	env->error_type = RGB;
 	rgb = ft_subsplit(env->line[3], ",\n");
 	if (triplets(rgb, 0, 255, env))
-		return (free_s(rgb), false);
+		return (false);
 	new_color(ft_atof(rgb[0]) / 255, ft_atof(rgb[1]) / 255,
 		ft_atof(rgb[2]) / 255, &pl->color);
 	env->error_type = NORMAL_;
 	normal = ft_subsplit(env->line[2], ",\n");
 	if (triplets(normal, -1, 1, env))
-		return (free_s(rgb), free_s(normal), false);
+		return (free_s(rgb), false);
 	new_vector(ft_atof(normal[0]), ft_atof(normal[1]), ft_atof(normal[2]),
 		&pl->normal);
 	point = ft_subsplit(env->line[1], ",\n");
 	env->error_type = POINT;
 	if (triplets(point, (double)INT_MIN, (double)INT_MAX, env))
-		return (free_s(normal), free_s(rgb), free_s(point), false);
+		return (free_s(normal), free_s(rgb), false);
 	new_point(ft_atof(point[0]), ft_atof(point[1]),
 		ft_atof(point[2]), &pl->center);
 	return (free_s(normal), free_s(rgb), free_s(point), true);

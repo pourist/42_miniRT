@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:45:14 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/28 21:18:30 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/29 08:25:03 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ int	init_cylinder(t_line_parse_env *env, t_shape *obj)
 	if (triplets(axis, -1, 1, env))
 		return (free_s(center), 1);
 	make_cylinder(&cy, center, axis, obj);
-	if (cy.material && find_material(env->material, obj, env->line[8], env))
+	if (cy.material && find_material(env->material, obj,
+			env->line[len - 1], env))
 		return (1);
 	return (0);
 }

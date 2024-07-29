@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 16:13:52 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/29 00:39:55 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/29 08:21:12 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ static bool	sp_info_2(t_line_parse_env *env, t_sphere_info *sp)
 	env->error_type = CENT;
 	center = ft_subsplit(env->line[1], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
-		return (free_s(center), false);
+		return (false);
 	new_point(ft_atof(center[0]), ft_atof(center[1]),
 		ft_atof(center[2]), &sp->center);
 	env->error_type = RGB;
 	rgb = ft_subsplit(env->line[3], ",\n");
 	if (triplets(rgb, 0, 255, env))
-		return (free_s(center), free_s(rgb), false);
+		return (free_s(center), false);
 	new_color(ft_atof(rgb[0]) / 255, ft_atof(rgb[1]) / 255,
 		ft_atof(rgb[2]) / 255, &sp->color);
 	return (free_s(center), free_s(rgb), true);

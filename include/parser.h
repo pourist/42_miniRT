@@ -6,7 +6,7 @@
 /*   By: sebasnadu <johnavar@student.42berlin.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:02:03 by sebasnadu         #+#    #+#             */
-/*   Updated: 2024/07/28 15:09:41 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/29 08:32:56 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include "obj_loader.h"
 # include <limits.h>
 
-// #define WIDTH 1920
-// #define HEIGHT 1080
-# define WIDTH 800
-# define HEIGHT 600
+#define WIDTH 1920
+#define HEIGHT 1080
+// # define WIDTH 800
+// # define HEIGHT 600
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846

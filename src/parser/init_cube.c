@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:26:38 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/28 21:49:43 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/29 08:23:38 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static bool	cube_info_2(t_line_parse_env *env, t_cube_info *cube)
 	env->error_type = RGB;
 	rgb = ft_subsplit(env->line[6], ",\n");
 	if (triplets(rgb, 0, 255, env))
-		return (free_s(rgb), false);
+		return (false);
 	new_color(ft_atof(rgb[0]) / 255, ft_atof(rgb[1]) / 255,
 		ft_atof(rgb[2]) / 255, &cube->color);
 	return (free_s(rgb), true);

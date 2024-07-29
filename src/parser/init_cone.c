@@ -6,7 +6,7 @@
 /*   By: ppour-ba <ppour-ba@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:40:20 by ppour-ba          #+#    #+#             */
-/*   Updated: 2024/07/28 22:51:30 by sebasnadu        ###   ########.fr       */
+/*   Updated: 2024/07/29 08:22:15 by sebasnadu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,11 @@ int	init_cone(t_line_parse_env *env, t_shape *obj)
 	env->error_type = CENT;
 	center = ft_subsplit(env->line[1], ",\n");
 	if (triplets(center, (double)INT_MIN, (double)INT_MAX, env))
-		return (free_s(center), 1);
+		return (1);
 	env->error_type = NORMAL_;
 	axis = ft_subsplit(env->line[2], ",\n");
 	if (triplets(axis, -1, 1, env))
-		return (free_s(center), free_s(axis), 1);
+		return (free_s(center), 1);
 	make_cone(&cone, center, axis, obj);
 	if (cone.material
 		&& find_material(env->material, obj, env->line[len - 1], env))

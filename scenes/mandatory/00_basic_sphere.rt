@@ -10,6 +10,7 @@ A 0.1 255,255,255
 # -----------------------------------------------
 
 C 0,0,-10 0,0,0.707 70
+# C 0,0,-10 0,0,0.707 70 DOF 0.5 10 0.001 1 64
 
 # -----------------------------------------------
 # *Light: position[x,y,z] | brightness ration(0,1) | color[r,g,b]
@@ -31,11 +32,11 @@ L -10,10,-10 1 255,255,255
 # -----------------------------------------------
 
 # -----------------------------------------------
-# *Sphere: position[x,y,z] | diameter | color[r,g,b] | material ref
-# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | material ref
-# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | material ref
-# *Cube: position[x,y,z] | normal[x,y,z] | size[x,y,z] | color[r,g,b] | material ref
+# *Sphere: position[x,y,z] | diameter | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *Plane: position[x,y,z] | normal[x,y,z] | color[r,g,b] | shadow(boolean:0,1) | material ref
+# *cylinder: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cone: position[x,y,z] | normal[x,y,z] | diameter | height | color[r,g,b] | closed(boolean:0,1) | shadow(boolean:0,1) | material ref
+# *Cube: position[x,y,z] | normal[x,y,z] | size [width] [hight] [depth] | color[r,g,b] | shadow(boolean:0,1) | material ref
 # -----------------------------------------------
 
 sp 0,0,0 2 55,200,220 1
