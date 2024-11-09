@@ -9,8 +9,8 @@ A 0 255,255,255
 # DOF(depth of field definition) | aperture(0,1) | focus distance | color variance limit | antialiasing(boolean:0,1) | samples(1,1024)
 # -----------------------------------------------
 
-C 2.5,3,-12 -0.1,-0.1,0.7 100
-# C 2.5,3,-12 -0.1,-0.1,0.7 100 DOF 0.1 11 0.001 1 64
+# C 2.5,3,-12 -0.1,-0.1,0.7 100
+C 2.5,3,-12 -0.1,-0.1,0.7 100 DOF 0.1 11 0.001 1 64
 
 # -----------------------------------------------
 # *Light: position[x,y,z] | brightness ration(0,1) | color[r,g,b]
