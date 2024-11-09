@@ -1,4 +1,6 @@
-# miniRT
+# miniRT: A Journey into Raytracing
+
+![CleanShot 2024-11-10 at 00 41 47](https://github.com/user-attachments/assets/4e0923b2-721b-4632-9bea-5139a3a3a873)
 
 ## Introduction
 
