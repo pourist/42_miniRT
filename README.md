@@ -50,6 +50,15 @@ Your can read the scene [readme](./scenes/readme.rt) and use the [template](./sc
 
 ## Samples
 
+![03](https://github.com/user-attachments/assets/4a933c5d-0f65-4c83-9403-36adf4c4c193)
+
+![04](https://github.com/user-attachments/assets/fb7bd35b-b453-4c35-8fc2-7052c1eec7ac)
+
+![Screenshot 2024-11-09 at 23 06 23](https://github.com/user-attachments/assets/845289d0-23fa-416d-82df-f3df029770b8)
+
+![Screenshot 2024-07-29 at 13 57 48](https://github.com/user-attachments/assets/597f2d5c-409b-4981-8135-b4fa30b92af0)
+
+
 ## Features Checklist
 
 - [x] **Ray Casting Basics**
