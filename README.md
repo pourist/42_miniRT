@@ -154,4 +154,4 @@ Your can read the scene [readme](./scenes/readme.rt) and use the [template](./sc
 ## Authors
 
 - [Sebastion Navarro](https://github.com/SebasNadu/) ([johnavar](https://profile.intra.42.fr/users/johnavar))
-- [Piranaut](https://github.com/Piranaut) ([ppour-ba](https://profile.intra.42.fr/users/ppour-ba))
+- [PouriyaPourbahrami](https://github.com/Pourist) ([ppour-ba](https://profile.intra.42.fr/users/ppour-ba))
